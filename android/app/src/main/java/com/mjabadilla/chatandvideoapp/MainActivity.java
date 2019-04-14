@@ -1,4 +1,4 @@
-package com.chatandvideoapp;
+package com.mjabadilla.chatandvideoapp;
 
 import com.facebook.react.ReactActivity;
 
