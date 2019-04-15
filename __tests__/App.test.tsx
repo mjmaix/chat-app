@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-native-testing-library';
-import App from '../App';
+import App from '../src/App';
 
 // Add 'export' to fake this being a module to silence TSLint.
 export const add = (a: number, b: number) => a + b;

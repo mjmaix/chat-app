@@ -1,14 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/emin93/react-native-template-typescript
- *
- * @format
- */
-
-import React, { Component } from 'react';
+import React from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 
 const instructions = Platform.select({
@@ -18,16 +8,14 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu'
 });
 
-export default class App extends Component<{}> {
-  public render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.tsx</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
-      </View>
-    );
-  }
+export default function AppContent() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.welcome}>Welcome to React Native!</Text>
+      <Text style={styles.instructions}>To get started, edit App.tsx</Text>
+      <Text style={styles.instructions}>{instructions}</Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
