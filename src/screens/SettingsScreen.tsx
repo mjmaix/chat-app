@@ -1,13 +1,75 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 
-function SettingsScreen() {
-  console.log('SettingsScreen called');
-  return (
-    <View>
-      <Text>Settings Screen</Text>
-    </View>
-  );
+import { Theme } from '../core/themeProvider';
+import { ThemeProps, withTheme } from '../core/ThemeProviderHoc';
+
+interface FlatListItem {
+  item: Theme;
 }
 
-export default SettingsScreen;
+const SettingsScreen: React.FunctionComponent<ThemeProps> = ({
+  theme,
+  themes,
+  setTheme
+}) => {
+  const renderItem = ({ item }: FlatListItem) => (
+    <TouchableOpacity onPress={() => setTheme(item.key)}>
+      <View
+        style={[
+          styles.itemContainer,
+          {
+            backgroundColor: item.backgroundColor
+          }
+        ]}
+      >
+        <Text style={[styles.itemText, { color: item.color }]}>{item.key}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
+  return (
+    <View style={styles.container}>
+      <FlatList<Theme>
+        style={styles.flatListContainer}
+        ListHeaderComponent={
+          <Text style={[styles.headline, { color: theme.backgroundColor }]}>
+            Choose your theme:
+          </Text>
+        }
+        data={themes}
+        renderItem={renderItem}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  flatListContainer: {
+    flex: 1
+  },
+  headline: {
+    marginTop: 60,
+    marginBottom: 20,
+    marginLeft: 20,
+    fontWeight: '200',
+    fontSize: 24
+  },
+  itemContainer: {
+    height: 100,
+    justifyContent: 'center',
+    paddingLeft: 20
+  },
+  itemText: { fontWeight: 'bold' }
+});
+
+export default withTheme(SettingsScreen);

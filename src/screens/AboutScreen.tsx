@@ -1,13 +1,26 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { ThemeProps, withTheme } from '../core/ThemeProviderHoc';
 
-function AboutScreen() {
-  console.log('AboutScreen called');
+const AboutScreen = ({ theme }: ThemeProps) => {
   return (
-    <View>
-      <Text>About Screen</Text>
+    <View
+      style={[styles.container, { backgroundColor: theme.backgroundColor }]}
+    >
+      <Text style={[styles.text, { color: theme.color }]}>ABOUT</Text>
     </View>
   );
-}
+};
 
-export default AboutScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  text: {
+    fontWeight: 'bold'
+  }
+});
+
+export default withTheme(AboutScreen);
