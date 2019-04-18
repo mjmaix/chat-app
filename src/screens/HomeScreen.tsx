@@ -8,7 +8,8 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu'
 });
 
-export default function AppContent() {
+function HomeScreen() {
+  console.log('HomeScreen called');
   return (
     <View style={styles.container}>
       <Text style={styles.welcome}>Welcome to React Native!</Text>
@@ -36,3 +37,5 @@ const styles = StyleSheet.create({
     marginBottom: 5
   }
 });
+
+export default HomeScreen;
