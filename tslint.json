@@ -3,13 +3,15 @@
     "tslint:recommended",
     "tslint-eslint-rules",
     "tslint-react",
-    "tslint-config-prettier"
+    "tslint-config-prettier",
+    "tslint-react-hooks"
   ],
   "jsRules": {},
   "rules": {
     "interface-name": false,
     "jsx-no-lambda": false,
     "object-literal-sort-keys": false,
-    "quotemark": [true, "single", "jsx-double"]
+    "quotemark": [true, "single", "jsx-double"],
+    "react-hooks-nesting": "error" // tslint-react-hooks
   }
 }
