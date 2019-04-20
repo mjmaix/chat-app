@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "name": "ChatAndVideoApp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "cleanup:node": "rm -rf packages/*/node_modules && rm -rf node_modules",
+    "start:web:dev": "cd ./packages/web && yarn start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git-codecommit.ap-southeast-1.amazonaws.com/v1/repos/ChatAndVideoApp"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "workspaces": [
+    "packages/*"
+  ]
+}

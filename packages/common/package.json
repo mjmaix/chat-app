@@ -1,0 +1,24 @@
+{
+  "name": "@chatandvideoapp/common",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "postinstall": "npm run build",
+    "build": "rimraf dist && tsc",
+    "watch": "tsc --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "16.8.3",
+    "react-native": "0.59.4"
+  },
+  "devDependencies": {
+    "@types/react": "16.8.14",
+    "@types/react-native": "^0.57.45",
+    "rimraf": "^2.6.3",
+    "typescript": "3.4.3"
+  }
+}

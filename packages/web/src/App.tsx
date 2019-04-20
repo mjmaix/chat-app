@@ -1,12 +1,3 @@
-import React from "react";
-import { Text, View } from "react-native";
-
-const App: React.FC = () => {
-  return (
-    <View>
-      <Text>Hello from React Native Web</Text>
-    </View>
-  );
-};
+import { App } from "@chatandvideoapp/common";
 
 export default App;
