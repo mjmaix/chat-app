@@ -5,6 +5,7 @@ import { Link, NativeRouter, Route } from 'react-router-native';
 const HomeScreen = lazy(() => import('./screens/HomeScreen'));
 const SettingsScreen = lazy(() => import('./screens/SettingsScreen'));
 const AboutScreen = lazy(() => import('./screens/AboutScreen'));
+const CounterScreen = lazy(() => import('./screens/CounterScreen'));
 
 function Routes() {
   return (
@@ -21,11 +22,15 @@ function Routes() {
             <Link to="/settings" underlayColor="#f0f4f7" style={styles.navItem}>
               <Text>Settings</Text>
             </Link>
+            <Link to="/counter" underlayColor="#f0f4f7" style={styles.navItem}>
+              <Text>Counter</Text>
+            </Link>
           </View>
 
           <Route exact={true} path="/" component={HomeScreen} />
           <Route path="/about" component={AboutScreen} />
           <Route path="/settings" component={SettingsScreen} />
+          <Route path="/counter" component={CounterScreen} />
         </View>
       </NativeRouter>
     </Suspense>

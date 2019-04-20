@@ -7,12 +7,12 @@ export interface Theme {
   color: string;
 }
 
-export const theme: Theme = THEMES[1];
-
 export interface ThemeContextProps {
   setThemeID: React.Dispatch<React.SetStateAction<string>>;
   themeID: string;
 }
+
+export const theme: Theme = THEMES[1];
 
 export const STORAGE_KEY = 'THEME_ID';
 
