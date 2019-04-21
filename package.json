@@ -28,8 +28,10 @@
       "packages/*"
     ],
     "nohoist": [
-      "@chatandvideoapp/mobile",
-      "@chatandvideoapp/mobile/**"
+      "@chatandvideoapp/mobile/react",
+      "@chatandvideoapp/mobile/react/**",
+      "@chatandvideoapp/mobile/react-native",
+      "@chatandvideoapp/mobile/react-native/**"
     ]
   }
 }

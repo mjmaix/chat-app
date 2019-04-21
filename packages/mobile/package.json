@@ -21,10 +21,10 @@
     "ios:pod:install": "cd ios && pod install"
   },
   "dependencies": {
+    "@chatandvideoapp/common": "1.0.0",
     "@react-native-community/async-storage": "^1.3.3",
     "react": "16.8.6",
-    "react-native": "0.59.5",
-    "react-router-native": "^5.0.0"
+    "react-native": "0.59.5"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",

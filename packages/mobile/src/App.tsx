@@ -1,13 +1,3 @@
-import React from 'react';
-import { ThemeContextProvider } from './core/ThemeProviderHoc';
-import Routes from './Routes';
-
-const App = () => {
-  return (
-    <ThemeContextProvider>
-      <Routes />
-    </ThemeContextProvider>
-  );
-};
+import { App } from "@chatandvideoapp/common";
 
 export default App;

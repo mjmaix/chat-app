@@ -11040,7 +11040,7 @@ react-router-dom@5.0.0:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-router-native@5.0.0, react-router-native@^5.0.0:
+react-router-native@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-router-native/-/react-router-native-5.0.0.tgz#18566065e312c7c91a4a7080e3a15ab022206254"
   integrity sha512-S44SLsjFrKAWt9m7mnSP5eL5JDAi6Qu+aCxjajiklUpY6RChVg7FVNuzch1KMKk5QLaHW4xa1Uw1k9KOgNH7Lg==
