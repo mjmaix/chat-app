@@ -5,11 +5,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "cleanup:all": "yarn cleanup:yarn && yarn cleanup:node && yarn && yarn common:dev:build && yarn web:dev:start",
+    "cleanup:mobile": "yarn workspace @chatandvideoapp/mobile cleanup:all",
+    "cleanup:web": "yarn cleanup:yarn && yarn cleanup:node && yarn && yarn common:dev:build",
     "cleanup:node": "rm -rf packages/*/node_modules && rm -rf node_modules",
     "cleanup:yarn": "rm -f packages/*/yarn.lock && rm -f yarn.lock",
-    "common:dev:build": "cd ./packages/common && yarn build",
-    "web:dev:start": "cd ./packages/web && yarn start"
+    "common:dev:build": "yarn workspace @chatandvideoapp/common build",
+    "web:dev:start": "yarn workspace @chatandvideoapp/web start",
+    "mobile:ios:dev:run": "yarn workspace @chatandvideoapp/mobile ios",
+    "mobile:android:dev:run": "yarn workspace @chatandvideoapp/mobile android",
+    "studio": "yarn workspace @chatandvideoapp/mobile studio",
+    "xcode": "yarn workspace @chatandvideoapp/mobile xcode"
   },
   "repository": {
     "type": "git",
@@ -18,7 +23,13 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "workspaces": [
-    "packages/*"
-  ]
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "@chatandvideoapp/mobile",
+      "@chatandvideoapp/mobile/**"
+    ]
+  }
 }
