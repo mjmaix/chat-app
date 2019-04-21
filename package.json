@@ -5,8 +5,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "cleanup:all": "yarn cleanup:yarn && yarn cleanup:node && yarn && yarn common:dev:build && yarn web:dev:start",
     "cleanup:node": "rm -rf packages/*/node_modules && rm -rf node_modules",
-    "start:web:dev": "cd ./packages/web && yarn start"
+    "cleanup:yarn": "rm -f packages/*/yarn.lock && rm -f yarn.lock",
+    "common:dev:build": "cd ./packages/common && yarn build",
+    "web:dev:start": "cd ./packages/web && yarn start"
   },
   "repository": {
     "type": "git",
