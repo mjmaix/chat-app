@@ -3,11 +3,20 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "start": "node node_modules/react-native/local-cli/cli.js start -- --reset-cache",
     "test": "jest",
     "lint": "tslint --project tsconfig.json",
     "ios": "react-native run-ios",
-    "android": "react-native run-android"
+    "android": "react-native run-android",
+    "cleanup:all": "npm run cleanup:android && npm run cleanup:react && npm run cleanup:metrobundler && npm run cleanup:hastecache && npm run cleanup:ios",
+    "cleanup:react": "watchman watch-del-all && rm -rf node_modules/ && rm -rf $TMPDIR/react-* ~/.npm/ ~./rncache",
+    "postcleanup:react": "echo 'run `npm install` or `yarn install`'",
+    "cleanup:ios": "rm -rf ~/Library/Developer/Xcode/DerivedData/* ios/build ios/Pods",
+    "cleanup:android": "[ -e node_modules/react-native ] || cd android || ./gradlew clean",
+    "cleanup:metrobundler": "rm -rf /tmp/metro-bundler-cache-*",
+    "cleanup:hastecache": "rm -rf /tmp/haste-map-react-native-packager-*",
+    "xpostinstall": "./scripts/postinstall.sh && npm run ios:pod:install",
+    "xios:pod:install": "cd ios && pod install"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.3.3",
