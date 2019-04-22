@@ -1,12 +1,12 @@
 import React from 'react';
 import {
   FlatList,
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View
 } from 'react-native';
-
 import { Theme } from '../core/themeProvider';
 import { ThemeProps, withTheme } from '../core/ThemeProviderHoc';
 
@@ -14,11 +14,7 @@ interface FlatListItem {
   item: Theme;
 }
 
-const SettingsScreen: React.FunctionComponent<ThemeProps> = ({
-  theme,
-  themes,
-  setTheme
-}) => {
+const SettingsScreen = ({ theme, themes, setTheme }: ThemeProps) => {
   const renderItem = ({ item }: FlatListItem) => (
     <TouchableOpacity onPress={() => setTheme(item.key)}>
       <View
@@ -36,18 +32,24 @@ const SettingsScreen: React.FunctionComponent<ThemeProps> = ({
 
   return (
     <View style={styles.container}>
-      <FlatList<Theme>
-        style={styles.flatListContainer}
-        ListHeaderComponent={
-          <Text style={[styles.headline, { color: theme.backgroundColor }]}>
-            Choose your theme:
-          </Text>
-        }
-        data={themes}
-        renderItem={renderItem}
-      />
+      <SafeAreaView style={styles.container}>
+        <FlatList<Theme>
+          style={styles.flatListContainer}
+          ListHeaderComponent={
+            <Text style={[styles.headline, { color: theme.backgroundColor }]}>
+              Choose your theme:
+            </Text>
+          }
+          data={themes}
+          renderItem={renderItem}
+        />
+      </SafeAreaView>
     </View>
   );
+};
+
+SettingsScreen.navigationOptions = {
+  drawerLabel: 'Settings'
 };
 
 const styles = StyleSheet.create({

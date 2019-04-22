@@ -2,20 +2,20 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { ThemeProps, withTheme } from '../core/ThemeProviderHoc';
 
-const HomeScreen = ({ theme }: ThemeProps) => {
+const MyDigestsScreen = ({ theme }: ThemeProps) => {
   return (
     <View
       style={[styles.container, { backgroundColor: theme.backgroundColor }]}
     >
       <SafeAreaView style={styles.container}>
-        <Text style={[styles.text, { color: theme.color }]}>HOME</Text>
+        <Text style={[styles.text, { color: theme.color }]}>MY DIGESTS</Text>
       </SafeAreaView>
     </View>
   );
 };
 
-HomeScreen.navigationOptions = {
-  drawerLabel: 'Home'
+MyDigestsScreen.navigationOptions = {
+  drawerLabel: 'My Digests'
 };
 
 const styles = StyleSheet.create({
@@ -29,4 +29,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withTheme(HomeScreen);
+export default withTheme(MyDigestsScreen);

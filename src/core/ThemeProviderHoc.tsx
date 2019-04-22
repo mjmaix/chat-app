@@ -36,6 +36,7 @@ export interface ThemeProps {
 
 export function withTheme<T>(Component: React.FC<T>) {
   return (props: any) => {
+    // tslint:disable-next-line: react-hooks-nesting
     const { themeID, setThemeID } = useContext(ThemeContext);
 
     const getTheme = (id: string) => THEMES.find((t: Theme) => t.key === id);

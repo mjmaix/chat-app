@@ -1,15 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { ThemeProps, withTheme } from '../core/ThemeProviderHoc';
 
-const AboutScreen = ({ theme }: ThemeProps) => {
+const ProfileScreen = ({ theme }: ThemeProps) => {
   return (
     <View
       style={[styles.container, { backgroundColor: theme.backgroundColor }]}
     >
-      <Text style={[styles.text, { color: theme.color }]}>ABOUT</Text>
+      <SafeAreaView style={styles.container}>
+        <Text style={[styles.text, { color: theme.color }]}>PROFILE</Text>
+      </SafeAreaView>
     </View>
   );
+};
+
+ProfileScreen.navigationOptions = {
+  drawerLabel: 'Profile'
 };
 
 const styles = StyleSheet.create({
@@ -23,4 +29,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withTheme(AboutScreen);
+export default withTheme(ProfileScreen);

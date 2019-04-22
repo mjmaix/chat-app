@@ -3,8 +3,8 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Route, withRouter } from 'react-router';
 import { ButtonIcon, ButtonIconProps } from '../components/icons/ButtonIcon';
-import AboutScreen from '../screens/AboutScreen';
 import HomeScreen from '../screens/HomeScreen';
+import AboutScreen from '../screens/ProfileScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 type TabbedContainerIconProps = ButtonIconProps & { route: string };
