@@ -11,8 +11,8 @@
     "cleanup:yarn": "rm -f packages/*/yarn.lock && rm -f yarn.lock",
     "common:dev:build": "yarn workspace @chatandvideoapp/common build",
     "web:dev:start": "yarn workspace @chatandvideoapp/web start",
-    "mobile:ios:dev:run": "yarn workspace @chatandvideoapp/mobile ios",
-    "mobile:android:dev:run": "yarn workspace @chatandvideoapp/mobile android",
+    "ios:dev:run": "yarn workspace @chatandvideoapp/mobile ios",
+    "android:dev:run": "yarn workspace @chatandvideoapp/mobile android",
     "studio": "yarn workspace @chatandvideoapp/mobile studio",
     "xcode": "yarn workspace @chatandvideoapp/mobile xcode"
   },
@@ -26,12 +26,6 @@
   "workspaces": {
     "packages": [
       "packages/*"
-    ],
-    "nohoist": [
-      "@chatandvideoapp/mobile/react",
-      "@chatandvideoapp/mobile/react/**",
-      "@chatandvideoapp/mobile/react-native",
-      "@chatandvideoapp/mobile/react-native/**"
     ]
   }
 }
