@@ -1,12 +1,35 @@
 import React, { Component } from 'react';
+import { NativeRouter } from 'react-router-native';
 import { ThemeContextProvider } from './core/ThemeProviderHoc';
-import Routes from './Routes';
+import { TabbedContainer } from './hocs';
 
 export default class App extends Component<{}> {
   public render() {
     return (
       <ThemeContextProvider>
-        <Routes />
+        <NativeRouter>
+          <TabbedContainer
+            tabs={[
+              {
+                iconName: 'home',
+                badgeText: '2',
+                labelText: 'Home',
+                active: true,
+                route: 'home'
+              },
+              {
+                iconName: 'settings',
+                labelText: 'Settings',
+                route: 'settings'
+              },
+              {
+                iconName: 'information-circle-outline',
+                labelText: 'About',
+                route: 'about'
+              }
+            ]}
+          />
+        </NativeRouter>
       </ThemeContextProvider>
     );
   }

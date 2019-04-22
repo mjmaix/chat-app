@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
-import { Link, NativeRouter, Route } from 'react-router-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { NativeRouter, Route } from 'react-router-native';
 
 const HomeScreen = lazy(() => import('./screens/HomeScreen'));
 const SettingsScreen = lazy(() => import('./screens/SettingsScreen'));
@@ -11,7 +11,7 @@ function Routes() {
     <Suspense fallback={<ActivityIndicator />}>
       <NativeRouter>
         <View style={styles.container}>
-          <View style={styles.nav}>
+          {/* <View style={styles.nav}>
             <Link to="/" underlayColor="#f0f4f7" style={styles.navItem}>
               <Text>Home</Text>
             </Link>
@@ -21,7 +21,7 @@ function Routes() {
             <Link to="/settings" underlayColor="#f0f4f7" style={styles.navItem}>
               <Text>Settings</Text>
             </Link>
-          </View>
+          </View> */}
 
           <Route exact={true} path="/" component={HomeScreen} />
           <Route path="/about" component={AboutScreen} />
