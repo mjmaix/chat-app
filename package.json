@@ -12,7 +12,7 @@
     "cleanup:react": "watchman watch-del-all && rm -rf node_modules/ && rm -rf $TMPDIR/react-* ~/.npm/ ~./rncache",
     "postcleanup:react": "echo 'run `npm install` or `yarn install`'",
     "cleanup:ios": "rm -rf ~/Library/Developer/Xcode/DerivedData/* ios/build ios/Pods",
-    "cleanup:android": "[ -d node_modules/react-native ] && cd ./android/ && ./gradlew clean",
+    "cleanup:android": "./scripts/cleanandroid.sh",
     "cleanup:metrobundler": "rm -rf /tmp/metro-bundler-cache-*",
     "cleanup:hastecache": "rm -rf /tmp/haste-map-react-native-packager-*",
     "xpostinstall": "./scripts/postinstall.sh && npm run ios:pod:install",
