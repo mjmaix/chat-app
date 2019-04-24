@@ -9,7 +9,7 @@
     "ios": "react-native run-ios",
     "android": "react-native run-android",
     "cleanup:all": "npm run cleanup:android && npm run cleanup:react && npm run cleanup:metrobundler && npm run cleanup:hastecache && npm run cleanup:ios",
-    "cleanup:react": "watchman watch-del-all && rm -rf node_modules/ && rm -rf $TMPDIR/react-* ~/.npm/ ~./rncache",
+    "cleanup:react": "./scripts/killpackager.sh && watchman watch-del-all && rm -rf node_modules/ && rm -rf $TMPDIR/react-* ~/.npm/ ~./rncache",
     "postcleanup:react": "echo 'run `npm install` or `yarn install`'",
     "cleanup:ios": "rm -rf ~/Library/Developer/Xcode/DerivedData/* ios/build ios/Pods",
     "cleanup:android": "./scripts/cleanandroid.sh",
