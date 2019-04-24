@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { ThemeProps, withTheme } from '../core/ThemeProviderHoc';
+import { ThemeProps, withTheme } from '../core/themes';
 
 const MyWorksScreen = ({ theme }: ThemeProps) => {
   return (
@@ -15,18 +15,18 @@ const MyWorksScreen = ({ theme }: ThemeProps) => {
 };
 
 MyWorksScreen.navigationOptions = {
-  drawerLabel: 'My Works'
+  drawerLabel: 'My Works',
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   text: {
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });
 
 export default withTheme(MyWorksScreen);

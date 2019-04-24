@@ -52,18 +52,21 @@ const styles = StyleSheet.create({
   },
   nav: {
     flexDirection: 'row',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   navItem: {
     flex: 1,
     alignItems: 'center',
-    padding: 10
+    padding: 10,
   },
   subNavItem: {
-    padding: 5
+    padding: 5,
   },
   topic: {
     textAlign: 'center',
-    fontSize: 15
-  }
+    fontSize: 15,
+  },
+  header: {
+    flex: 1,
+  },
 });

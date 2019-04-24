@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { ThemeProps, withTheme } from '../core/ThemeProviderHoc';
+import { ThemeProps, withTheme } from '../core/themes/ThemeProviderHoc';
 
 const MyDigestsScreen = ({ theme }: ThemeProps) => {
   return (
@@ -15,18 +15,18 @@ const MyDigestsScreen = ({ theme }: ThemeProps) => {
 };
 
 MyDigestsScreen.navigationOptions = {
-  drawerLabel: 'My Digests'
+  drawerLabel: 'My Digests',
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   text: {
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });
 
 export default withTheme(MyDigestsScreen);

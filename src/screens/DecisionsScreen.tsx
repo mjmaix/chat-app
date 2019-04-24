@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { ThemeProps, withTheme } from '../core/ThemeProviderHoc';
+import { ThemeProps, withTheme } from '../core/themes';
 
 const DecisionsScreen = ({ theme }: ThemeProps) => {
   return (
@@ -15,18 +15,18 @@ const DecisionsScreen = ({ theme }: ThemeProps) => {
 };
 
 DecisionsScreen.navigationOptions = {
-  drawerLabel: 'Decisions'
+  drawerLabel: 'Decisions',
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   text: {
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });
 
 export default withTheme(DecisionsScreen);

@@ -1,22 +1,22 @@
-export default [
+export const themes = [
   {
     key: 'MAASTRICHT BLUE',
     backgroundColor: '#011627',
-    color: '#ffffff'
+    color: '#ffffff',
   },
   {
     key: 'MAXIMUM BLUE GREEN',
     backgroundColor: '#2EC4B6',
-    color: '#ffffff'
+    color: '#ffffff',
   },
   {
     key: 'ROSE MADDER',
     backgroundColor: '#E71D36',
-    color: '#ffffff'
+    color: '#ffffff',
   },
   {
     key: 'BRIGHT YELLOW (CRAYOLA)',
     backgroundColor: '#FF9F1C',
-    color: '#1F2D3D'
-  }
+    color: '#1F2D3D',
+  },
 ];

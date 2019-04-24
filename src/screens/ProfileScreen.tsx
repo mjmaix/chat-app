@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { ThemeProps, withTheme } from '../core/ThemeProviderHoc';
+import { ThemeProps, withTheme } from '../core/themes';
 
 const ProfileScreen = ({ theme }: ThemeProps) => {
   return (
@@ -14,19 +14,15 @@ const ProfileScreen = ({ theme }: ThemeProps) => {
   );
 };
 
-ProfileScreen.navigationOptions = {
-  drawerLabel: 'Profile'
-};
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   text: {
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });
 
 export default withTheme(ProfileScreen);

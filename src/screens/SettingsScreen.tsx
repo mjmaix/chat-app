@@ -5,10 +5,9 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
-import { Theme } from '../core/themeProvider';
-import { ThemeProps, withTheme } from '../core/ThemeProviderHoc';
+import { Theme, ThemeProps, withTheme } from '../core/themes';
 
 interface FlatListItem {
   item: Theme;
@@ -21,8 +20,8 @@ const SettingsScreen = ({ theme, themes, setTheme }: ThemeProps) => {
         style={[
           styles.itemContainer,
           {
-            backgroundColor: item.backgroundColor
-          }
+            backgroundColor: item.backgroundColor,
+          },
         ]}
       >
         <Text style={[styles.itemText, { color: item.color }]}>{item.key}</Text>
@@ -49,29 +48,29 @@ const SettingsScreen = ({ theme, themes, setTheme }: ThemeProps) => {
 };
 
 SettingsScreen.navigationOptions = {
-  drawerLabel: 'Settings'
+  drawerLabel: 'Settings',
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   flatListContainer: {
-    flex: 1
+    flex: 1,
   },
   headline: {
     marginTop: 60,
     marginBottom: 20,
     marginLeft: 20,
     fontWeight: '200',
-    fontSize: 24
+    fontSize: 24,
   },
   itemContainer: {
     height: 100,
     justifyContent: 'center',
-    paddingLeft: 20
+    paddingLeft: 20,
   },
-  itemText: { fontWeight: 'bold' }
+  itemText: { fontWeight: 'bold' },
 });
 
 export default withTheme(SettingsScreen);
