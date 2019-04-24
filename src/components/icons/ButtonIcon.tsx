@@ -1,32 +1,42 @@
 import { Badge, Button, Icon, Text } from 'native-base';
 import React from 'react';
+import { IconObject } from '.';
 
 export interface ButtonIconProps {
-  iconName: string;
+  icon: IconObject;
   labelText?: string;
   badgeText?: string;
   vertical?: boolean;
   active?: boolean;
+  transparent?: boolean;
   onPress?: () => void;
 }
 
 export const ButtonIcon = ({
   labelText,
-  iconName,
+  icon,
   badgeText,
   vertical,
   active,
-  onPress
+  onPress,
+  transparent,
 }: ButtonIconProps) => {
   const badge = !!badgeText;
   return (
-    <Button active={active} badge={badge} vertical={vertical} onPress={onPress}>
+    <Button
+      transparent={transparent}
+      active={active}
+      badge={badge}
+      vertical={vertical}
+      onPress={onPress}
+      // dark={true}
+    >
       {badge && (
         <Badge>
           <Text>{badgeText}</Text>
         </Badge>
       )}
-      <Icon name={iconName} />
+      <Icon {...icon} />
       {!!labelText && <Text>{labelText}</Text>}
     </Button>
   );
@@ -36,5 +46,6 @@ ButtonIcon.defaultProps = {
   active: false,
   vertical: true,
   badgeText: null,
-  labelText: null
+  labelText: null,
+  transparent: true,
 };

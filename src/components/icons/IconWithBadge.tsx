@@ -1,27 +1,11 @@
 import { Icon, Text } from 'native-base';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import { IconObject } from '.';
 
-export type IconTypes =
-  | 'AntDesign'
-  | 'Entypo'
-  | 'EvilIcons'
-  | 'Feather'
-  | 'FontAwesome'
-  | 'FontAwesome5'
-  | 'Foundation'
-  | 'Ionicons'
-  | 'MaterialCommunityIcons'
-  | 'MaterialIcons'
-  | 'Octicons'
-  | 'SimpleLineIcons'
-  | 'Zocial';
 // FIXME: correct copy paste
 interface Props {
-  icon: {
-    name: string;
-    type: IconTypes;
-  };
+  icon: IconObject;
   badgeCount?: number;
   color?: string;
 }

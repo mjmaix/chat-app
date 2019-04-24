@@ -1,4 +1,4 @@
-import { Container, Content, Footer, FooterTab, Header } from 'native-base';
+import { Container, Content, Footer, FooterTab } from 'native-base';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Route, withRouter } from 'react-router';
@@ -16,7 +16,6 @@ interface TabbedContainerProps {
 export const TabbedContainer = (props: TabbedContainerProps) => {
   return (
     <Container>
-      <Header />
       <Content contentContainerStyle={styles.container}>
         <Route exact={true} path={['/', '/home']} component={HomeScreen} />
         <Route path="/about" component={AboutScreen} />
@@ -28,14 +27,14 @@ export const TabbedContainer = (props: TabbedContainerProps) => {
             const RouterButton = withRouter(({ history }) => (
               <ButtonIcon
                 badgeText={p.badgeText}
-                iconName={p.iconName}
+                icon={p.icon}
                 labelText={p.labelText}
                 active={p.active}
                 onPress={() => history.push(p.route)}
               />
             ));
 
-            return <RouterButton key={p.iconName} />;
+            return <RouterButton key={p.icon.name} />;
           })}
         </FooterTab>
       </Footer>
@@ -45,11 +44,9 @@ export const TabbedContainer = (props: TabbedContainerProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
-  header: {
-    fontSize: 20
-  },
+
   nav: {
     flexDirection: 'row',
     justifyContent: 'space-around',
