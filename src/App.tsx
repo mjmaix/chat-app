@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { ThemeContextProvider } from './core/ThemeProviderHoc';
-import Routes from './Routes';
+import { ThemeContextProvider } from './core/themes';
+import { AppRoutes } from './routes/';
 
 export default class App extends Component<{}> {
   public render() {
     return (
       <ThemeContextProvider>
-        <Routes />
+        <AppRoutes />
       </ThemeContextProvider>
     );
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import THEMES from './themes';
+import { themes } from './themes';
 
 export interface Theme {
   key: string;
@@ -7,7 +7,7 @@ export interface Theme {
   color: string;
 }
 
-export const theme: Theme = THEMES[1];
+export const theme: Theme = themes[1];
 
 export interface ThemeContextProps {
   setThemeID: React.Dispatch<React.SetStateAction<string>>;
@@ -17,10 +17,10 @@ export interface ThemeContextProps {
 export const STORAGE_KEY = 'THEME_ID';
 
 const initialState = {
-  themeID: THEMES[0].key,
-  setThemeID: () => null
+  themeID: themes[0].key,
+  setThemeID: () => null,
 };
 
 export const ThemeContext = React.createContext<ThemeContextProps>(
-  initialState
+  initialState,
 );
