@@ -2,20 +2,16 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { ThemeProps, withTheme } from '../core/themes';
 
-const FavoritesScreen = ({ theme }: ThemeProps) => {
+const ChatSCreen = ({ theme }: ThemeProps) => {
   return (
     <View
       style={[styles.container, { backgroundColor: theme.backgroundColor }]}
     >
       <SafeAreaView style={styles.container}>
-        <Text style={[styles.text, { color: theme.color }]}>FAVORITES</Text>
+        <Text style={[styles.text, { color: theme.color }]}>CHAT</Text>
       </SafeAreaView>
     </View>
   );
-};
-
-FavoritesScreen.navigationOptions = {
-  drawerLabel: 'Favorites',
 };
 
 const styles = StyleSheet.create({
@@ -29,4 +25,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withTheme(FavoritesScreen);
+export default withTheme(ChatSCreen);

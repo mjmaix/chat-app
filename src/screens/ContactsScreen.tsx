@@ -1,22 +1,23 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SearchBar } from '../components/search-bar/SearchBar';
 import { ThemeProps, withTheme } from '../core/themes';
 
-const MyWorksScreen = ({ theme }: ThemeProps) => {
+const ContactsScreen = ({ theme }: ThemeProps) => {
   return (
     <View
       style={[styles.container, { backgroundColor: theme.backgroundColor }]}
     >
       <SafeAreaView style={styles.container}>
-        <Text style={[styles.text, { color: theme.color }]}>MY WORKS</Text>
+        <Text style={[styles.text, { color: theme.color }]}>CONTACTS</Text>
       </SafeAreaView>
     </View>
   );
 };
 
-MyWorksScreen.navigationOptions = {
-  drawerLabel: 'My Works',
-};
+ContactsScreen.navigationOptions = () => ({
+  header: () => <SearchBar />,
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -29,4 +30,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withTheme(MyWorksScreen);
+export default withTheme(ContactsScreen);

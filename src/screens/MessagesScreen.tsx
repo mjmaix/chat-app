@@ -1,22 +1,24 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { ThemeProps, withTheme } from '../core/themes/ThemeProviderHoc';
+import { SearchBar } from '../components/search-bar/SearchBar';
+import { ThemeProps, withTheme } from '../core/themes';
 
-const MyDigestsScreen = ({ theme }: ThemeProps) => {
+const MessagesScreen = ({ theme }: ThemeProps) => {
   return (
     <View
       style={[styles.container, { backgroundColor: theme.backgroundColor }]}
     >
       <SafeAreaView style={styles.container}>
-        <Text style={[styles.text, { color: theme.color }]}>MY DIGESTS</Text>
+        <Text style={[styles.text, { color: theme.color }]}>MESSAGES</Text>
       </SafeAreaView>
     </View>
   );
 };
 
-MyDigestsScreen.navigationOptions = {
-  drawerLabel: 'My Digests',
-};
+MessagesScreen.navigationOptions = () => ({
+  header: () => <SearchBar />,
+  title: 'MessageScreen',
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -29,4 +31,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withTheme(MyDigestsScreen);
+export default withTheme(MessagesScreen);
