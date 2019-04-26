@@ -6,21 +6,13 @@ import UserListItem from '../components/lists/UserListItem';
 import { SearchBar } from '../components/search-bar/SearchBar';
 import { User, users } from '../core/api/unsplash';
 import { ThemeProps, withTheme } from '../core/themes';
-import { Mappings } from '../routes/mappings';
 
 type Props = ThemeProps & NavigationScreenProps;
 
 const datas: User[] = [...users.results];
 
 const ContactsScreen = ({ theme, navigation }: Props) => {
-  const HeaderComponent = (
-    <SearchBar
-      rightIcon={{
-        ...Mappings.Chat.icon,
-        onPress: () => navigation.navigate('Chat'),
-      }}
-    />
-  );
+  const HeaderComponent = <SearchBar />;
   return (
     <View
       style={[styles.container, { backgroundColor: theme.backgroundColor }]}

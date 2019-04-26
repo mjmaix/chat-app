@@ -1,4 +1,4 @@
-type Nullable<T> = T | null;
+import { Nullable } from '../ts';
 
 export interface Links {
   self: string;
