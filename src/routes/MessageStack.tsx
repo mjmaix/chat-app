@@ -21,13 +21,6 @@ const MessageStack = createStackNavigator(
       screen: Mappings.Contacts.screen,
       navigationOptions: ({ navigation }: NavigationScreenProps) => ({
         title: 'Contacts',
-        headerRight: (
-          // FIXME: REMOVE
-          <ButtonIcon
-            icon={Mappings.Chat.icon}
-            onPress={() => navigation.navigate('Chat')}
-          />
-        ),
       }),
     },
     Chat: {

@@ -1,16 +1,17 @@
-import { Button, Header, Icon, Input, Item, Text } from 'native-base';
+import { Icon, Input, Item, View } from 'native-base';
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { DevBorders } from '../../utils/borders';
+import TransparentButton from '../buttons/TransparentButton';
 import { IconObject } from '../icons';
 
 interface SearchProps {
   leftIcon?: IconObject;
   rightIcon?: IconObject;
-  buttonText?: 'Search';
-  inputPlaceholder?: 'Search';
-  onButtonPress?: (text: string) => void;
+  buttonText: string;
+  inputPlaceholder: string;
+  submitButtonPress?: (text: string) => void;
   onChangeText?: (text: string) => void;
+  headerLeft?: () => React.ReactNode;
 }
 
 export const SearchBar = ({
@@ -18,13 +19,15 @@ export const SearchBar = ({
   rightIcon,
   buttonText,
   inputPlaceholder,
-  onButtonPress,
-  onChangeText
+  submitButtonPress: submitButtonPress,
+  onChangeText,
+  headerLeft: headerLeft,
 }: SearchProps) => {
   const [text, setText] = useState('');
   return (
-    <Header style={styles.container} searchBar={true} rounded={true}>
-      <Item>
+    <View style={styles.container}>
+      {!!headerLeft && headerLeft()}
+      <Item rounded={true} style={styles.inputItem}>
         {!!leftIcon && <Icon {...leftIcon} />}
         <Input
           autoCapitalize="none"
@@ -40,12 +43,13 @@ export const SearchBar = ({
         />
         {!!rightIcon && <Icon {...rightIcon} />}
       </Item>
-      {!!onButtonPress && (
-        <Button transparent={true} onPress={() => onButtonPress(text)}>
-          <Text>{buttonText}</Text>
-        </Button>
+      {!!submitButtonPress && (
+        <TransparentButton
+          label={buttonText}
+          onPress={() => submitButtonPress(text)}
+        />
       )}
-    </Header>
+    </View>
   );
 };
 
@@ -53,11 +57,15 @@ SearchBar.defaultProps = {
   leftIcon: { name: 'ios-search', type: 'Ionicons' },
   rightIcon: null,
   buttonText: 'Search',
-  inputPlaceholder: 'Search'
+  inputPlaceholder: 'Search',
 };
 
 const styles = StyleSheet.create({
   container: {
-    ...DevBorders.red
-  }
+    width: '100%',
+    padding: 5, // FIXME: use StyleGuide
+  },
+  inputItem: {
+    backgroundColor: 'white',
+  },
 });

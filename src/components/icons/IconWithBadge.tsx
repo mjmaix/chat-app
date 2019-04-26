@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   badge: {
     position: 'absolute',
@@ -25,13 +25,13 @@ const styles = StyleSheet.create({
     width: 12,
     height: 12,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   badgeText: {
     color: 'white',
     fontSize: 10,
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });
 
 export default class IconWithBadge extends React.Component<Props> {

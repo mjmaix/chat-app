@@ -1,5 +1,10 @@
 export const themes = [
   {
+    key: 'JUST WHITE',
+    backgroundColor: '#fffff',
+    color: '#000000',
+  },
+  {
     key: 'MAASTRICHT BLUE',
     backgroundColor: '#011627',
     color: '#ffffff',

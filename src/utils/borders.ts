@@ -1,14 +1,12 @@
-import { StyleSheet } from 'react-native';
-
 const showBorders = false;
 
 function DevEmpty(obj: any) {
   return showBorders && __DEV__ ? obj : {};
 }
 
-export const DevBorders = StyleSheet.create({
-  red: DevEmpty({
-    borderColor: 'red',
-    borderWidth: 1
-  })
-});
+export const DevBorders = (color = 'red', width = 1) => {
+  return DevEmpty({
+    borderColor: color,
+    borderWidth: width,
+  });
+};

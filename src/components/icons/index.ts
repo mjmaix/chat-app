@@ -16,4 +16,5 @@ export type IconTypes =
 export interface IconObject {
   name: string;
   type: IconTypes;
+  onPress?: React.MouseEventHandler;
 }

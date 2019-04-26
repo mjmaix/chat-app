@@ -18,6 +18,9 @@ const MoreStack = createStackNavigator({
   },
   Settings: {
     screen: Mappings.Settings.screen,
+    navigationOptions: () => ({
+      title: 'Settings',
+    }),
   },
 });
 
