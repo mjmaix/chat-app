@@ -1,42 +1,17 @@
-import React from 'react';
-import { createAppContainer, createBottomTabNavigator } from 'react-navigation';
-import { IconObject } from '../components/icons';
-import IconWithBadge from '../components/icons/IconWithBadge';
-import { Mappings } from './mappings';
-import MessageStack from './MessageStack';
-import MoreStack from './MoreStack';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import AuthLoadingScreen from '../screens/AuthLoadingScreen';
+import AuthStack from './inner/AuthStack';
+import TabBarStack from './inner/TabBarStack';
 
-const NavBar = createBottomTabNavigator(
+const SwitchNav = createSwitchNavigator(
   {
-    MessageStack: {
-      screen: MessageStack,
-    },
-    MoreStack: {
-      screen: MoreStack,
-    },
+    AuthLoading: AuthLoadingScreen,
+    App: TabBarStack,
+    Auth: AuthStack,
   },
   {
-    defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused, horizontal, tintColor }) => {
-        const { routeName } = navigation.state;
-        const iconDefault: IconObject = {
-          name: 'help',
-          type: 'Entypo',
-        };
-
-        return (
-          <IconWithBadge
-            icon={Mappings[routeName] ? Mappings[routeName].icon : iconDefault}
-            color={tintColor || ''}
-            badgeCount={0}
-          />
-        );
-      },
-    }),
-    tabBarOptions: {
-      showLabel: false,
-    },
+    initialRouteName: 'AuthLoading',
   },
 );
 
-export default createAppContainer(NavBar);
+export default createAppContainer(SwitchNav);

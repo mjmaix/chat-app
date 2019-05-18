@@ -1,14 +1,27 @@
+import AsyncStorage from '@react-native-community/async-storage';
+import { Button } from 'native-base';
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { NavigationScreenProps } from 'react-navigation';
 import { ThemeProps, withTheme } from '../core/themes';
 
-const ProfileScreen = ({ theme }: ThemeProps) => {
+type Props = ThemeProps & NavigationScreenProps;
+
+const ProfileScreen = ({ theme, navigation }: Props) => {
+  const handleSignOutAsync = async () => {
+    await AsyncStorage.clear();
+    navigation.navigate('Auth');
+  };
+
   return (
     <View
       style={[styles.container, { backgroundColor: theme.backgroundColor }]}
     >
       <SafeAreaView style={styles.container}>
         <Text style={[styles.text, { color: theme.color }]}>PROFILE</Text>
+        <Button onPress={handleSignOutAsync}>
+          <Text>Sign out</Text>
+        </Button>
       </SafeAreaView>
     </View>
   );

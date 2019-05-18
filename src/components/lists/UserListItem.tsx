@@ -7,7 +7,7 @@ import NavigationService from '../../routes/NavigationService';
 const UserListItem: ListRenderItem<User> = ({ item, ...props }) => {
   return (
     <ListItem
-      avatar={true}
+      avatar
       style={styles.listItem}
       onPress={() => NavigationService.navigate('Chat', item)}
     >
@@ -16,10 +16,10 @@ const UserListItem: ListRenderItem<User> = ({ item, ...props }) => {
       </Left>
       <Body>
         <Text>{`${item.last_name}, ${item.first_name}`}</Text>
-        <Text note={true}>{item.bio}</Text>
+        <Text note>{item.bio}</Text>
       </Body>
       <Right>
-        <Text note={true}>{item.username}</Text>
+        <Text note>{item.username}</Text>
       </Right>
     </ListItem>
   );

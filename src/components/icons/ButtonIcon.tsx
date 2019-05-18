@@ -29,7 +29,7 @@ export const ButtonIcon = ({
       badge={badge}
       vertical={vertical}
       onPress={onPress}
-      // dark={true}
+      // dark
     >
       {badge && (
         <Badge>

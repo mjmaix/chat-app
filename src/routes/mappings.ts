@@ -1,4 +1,7 @@
 import React from 'react';
+import ChallengeScreen from '../screens/Auth/ChallengeScreen';
+import ForgotPasswordScreen from '../screens/Auth/ForgotPasswordScreen';
+import SignInScreen from '../screens/Auth/SignInScreen';
 import ChatScreen from '../screens/ChatScreen';
 import ContactsScreen from '../screens/ContactsScreen';
 import MessagesScreen from '../screens/MessagesScreen';
@@ -20,7 +23,6 @@ export const Mappings: Mappings = {
     screen: ProfileScreen,
     icon: { name: 'user', type: 'AntDesign' },
   },
-
   Settings: {
     screen: SettingsScreen,
     icon: { type: 'AntDesign', name: 'setting' },
@@ -36,6 +38,18 @@ export const Mappings: Mappings = {
   Contacts: {
     screen: ContactsScreen,
     icon: { name: 'contacts', type: 'AntDesign' },
+  },
+  SignIn: {
+    screen: SignInScreen,
+    icon: { name: '', type: 'AntDesign' },
+  },
+  Forgot: {
+    screen: ForgotPasswordScreen,
+    icon: { name: '', type: 'AntDesign' },
+  },
+  Confirm: {
+    screen: ChallengeScreen,
+    icon: { name: '', type: 'AntDesign' },
   },
   MessageStack: {
     screen: null,

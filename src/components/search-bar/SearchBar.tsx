@@ -27,7 +27,7 @@ export const SearchBar = ({
   return (
     <View style={styles.container}>
       {!!headerLeft && headerLeft()}
-      <Item rounded={true} style={styles.inputItem}>
+      <Item rounded style={styles.inputItem}>
         {!!leftIcon && <Icon {...leftIcon} />}
         <Input
           autoCapitalize="none"
