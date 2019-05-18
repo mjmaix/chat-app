@@ -4,13 +4,14 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { ThemeProps, withTheme } from '../core/themes';
+import NavigationService from '../routes/NavigationService';
 
 type Props = ThemeProps & NavigationScreenProps;
 
 const ProfileScreen = ({ theme, navigation }: Props) => {
   const handleSignOutAsync = async () => {
     await AsyncStorage.clear();
-    navigation.navigate('Auth');
+    NavigationService.navigate('Auth');
   };
 
   return (

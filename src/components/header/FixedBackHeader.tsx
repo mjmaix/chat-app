@@ -1,11 +1,11 @@
 import { Button, Icon } from 'native-base';
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { NavigationInjectedProps, withNavigation } from 'react-navigation';
 import { StyleGuide } from '../../core/themes';
+import NavigationService from '../../routes/NavigationService';
 
-const Header = ({ navigation }: NavigationInjectedProps) => {
-  const onPress = () => navigation.goBack(null);
+const Header = () => {
+  const onPress = () => NavigationService.goBack();
   return (
     <SafeAreaView style={styles.container}>
       <Button
@@ -28,4 +28,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export const FixedBackHeader = withNavigation(Header);
+export const FixedBackHeader = Header;

@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator, NavigationScreenProps } from 'react-navigation';
 import { ButtonIcon } from '../../components/icons/ButtonIcon';
 import { Mappings } from '../mappings';
+import NavigationService from '../NavigationService';
 
 const MoreStack = createStackNavigator({
   Profile: {
@@ -11,7 +12,7 @@ const MoreStack = createStackNavigator({
       headerRight: (
         <ButtonIcon
           icon={Mappings.Settings.icon}
-          onPress={() => navigation.navigate('Settings')}
+          onPress={() => NavigationService.navigate('Settings')}
         />
       ),
     }),

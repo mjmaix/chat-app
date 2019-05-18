@@ -78,7 +78,7 @@ class SignInScreen extends Component<Props> {
 
   public onPressConfirmCode = async () => {
     NavigationService.navigate('Confirm', {
-      title: 'We\'ve sent you a verification code to your email',
+      title: 'We\'ve sent a verification code to your email.',
       placeholder: 'Type here',
     });
   };
