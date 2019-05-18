@@ -1,8 +1,11 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { NavigationScreenProps } from 'react-navigation';
 import { ThemeProps, withTheme } from '../core/themes';
 
-const ChatSCreen = ({ theme }: ThemeProps) => {
+type Props = ThemeProps & NavigationScreenProps;
+
+const ChatScreen = ({ theme, navigation }: Props) => {
   return (
     <View
       style={[styles.container, { backgroundColor: theme.backgroundColor }]}
@@ -25,4 +28,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withTheme(ChatSCreen);
+export default withTheme(ChatScreen);
