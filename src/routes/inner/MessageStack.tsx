@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator, NavigationScreenProps } from 'react-navigation';
-import { ButtonIcon } from '../../components/icons/ButtonIcon';
+import { ButtonIcon } from '../../components/Icons/ButtonIcon';
 import { Mappings } from '../mappings';
 
 const MessageStack = createStackNavigator(

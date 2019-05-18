@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { SearchBar } from '../components/search-bar/SearchBar';
+import { SearchBar } from '../components/SearchBar/SearchBar';
 import { ThemeProps, withTheme } from '../core/themes';
 
 const MessagesScreen = ({ theme }: ThemeProps) => {

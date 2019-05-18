@@ -2,10 +2,9 @@ import { Text, View } from 'native-base';
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
+import { FormButton, FormTextInput } from '../../components/Forms';
+import { Header } from '../../components/Header';
 import { ThemeProps, withTheme } from '../../core/themes';
-import { Button } from './components/Button';
-import { Header } from './components/Header';
-import { TextInput } from './components/TextInput';
 import { styles } from './styles';
 
 interface ChallengeScreen {
@@ -35,13 +34,10 @@ class ChallengeScreen extends Component<Props> {
             <Text numberOfLines={3}>{this.getDisplayText('message')}</Text>
           </View>
           <View style={styles.formItem}>
-            <TextInput
-              style={styles.input}
-              placeholder={this.getDisplayText('placeholder')}
-            />
+            <FormTextInput placeholder={this.getDisplayText('placeholder')} />
           </View>
           <View style={styles.formItem}>
-            <Button
+            <FormButton
               onPress={() => Alert.alert('not yet implemented')}
               label={'Submit'}
               block

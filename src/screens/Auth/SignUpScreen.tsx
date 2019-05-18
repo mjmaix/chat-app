@@ -2,10 +2,9 @@ import { View } from 'native-base';
 import React, { Component } from 'react';
 import { Alert, Platform } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
+import { FormButton, FormTextInput } from '../../components/Forms/';
+import { Header } from '../../components/Header';
 import { ThemeProps, withTheme } from '../../core/themes';
-import { Button } from './components/Button';
-import { Header } from './components/Header';
-import { TextInput } from './components/TextInput';
 import { styles } from './styles';
 type Props = NavigationScreenProps & ThemeProps;
 
@@ -19,7 +18,7 @@ class SignUpScreen extends Component<Props> {
         <Header text={'Sign up'} message="Please fill up the details" />
         <View style={styles.form}>
           <View style={styles.formItem}>
-            <TextInput
+            <FormTextInput
               placeholder="Email"
               keyboardType="email-address"
               autoCapitalize="none"
@@ -27,7 +26,7 @@ class SignUpScreen extends Component<Props> {
             />
           </View>
           <View style={styles.formItem}>
-            <TextInput
+            <FormTextInput
               placeholder="Mobile"
               keyboardType="phone-pad"
               autoCapitalize="none"
@@ -35,7 +34,7 @@ class SignUpScreen extends Component<Props> {
             />
           </View>
           <View style={styles.formItem}>
-            <TextInput
+            <FormTextInput
               placeholder="Password"
               keyboardType={
                 Platform.OS === 'android' ? 'visible-password' : undefined
@@ -45,7 +44,7 @@ class SignUpScreen extends Component<Props> {
             />
           </View>
           <View style={styles.formItem}>
-            <Button
+            <FormButton
               onPress={() => Alert.alert('not yet implemented')}
               label={'Change'}
               block

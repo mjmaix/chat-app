@@ -18,10 +18,3 @@ export const containerStyles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-export const componentOverridesStyles = StyleSheet.create({
-  button: {
-    alignSelf: 'center',
-    width: '100%',
-  },
-});

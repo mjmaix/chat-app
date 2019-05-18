@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator, StackNavigatorConfig } from 'react-navigation';
-import { FixedBackHeader } from '../../components/header/FixedBackHeader';
+import { FixedBackHeader } from '../../components/Header/FixedBackHeader';
 import { Mappings } from '../mappings';
 
 const options: StackNavigatorConfig = {

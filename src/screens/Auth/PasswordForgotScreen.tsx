@@ -1,11 +1,10 @@
 import { View } from 'native-base';
 import React, { Component } from 'react';
 import { NavigationScreenProps } from 'react-navigation';
+import { FormButton, FormTextInput } from '../../components/Forms';
+import { Header } from '../../components/Header';
 import { ThemeProps, withTheme } from '../../core/themes';
 import NavigationService from '../../routes/NavigationService';
-import { Button } from './components/Button';
-import { Header } from './components/Header';
-import { TextInput } from './components/TextInput';
 import { styles } from './styles';
 type Props = NavigationScreenProps & ThemeProps;
 
@@ -22,7 +21,7 @@ class PasswordForgotScreen extends Component<Props> {
         />
         <View style={styles.form}>
           <View style={styles.formItem}>
-            <TextInput
+            <FormTextInput
               placeholder="Email"
               keyboardType="email-address"
               autoCapitalize="none"
@@ -31,7 +30,7 @@ class PasswordForgotScreen extends Component<Props> {
           </View>
 
           <View style={styles.formItem}>
-            <Button
+            <FormButton
               onPress={this.onPressReset}
               label={'Reset'}
               block

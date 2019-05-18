@@ -1,8 +1,8 @@
 import { Icon, Input, Item, View } from 'native-base';
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
-import TransparentButton from '../buttons/TransparentButton';
-import { IconObject } from '../icons';
+import TransparentButton from '../Buttons/TransparentButton';
+import { IconObject } from '../Icons';
 
 interface SearchProps {
   leftIcon?: IconObject;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { IconObject } from '../components/Icons/index';
 import ChallengeScreen from '../screens/Auth/ChallengeScreen';
 import PasswordForgotScreen from '../screens/Auth/PasswordForgotScreen';
 import PasswordResetScreen from '../screens/Auth/PasswordResetScreen';
@@ -9,7 +10,6 @@ import ContactsScreen from '../screens/ContactsScreen';
 import MessagesScreen from '../screens/MessagesScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import { IconObject } from './../components/icons/index';
 
 interface Mapping {
   icon: IconObject;

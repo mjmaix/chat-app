@@ -2,10 +2,9 @@ import { View } from 'native-base';
 import React, { Component } from 'react';
 import { Alert, Platform } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
+import { FormButton, FormTextInput } from '../../components/Forms';
+import { Header } from '../../components/Header';
 import { ThemeProps, withTheme } from '../../core/themes';
-import { Button } from './components/Button';
-import { Header } from './components/Header';
-import { TextInput } from './components/TextInput';
 import { styles } from './styles';
 type Props = NavigationScreenProps & ThemeProps;
 
@@ -19,11 +18,10 @@ class PasswordResetScreen extends Component<Props> {
         <Header text={'Change password'} message="Type in the reset code" />
         <View style={styles.form}>
           <View style={styles.formItem}>
-            <TextInput style={styles.input} placeholder="Code" />
+            <FormTextInput placeholder="Code" />
           </View>
           <View style={styles.formItem}>
-            <TextInput
-              style={styles.input}
+            <FormTextInput
               placeholder="New password"
               secureTextEntry
               keyboardType={
@@ -32,7 +30,7 @@ class PasswordResetScreen extends Component<Props> {
             />
           </View>
           <View style={styles.formItem}>
-            <Button
+            <FormButton
               onPress={() => Alert.alert('not yet implemented')}
               label={'Submit'}
               block

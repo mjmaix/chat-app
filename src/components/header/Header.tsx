@@ -1,9 +1,9 @@
 import { View } from 'native-base';
 import React from 'react';
 import { TextProps } from 'react-native';
-import { styles } from '../styles';
 import { HeaderSub } from './HeaderSub';
 import { HeaderText } from './HeaderText';
+import { styles } from './styles';
 
 interface HeaderProps extends TextProps {
   text: string;
