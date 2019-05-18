@@ -15,17 +15,27 @@ const AuthStack = createStackNavigator(
         header: null,
       },
     },
-    Forgot: {
-      screen: Mappings.Forgot.screen,
+    SignUp: {
+      screen: Mappings.SignUp.screen,
       navigationOptions: {
-        title: 'Forgot Password',
         header: <FixedBackHeader />,
       },
     },
-    Confirm: {
+    Forgot: {
+      screen: Mappings.Forgot.screen,
+      navigationOptions: {
+        header: <FixedBackHeader />,
+      },
+    },
+    Challenge: {
       screen: Mappings.Confirm.screen,
       navigationOptions: {
-        title: 'Confirmation',
+        header: <FixedBackHeader />,
+      },
+    },
+    Reset: {
+      screen: Mappings.Reset.screen,
+      navigationOptions: {
         header: <FixedBackHeader />,
       },
     },

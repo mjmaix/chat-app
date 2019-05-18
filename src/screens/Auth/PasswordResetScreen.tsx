@@ -1,43 +1,34 @@
-import { Text, View } from 'native-base';
+import { View } from 'native-base';
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
+import { Alert, Platform } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { ThemeProps, withTheme } from '../../core/themes';
 import { Button } from './components/Button';
 import { Header } from './components/Header';
 import { TextInput } from './components/TextInput';
 import { styles } from './styles';
+type Props = NavigationScreenProps & ThemeProps;
 
-interface ChallengeScreen {
-  title: string;
-  message?: string;
-  placeholder: string;
-}
-type Props = ChallengeScreen & NavigationScreenProps & ThemeProps;
-
-class ChallengeScreen extends Component<Props> {
-  public static defaultProps = {
-    title: 'Challenge question',
-    message: '',
-    placeholder: 'answer',
-  };
-
+class PasswordResetScreen extends Component<Props> {
   public render() {
-    const { theme } = this.props;
-
+    const { theme, navigation } = this.props;
     return (
       <View
         style={[styles.container, { backgroundColor: theme.backgroundColor }]}
       >
-        <Header text={this.getDisplayText('title')} />
+        <Header text={'Change password'} message="Type in the reset code" />
         <View style={styles.form}>
           <View style={styles.formItem}>
-            <Text numberOfLines={3}>{this.getDisplayText('message')}</Text>
+            <TextInput style={styles.input} placeholder="Code" />
           </View>
           <View style={styles.formItem}>
             <TextInput
               style={styles.input}
-              placeholder={this.getDisplayText('placeholder')}
+              placeholder="New password"
+              secureTextEntry
+              keyboardType={
+                Platform.OS === 'android' ? 'visible-password' : undefined
+              }
             />
           </View>
           <View style={styles.formItem}>
@@ -52,12 +43,6 @@ class ChallengeScreen extends Component<Props> {
       </View>
     );
   }
-
-  private getDisplayText = (key: keyof Props) => {
-    const { navigation } = this.props;
-    const defaultValue: string = this.props[key];
-    return navigation.getParam(key) || defaultValue;
-  };
 }
 
-export default withTheme(ChallengeScreen);
+export default withTheme(PasswordResetScreen);

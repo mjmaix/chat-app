@@ -48,10 +48,20 @@ class SignInScreen extends Component<Props> {
           </View>
           <View style={styles.formItem}>
             <Button
+              onPress={this.onPressSignUp}
+              label={'Sign up'}
+              block
+              rounded
+              light
+            />
+          </View>
+          <View style={styles.formItem}>
+            <Button
               onPress={this.onPressForgotPassword}
               label={'Forgot password?'}
               transparent
               block
+              info
             />
           </View>
           <View style={styles.formItem}>
@@ -60,6 +70,7 @@ class SignInScreen extends Component<Props> {
               label={'Confirm code'}
               transparent
               block
+              info
             />
           </View>
         </View>
@@ -67,28 +78,33 @@ class SignInScreen extends Component<Props> {
     );
   }
 
-  public onPressSignIn = async () => {
-    await AsyncStorage.setItem('userToken', 'abc');
-    NavigationService.navigate('App');
-  };
-
-  public onPressForgotPassword = async () => {
-    NavigationService.navigate('Forgot');
-  };
-
-  public onPressConfirmCode = async () => {
-    NavigationService.navigate('Confirm', {
-      title: 'We\'ve sent a verification code to your email.',
-      placeholder: 'Type here',
-    });
-  };
-
-  public onSubmitPassword = () => {
+  private onSubmitPassword = () => {
     this.onPressSignIn();
     Keyboard.dismiss();
   };
 
-  public onSubmitEmail = () => Keyboard.dismiss();
+  private onSubmitEmail = () => Keyboard.dismiss();
+
+  private onPressSignIn = async () => {
+    await AsyncStorage.setItem('userToken', 'abc');
+    NavigationService.navigate('App');
+  };
+
+  private onPressSignUp = async () => {
+    NavigationService.navigate('SignUp');
+  };
+
+  private onPressForgotPassword = async () => {
+    NavigationService.navigate('Forgot');
+  };
+
+  private onPressConfirmCode = async () => {
+    NavigationService.navigate('Challenge', {
+      title: 'Confirmation',
+      message: 'We\'ve sent a verification code to your email.',
+      placeholder: 'Type here',
+    });
+  };
 }
 
 export default withTheme(SignInScreen);

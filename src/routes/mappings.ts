@@ -1,7 +1,9 @@
 import React from 'react';
 import ChallengeScreen from '../screens/Auth/ChallengeScreen';
-import ForgotPasswordScreen from '../screens/Auth/ForgotPasswordScreen';
+import PasswordForgotScreen from '../screens/Auth/PasswordForgotScreen';
+import PasswordResetScreen from '../screens/Auth/PasswordResetScreen';
 import SignInScreen from '../screens/Auth/SignInScreen';
+import SignUpScreen from '../screens/Auth/SignUpScreen';
 import ChatScreen from '../screens/ChatScreen';
 import ContactsScreen from '../screens/ContactsScreen';
 import MessagesScreen from '../screens/MessagesScreen';
@@ -43,8 +45,16 @@ export const Mappings: Mappings = {
     screen: SignInScreen,
     icon: { name: '', type: 'AntDesign' },
   },
+  SignUp: {
+    screen: SignUpScreen,
+    icon: { name: '', type: 'AntDesign' },
+  },
   Forgot: {
-    screen: ForgotPasswordScreen,
+    screen: PasswordForgotScreen,
+    icon: { name: '', type: 'AntDesign' },
+  },
+  Reset: {
+    screen: PasswordResetScreen,
     icon: { name: '', type: 'AntDesign' },
   },
   Confirm: {
