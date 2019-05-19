@@ -3,7 +3,7 @@ import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import SimpleFlatList from '../components/Lists/SimpleFlatList';
 import UserListItem from '../components/Lists/UserListItem';
-import { SearchBar } from '../components/SearchBar/SearchBar';
+import { SearchBar } from '../components/SearchBars/SearchBar';
 import { User, users } from '../core/api/unsplash';
 import { ThemeProps, withTheme } from '../core/themes';
 
