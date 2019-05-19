@@ -22,10 +22,12 @@ class PasswordForgotScreen extends Component<Props> {
         <View style={styles.form}>
           <View style={styles.formItem}>
             <FormTextInput
-              placeholder="Email"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              textContentType="emailAddress"
+              inputProps={{
+                placeholder: 'Email',
+                keyboardType: 'email-address',
+                autoCapitalize: 'none',
+                textContentType: 'emailAddress',
+              }}
             />
           </View>
 

@@ -18,13 +18,28 @@ class PasswordChangeScreen extends Component<Props> {
         <Header text={'Change password'} />
         <View style={styles.form}>
           <View style={styles.formItem}>
-            <FormTextInput placeholder="Old password" secureTextEntry />
+            <FormTextInput
+              inputProps={{
+                placeholder: 'Old password',
+                secureTextEntry: true,
+              }}
+            />
           </View>
           <View style={styles.formItem}>
-            <FormTextInput placeholder="New password" secureTextEntry />
+            <FormTextInput
+              inputProps={{
+                placeholder: 'New password',
+                secureTextEntry: true,
+              }}
+            />
           </View>
           <View style={styles.formItem}>
-            <FormTextInput placeholder="Confirm password" secureTextEntry />
+            <FormTextInput
+              inputProps={{
+                placeholder: 'Confirm password',
+                secureTextEntry: true,
+              }}
+            />
           </View>
           <View style={styles.formItem}>
             <FormButton

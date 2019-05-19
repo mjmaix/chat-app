@@ -2,15 +2,23 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { Formik } from 'formik';
 import { View } from 'native-base';
 import React, { Component } from 'react';
-import { Alert, Keyboard } from 'react-native';
+import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
-import { FormButton, FormTextInput } from '../../components/Forms/';
+import * as Yup from 'yup';
+import { FormButton, FriendlyFormInput } from '../../components/Forms/';
 import { ThemeProps, withTheme } from '../../core/themes';
 import NavigationService from '../../routes/NavigationService';
 import { styles } from './styles';
 
+const SignInSchema = Yup.object().shape({
+  password: Yup.string().required('Required'),
+  email: Yup.string()
+    .email('Invalid email')
+    .required('Required'),
+});
+
 type Props = NavigationScreenProps & ThemeProps;
-interface SignInForm {
+interface SignInModel {
   email: string;
   password: string;
 }
@@ -27,47 +35,50 @@ class SignInScreen extends Component<Props> {
             email: '',
             password: '',
           }}
+          validationSchema={SignInSchema}
           onSubmit={(values, actions) => {
-            console.log('formik.values', values);
-            console.log('formik.actions', actions);
             Alert.alert('submit');
             this.onPressSignIn(values);
           }}
         >
-          {props => (
-            <View style={styles.form}>
-              <View style={styles.formItem}>
-                <FormTextInput
-                  placeholder="Email"
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  textContentType="emailAddress"
-                  onChangeText={props.handleChange('email')}
-                  onBlur={props.handleBlur('email')}
-                  value={props.values.email}
-                />
+          {fProps => {
+            return (
+              <View style={styles.form}>
+                <View style={styles.formItem}>
+                  <FriendlyFormInput<SignInModel>
+                    dataKey="email"
+                    formProps={fProps}
+                    inputProps={{
+                      placeholder: 'Email',
+                      keyboardType: 'email-address',
+                      autoCapitalize: 'none',
+                      textContentType: 'emailAddress',
+                    }}
+                  />
+                </View>
+                <View style={styles.formItem}>
+                  <FriendlyFormInput<SignInModel>
+                    dataKey="password"
+                    formProps={fProps}
+                    inputProps={{
+                      secureTextEntry: true,
+                      clearTextOnFocus: true,
+                      placeholder: 'Password',
+                      textContentType: 'password',
+                    }}
+                  />
+                </View>
+                <View style={styles.formItem}>
+                  <FormButton
+                    onPress={fProps.handleSubmit}
+                    label={'Sign in'}
+                    block
+                    rounded
+                  />
+                </View>
               </View>
-              <View style={styles.formItem}>
-                <FormTextInput
-                  placeholder="Password"
-                  secureTextEntry
-                  textContentType="password"
-                  clearTextOnFocus
-                  onChangeText={props.handleChange('password')}
-                  onBlur={props.handleBlur('password')}
-                  value={props.values.password}
-                />
-              </View>
-              <View style={styles.formItem}>
-                <FormButton
-                  onPress={props.handleSubmit}
-                  label={'Sign in'}
-                  block
-                  rounded
-                />
-              </View>
-            </View>
-          )}
+            );
+          }}
         </Formik>
         <View style={styles.form}>
           <View style={styles.formItem}>
@@ -104,9 +115,7 @@ class SignInScreen extends Component<Props> {
     );
   }
 
-  private onSubmitEmail = () => Keyboard.dismiss();
-
-  private onPressSignIn = async (form: SignInForm) => {
+  private onPressSignIn = async (form: SignInModel) => {
     await AsyncStorage.setItem('userToken', `${form.email}_${form.password}`);
     NavigationService.navigate('App');
   };

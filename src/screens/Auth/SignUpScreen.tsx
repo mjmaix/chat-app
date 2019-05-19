@@ -19,28 +19,34 @@ class SignUpScreen extends Component<Props> {
         <View style={styles.form}>
           <View style={styles.formItem}>
             <FormTextInput
-              placeholder="Email"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              textContentType="emailAddress"
+              inputProps={{
+                placeholder: 'Email',
+                keyboardType: 'email-address',
+                autoCapitalize: 'none',
+                textContentType: 'emailAddress',
+              }}
             />
           </View>
           <View style={styles.formItem}>
             <FormTextInput
-              placeholder="Mobile"
-              keyboardType="phone-pad"
-              autoCapitalize="none"
-              textContentType="telephoneNumber"
+              inputProps={{
+                placeholder: 'Mobile',
+                keyboardType: 'phone-pad',
+                autoCapitalize: 'none',
+                textContentType: 'telephoneNumber',
+              }}
             />
           </View>
           <View style={styles.formItem}>
             <FormTextInput
-              placeholder="Password"
-              keyboardType={
-                Platform.OS === 'android' ? 'visible-password' : undefined
-              }
-              secureTextEntry
-              textContentType="password"
+              inputProps={{
+                placeholder: 'Password',
+                keyboardType:
+                  Platform.OS === 'android' ? 'visible-password' : undefined,
+
+                secureTextEntry: true,
+                textContentType: 'password',
+              }}
             />
           </View>
           <View style={styles.formItem}>

@@ -5,6 +5,12 @@ export const styles = StyleSheet.create({
   input: {
     textAlign: 'center',
   },
+  inputMessage: {
+    textAlign: 'center',
+  },
+  error: {
+    color: 'red',
+  },
   button: {
     alignSelf: 'center',
     width: '100%',

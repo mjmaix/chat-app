@@ -34,7 +34,9 @@ class ChallengeScreen extends Component<Props> {
             <Text numberOfLines={3}>{this.getDisplayText('message')}</Text>
           </View>
           <View style={styles.formItem}>
-            <FormTextInput placeholder={this.getDisplayText('placeholder')} />
+            <FormTextInput
+              inputProps={{ placeholder: this.getDisplayText('placeholder') }}
+            />
           </View>
           <View style={styles.formItem}>
             <FormButton
