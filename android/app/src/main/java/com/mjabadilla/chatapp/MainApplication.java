@@ -1,4 +1,4 @@
-package com.mjabadilla.chatandvideoapp;
+package com.mjabadilla.chatapp;
 
 import android.app.Application;
 
