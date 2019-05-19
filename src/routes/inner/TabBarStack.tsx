@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  BottomTabNavigatorConfig,
-  createBottomTabNavigator,
-} from 'react-navigation';
+import { BottomTabNavigatorConfig, createBottomTabNavigator } from 'react-navigation';
 import { IconObject } from '../../components/Icons';
 import IconWithBadge from '../../components/Icons/IconWithBadge';
 import { Mappings } from '../mappings';

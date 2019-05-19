@@ -2,7 +2,7 @@ import { View } from 'native-base';
 import React, { Component } from 'react';
 import { NavigationScreenProps } from 'react-navigation';
 import { FormButton, FormTextInput } from '../../components/Forms';
-import { Header } from '../../components/Header';
+import { Header } from '../../components/Headers';
 import { ThemeProps, withTheme } from '../../core/themes';
 import NavigationService from '../../routes/NavigationService';
 import { styles } from './styles';

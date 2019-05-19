@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { FormButton, FormTextInput } from '../../components/Forms';
-import { Header } from '../../components/Header';
+import { Header } from '../../components/Headers';
 import { ThemeProps, withTheme } from '../../core/themes';
 import { styles } from './styles';
 type Props = NavigationScreenProps & ThemeProps;
