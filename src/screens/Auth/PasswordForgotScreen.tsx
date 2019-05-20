@@ -1,5 +1,5 @@
-import { View } from 'native-base';
 import React, { Component } from 'react';
+import { View } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { FormButton, FormTextInput } from '../../components/Forms';
 import { Header } from '../../components/Headers';
@@ -32,13 +32,7 @@ class PasswordForgotScreen extends Component<Props> {
           </View>
 
           <View style={styles.formItem}>
-            <FormButton
-              onPress={this.onPressReset}
-              label={'Reset'}
-              block
-              rounded
-              light
-            />
+            <FormButton onPress={this.onPressReset} label={'Reset'} />
           </View>
         </View>
       </View>

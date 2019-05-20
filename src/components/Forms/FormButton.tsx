@@ -1,8 +1,8 @@
-import { Button as NBButton, NativeBase, Text } from 'native-base';
 import React from 'react';
+import { Button, ButtonProps } from 'react-native-elements';
 import { styles } from './styles';
 
-interface FormButtonProps extends NativeBase.Button {
+interface FormButtonProps extends ButtonProps {
   onPress: () => void;
   label: string;
 }
@@ -13,8 +13,11 @@ export const FormButton = ({
   ...buttonProps
 }: FormButtonProps) => {
   return (
-    <NBButton style={styles.button} onPress={onPress} {...buttonProps}>
-      <Text>{label}</Text>
-    </NBButton>
+    <Button
+      title={label}
+      style={styles.button}
+      onPress={onPress}
+      {...buttonProps}
+    />
   );
 };

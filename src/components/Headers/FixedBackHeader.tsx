@@ -1,6 +1,6 @@
-import { Button, Icon } from 'native-base';
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
+import { Button, Icon } from 'react-native-elements';
 import { StyleGuide } from '../../core/themes';
 import NavigationService from '../../routes/NavigationService';
 
@@ -10,12 +10,10 @@ const Header = () => {
     <SafeAreaView style={styles.container}>
       <Button
         onPress={onPress}
-        iconLeft
-        transparent
+        icon={<Icon name="chevron-left" type={'entypo'} />}
+        type="clear"
         hitSlop={{ ...StyleGuide.hitSlop, right: 50 }}
-      >
-        <Icon name="arrow-back" />
-      </Button>
+      />
     </SafeAreaView>
   );
 };

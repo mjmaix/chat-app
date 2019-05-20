@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator, NavigationScreenProps } from 'react-navigation';
-import { ButtonIcon } from '../../components/Icons/ButtonIcon';
+import { HeaderIcon } from '../../components/Icons/HeaderIcon';
 import { Mappings } from '../mappings';
 import NavigationService from '../NavigationService';
 
@@ -10,7 +10,7 @@ const MoreStack = createStackNavigator({
     navigationOptions: ({ navigation }: NavigationScreenProps) => ({
       title: 'Profile',
       headerRight: (
-        <ButtonIcon
+        <HeaderIcon
           icon={Mappings.Settings.icon}
           onPress={() => NavigationService.navigate('Settings')}
         />

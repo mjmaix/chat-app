@@ -1,6 +1,5 @@
-import { View } from 'native-base';
 import React from 'react';
-import { TextProps } from 'react-native';
+import { TextProps, View } from 'react-native';
 import { HeaderSub } from './HeaderSub';
 import { HeaderText } from './HeaderText';
 import { styles } from './styles';

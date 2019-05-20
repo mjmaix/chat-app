@@ -1,6 +1,6 @@
-import { H2, View } from 'native-base';
 import React from 'react';
-import { TextProps } from 'react-native';
+import { TextProps, View } from 'react-native';
+import { Text } from 'react-native-elements';
 import { styles } from './styles';
 
 export interface HeaderTextProps extends TextProps {
@@ -10,7 +10,9 @@ export interface HeaderTextProps extends TextProps {
 export const HeaderText = ({ text, ...textProps }: HeaderTextProps) => {
   return (
     <View style={styles.headerText}>
-      <H2 {...textProps}>{text}</H2>
+      <Text h4 {...textProps}>
+        {text}
+      </Text>
     </View>
   );
 };

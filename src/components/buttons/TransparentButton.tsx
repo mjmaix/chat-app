@@ -1,5 +1,5 @@
-import { Button, Text } from 'native-base';
 import React from 'react';
+import { Button, Text } from 'react-native-elements';
 
 interface Props {
   label: string;
@@ -8,7 +8,7 @@ interface Props {
 
 const TransparentButton: React.FC<Props> = ({ label, onPress }: Props) => {
   return (
-    <Button transparent onPress={() => onPress()}>
+    <Button type="clear" onPress={() => onPress()}>
       <Text>{label}</Text>
     </Button>
   );

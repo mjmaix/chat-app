@@ -1,20 +1,8 @@
-export type IconTypes =
-  | 'AntDesign'
-  | 'Entypo'
-  | 'EvilIcons'
-  | 'Feather'
-  | 'FontAwesome'
-  | 'FontAwesome5'
-  | 'Foundation'
-  | 'Ionicons'
-  | 'MaterialCommunityIcons'
-  | 'MaterialIcons'
-  | 'Octicons'
-  | 'SimpleLineIcons'
-  | 'Zocial';
+import { IconProps, IconType } from 'react-native-elements';
 
-export interface IconObject {
+export type IconType = IconType;
+
+export interface IconObject extends IconProps {
   name: string;
-  type: IconTypes;
-  onPress?: React.MouseEventHandler;
+  type: IconType;
 }

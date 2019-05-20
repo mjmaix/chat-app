@@ -1,6 +1,5 @@
-import { View } from 'native-base';
 import React, { Component } from 'react';
-import { Alert, Platform } from 'react-native';
+import { Alert, Platform, View } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { FormButton, FormTextInput } from '../../components/Forms';
 import { Header } from '../../components/Headers';
@@ -34,8 +33,6 @@ class PasswordResetScreen extends Component<Props> {
             <FormButton
               onPress={() => Alert.alert('not yet implemented')}
               label={'Submit'}
-              block
-              rounded
             />
           </View>
         </View>

@@ -1,11 +1,10 @@
 import { FormikProps } from 'formik';
-import { Input, Item, NativeBase, Text } from 'native-base';
-import React, { Fragment } from 'react';
+import React from 'react';
+import { Input, InputProps } from 'react-native-elements';
 import { styles } from './styles';
 
-interface FormTextInputProps extends NativeBase.Text {
-  inputProps: NativeBase.Input;
-  itemProps?: NativeBase.Item;
+interface FormTextInputProps {
+  inputProps: InputProps;
 }
 
 interface StringKeyedObject {
@@ -18,27 +17,24 @@ interface FriendlyFormInputProps<T extends StringKeyedObject>
   formProps: FormikProps<T>;
 }
 
-const FormTextInput = (props: FormTextInputProps) => {
-  const { inputProps, itemProps } = props;
-  return (
-    <Item fixedLabel rounded {...itemProps || {}}>
-      <Input style={styles.input} {...inputProps} />
-    </Item>
-  );
+export const FormTextInput = (props: FormTextInputProps) => {
+  const { inputProps } = props;
+  return <Input style={styles.input} {...inputProps} />;
 };
 
 export function FriendlyFormInput<T extends StringKeyedObject>(
   props: FriendlyFormInputProps<StringKeyedObject>,
 ) {
-  const { formProps, itemProps, inputProps, dataKey } = props;
+  const { formProps, inputProps, dataKey } = props;
   // const isValidating = formProps.isValidating;
-  const isError = formProps.touched[dataKey] && !!formProps.errors[dataKey];
-  const message = formProps.errors[dataKey];
+  // const isError = formProps.touched[dataKey] && !!formProps.errors[dataKey];
+  const errorMessage = formProps.errors[dataKey] as string;
   const onChangeText = formProps.handleChange(dataKey);
 
-  let builtInputProps: NativeBase.Input = {
+  let builtInputProps: InputProps = {
     ...inputProps,
     onChangeText,
+    errorMessage,
   };
   if (formProps.handleBlur(dataKey)) {
     builtInputProps = {
@@ -52,21 +48,5 @@ export function FriendlyFormInput<T extends StringKeyedObject>(
       value: formProps.values[dataKey],
     };
   }
-  return (
-    <Fragment>
-      <FormTextInput
-        itemProps={{ ...itemProps, error: isError }}
-        inputProps={builtInputProps}
-      />
-      {!!message && (
-        <Text
-          note
-          uppercase
-          style={[styles.inputMessage, isError && styles.error]}
-        >
-          {message}
-        </Text>
-      )}
-    </Fragment>
-  );
+  return <FormTextInput inputProps={builtInputProps} />;
 }

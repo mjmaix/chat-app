@@ -1,6 +1,6 @@
-import { Text } from 'native-base';
 import React from 'react';
 import { TextProps } from 'react-native';
+import { Text } from 'react-native-elements';
 
 export interface HeaderSubProps extends TextProps {
   message: string;

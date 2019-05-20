@@ -1,71 +1,49 @@
-import { Icon, Input, Item, View } from 'native-base';
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
-import TransparentButton from '../Buttons/TransparentButton';
-import { IconObject } from '../Icons';
+import { StyleSheet, View } from 'react-native';
+import { SearchBar as RNESearchBar } from 'react-native-elements';
 
 interface SearchProps {
-  leftIcon?: IconObject;
-  rightIcon?: IconObject;
-  buttonText: string;
-  inputPlaceholder: string;
-  submitButtonPress?: (text: string) => void;
-  onChangeText?: (text: string) => void;
-  headerLeft?: () => React.ReactNode;
+  placeholder: string;
+  onChangeText: (text: string) => void;
 }
 
-export const SearchBar = ({
-  leftIcon,
-  rightIcon,
-  buttonText,
-  inputPlaceholder,
-  submitButtonPress: submitButtonPress,
-  onChangeText,
-  headerLeft: headerLeft,
-}: SearchProps) => {
+export const SearchBar = ({ placeholder, onChangeText }: SearchProps) => {
   const [text, setText] = useState('');
   return (
     <View style={styles.container}>
-      {!!headerLeft && headerLeft()}
-      <Item rounded style={styles.inputItem}>
-        {!!leftIcon && <Icon {...leftIcon} />}
-        <Input
-          autoCapitalize="none"
-          autoCorrect={false}
-          value={text}
-          placeholder={inputPlaceholder}
-          onChangeText={t => {
-            if (onChangeText) {
-              onChangeText(t);
-            }
-            setText(t);
-          }}
-        />
-        {!!rightIcon && <Icon {...rightIcon} />}
-      </Item>
-      {!!submitButtonPress && (
-        <TransparentButton
-          label={buttonText}
-          onPress={() => submitButtonPress(text)}
-        />
-      )}
+      <RNESearchBar
+        containerStyle={styles.searchContainer}
+        inputContainerStyle={styles.searchInputContainer}
+        round
+        placeholder={placeholder}
+        onChangeText={(t: string) => {
+          onChangeText(t);
+          setText(t);
+        }}
+        value={text}
+      />
     </View>
   );
 };
 
 SearchBar.defaultProps = {
-  leftIcon: { name: 'ios-search', type: 'Ionicons' },
-  rightIcon: null,
-  buttonText: 'Search',
-  inputPlaceholder: 'Search',
+  placeholder: 'Search',
 };
 
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    padding: 5, // FIXME: use StyleGuide
   },
-  inputItem: {
+
+  searchContainer: {
     backgroundColor: 'white',
+    borderBottomWidth: 0,
+    borderTopWidth: 0,
+    borderBottomColor: 'transparent',
+    borderTopColor: 'transparent',
+  },
+  searchInputContainer: {
+    backgroundColor: 'rgba(0,0,0,0.1)',
+    borderColor: 'transparent',
   },
 });

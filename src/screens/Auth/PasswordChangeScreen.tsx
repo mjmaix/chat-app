@@ -1,6 +1,5 @@
-import { View } from 'native-base';
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
+import { Alert, View } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { FormButton, FormTextInput } from '../../components/Forms';
 import { Header } from '../../components/Headers';
@@ -45,8 +44,6 @@ class PasswordChangeScreen extends Component<Props> {
             <FormButton
               onPress={() => Alert.alert('not yet implemented')}
               label={'Change'}
-              block
-              rounded
             />
           </View>
         </View>

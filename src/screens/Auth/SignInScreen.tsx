@@ -1,8 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { Formik } from 'formik';
-import { View } from 'native-base';
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
+import { Alert, View } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import * as Yup from 'yup';
 import { FormButton, FriendlyFormInput } from '../../components/Forms/';
@@ -69,12 +68,7 @@ class SignInScreen extends Component<Props> {
                   />
                 </View>
                 <View style={styles.formItem}>
-                  <FormButton
-                    onPress={fProps.handleSubmit}
-                    label={'Sign in'}
-                    block
-                    rounded
-                  />
+                  <FormButton onPress={fProps.handleSubmit} label={'Sign in'} />
                 </View>
               </View>
             );
@@ -85,30 +79,22 @@ class SignInScreen extends Component<Props> {
             <FormButton
               onPress={this.onPressSignUp}
               label={'Sign up'}
-              block
-              rounded
-              light
+              type="outline"
             />
           </View>
-          <View style={styles.form}>
-            <View style={styles.formItem}>
-              <FormButton
-                onPress={this.onPressForgotPassword}
-                label={'Forgot password?'}
-                transparent
-                block
-                info
-              />
-            </View>
-            <View style={styles.formItem}>
-              <FormButton
-                onPress={this.onPressConfirmCode}
-                label={'Confirm code'}
-                transparent
-                block
-                info
-              />
-            </View>
+          <View style={styles.formItem}>
+            <FormButton
+              onPress={this.onPressForgotPassword}
+              label={'Forgot password?'}
+              type="clear"
+            />
+          </View>
+          <View style={styles.formItem}>
+            <FormButton
+              onPress={this.onPressConfirmCode}
+              label={'Confirm code'}
+              type="clear"
+            />
           </View>
         </View>
       </View>

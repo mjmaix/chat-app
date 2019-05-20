@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator, NavigationScreenProps } from 'react-navigation';
-import { ButtonIcon } from '../../components/Icons/ButtonIcon';
+import { HeaderIcon } from '../../components/Icons/HeaderIcon';
 import { Mappings } from '../mappings';
 
 const MessageStack = createStackNavigator(
@@ -10,7 +10,7 @@ const MessageStack = createStackNavigator(
       navigationOptions: ({ navigation }: NavigationScreenProps) => ({
         title: 'Messages',
         headerRight: (
-          <ButtonIcon
+          <HeaderIcon
             icon={Mappings.Contacts.icon}
             onPress={() => navigation.navigate('Contacts')}
           />

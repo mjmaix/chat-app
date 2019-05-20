@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { Alert, SafeAreaView, StyleSheet, View } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import SimpleFlatList from '../components/Lists/SimpleFlatList';
 import UserListItem from '../components/Lists/UserListItem';
@@ -12,7 +12,9 @@ type Props = ThemeProps & NavigationScreenProps;
 const datas: User[] = [...users.results];
 
 const ContactsScreen = ({ theme, navigation }: Props) => {
-  const HeaderComponent = <SearchBar />;
+  const HeaderComponent = (
+    <SearchBar onChangeText={() => Alert.alert('not yet implemented')} />
+  );
   return (
     <View
       style={[styles.container, { backgroundColor: theme.backgroundColor }]}

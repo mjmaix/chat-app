@@ -1,6 +1,6 @@
-import { Text, View } from 'native-base';
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
+import { Alert, View } from 'react-native';
+import { Text } from 'react-native-elements';
 import { NavigationScreenProps } from 'react-navigation';
 import { FormButton, FormTextInput } from '../../components/Forms';
 import { Header } from '../../components/Headers';
@@ -42,8 +42,6 @@ class ChallengeScreen extends Component<Props> {
             <FormButton
               onPress={() => Alert.alert('not yet implemented')}
               label={'Submit'}
-              block
-              rounded
             />
           </View>
         </View>

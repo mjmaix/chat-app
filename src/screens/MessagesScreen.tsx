@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Alert, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { SearchBar } from '../components/SearchBars/SearchBar';
 import { ThemeProps, withTheme } from '../core/themes';
 
@@ -16,7 +16,9 @@ const MessagesScreen = ({ theme }: ThemeProps) => {
 };
 
 MessagesScreen.navigationOptions = () => ({
-  header: () => <SearchBar />,
+  header: () => (
+    <SearchBar onChangeText={() => Alert.alert('not yet implemented')} />
+  ),
   title: 'MessageScreen',
 });
 

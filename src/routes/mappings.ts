@@ -23,50 +23,50 @@ interface Mappings {
 export const Mappings: Mappings = {
   Profile: {
     screen: ProfileScreen,
-    icon: { name: 'user', type: 'AntDesign' },
+    icon: { name: 'user', type: 'antdesign' },
   },
   Settings: {
     screen: SettingsScreen,
-    icon: { type: 'AntDesign', name: 'setting' },
+    icon: { type: 'antdesign', name: 'setting' },
   },
   Messages: {
     screen: MessagesScreen,
-    icon: { name: 'mail', type: 'Feather' },
+    icon: { name: 'mail', type: 'feather' },
   },
   Chat: {
     screen: ChatScreen,
-    icon: { name: 'message1', type: 'AntDesign' },
+    icon: { name: 'message1', type: 'antdesign' },
   },
   Contacts: {
     screen: ContactsScreen,
-    icon: { name: 'contacts', type: 'AntDesign' },
+    icon: { name: 'contacts', type: 'antdesign' },
   },
   SignIn: {
     screen: SignInScreen,
-    icon: { name: '', type: 'AntDesign' },
+    icon: { name: '', type: 'antdesign' },
   },
   SignUp: {
     screen: SignUpScreen,
-    icon: { name: '', type: 'AntDesign' },
+    icon: { name: '', type: 'antdesign' },
   },
   Forgot: {
     screen: PasswordForgotScreen,
-    icon: { name: '', type: 'AntDesign' },
+    icon: { name: '', type: 'antdesign' },
   },
   Reset: {
     screen: PasswordResetScreen,
-    icon: { name: '', type: 'AntDesign' },
+    icon: { name: '', type: 'antdesign' },
   },
   Confirm: {
     screen: ChallengeScreen,
-    icon: { name: '', type: 'AntDesign' },
+    icon: { name: '', type: 'antdesign' },
   },
   MessageStack: {
     screen: null,
-    icon: { name: 'mail-outline', type: 'MaterialIcons' },
+    icon: { name: 'mail-outline', type: 'material' },
   },
   MoreStack: {
     screen: null,
-    icon: { name: 'more-horiz', type: 'MaterialIcons' },
+    icon: { name: 'more-horiz', type: 'material' },
   },
 };
