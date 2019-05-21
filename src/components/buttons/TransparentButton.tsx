@@ -8,7 +8,7 @@ interface Props {
 
 const TransparentButton: React.FC<Props> = ({ label, onPress }: Props) => {
   return (
-    <Button type="clear" onPress={() => onPress()}>
+    <Button type="clear" onPress={onPress}>
       <Text>{label}</Text>
     </Button>
   );

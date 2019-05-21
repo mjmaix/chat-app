@@ -58,23 +58,5 @@
     "tslint-react": "4.0.0",
     "tslint-react-hooks": "2.1.0",
     "typescript": "3.4.5"
-  },
-  "jest": {
-    "preset": "react-native",
-    "transform": {
-      ".+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js",
-      "\\.(ts|tsx)$": "ts-jest"
-    },
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "tsconfig.jest.json"
-      }
-    },
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$"
   }
 }
