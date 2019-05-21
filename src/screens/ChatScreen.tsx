@@ -1,31 +1,71 @@
-import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { withTheme } from 'react-native-elements';
+import { GiftedChat } from 'react-native-gifted-chat';
+import { IMessage } from 'react-native-gifted-chat/lib/types';
 import { NavigationScreenProps } from 'react-navigation';
 import { ScreenThemeProps } from '../core/themes';
 
 type Props = ScreenThemeProps & NavigationScreenProps;
 
-const ChatScreen = ({ theme, navigation }: Props) => {
-  return (
-    <View
-      style={[
-        styles.container,
-        { backgroundColor: theme.colors.backgroundColor },
-      ]}
-    >
-      <SafeAreaView style={styles.container}>
-        <Text style={[styles.text, { color: theme.colors.primary }]}>CHAT</Text>
-      </SafeAreaView>
-    </View>
-  );
-};
+interface State {
+  messages: IMessage[];
+}
+
+class ChatScreen extends Component<Props, State> {
+  public readonly state = {
+    messages: [],
+  };
+
+  public componentWillMount() {
+    this.setState({
+      messages: [
+        {
+          _id: 1,
+          text: 'Hello developer',
+          createdAt: new Date(),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://placeimg.com/140/140/people',
+          },
+        },
+      ],
+    });
+  }
+  public render() {
+    const { theme, navigation } = this.props;
+    return (
+      <View
+        style={[
+          styles.container,
+
+          {
+            backgroundColor: theme.colors.backgroundColor,
+          },
+        ]}
+      >
+        <GiftedChat
+          messages={this.state.messages}
+          onSend={messages => this.onSend(messages)}
+          user={{
+            _id: 1,
+          }}
+        />
+      </View>
+    );
+  }
+
+  private onSend(messages: IMessage[] = []) {
+    this.setState(previousState => ({
+      messages: GiftedChat.append(previousState.messages, messages),
+    }));
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    ...StyleSheet.absoluteFillObject,
   },
   text: {
     fontWeight: 'bold',
