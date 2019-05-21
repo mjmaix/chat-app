@@ -8,6 +8,7 @@
     "lint": "tslint --project tsconfig.json",
     "debugger": "./scripts/run-debugger.sh",
     "ios": "npm run debugger && react-native run-ios",
+    "ios:tablet": "npm run ios -- --simulator 'iPad Air'",
     "android": "npm run debugger && react-native run-android",
     "cleanup:all": "npm run cleanup:android && npm run cleanup:react && npm run cleanup:metrobundler && npm run cleanup:hastecache && npm run cleanup:ios",
     "cleanup:react": "./scripts/killpackager.sh && watchman watch-del-all && rm -rf node_modules/ && rm -rf $TMPDIR/react-* ~/.npm/ ~./rncache",

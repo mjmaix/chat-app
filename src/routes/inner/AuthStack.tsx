@@ -5,6 +5,7 @@ import { Mappings } from '../mappings';
 
 const options: StackNavigatorConfig = {
   headerMode: 'screen',
+  mode: 'modal',
 };
 
 const AuthStack = createStackNavigator(
@@ -18,25 +19,33 @@ const AuthStack = createStackNavigator(
     SignUp: {
       screen: Mappings.SignUp.screen,
       navigationOptions: {
-        header: <FixedBackHeader />,
+        header: (
+          <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
+        ),
       },
     },
     Forgot: {
       screen: Mappings.Forgot.screen,
       navigationOptions: {
-        header: <FixedBackHeader />,
+        header: (
+          <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
+        ),
       },
     },
     Challenge: {
       screen: Mappings.Confirm.screen,
       navigationOptions: {
-        header: <FixedBackHeader />,
+        header: (
+          <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
+        ),
       },
     },
     Reset: {
       screen: Mappings.Reset.screen,
       navigationOptions: {
-        header: <FixedBackHeader />,
+        header: (
+          <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
+        ),
       },
     },
   },

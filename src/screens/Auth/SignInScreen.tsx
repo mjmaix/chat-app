@@ -68,6 +68,7 @@ class SignInScreen extends Component<Props> {
                       clearTextOnFocus: true,
                       placeholder: 'Password',
                       textContentType: 'password',
+                      onSubmitEditing: fProps.handleSubmit,
                     }}
                   />
                 </View>
