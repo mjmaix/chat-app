@@ -2,10 +2,11 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { Formik } from 'formik';
 import React, { Component } from 'react';
 import { Alert, View } from 'react-native';
+import { withTheme } from 'react-native-elements';
 import { NavigationScreenProps } from 'react-navigation';
 import * as Yup from 'yup';
 import { FormButton, FriendlyFormInput } from '../../components/Forms/';
-import { ThemeProps, withTheme } from '../../core/themes';
+import { ScreenThemeProps } from '../../core/themes';
 import NavigationService from '../../routes/NavigationService';
 import { styles } from './styles';
 
@@ -16,7 +17,7 @@ const SignInSchema = Yup.object().shape({
     .required('Required'),
 });
 
-type Props = NavigationScreenProps & ThemeProps;
+type Props = NavigationScreenProps & ScreenThemeProps;
 interface SignInModel {
   email: string;
   password: string;
@@ -27,7 +28,10 @@ class SignInScreen extends Component<Props> {
     const { theme } = this.props;
     return (
       <View
-        style={[styles.container, { backgroundColor: theme.backgroundColor }]}
+        style={[
+          styles.container,
+          { backgroundColor: theme.colors.backgroundColor },
+        ]}
       >
         <Formik
           initialValues={{

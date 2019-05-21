@@ -6,11 +6,12 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import { withTheme } from 'react-native-elements';
 import { NavigationScreenProps } from 'react-navigation';
-import { ThemeProps, withTheme } from '../core/themes';
+import { ScreenThemeProps } from '../core/themes';
 import NavigationService from '../routes/NavigationService';
 
-type Props = ThemeProps & NavigationScreenProps;
+type Props = ScreenThemeProps & NavigationScreenProps;
 
 class AuthLoadingScreen extends React.Component<Props> {
   public async componentDidMount() {
@@ -22,7 +23,10 @@ class AuthLoadingScreen extends React.Component<Props> {
     const { theme } = this.props;
     return (
       <View
-        style={[styles.container, { backgroundColor: theme.backgroundColor }]}
+        style={[
+          styles.container,
+          { backgroundColor: theme.colors.backgroundColor },
+        ]}
       >
         <ActivityIndicator />
         <StatusBar barStyle="default" />

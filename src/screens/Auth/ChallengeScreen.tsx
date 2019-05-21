@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Alert, View } from 'react-native';
-import { Text } from 'react-native-elements';
+import { Text, withTheme } from 'react-native-elements';
 import { NavigationScreenProps } from 'react-navigation';
 import { FormButton, FormTextInput } from '../../components/Forms';
 import { Header } from '../../components/Headers';
-import { ThemeProps, withTheme } from '../../core/themes';
+import { ScreenThemeProps } from '../../core/themes';
 import { styles } from './styles';
 
 interface ChallengeScreen {
@@ -12,7 +12,7 @@ interface ChallengeScreen {
   message?: string;
   placeholder: string;
 }
-type Props = ChallengeScreen & NavigationScreenProps & ThemeProps;
+type Props = ChallengeScreen & NavigationScreenProps & ScreenThemeProps;
 
 class ChallengeScreen extends Component<Props> {
   public static defaultProps = {
@@ -26,7 +26,10 @@ class ChallengeScreen extends Component<Props> {
 
     return (
       <View
-        style={[styles.container, { backgroundColor: theme.backgroundColor }]}
+        style={[
+          styles.container,
+          { backgroundColor: theme.colors.backgroundColor },
+        ]}
       >
         <Header text={this.getDisplayText('title')} />
         <View style={styles.form}>

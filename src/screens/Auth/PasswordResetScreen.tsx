@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import { Alert, Platform, View } from 'react-native';
+import { withTheme } from 'react-native-elements';
 import { NavigationScreenProps } from 'react-navigation';
 import { FormButton, FormTextInput } from '../../components/Forms';
 import { Header } from '../../components/Headers';
-import { ThemeProps, withTheme } from '../../core/themes';
+import { ScreenThemeProps } from '../../core/themes';
 import { styles } from './styles';
-type Props = NavigationScreenProps & ThemeProps;
+type Props = NavigationScreenProps & ScreenThemeProps;
 
 class PasswordResetScreen extends Component<Props> {
   public render() {
     const { theme, navigation } = this.props;
     return (
       <View
-        style={[styles.container, { backgroundColor: theme.backgroundColor }]}
+        style={[
+          styles.container,
+          { backgroundColor: theme.colors.backgroundColor },
+        ]}
       >
         <Header text={'Change password'} message="Type in the reset code" />
         <View style={styles.form}>

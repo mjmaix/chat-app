@@ -1,15 +1,21 @@
 import React from 'react';
 import { Alert, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { withTheme } from 'react-native-elements';
 import { SearchBar } from '../components/SearchBars/SearchBar';
-import { ThemeProps, withTheme } from '../core/themes';
+import { ScreenThemeProps } from '../core/themes';
 
-const MessagesScreen = ({ theme }: ThemeProps) => {
+const MessagesScreen = ({ theme }: ScreenThemeProps) => {
   return (
     <View
-      style={[styles.container, { backgroundColor: theme.backgroundColor }]}
+      style={[
+        styles.container,
+        { backgroundColor: theme.colors.backgroundColor },
+      ]}
     >
       <SafeAreaView style={styles.container}>
-        <Text style={[styles.text, { color: theme.color }]}>MESSAGES</Text>
+        <Text style={[styles.text, { color: theme.colors.primary }]}>
+          MESSAGES
+        </Text>
       </SafeAreaView>
     </View>
   );

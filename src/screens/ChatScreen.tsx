@@ -1,17 +1,21 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { withTheme } from 'react-native-elements';
 import { NavigationScreenProps } from 'react-navigation';
-import { ThemeProps, withTheme } from '../core/themes';
+import { ScreenThemeProps } from '../core/themes';
 
-type Props = ThemeProps & NavigationScreenProps;
+type Props = ScreenThemeProps & NavigationScreenProps;
 
 const ChatScreen = ({ theme, navigation }: Props) => {
   return (
     <View
-      style={[styles.container, { backgroundColor: theme.backgroundColor }]}
+      style={[
+        styles.container,
+        { backgroundColor: theme.colors.backgroundColor },
+      ]}
     >
       <SafeAreaView style={styles.container}>
-        <Text style={[styles.text, { color: theme.color }]}>CHAT</Text>
+        <Text style={[styles.text, { color: theme.colors.primary }]}>CHAT</Text>
       </SafeAreaView>
     </View>
   );

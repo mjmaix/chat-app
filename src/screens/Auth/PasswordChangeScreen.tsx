@@ -3,16 +3,19 @@ import { Alert, View } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { FormButton, FormTextInput } from '../../components/Forms';
 import { Header } from '../../components/Headers';
-import { ThemeProps, withTheme } from '../../core/themes';
+import { ScreenThemeProps } from '../../core/themes';
 import { styles } from './styles';
-type Props = NavigationScreenProps & ThemeProps;
+type Props = NavigationScreenProps & ScreenThemeProps;
 
 class PasswordChangeScreen extends Component<Props> {
   public render() {
     const { theme, navigation } = this.props;
     return (
       <View
-        style={[styles.container, { backgroundColor: theme.backgroundColor }]}
+        style={[
+          styles.container,
+          { backgroundColor: theme.colors.backgroundColor },
+        ]}
       >
         <Header text={'Change password'} />
         <View style={styles.form}>
@@ -52,4 +55,4 @@ class PasswordChangeScreen extends Component<Props> {
   }
 }
 
-export default withTheme(PasswordChangeScreen);
+export default PasswordChangeScreen;

@@ -1,4 +1,3 @@
 export * from './StyleGuide';
-export * from './themeProvider';
-export * from './ThemeProviderHoc';
 export * from './themes';
+export const STORAGE_KEY = 'THEME_ID';

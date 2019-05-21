@@ -1,44 +1,49 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
 import {
   FlatList,
+  ListRenderItemInfo,
   SafeAreaView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
-import { Theme, ThemeProps, withTheme } from '../core/themes';
+import { UpdateTheme, withTheme } from 'react-native-elements';
+import { ThemeListItem, ThemeWithId } from '../components/Lists/ThemeListItem';
+import {
+  getTheme,
+  ScreenThemeProps,
+  STORAGE_KEY,
+  themes,
+} from '../core/themes';
 
-interface FlatListItem {
-  item: Theme;
-}
+const saveThemeId = (item: ThemeWithId, updateTheme: UpdateTheme) => {
+  const t = getTheme(item.id);
+  if (t) {
+    updateTheme(t);
+  }
+  void AsyncStorage.setItem(STORAGE_KEY, item.id);
+};
 
-const SettingsScreen = ({ theme, themes, setTheme }: ThemeProps) => {
-  const renderItem = ({ item }: FlatListItem) => (
-    <TouchableOpacity onPress={() => setTheme(item.key)}>
-      <View
-        style={[
-          styles.itemContainer,
-          {
-            backgroundColor: item.backgroundColor,
-          },
-        ]}
-      >
-        <Text style={[styles.itemText, { color: item.color }]}>{item.key}</Text>
-      </View>
-    </TouchableOpacity>
+const SettingsScreen = ({ updateTheme, theme }: ScreenThemeProps) => {
+  const { colors } = theme;
+  const ListHeaderComp = (
+    <Text style={styles.headline}>{`Choose your theme:`}</Text>
+  );
+
+  const renderItem = (data: ListRenderItemInfo<ThemeWithId>) => (
+    <ThemeListItem
+      item={data.item}
+      onPress={e => saveThemeId(e, updateTheme)}
+    />
   );
 
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.container}>
-        <FlatList<Theme>
+        <FlatList<ThemeWithId>
           style={styles.flatListContainer}
-          ListHeaderComponent={
-            <Text style={[styles.headline, { color: theme.backgroundColor }]}>
-              Choose your theme:
-            </Text>
-          }
+          ListHeaderComponent={ListHeaderComp}
           data={themes}
           renderItem={renderItem}
         />
@@ -65,12 +70,6 @@ const styles = StyleSheet.create({
     fontWeight: '200',
     fontSize: 24,
   },
-  itemContainer: {
-    height: 100,
-    justifyContent: 'center',
-    paddingLeft: 20,
-  },
-  itemText: { fontWeight: 'bold' },
 });
 
 export default withTheme(SettingsScreen);
