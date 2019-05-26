@@ -20,5 +20,10 @@
     "metro.config.js",
     "jest.config.js",
     "coverage/"
+  ],
+  "plugins": [
+    {
+      "name": "typescript-styled-plugin"
+    }
   ]
 }
