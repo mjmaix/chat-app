@@ -1,25 +1,21 @@
 import React from 'react';
-import { Icon, withTheme } from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import { IconObject } from '.';
-import { ExtendedFullTheme, StyleGuide } from '../../core/themes';
+import { StyleGuide } from '../../core/themes';
 
 interface HeaderIconProps {
   icon: IconObject;
   onPress?: () => void;
-  theme: ExtendedFullTheme;
 }
 
-export const HeaderIcon = withTheme(
-  ({ icon, onPress, theme }: HeaderIconProps) => {
-    return (
-      <Icon
-        {...icon}
-        onPress={onPress}
-        color={theme.colors.primary}
-        containerStyle={{
-          padding: StyleGuide.gap.regular,
-        }}
-      />
-    );
-  },
-);
+export const HeaderIcon = ({ icon, onPress }: HeaderIconProps) => {
+  return (
+    <Icon
+      {...icon}
+      onPress={onPress}
+      containerStyle={{
+        padding: StyleGuide.gap.regular,
+      }}
+    />
+  );
+};

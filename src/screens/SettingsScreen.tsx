@@ -1,54 +1,35 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
-import {
-  FlatList,
-  ListRenderItemInfo,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
-import { UpdateTheme, withTheme } from 'react-native-elements';
-import { ThemeListItem, ThemeWithId } from '../components/Lists/ThemeListItem';
-import {
-  getTheme,
-  ScreenThemeProps,
-  STORAGE_KEY,
-  themes,
-} from '../core/themes';
+import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
+import { ThemeListItem } from '../components/Lists/ThemeListItem';
+import { STORAGE_KEY, Theme, themes } from '../core/themes';
+import { BoldText, ScreenContainer } from '../styled';
 
-const saveThemeId = (item: ThemeWithId, updateTheme: UpdateTheme) => {
-  const t = getTheme(item.id);
-  if (t) {
-    updateTheme(t);
-  }
+type Theme = typeof themes[0];
+
+const saveThemeId = (item: Theme) => {
+  Theme.set(item.id);
   void AsyncStorage.setItem(STORAGE_KEY, item.id);
 };
 
-const SettingsScreen = ({ updateTheme, theme }: ScreenThemeProps) => {
-  const { colors } = theme;
+const SettingsScreen = () => {
   const ListHeaderComp = (
-    <Text style={styles.headline}>{`Choose your theme:`}</Text>
+    <BoldText style={styles.headline}>{`Choose your theme:`}</BoldText>
   );
 
-  const renderItem = (data: ListRenderItemInfo<ThemeWithId>) => (
-    <ThemeListItem
-      item={data.item}
-      onPress={e => saveThemeId(e, updateTheme)}
-    />
+  const renderItem = (data: ListRenderItemInfo<Theme>) => (
+    <ThemeListItem item={data.item} onPress={e => saveThemeId(data.item)} />
   );
 
   return (
-    <View style={styles.container}>
-      <SafeAreaView style={styles.container}>
-        <FlatList<ThemeWithId>
-          style={styles.flatListContainer}
-          ListHeaderComponent={ListHeaderComp}
-          data={themes}
-          renderItem={renderItem}
-        />
-      </SafeAreaView>
-    </View>
+    <ScreenContainer>
+      <FlatList<Theme>
+        style={styles.flatListContainer}
+        ListHeaderComponent={ListHeaderComp}
+        data={themes}
+        renderItem={renderItem}
+      />
+    </ScreenContainer>
   );
 };
 
@@ -57,11 +38,9 @@ SettingsScreen.navigationOptions = {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   flatListContainer: {
     flex: 1,
+    width: '100%',
   },
   headline: {
     marginTop: 60,
@@ -72,4 +51,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withTheme(SettingsScreen);
+export default SettingsScreen;

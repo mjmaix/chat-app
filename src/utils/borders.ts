@@ -1,4 +1,4 @@
-const showBorders = false;
+const showBorders = true;
 
 function DevEmpty(obj: any) {
   return showBorders && __DEV__ ? obj : {};

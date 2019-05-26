@@ -1,46 +1,21 @@
 import React from 'react';
-import {
-  ActivityIndicator,
-  AsyncStorage,
-  StatusBar,
-  StyleSheet,
-  View,
-} from 'react-native';
-import { withTheme } from 'react-native-elements';
-import { NavigationScreenProps } from 'react-navigation';
-import { ScreenThemeProps } from '../core/themes';
+import { ActivityIndicator, AsyncStorage, StatusBar } from 'react-native';
 import NavigationService from '../routes/NavigationService';
+import { ScreenContainer } from '../styled';
 
-type Props = ScreenThemeProps & NavigationScreenProps;
-
-class AuthLoadingScreen extends React.Component<Props> {
+class AuthLoadingScreen extends React.Component<{}> {
   public async componentDidMount() {
     const userToken = await AsyncStorage.getItem('userToken');
     NavigationService.navigate(userToken ? 'App' : 'Auth');
   }
-
   public render() {
-    const { theme } = this.props;
     return (
-      <View
-        style={[
-          styles.container,
-          { backgroundColor: theme.colors.backgroundColor },
-        ]}
-      >
+      <ScreenContainer>
         <ActivityIndicator />
         <StatusBar barStyle="default" />
-      </View>
+      </ScreenContainer>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-export default withTheme(AuthLoadingScreen);
+export default AuthLoadingScreen;

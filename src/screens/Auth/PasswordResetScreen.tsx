@@ -1,29 +1,22 @@
 import React, { Component } from 'react';
-import { Alert, Platform, View } from 'react-native';
-import { withTheme } from 'react-native-elements';
+import { Alert, Platform } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { FormButton, FormTextInput } from '../../components/Forms';
 import { Header } from '../../components/Headers';
-import { ScreenThemeProps } from '../../core/themes';
-import { styles } from './styles';
-type Props = NavigationScreenProps & ScreenThemeProps;
+import { FormContainer, FormRow, ScreenContainer } from '../../styled';
+type Props = NavigationScreenProps;
 
 class PasswordResetScreen extends Component<Props> {
   public render() {
-    const { theme, navigation } = this.props;
+    const { navigation } = this.props;
     return (
-      <View
-        style={[
-          styles.container,
-          { backgroundColor: theme.colors.backgroundColor },
-        ]}
-      >
+      <ScreenContainer>
         <Header text={'Change password'} message="Type in the reset code" />
-        <View style={styles.form}>
-          <View style={styles.formItem}>
+        <FormContainer>
+          <FormRow>
             <FormTextInput inputProps={{ placeholder: 'Code' }} />
-          </View>
-          <View style={styles.formItem}>
+          </FormRow>
+          <FormRow>
             <FormTextInput
               inputProps={{
                 placeholder: 'New password',
@@ -32,17 +25,17 @@ class PasswordResetScreen extends Component<Props> {
                   Platform.OS === 'android' ? 'visible-password' : undefined,
               }}
             />
-          </View>
-          <View style={styles.formItem}>
+          </FormRow>
+          <FormRow>
             <FormButton
               onPress={() => Alert.alert('not yet implemented')}
               label={'Submit'}
             />
-          </View>
-        </View>
-      </View>
+          </FormRow>
+        </FormContainer>
+      </ScreenContainer>
     );
   }
 }
 
-export default withTheme(PasswordResetScreen);
+export default PasswordResetScreen;

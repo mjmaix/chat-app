@@ -13,6 +13,7 @@
     "jsx-boolean-value": false,
     "object-literal-sort-keys": false,
     "quotemark": [true, "single", "jsx-double"],
-    "react-hooks-nesting": "error" // tslint-react-hooks
+    "react-hooks-nesting": "error",
+    "no-angle-bracket-type-assertion": false
   }
 }

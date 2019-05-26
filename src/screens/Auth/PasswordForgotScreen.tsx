@@ -1,30 +1,22 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { withTheme } from 'react-native-elements';
 import { NavigationScreenProps } from 'react-navigation';
 import { FormButton, FormTextInput } from '../../components/Forms';
 import { Header } from '../../components/Headers';
-import { ScreenThemeProps } from '../../core/themes';
 import NavigationService from '../../routes/NavigationService';
-import { styles } from './styles';
-type Props = NavigationScreenProps & ScreenThemeProps;
+import { FormContainer, FormRow, ScreenContainer } from '../../styled';
+type Props = NavigationScreenProps;
 
 class PasswordForgotScreen extends Component<Props> {
   public render() {
-    const { theme, navigation } = this.props;
+    const { navigation } = this.props;
     return (
-      <View
-        style={[
-          styles.container,
-          { backgroundColor: theme.colors.backgroundColor },
-        ]}
-      >
+      <ScreenContainer>
         <Header
           text={'What is your email?'}
           message="We'll send a reset code."
         />
-        <View style={styles.form}>
-          <View style={styles.formItem}>
+        <FormContainer>
+          <FormRow>
             <FormTextInput
               inputProps={{
                 placeholder: 'Email',
@@ -33,13 +25,13 @@ class PasswordForgotScreen extends Component<Props> {
                 textContentType: 'emailAddress',
               }}
             />
-          </View>
+          </FormRow>
 
-          <View style={styles.formItem}>
+          <FormRow>
             <FormButton onPress={this.onPressReset} label={'Reset'} />
-          </View>
-        </View>
-      </View>
+          </FormRow>
+        </FormContainer>
+      </ScreenContainer>
     );
   }
 
@@ -48,4 +40,4 @@ class PasswordForgotScreen extends Component<Props> {
   };
 }
 
-export default withTheme(PasswordForgotScreen);
+export default PasswordForgotScreen;

@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
-import { Alert, View } from 'react-native';
-import { Text, withTheme } from 'react-native-elements';
+import { Alert } from 'react-native';
+import { Text } from 'react-native-elements';
 import { NavigationScreenProps } from 'react-navigation';
 import { FormButton, FormTextInput } from '../../components/Forms';
 import { Header } from '../../components/Headers';
-import { ScreenThemeProps } from '../../core/themes';
-import { styles } from './styles';
+import { FormContainer, FormRow, ScreenContainer } from '../../styled';
 
 interface ChallengeScreen {
   title: string;
   message?: string;
   placeholder: string;
 }
-type Props = ChallengeScreen & NavigationScreenProps & ScreenThemeProps;
+type Props = ChallengeScreen & NavigationScreenProps;
 
 class ChallengeScreen extends Component<Props> {
   public static defaultProps = {
@@ -22,33 +21,26 @@ class ChallengeScreen extends Component<Props> {
   };
 
   public render() {
-    const { theme } = this.props;
-
     return (
-      <View
-        style={[
-          styles.container,
-          { backgroundColor: theme.colors.backgroundColor },
-        ]}
-      >
+      <ScreenContainer>
         <Header text={this.getDisplayText('title')} />
-        <View style={styles.form}>
-          <View style={styles.formItem}>
+        <FormContainer>
+          <FormRow>
             <Text numberOfLines={3}>{this.getDisplayText('message')}</Text>
-          </View>
-          <View style={styles.formItem}>
+          </FormRow>
+          <FormRow>
             <FormTextInput
               inputProps={{ placeholder: this.getDisplayText('placeholder') }}
             />
-          </View>
-          <View style={styles.formItem}>
+          </FormRow>
+          <FormRow>
             <FormButton
               onPress={() => Alert.alert('not yet implemented')}
               label={'Submit'}
             />
-          </View>
-        </View>
-      </View>
+          </FormRow>
+        </FormContainer>
+      </ScreenContainer>
     );
   }
 
@@ -59,4 +51,4 @@ class ChallengeScreen extends Component<Props> {
   };
 }
 
-export default withTheme(ChallengeScreen);
+export default ChallengeScreen;

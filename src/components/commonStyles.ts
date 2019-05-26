@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
-import { StyleGuide } from './../core/themes/StyleGuide';
+import { StyleGuide, Theme } from './../core/themes';
 
+const { colors } = Theme.get();
 export const formStyles = StyleSheet.create({
   form: {
     alignSelf: 'center',
@@ -16,5 +17,9 @@ export const containerStyles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  fixedTop: {
+    position: 'absolute',
+    top: 0,
   },
 });

@@ -2,13 +2,11 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { Formik } from 'formik';
 import React, { Component } from 'react';
 import { Alert, View } from 'react-native';
-import { withTheme } from 'react-native-elements';
 import { NavigationScreenProps } from 'react-navigation';
 import * as Yup from 'yup';
 import { FormButton, FriendlyFormInput } from '../../components/Forms/';
-import { ScreenThemeProps } from '../../core/themes';
 import NavigationService from '../../routes/NavigationService';
-import { styles } from './styles';
+import { FormContainer, FormRow, ScreenContainer } from '../../styled';
 
 const SignInSchema = Yup.object().shape({
   password: Yup.string().required('Required'),
@@ -17,7 +15,7 @@ const SignInSchema = Yup.object().shape({
     .required('Required'),
 });
 
-type Props = NavigationScreenProps & ScreenThemeProps;
+type Props = NavigationScreenProps;
 interface SignInModel {
   email: string;
   password: string;
@@ -25,14 +23,8 @@ interface SignInModel {
 
 class SignInScreen extends Component<Props> {
   public render() {
-    const { theme } = this.props;
     return (
-      <View
-        style={[
-          styles.container,
-          { backgroundColor: theme.colors.backgroundColor },
-        ]}
-      >
+      <ScreenContainer>
         <Formik
           initialValues={{
             email: '',
@@ -46,8 +38,8 @@ class SignInScreen extends Component<Props> {
         >
           {fProps => {
             return (
-              <View style={styles.form}>
-                <View style={styles.formItem}>
+              <FormContainer>
+                <FormRow>
                   <FriendlyFormInput<SignInModel>
                     dataKey="email"
                     formProps={fProps}
@@ -58,8 +50,8 @@ class SignInScreen extends Component<Props> {
                       textContentType: 'emailAddress',
                     }}
                   />
-                </View>
-                <View style={styles.formItem}>
+                </FormRow>
+                <FormRow>
                   <FriendlyFormInput<SignInModel>
                     dataKey="password"
                     formProps={fProps}
@@ -71,38 +63,38 @@ class SignInScreen extends Component<Props> {
                       onSubmitEditing: fProps.handleSubmit,
                     }}
                   />
-                </View>
-                <View style={styles.formItem}>
+                </FormRow>
+                <FormRow>
                   <FormButton onPress={fProps.handleSubmit} label={'Sign in'} />
-                </View>
-              </View>
+                </FormRow>
+              </FormContainer>
             );
           }}
         </Formik>
-        <View style={styles.form}>
-          <View style={styles.formItem}>
+        <FormContainer>
+          <FormRow>
             <FormButton
               onPress={this.onPressSignUp}
               label={'Sign up'}
               type="outline"
             />
-          </View>
-          <View style={styles.formItem}>
+          </FormRow>
+          <FormRow>
             <FormButton
               onPress={this.onPressForgotPassword}
               label={'Forgot password?'}
               type="clear"
             />
-          </View>
-          <View style={styles.formItem}>
+          </FormRow>
+          <FormRow>
             <FormButton
               onPress={this.onPressConfirmCode}
               label={'Confirm code'}
               type="clear"
             />
-          </View>
-        </View>
-      </View>
+          </FormRow>
+        </FormContainer>
+      </ScreenContainer>
     );
   }
 
@@ -128,4 +120,4 @@ class SignInScreen extends Component<Props> {
   };
 }
 
-export default withTheme(SignInScreen);
+export default SignInScreen;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { SearchBar as RNESearchBar } from 'react-native-elements';
 
 interface SearchProps {
@@ -10,19 +10,17 @@ interface SearchProps {
 export const SearchBar = ({ placeholder, onChangeText }: SearchProps) => {
   const [text, setText] = useState('');
   return (
-    <View style={styles.container}>
-      <RNESearchBar
-        containerStyle={styles.searchContainer}
-        inputContainerStyle={styles.searchInputContainer}
-        round
-        placeholder={placeholder}
-        onChangeText={(t: string) => {
-          onChangeText(t);
-          setText(t);
-        }}
-        value={text}
-      />
-    </View>
+    <RNESearchBar
+      containerStyle={styles.searchContainer}
+      inputContainerStyle={styles.searchInputContainer}
+      round
+      placeholder={placeholder}
+      onChangeText={(t: string) => {
+        onChangeText(t);
+        setText(t);
+      }}
+      value={text}
+    />
   );
 };
 
@@ -31,10 +29,6 @@ SearchBar.defaultProps = {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-  },
-
   searchContainer: {
     backgroundColor: 'white',
     borderBottomWidth: 0,

@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { withTheme } from 'react-native-elements';
 import { GiftedChat } from 'react-native-gifted-chat';
-import { IMessage } from 'react-native-gifted-chat/lib/types';
+import { IMessage, User } from 'react-native-gifted-chat/lib/types';
 import { NavigationScreenProps } from 'react-navigation';
-import { ScreenThemeProps } from '../core/themes';
+import { containerStyles } from '../components/commonStyles';
 
-type Props = ScreenThemeProps & NavigationScreenProps;
+type Props = NavigationScreenProps;
 
 interface State {
   messages: IMessage[];
+  myUser: User;
 }
 
 class ChatScreen extends Component<Props, State> {
   public readonly state = {
     messages: [],
+    myUser: {
+      _id: 1,
+      name: 'You',
+      avatar: 'https://placeimg.com/140/140/people',
+    },
   };
 
   public componentWillMount() {
@@ -27,30 +32,19 @@ class ChatScreen extends Component<Props, State> {
           user: {
             _id: 2,
             name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/people',
+            avatar: 'https://placeimg.com/141/141/people',
           },
         },
       ],
     });
   }
   public render() {
-    const { theme, navigation } = this.props;
     return (
-      <View
-        style={[
-          styles.container,
-
-          {
-            backgroundColor: theme.colors.backgroundColor,
-          },
-        ]}
-      >
+      <View style={[styles.themed, styles.giftedChatContainer]}>
         <GiftedChat
           messages={this.state.messages}
           onSend={messages => this.onSend(messages)}
-          user={{
-            _id: 1,
-          }}
+          user={this.state.myUser}
         />
       </View>
     );
@@ -64,7 +58,8 @@ class ChatScreen extends Component<Props, State> {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  ...containerStyles,
+  giftedChatContainer: {
     ...StyleSheet.absoluteFillObject,
   },
   text: {
@@ -72,4 +67,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withTheme(ChatScreen);
+export default ChatScreen;

@@ -1,13 +1,13 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-elements';
-import { ExtendedFullTheme, ThemeName } from '../../core/themes';
+import { themes } from '../../core/themes';
 
-export type ThemeWithId = ExtendedFullTheme & { id: ThemeName };
+type Theme = typeof themes[0];
 
 interface ThemeListItem {
-  item: ThemeWithId;
-  onPress: (param: ThemeWithId) => void;
+  item: Theme;
+  onPress: (param: Theme) => void;
 }
 
 export function ThemeListItem({ item, onPress }: ThemeListItem) {
@@ -17,7 +17,7 @@ export function ThemeListItem({ item, onPress }: ThemeListItem) {
         style={[
           styles.itemContainer,
           {
-            backgroundColor: item.colors.backgroundColor,
+            backgroundColor: item.colors.bgColor,
           },
         ]}
       >
