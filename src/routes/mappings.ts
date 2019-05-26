@@ -1,15 +1,6 @@
 import React from 'react';
-import { IconObject } from '../components/Icons/index';
-import ChallengeScreen from '../screens/Auth/ChallengeScreen';
-import PasswordForgotScreen from '../screens/Auth/PasswordForgotScreen';
-import PasswordResetScreen from '../screens/Auth/PasswordResetScreen';
-import SignInScreen from '../screens/Auth/SignInScreen';
-import SignUpScreen from '../screens/Auth/SignUpScreen';
-import ChatScreen from '../screens/ChatScreen';
-import ContactsScreen from '../screens/ContactsScreen';
-import MessagesScreen from '../screens/MessagesScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import { IconObject } from '../components';
+import { ChallengeScreen, ChatScreen, ContactsScreen, MessagesScreen, PasswordForgotScreen, PasswordResetScreen, ProfileScreen, SettingsScreen, SignInScreen, SignUpScreen } from '../screens';
 
 interface Mapping {
   icon: IconObject;

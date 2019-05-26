@@ -2,7 +2,6 @@ import {
   NavigationActions,
   NavigationContainerComponent,
 } from 'react-navigation';
-import { Nullable } from '../core/ts';
 
 let navigator: Nullable<NavigationContainerComponent>;
 
@@ -29,9 +28,7 @@ function goBack() {
   }
 }
 
-// add other navigation functions that you need and export them
-
-export default {
+export const NavigationService = {
   goBack,
   navigate,
   setTopLevelNavigator,

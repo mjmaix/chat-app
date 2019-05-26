@@ -2,11 +2,11 @@ import AsyncStorage from '@react-native-community/async-storage';
 import React, { Component } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { ThemeProvider } from 'styled-components';
-import { report } from './core/errors/report';
-import { STORAGE_KEY, Theme, ThemeName, themes } from './core/themes/';
-import { AppRoutes } from './routes/';
-import NavigationService from './routes/NavigationService';
+import { STORAGE_KEY, Theme, ThemeName, themes } from './core';
+import { error } from './core/reports';
+import { AppRoutes } from './routes';
 import './setup';
+import { NavigationService } from './utils';
 
 type Theme = typeof themes[0];
 
@@ -50,7 +50,7 @@ export default class App extends Component<{}> {
       this.setState({ isReady: true, theme: Theme.get() });
     } catch (err) {
       this.setState({ isReady: true });
-      report(err);
+      error(err);
     }
   }
 }

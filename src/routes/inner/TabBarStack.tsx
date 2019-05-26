@@ -3,8 +3,7 @@ import {
   BottomTabNavigatorConfig,
   createBottomTabNavigator,
 } from 'react-navigation';
-import { IconObject } from '../../components/Icons';
-import IconWithBadge from '../../components/Icons/IconWithBadge';
+import { IconObject, IconWithBadge } from '../../components';
 import { Mappings } from '../mappings';
 import MessageStack from './MessageStack';
 import MoreStack from './MoreStack';

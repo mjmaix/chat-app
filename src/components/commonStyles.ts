@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { StyleGuide, Theme } from './../core/themes';
+import { StyleGuide } from './../core/themes';
 
-const { colors } = Theme.get();
 export const formStyles = StyleSheet.create({
   form: {
     alignSelf: 'center',

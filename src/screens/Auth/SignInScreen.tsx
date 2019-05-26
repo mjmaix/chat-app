@@ -1,12 +1,12 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import { Formik } from 'formik';
 import React, { Component } from 'react';
-import { Alert, View } from 'react-native';
+import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import * as Yup from 'yup';
-import { FormButton, FriendlyFormInput } from '../../components/Forms/';
-import NavigationService from '../../routes/NavigationService';
+import { FormButton, FriendlyFormInput } from '../../components';
 import { FormContainer, FormRow, ScreenContainer } from '../../styled';
+import { NavigationService } from '../../utils';
 
 const SignInSchema = Yup.object().shape({
   password: Yup.string().required('Required'),
@@ -120,4 +120,5 @@ class SignInScreen extends Component<Props> {
   };
 }
 
-export default SignInScreen;
+export { SignInScreen };
+

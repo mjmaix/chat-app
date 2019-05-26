@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
   listItem: {},
 });
 
-export default SimpleFlatList;
+export { SimpleFlatList };

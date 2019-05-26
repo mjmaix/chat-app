@@ -14,4 +14,4 @@ const TransparentButton: React.FC<Props> = ({ label, onPress }: Props) => {
   );
 };
 
-export default TransparentButton;
+export { TransparentButton };

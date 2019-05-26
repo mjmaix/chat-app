@@ -1,8 +1,8 @@
 import React from 'react';
 import { ListRenderItem } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { User } from '../../core/api/unsplash';
-import NavigationService from '../../routes/NavigationService';
+import { User } from '../../core';
+import { NavigationService } from '../../utils';
 
 const UserListItem: ListRenderItem<User> = ({ item, ...props }) => {
   return (
@@ -15,4 +15,4 @@ const UserListItem: ListRenderItem<User> = ({ item, ...props }) => {
   );
 };
 
-export default UserListItem;
+export { UserListItem };

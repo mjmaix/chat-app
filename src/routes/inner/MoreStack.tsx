@@ -1,8 +1,8 @@
 import React from 'react';
 import { createStackNavigator, NavigationScreenProps } from 'react-navigation';
-import { HeaderIcon } from '../../components/Icons/HeaderIcon';
+import { HeaderIcon } from '../../components';
+import { NavigationService } from '../../utils';
 import { Mappings } from '../mappings';
-import NavigationService from '../NavigationService';
 
 const MoreStack = createStackNavigator({
   Profile: {

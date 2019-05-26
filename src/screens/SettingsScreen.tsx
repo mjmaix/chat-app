@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
 import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
-import { ThemeListItem } from '../components/Lists/ThemeListItem';
-import { STORAGE_KEY, Theme, themes } from '../core/themes';
+import { ThemeListItem } from '../components';
+import { STORAGE_KEY, Theme, themes } from '../core';
 import { BoldText, ScreenContainer } from '../styled';
 
 type Theme = typeof themes[0];
@@ -17,13 +17,17 @@ const SettingsScreen = () => {
     <BoldText style={styles.headline}>{`Choose your theme:`}</BoldText>
   );
 
-  const renderItem = (data: ListRenderItemInfo<Theme>) => (
-    <ThemeListItem item={data.item} onPress={e => saveThemeId(data.item)} />
-  );
+  const renderItem = (data: ListRenderItemInfo<Theme>) => {
+    console.log('data', data);
+    return (
+      <ThemeListItem item={data.item} onPress={e => saveThemeId(data.item)} />
+    );
+  };
 
   return (
     <ScreenContainer>
       <FlatList<Theme>
+        keyExtractor={d => `${d.id}`}
         style={styles.flatListContainer}
         ListHeaderComponent={ListHeaderComp}
         data={themes}
@@ -51,4 +55,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SettingsScreen;
+export { SettingsScreen };

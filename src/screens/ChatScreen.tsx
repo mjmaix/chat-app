@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { IMessage, User } from 'react-native-gifted-chat/lib/types';
 import { NavigationScreenProps } from 'react-navigation';
-import { containerStyles } from '../components/commonStyles';
+import { ScreenContainer } from '../styled';
 
 type Props = NavigationScreenProps;
 
@@ -40,13 +40,15 @@ class ChatScreen extends Component<Props, State> {
   }
   public render() {
     return (
-      <View style={[styles.themed, styles.giftedChatContainer]}>
-        <GiftedChat
-          messages={this.state.messages}
-          onSend={messages => this.onSend(messages)}
-          user={this.state.myUser}
-        />
-      </View>
+      <ScreenContainer>
+        <View style={styles.giftedChat}>
+          <GiftedChat
+            messages={this.state.messages}
+            onSend={messages => this.onSend(messages)}
+            user={this.state.myUser}
+          />
+        </View>
+      </ScreenContainer>
     );
   }
 
@@ -58,13 +60,9 @@ class ChatScreen extends Component<Props, State> {
 }
 
 const styles = StyleSheet.create({
-  ...containerStyles,
-  giftedChatContainer: {
+  giftedChat: {
     ...StyleSheet.absoluteFillObject,
-  },
-  text: {
-    fontWeight: 'bold',
   },
 });
 
-export default ChatScreen;
+export { ChatScreen };

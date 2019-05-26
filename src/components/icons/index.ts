@@ -6,3 +6,6 @@ export interface IconObject extends IconProps {
   name: string;
   type: IconType;
 }
+
+export * from './HeaderIcon';
+export * from './IconWithBadge';

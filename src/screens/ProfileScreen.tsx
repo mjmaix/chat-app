@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
 import { Button } from 'react-native-elements';
-import NavigationService from '../routes/NavigationService';
 import { BoldText, ScreenContainer } from '../styled';
+import { NavigationService } from '../utils';
 
 const ProfileScreen = () => {
   const handleSignOutAsync = async () => {
@@ -18,4 +18,4 @@ const ProfileScreen = () => {
   );
 };
 
-export default ProfileScreen;
+export { ProfileScreen };

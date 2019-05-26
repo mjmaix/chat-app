@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent, render } from 'react-native-testing-library';
-import Button from './TransparentButton';
+import { TransparentButton as Button } from './TransparentButton';
 
 const onPressMock = jest.fn();
 const mockClickEvent = {};

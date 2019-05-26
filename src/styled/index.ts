@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
-import { containerStyles, formStyles } from '../components/commonStyles';
-import { StyledComponent } from '../core/themes';
+import { containerStyles, formStyles } from '../components';
+import { StyledComponent } from '../core';
 
 const styles = StyleSheet.create({
   searchContainer: {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert } from 'react-native';
-import { SearchBar } from '../components/SearchBars/SearchBar';
+import { SearchBar } from '../components';
 import { BoldText, ScreenContainer, TopContainer } from '../styled';
 
 const MessagesScreen = () => {
@@ -14,4 +14,4 @@ const MessagesScreen = () => {
   );
 };
 
-export default MessagesScreen;
+export { MessagesScreen };

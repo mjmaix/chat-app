@@ -1,5 +1,3 @@
-import { Nullable } from '../ts';
-
 export interface Links {
   self: string;
   html: string;

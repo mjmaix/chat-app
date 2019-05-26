@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { NavigationScreenProps } from 'react-navigation';
-import { FormButton, FormTextInput } from '../../components/Forms';
-import { Header } from '../../components/Headers';
-import NavigationService from '../../routes/NavigationService';
+import { FormButton, FormTextInput, Header } from '../../components';
 import { FormContainer, FormRow, ScreenContainer } from '../../styled';
+import { NavigationService } from '../../utils';
 type Props = NavigationScreenProps;
 
 class PasswordForgotScreen extends Component<Props> {
@@ -40,4 +39,4 @@ class PasswordForgotScreen extends Component<Props> {
   };
 }
 
-export default PasswordForgotScreen;
+export { PasswordForgotScreen };

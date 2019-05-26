@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, Platform } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
-import { FormButton, FormTextInput } from '../../components/Forms';
-import { Header } from '../../components/Headers';
+import { FormButton, FormTextInput, Header } from '../../components';
 import { FormContainer, FormRow, ScreenContainer } from '../../styled';
 type Props = NavigationScreenProps;
 
@@ -38,4 +37,5 @@ class PasswordResetScreen extends Component<Props> {
   }
 }
 
-export default PasswordResetScreen;
+export { PasswordResetScreen };
+

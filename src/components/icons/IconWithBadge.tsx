@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class IconWithBadge extends React.Component<Props> {
+export class IconWithBadge extends React.Component<Props> {
   public render() {
     const { icon, badgeValue, color } = this.props;
     return (

@@ -1,8 +1,8 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { Button, Icon, IconProps } from 'react-native-elements';
-import { StyleGuide } from '../../core/themes';
-import NavigationService from '../../routes/NavigationService';
+import { StyleGuide } from '../../core';
+import { NavigationService } from '../../utils';
 
 interface FixedBackHeaderProps {
   iconProps?: IconProps;
@@ -24,6 +24,7 @@ export const FixedBackHeader = ({ iconProps }: FixedBackHeaderProps) => {
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'flex-start',
     position: 'absolute',
     left: 0,
     right: 0,

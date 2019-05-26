@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, AsyncStorage, StatusBar } from 'react-native';
-import NavigationService from '../routes/NavigationService';
 import { ScreenContainer } from '../styled';
+import { NavigationService } from '../utils';
 
 class AuthLoadingScreen extends React.Component<{}> {
   public async componentDidMount() {
@@ -18,4 +18,4 @@ class AuthLoadingScreen extends React.Component<{}> {
   }
 }
 
-export default AuthLoadingScreen;
+export { AuthLoadingScreen };

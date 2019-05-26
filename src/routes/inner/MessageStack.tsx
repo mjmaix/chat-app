@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator, NavigationScreenProps } from 'react-navigation';
-import { HeaderIcon } from '../../components/Icons/HeaderIcon';
+import { HeaderIcon } from '../../components';
 import { Mappings } from '../mappings';
 
 const MessageStack = createStackNavigator(

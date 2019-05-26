@@ -1,10 +1,8 @@
 import React from 'react';
 import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
-import SimpleFlatList from '../components/Lists/SimpleFlatList';
-import UserListItem from '../components/Lists/UserListItem';
-import { SearchBar } from '../components/SearchBars/SearchBar';
-import { User, users } from '../core/api/unsplash';
+import { SearchBar, SimpleFlatList, UserListItem } from '../components';
+import { User, users } from '../core';
 import { ScreenContainer } from '../styled';
 
 type Props = NavigationScreenProps;
@@ -27,4 +25,4 @@ const ContactsScreen = ({ navigation }: Props) => {
   );
 };
 
-export default ContactsScreen;
+export { ContactsScreen };

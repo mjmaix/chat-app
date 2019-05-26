@@ -1,6 +1,6 @@
 import { EventEmitter } from 'eventemitter3';
 import _ from 'lodash';
-import { info } from '../errors/report';
+import { info } from '../reports';
 import { ThemeName, themes } from './themes';
 type Theme = typeof themes[0];
 
