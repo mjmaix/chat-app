@@ -46,10 +46,11 @@ export class ThemeHelper {
     this.event.emit('change', this.theme);
   }
 
-  private getTheme = (key: ThemeName) => {
+  private getTheme: (key: ThemeName) => any = key => {
     const theme = _.find(this.themes, e => e.id === key);
     if (!theme) {
-      throw new Error('Theme not found');
+      info('Theme not found');
+      return this.getTheme('DEFAULT');
     }
     return theme;
   };

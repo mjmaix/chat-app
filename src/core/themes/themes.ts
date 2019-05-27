@@ -1,12 +1,15 @@
+import { Color } from 'csstype';
 import { Platform } from 'react-native';
-import { Colors, colors } from 'react-native-elements';
+import { colors } from 'react-native-elements';
 import { ThemeName } from '.';
 
 export interface Theme {
   id: ThemeName;
   colors: {
-    bgColor: string;
-  } & Partial<Colors>;
+    bgColor: Color;
+    primary: Color;
+    secondary: Color;
+  };
 }
 
 export interface StyledComponent {
@@ -15,11 +18,11 @@ export interface StyledComponent {
 
 export type ThemeName =
   | 'DEFAULT'
-  | 'JUST WHITE'
-  | 'MAASTRICHT BLUE'
-  | 'MAXIMUM BLUE GREEN'
-  | 'ROSE MADDER'
-  | 'BRIGHT YELLOW (CRAYOLA)';
+  | 'BLACK & WHITE'
+  | 'MIDNIGHT BLUE'
+  | 'MEDIUM AQUAMARINE'
+  | 'MISTY ROSE'
+  | 'GOLD';
 
 export const themes: Theme[] = [
   {
@@ -29,42 +32,47 @@ export const themes: Theme[] = [
         default: colors.platform.android,
         ios: colors.platform.ios,
       }),
-      bgColor: '#fff',
+      bgColor: 'white',
     },
   },
   {
-    id: 'JUST WHITE',
+    id: 'BLACK & WHITE',
     colors: {
-      primary: '#000000',
-      bgColor: '#fff',
+      primary: 'black',
+      bgColor: 'white',
+      secondary: 'rgba(0,0,0,0.5)',
     },
   },
   {
-    id: 'MAASTRICHT BLUE',
+    id: 'MIDNIGHT BLUE',
     colors: {
-      bgColor: '#011627',
-      primary: '#ffffff',
+      bgColor: 'midnightblue',
+      primary: 'white',
+      secondary: 'honeydew',
     },
   },
   {
-    id: 'MAXIMUM BLUE GREEN',
+    id: 'MEDIUM AQUAMARINE',
     colors: {
-      bgColor: '#2EC4B6',
-      primary: '#ffffff',
+      bgColor: 'white',
+      primary: 'mediumaquamarine',
+      secondary: 'indigo',
     },
   },
   {
-    id: 'ROSE MADDER',
+    id: 'MISTY ROSE',
     colors: {
-      bgColor: '#E71D36',
-      primary: '#ffffff',
+      bgColor: 'slateblue',
+      primary: 'mistyrose',
+      secondary: 'black',
     },
   },
   {
-    id: 'BRIGHT YELLOW (CRAYOLA)',
+    id: 'GOLD',
     colors: {
-      bgColor: '#FF9F1C',
-      primary: '#1F2D3D',
+      bgColor: 'ghostwhite',
+      primary: 'gold',
+      secondary: 'black',
     },
   },
 ];
