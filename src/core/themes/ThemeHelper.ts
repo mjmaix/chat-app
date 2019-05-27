@@ -1,7 +1,7 @@
 import { EventEmitter } from 'eventemitter3';
 import _ from 'lodash';
 import { info } from '../reports';
-import { ThemeName, themes } from './themes';
+import { DEFAULT_THEME, ThemeName, themes } from './themes';
 type Theme = typeof themes[0];
 
 type ThemeChangeEventListener = (data: Theme) => void;
@@ -11,7 +11,7 @@ export class ThemeHelper {
   private themeName: ThemeName;
   private theme: Theme;
   constructor(cb?: ThemeChangeEventListener) {
-    this.themeName = 'DEFAULT';
+    this.themeName = DEFAULT_THEME;
     this.theme = this.getTheme(this.themeName);
     this.handleChange = cb || this.handleChange;
     this.event.addListener('change', this.handleChange);
@@ -50,7 +50,7 @@ export class ThemeHelper {
     const theme = _.find(this.themes, e => e.id === key);
     if (!theme) {
       info('Theme not found');
-      return this.getTheme('DEFAULT');
+      return this.getTheme(DEFAULT_THEME);
     }
     return theme;
   };
