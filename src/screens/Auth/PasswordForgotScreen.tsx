@@ -1,36 +1,39 @@
 import React, { Component } from 'react';
 import { NavigationScreenProps } from 'react-navigation';
-import { FormButton, FormTextInput, Header } from '../../components';
-import { FormContainer, FormRow, ScreenContainer } from '../../styled';
+import { Header } from '../../components';
+import {
+  StyledButton,
+  StyledFormContainer,
+  StyledFormRow,
+  StyledScreenContainer,
+  StyledTextInput,
+} from '../../styled';
 import { NavigationService } from '../../utils';
 type Props = NavigationScreenProps;
 
 class PasswordForgotScreen extends Component<Props> {
   public render() {
-    const { navigation } = this.props;
     return (
-      <ScreenContainer>
+      <StyledScreenContainer>
         <Header
           text={'What is your email?'}
           message="We'll send a reset code."
         />
-        <FormContainer>
-          <FormRow>
-            <FormTextInput
-              inputProps={{
-                placeholder: 'Email',
-                keyboardType: 'email-address',
-                autoCapitalize: 'none',
-                textContentType: 'emailAddress',
-              }}
+        <StyledFormContainer>
+          <StyledFormRow>
+            <StyledTextInput
+              placeholder="Email"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              textContentType="emailAddress"
             />
-          </FormRow>
+          </StyledFormRow>
 
-          <FormRow>
-            <FormButton onPress={this.onPressReset} label={'Reset'} />
-          </FormRow>
-        </FormContainer>
-      </ScreenContainer>
+          <StyledFormRow>
+            <StyledButton onPress={this.onPressReset} label={'Reset'} />
+          </StyledFormRow>
+        </StyledFormContainer>
+      </StyledScreenContainer>
     );
   }
 

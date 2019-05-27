@@ -1,2 +1,2 @@
-export * from './FormButton';
-export * from './FormTextInput';
+export * from './Button';
+export * from './TextInput';

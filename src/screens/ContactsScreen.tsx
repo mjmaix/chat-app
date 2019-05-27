@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { SearchBar, SimpleFlatList, UserListItem } from '../components';
 import { User, users } from '../core';
-import { ScreenContainer } from '../styled';
+import { StyledScreenContainer } from '../styled';
 
 type Props = NavigationScreenProps;
 
@@ -14,14 +14,14 @@ const ContactsScreen = ({ navigation }: Props) => {
     <SearchBar onChangeText={() => Alert.alert('not yet implemented')} />
   );
   return (
-    <ScreenContainer>
+    <StyledScreenContainer>
       <SimpleFlatList<User>
         ListHeaderComponent={HeaderComponent}
         stickyHeaderIndices={[0]}
         data={datas}
         renderItem={data => <UserListItem {...data} />}
       />
-    </ScreenContainer>
+    </StyledScreenContainer>
   );
 };
 

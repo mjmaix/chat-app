@@ -1,7 +1,8 @@
 import { Color } from 'csstype';
+import { Colors as RneColors, Theme as RneTheme } from 'react-native-elements';
 import { ThemeName } from '.';
 
-export interface Theme {
+export interface Theme extends RneTheme {
   id: ThemeName;
   colors: {
     bgColor: Color;
@@ -17,15 +18,16 @@ export interface Theme {
     secondarylighttext: Color;
     secondarydark: Color;
     secondarydarktext: Color;
-  };
+  } & Partial<RneColors>;
   activeTintColor: Color;
   inactiveTintColor: Color;
+  // statusBarStyle: StatusBarStyle;
 }
 
 export type ThemeName =
   | 'DEFAULT'
   | 'PINK'
-  | 'MIDNIGHT BLUE'
+  | 'CYAN BLUE'
   | 'MEDIUM AQUAMARINE'
   | 'MISTY ROSE'
   | 'GOLD';
@@ -53,7 +55,6 @@ export const themes: Theme[] = [
       primarylighttext: 'black',
       primarydark: '#b4004e',
       primarydarktext: 'white',
-
       secondary: '#455a64',
       secondarytext: 'white',
       secondarylight: '#718792',
@@ -64,26 +65,26 @@ export const themes: Theme[] = [
     activeTintColor: '#ec407a',
     inactiveTintColor: '#455a64',
   },
-  // {
-  //   id: 'MIDNIGHT BLUE',
-  //   colors: {
-  //     bgColor: 'midnightblue',
-  //     primary: 'white',
-  //     secondary: 'honeydew',
-  //   },
-  //   activeTintColor: colors.primary,
-  //   inactiveTintColor: colors.secondary,
-  // },
-  // {
-  //   id: 'MEDIUM AQUAMARINE',
-  //   colors: {
-  //     bgColor: 'white',
-  //     primary: 'mediumaquamarine',
-  //     secondary: 'indigo',
-  //   },
-  //   activeTintColor: colors.primary,
-  //   inactiveTintColor: colors.secondary,
-  // },
+  {
+    id: 'CYAN BLUE',
+    colors: {
+      bgColor: 'white',
+      primary: '#01579b',
+      primarytext: 'white',
+      primarylight: '#4f83cc',
+      primarylighttext: 'black',
+      primarydark: '#002f6c',
+      primarydarktext: 'white',
+      secondary: '#b0bec5',
+      secondarytext: 'black',
+      secondarylight: '#e2f1f8',
+      secondarylighttext: 'black',
+      secondarydark: '#1c313a',
+      secondarydarktext: 'black',
+    },
+    activeTintColor: '#ec407a',
+    inactiveTintColor: '#455a64',
+  },
   // {
   //   id: 'MISTY ROSE',
   //   colors: {

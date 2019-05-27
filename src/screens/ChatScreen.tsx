@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { IMessage, User } from 'react-native-gifted-chat/lib/types';
 import { NavigationScreenProps } from 'react-navigation';
-import { ScreenContainer } from '../styled';
+import { StyledScreenContainer } from '../styled';
 
 type Props = NavigationScreenProps;
 
@@ -40,7 +40,7 @@ class ChatScreen extends Component<Props, State> {
   }
   public render() {
     return (
-      <ScreenContainer>
+      <StyledScreenContainer>
         <View style={styles.giftedChat}>
           <GiftedChat
             messages={this.state.messages}
@@ -48,7 +48,7 @@ class ChatScreen extends Component<Props, State> {
             user={this.state.myUser}
           />
         </View>
-      </ScreenContainer>
+      </StyledScreenContainer>
     );
   }
 

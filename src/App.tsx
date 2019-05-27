@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React, { Component } from 'react';
 import { ActivityIndicator } from 'react-native';
-import { ThemeProvider } from 'styled-components';
-import { STORAGE_KEY, Theme, ThemeName, themes } from './core';
-import { error } from './core/reports';
+import { ThemeProvider as RneThemeProvider } from 'react-native-elements';
+import { ThemeProvider as ScThemeProvider } from 'styled-components';
+import { error, STORAGE_KEY, Theme, ThemeName, themes } from './core';
 import { AppRoutes } from './routes';
 import './setup';
 import { NavigationService } from './utils';
@@ -32,17 +32,20 @@ export default class App extends Component<{}> {
     if (!this.state.isReady) {
       return <ActivityIndicator />;
     }
+    const { theme } = this.state;
     return (
-      <ThemeProvider theme={this.state.theme}>
-        <AppRoutes
-          screenProps={{
-            theme: this.state.theme,
-          }}
-          ref={navigatorRef => {
-            NavigationService.setTopLevelNavigator(navigatorRef);
-          }}
-        />
-      </ThemeProvider>
+      <ScThemeProvider theme={theme}>
+        <RneThemeProvider theme={theme}>
+          <AppRoutes
+            screenProps={{
+              theme: this.state.theme,
+            }}
+            ref={navigatorRef => {
+              NavigationService.setTopLevelNavigator(navigatorRef);
+            }}
+          />
+        </RneThemeProvider>
+      </ScThemeProvider>
     );
   }
 

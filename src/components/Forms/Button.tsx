@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ButtonProps } from 'react-native-elements';
+import { Button as RNEButton, ButtonProps } from 'react-native-elements';
 import { styles } from './styles';
 
 interface FormButtonProps extends ButtonProps {
@@ -7,13 +7,9 @@ interface FormButtonProps extends ButtonProps {
   label: string;
 }
 
-export const FormButton = ({
-  onPress,
-  label,
-  ...buttonProps
-}: FormButtonProps) => {
+export const Button = ({ onPress, label, ...buttonProps }: FormButtonProps) => {
   return (
-    <Button
+    <RNEButton
       title={label}
       style={styles.button}
       onPress={onPress}

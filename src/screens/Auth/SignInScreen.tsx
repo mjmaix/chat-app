@@ -4,8 +4,13 @@ import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import * as Yup from 'yup';
-import { FormButton, FriendlyFormInput } from '../../components';
-import { FormContainer, FormRow, ScreenContainer } from '../../styled';
+import {
+  StyledButton,
+  StyledFormContainer,
+  StyledFormikInput,
+  StyledFormRow,
+  StyledScreenContainer,
+} from '../../styled';
 import { NavigationService } from '../../utils';
 
 const SignInSchema = Yup.object().shape({
@@ -24,7 +29,7 @@ interface SignInModel {
 class SignInScreen extends Component<Props> {
   public render() {
     return (
-      <ScreenContainer>
+      <StyledScreenContainer>
         <Formik
           initialValues={{
             email: '',
@@ -38,63 +43,62 @@ class SignInScreen extends Component<Props> {
         >
           {fProps => {
             return (
-              <FormContainer>
-                <FormRow>
-                  <FriendlyFormInput<SignInModel>
+              <StyledFormContainer>
+                <StyledFormRow>
+                  <StyledFormikInput
                     dataKey="email"
                     formProps={fProps}
-                    inputProps={{
-                      placeholder: 'Email',
-                      keyboardType: 'email-address',
-                      autoCapitalize: 'none',
-                      textContentType: 'emailAddress',
-                    }}
+                    placeholder="Email"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    textContentType="emailAddress"
                   />
-                </FormRow>
-                <FormRow>
-                  <FriendlyFormInput<SignInModel>
+                </StyledFormRow>
+                <StyledFormRow>
+                  <StyledFormikInput
                     dataKey="password"
                     formProps={fProps}
-                    inputProps={{
-                      secureTextEntry: true,
-                      clearTextOnFocus: true,
-                      placeholder: 'Password',
-                      textContentType: 'password',
-                      onSubmitEditing: fProps.handleSubmit,
-                    }}
+                    secureTextEntry
+                    clearTextOnFocus
+                    placeholder="Password"
+                    textContentType="password"
+                    onSubmitEditing={fProps.handleSubmit}
                   />
-                </FormRow>
-                <FormRow>
-                  <FormButton onPress={fProps.handleSubmit} label={'Sign in'} />
-                </FormRow>
-              </FormContainer>
+                </StyledFormRow>
+                <StyledFormRow>
+                  <StyledButton
+                    onPress={fProps.handleSubmit}
+                    label={'Sign in'}
+                  />
+                </StyledFormRow>
+              </StyledFormContainer>
             );
           }}
         </Formik>
-        <FormContainer>
-          <FormRow>
-            <FormButton
+        <StyledFormContainer>
+          <StyledFormRow>
+            <StyledButton
               onPress={this.onPressSignUp}
               label={'Sign up'}
               type="outline"
             />
-          </FormRow>
-          <FormRow>
-            <FormButton
+          </StyledFormRow>
+          <StyledFormRow>
+            <StyledButton
               onPress={this.onPressForgotPassword}
               label={'Forgot password?'}
               type="clear"
             />
-          </FormRow>
-          <FormRow>
-            <FormButton
+          </StyledFormRow>
+          <StyledFormRow>
+            <StyledButton
               onPress={this.onPressConfirmCode}
               label={'Confirm code'}
               type="clear"
             />
-          </FormRow>
-        </FormContainer>
-      </ScreenContainer>
+          </StyledFormRow>
+        </StyledFormContainer>
+      </StyledScreenContainer>
     );
   }
 
@@ -121,4 +125,3 @@ class SignInScreen extends Component<Props> {
 }
 
 export { SignInScreen };
-

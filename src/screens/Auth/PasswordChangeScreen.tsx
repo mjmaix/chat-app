@@ -1,51 +1,41 @@
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
-import { FormButton, FormTextInput, Header } from '../../components';
-import { FormContainer, FormRow, ScreenContainer } from '../../styled';
+import { Header } from '../../components';
+import {
+  StyledButton,
+  StyledFormContainer,
+  StyledFormRow,
+  StyledScreenContainer,
+  StyledTextInput,
+} from '../../styled';
 type Props = NavigationScreenProps;
 
 class PasswordChangeScreen extends Component<Props> {
   public render() {
     return (
-      <ScreenContainer>
+      <StyledScreenContainer>
         <Header text={'Change password'} />
-        <FormContainer>
-          <FormRow>
-            <FormTextInput
-              inputProps={{
-                placeholder: 'Old password',
-                secureTextEntry: true,
-              }}
-            />
-          </FormRow>
-          <FormRow>
-            <FormTextInput
-              inputProps={{
-                placeholder: 'New password',
-                secureTextEntry: true,
-              }}
-            />
-          </FormRow>
-          <FormRow>
-            <FormTextInput
-              inputProps={{
-                placeholder: 'Confirm password',
-                secureTextEntry: true,
-              }}
-            />
-          </FormRow>
-          <FormRow>
-            <FormButton
+        <StyledFormContainer>
+          <StyledFormRow>
+            <StyledTextInput placeholder="Old password" secureTextEntry />
+          </StyledFormRow>
+          <StyledFormRow>
+            <StyledTextInput placeholder="New password" secureTextEntry />
+          </StyledFormRow>
+          <StyledFormRow>
+            <StyledTextInput placeholder="Confirm password" secureTextEntry />
+          </StyledFormRow>
+          <StyledFormRow>
+            <StyledButton
               onPress={() => Alert.alert('not yet implemented')}
               label={'Change'}
             />
-          </FormRow>
-        </FormContainer>
-      </ScreenContainer>
+          </StyledFormRow>
+        </StyledFormContainer>
+      </StyledScreenContainer>
     );
   }
 }
 
 export { PasswordChangeScreen };
-

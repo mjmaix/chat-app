@@ -3,36 +3,31 @@ import React from 'react';
 import { Input, InputProps } from 'react-native-elements';
 import { styles } from './styles';
 
-interface FormTextInputProps {
-  inputProps: InputProps;
-}
-
 interface StringKeyedObject {
   [key: string]: any;
 }
 
 interface FriendlyFormInputProps<T extends StringKeyedObject>
-  extends FormTextInputProps {
+  extends InputProps {
   dataKey: string;
   formProps: FormikProps<T>;
 }
 
-export const FormTextInput = (props: FormTextInputProps) => {
-  const { inputProps } = props;
-  return <Input style={styles.input} {...inputProps} />;
+export const TextInput = (props: InputProps) => {
+  return <Input style={styles.input} {...props} />;
 };
 
-export function FriendlyFormInput<T extends StringKeyedObject>(
-  props: FriendlyFormInputProps<StringKeyedObject>,
+export function FormikInput<T extends StringKeyedObject>(
+  props: FriendlyFormInputProps<T>,
 ) {
-  const { formProps, inputProps, dataKey } = props;
+  const { formProps, dataKey, ...props2 } = props;
   // const isValidating = formProps.isValidating;
   // const isError = formProps.touched[dataKey] && !!formProps.errors[dataKey];
   const errorMessage = formProps.errors[dataKey] as string;
   const onChangeText = formProps.handleChange(dataKey);
 
   let builtInputProps: InputProps = {
-    ...inputProps,
+    ...props2,
     onChangeText,
     errorMessage,
   };
@@ -48,5 +43,5 @@ export function FriendlyFormInput<T extends StringKeyedObject>(
       value: formProps.values[dataKey],
     };
   }
-  return <FormTextInput inputProps={builtInputProps} />;
+  return <TextInput {...builtInputProps} />;
 }

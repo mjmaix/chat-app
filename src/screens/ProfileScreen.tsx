@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
 import { Button } from 'react-native-elements';
-import { BoldText, ScreenContainer } from '../styled';
+import { StyledBoldText, StyledScreenContainer } from '../styled';
 import { NavigationService } from '../utils';
 
 const ProfileScreen = () => {
@@ -11,10 +11,10 @@ const ProfileScreen = () => {
   };
 
   return (
-    <ScreenContainer>
-      <BoldText>PROFILE</BoldText>
+    <StyledScreenContainer>
+      <StyledBoldText>PROFILE</StyledBoldText>
       <Button title={'Sign out'} onPress={handleSignOutAsync} type="clear" />
-    </ScreenContainer>
+    </StyledScreenContainer>
   );
 };
 

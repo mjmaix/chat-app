@@ -3,34 +3,51 @@ import { createStackNavigator, NavigationScreenProps } from 'react-navigation';
 import { ThemedComponentProps } from 'styled-components';
 import { HeaderIcon } from '../../components';
 import { NavigationService } from '../../utils';
+import { updateStatusBarStyle } from '../../utils/StatusBarService';
 import { Mappings } from '../mappings';
 
-const MoreStack = createStackNavigator({
-  Profile: {
-    screen: Mappings.Profile.screen,
-    navigationOptions: ({ screenProps }: NavigationScreenProps) => {
+const MoreStack = createStackNavigator(
+  {
+    Profile: {
+      screen: Mappings.Profile.screen,
+      navigationOptions: ({ screenProps }: NavigationScreenProps) => {
+        const { theme } = screenProps as ThemedComponentProps;
+        return {
+          title: 'Profile',
+          headerRight: (
+            <HeaderIcon
+              icon={{
+                ...Mappings.Settings.icon,
+                iconStyle: { color: theme.colors.primary },
+              }}
+              onPress={() => NavigationService.navigate('Settings')}
+            />
+          ),
+        };
+      },
+    },
+    Settings: {
+      screen: Mappings.Settings.screen,
+      navigationOptions: () => ({
+        title: 'Settings',
+      }),
+    },
+  },
+  {
+    defaultNavigationOptions: ({
+      screenProps,
+      navigation,
+    }: NavigationScreenProps) => {
       const { theme } = screenProps as ThemedComponentProps;
+      navigation.addListener('didFocus', () => {
+        updateStatusBarStyle();
+      });
       return {
-        title: 'Profile',
-        headerRight: (
-          <HeaderIcon
-            icon={{
-              ...Mappings.Contacts.icon,
-              iconStyle: { color: theme.colors.primarydarktext },
-            }}
-            onPress={() => NavigationService.navigate('Settings')}
-          />
-        ),
+        headerTintColor: theme.colors.primary,
       };
     },
   },
-  Settings: {
-    screen: Mappings.Settings.screen,
-    navigationOptions: () => ({
-      title: 'Settings',
-    }),
-  },
-});
+);
 
 MoreStack.navigationOptions = ({ navigation }: NavigationScreenProps) => {
   let tabBarVisible = true;

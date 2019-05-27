@@ -2,8 +2,14 @@ import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { Text } from 'react-native-elements';
 import { NavigationScreenProps } from 'react-navigation';
-import { FormButton, FormTextInput, Header } from '../../components';
-import { FormContainer, FormRow, ScreenContainer } from '../../styled';
+import { Header } from '../../components';
+import {
+  StyledButton,
+  StyledFormContainer,
+  StyledFormRow,
+  StyledScreenContainer,
+  StyledTextInput,
+} from '../../styled';
 
 interface ChallengeScreen {
   title: string;
@@ -21,25 +27,23 @@ class ChallengeScreen extends Component<Props> {
 
   public render() {
     return (
-      <ScreenContainer>
+      <StyledScreenContainer>
         <Header text={this.getDisplayText('title')} />
-        <FormContainer>
-          <FormRow>
+        <StyledFormContainer>
+          <StyledFormRow>
             <Text numberOfLines={3}>{this.getDisplayText('message')}</Text>
-          </FormRow>
-          <FormRow>
-            <FormTextInput
-              inputProps={{ placeholder: this.getDisplayText('placeholder') }}
-            />
-          </FormRow>
-          <FormRow>
-            <FormButton
+          </StyledFormRow>
+          <StyledFormRow>
+            <StyledTextInput placeholder={this.getDisplayText('placeholder')} />
+          </StyledFormRow>
+          <StyledFormRow>
+            <StyledButton
               onPress={() => Alert.alert('not yet implemented')}
               label={'Submit'}
             />
-          </FormRow>
-        </FormContainer>
-      </ScreenContainer>
+          </StyledFormRow>
+        </StyledFormContainer>
+      </StyledScreenContainer>
     );
   }
 

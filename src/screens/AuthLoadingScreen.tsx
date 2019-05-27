@@ -1,6 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, AsyncStorage, StatusBar } from 'react-native';
-import { ScreenContainer } from '../styled';
+import { StyledScreenContainer } from '../styled';
 import { NavigationService } from '../utils';
 
 class AuthLoadingScreen extends React.Component<{}> {
@@ -10,10 +10,10 @@ class AuthLoadingScreen extends React.Component<{}> {
   }
   public render() {
     return (
-      <ScreenContainer>
+      <StyledScreenContainer>
         <ActivityIndicator />
         <StatusBar barStyle="default" />
-      </ScreenContainer>
+      </StyledScreenContainer>
     );
   }
 }

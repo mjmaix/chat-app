@@ -1,6 +1,12 @@
 import { StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
-import { containerStyles, formStyles } from '../components';
+import {
+  Button,
+  containerStyles,
+  FormikInput,
+  formStyles,
+  TextInput,
+} from '../components';
 
 const styles = StyleSheet.create({
   searchContainer: {
@@ -11,34 +17,40 @@ const styles = StyleSheet.create({
   },
 });
 
-export const ScreenContainer = styled.SafeAreaView`
+export const StyledScreenContainer = styled.SafeAreaView`
   ${props => ({
     ...containerStyles.fullCenter,
   })};
 `;
 
-export const BoldText = styled.Text`
+export const StyledBoldText = styled.Text`
   ${props => ({
     ...styles.text,
     color: props.theme.colors.primary,
   })}
 `;
 
-export const TopContainer = styled.View`
+export const StyledTopContainer = styled.View`
   ${props => ({
     ...containerStyles.fixedTop,
     ...styles.searchContainer,
   })}
 `;
 
-export const FormContainer = styled.View`
+export const StyledFormContainer = styled.View`
   ${props => ({
     ...formStyles.form,
   })}
 `;
 
-export const FormRow = styled.View`
+export const StyledFormRow = styled.View`
   ${props => ({
     ...formStyles.formItem,
   })}
 `;
+
+export const StyledTextInput = styled(TextInput).attrs({})``;
+
+export const StyledFormikInput = styled(FormikInput).attrs({})``;
+
+export const StyledButton = styled(Button).attrs({})``;
