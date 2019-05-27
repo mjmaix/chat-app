@@ -1,10 +1,10 @@
 import React from 'react';
-import { Icon } from 'react-native-elements';
+import { Icon, IconProps } from 'react-native-elements';
 import { IconObject } from '.';
 import { StyleGuide } from '../../core';
 
 interface HeaderIconProps {
-  icon: IconObject;
+  icon: IconObject & IconProps;
   onPress?: () => void;
 }
 

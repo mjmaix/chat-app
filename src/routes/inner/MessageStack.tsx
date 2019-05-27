@@ -1,5 +1,6 @@
 import React from 'react';
 import { createStackNavigator, NavigationScreenProps } from 'react-navigation';
+import { ThemedComponentProps } from 'styled-components';
 import { HeaderIcon } from '../../components';
 import { Mappings } from '../mappings';
 
@@ -7,15 +8,24 @@ const MessageStack = createStackNavigator(
   {
     Messages: {
       screen: Mappings.Messages.screen,
-      navigationOptions: ({ navigation }: NavigationScreenProps) => ({
-        title: 'Messages',
-        headerRight: (
-          <HeaderIcon
-            icon={Mappings.Contacts.icon}
-            onPress={() => navigation.navigate('Contacts')}
-          />
-        ),
-      }),
+      navigationOptions: ({
+        navigation,
+        screenProps,
+      }: NavigationScreenProps) => {
+        const { theme } = screenProps as ThemedComponentProps;
+        return {
+          title: 'Messages',
+          headerRight: (
+            <HeaderIcon
+              icon={{
+                ...Mappings.Contacts.icon,
+                iconStyle: { color: theme.colors.primarydarktext },
+              }}
+              onPress={() => navigation.navigate('Contacts')}
+            />
+          ),
+        };
+      },
     },
     Contacts: {
       screen: Mappings.Contacts.screen,
@@ -30,7 +40,20 @@ const MessageStack = createStackNavigator(
       }),
     },
   },
-  {},
+  {
+    defaultNavigationOptions: ({
+      navigation,
+      screenProps,
+    }: NavigationScreenProps) => {
+      const { theme } = screenProps as ThemedComponentProps;
+      return {
+        headerTintColor: theme.colors.primarydarktext,
+        headerStyle: { backgroundColor: theme.colors.primarydark },
+      };
+    },
+
+    // navigationOptions: ({ navigation }) => ({ header: StyledHeader }),
+  },
 );
 
 MessageStack.navigationOptions = ({ navigation }: NavigationScreenProps) => {

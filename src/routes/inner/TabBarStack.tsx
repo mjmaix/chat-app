@@ -3,30 +3,32 @@ import {
   BottomTabNavigatorConfig,
   createBottomTabNavigator,
 } from 'react-navigation';
-import { IconObject, IconWithBadge } from '../../components';
+import { ThemedComponentProps } from 'styled-components';
+import { IconWithBadge } from '../../components';
 import { Mappings } from '../mappings';
 import MessageStack from './MessageStack';
 import MoreStack from './MoreStack';
 
 const navBarOptions: BottomTabNavigatorConfig = {
-  defaultNavigationOptions: ({ navigation }) => ({
-    tabBarIcon: ({ focused, horizontal, tintColor }) => {
-      const { routeName } = navigation.state;
-      const iconDefault: IconObject = {
-        name: 'help',
-        type: 'Entypo',
-      };
+  defaultNavigationOptions: ({ navigation, screenProps }) => {
+    const { theme } = screenProps as ThemedComponentProps;
+    return {
+      tabBarIcon: ({ tintColor }) => {
+        const { routeName } = navigation.state;
 
-      return (
-        <IconWithBadge
-          icon={Mappings[routeName] ? Mappings[routeName].icon : iconDefault}
-          color={tintColor || ''}
-        />
-      );
-    },
-  }),
-  tabBarOptions: {
-    showLabel: false,
+        return (
+          <IconWithBadge
+            icon={Mappings[routeName].icon}
+            color={tintColor || ''}
+          />
+        );
+      },
+      tabBarOptions: {
+        showLabel: false,
+        activeTintColor: theme.colors.primary,
+        inactiveTintColor: theme.colors.secondary,
+      },
+    };
   },
 };
 

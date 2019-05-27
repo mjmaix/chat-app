@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 import { containerStyles, formStyles } from '../components';
-import { StyledComponent } from '../core';
 
 const styles = StyleSheet.create({
   searchContainer: {
@@ -12,14 +11,13 @@ const styles = StyleSheet.create({
   },
 });
 
-export const ScreenContainer = styled.SafeAreaView<StyledComponent>`
+export const ScreenContainer = styled.SafeAreaView`
   ${props => ({
     ...containerStyles.fullCenter,
-    backgroundColor: props.theme.colors.bgColor,
   })};
 `;
 
-export const BoldText = styled.Text<StyledComponent>`
+export const BoldText = styled.Text`
   ${props => ({
     ...styles.text,
     color: props.theme.colors.primary,

@@ -12,7 +12,7 @@ type Theme = typeof themes[0];
 
 export default class App extends Component<{}> {
   public readonly state = {
-    theme: Theme,
+    theme: Theme.get(),
     isReady: undefined,
   };
 
@@ -35,6 +35,9 @@ export default class App extends Component<{}> {
     return (
       <ThemeProvider theme={this.state.theme}>
         <AppRoutes
+          screenProps={{
+            theme: this.state.theme,
+          }}
           ref={navigatorRef => {
             NavigationService.setTopLevelNavigator(navigatorRef);
           }}
