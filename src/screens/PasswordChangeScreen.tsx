@@ -1,49 +1,47 @@
 import { Formik } from 'formik';
 import React, { Component } from 'react';
-import { Alert, Platform } from 'react-native';
+import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import * as Yup from 'yup';
-import { Header } from '../../components';
+import { Header } from '../components';
 import {
   StyledButton,
   StyledFormContainer,
   StyledFormikInput,
   StyledFormRow,
   StyledScreenContainer,
-} from '../../styled';
+} from '../styled';
 type Props = NavigationScreenProps;
 type Model = typeof formikInitialValues;
 
-const PasswordResetSchema = Yup.object().shape({
+const PasswordChangeSchema = Yup.object().shape({
   password: Yup.string()
     .label('Password')
     .required(),
-  code: Yup.string()
-    .label('Code')
-    .required(),
-  email: Yup.string()
-    .label('Email')
-    .email()
+  passwordConfirm: Yup.string()
+    .label('Confirm password')
+    .oneOf([Yup.ref('password'), null], 'Passwords must match'),
+  passwordOld: Yup.string()
+    .label('Old password')
     .required(),
 });
 
 const formikInitialValues = {
-  email: '',
+  oldPassword: '',
   password: '',
-  code: '',
+  passwordConfirm: '',
 };
 
-class PasswordResetScreen extends Component<Props> {
+class PasswordChangeScreen extends Component<Props> {
   public render() {
-    const { navigation } = this.props;
     return (
       <StyledScreenContainer>
-        <Header text={'Change password'} message="Type in the reset code" />
+        <Header text={'Change password'} />
         <Formik
           initialValues={formikInitialValues}
-          validationSchema={PasswordResetSchema}
+          validationSchema={PasswordChangeSchema}
           onSubmit={(values, actions) => {
-            this.onPressReset(values);
+            this.onPressChange(values);
           }}
         >
           {fProps => {
@@ -51,36 +49,32 @@ class PasswordResetScreen extends Component<Props> {
               <StyledFormContainer>
                 <StyledFormRow>
                   <StyledFormikInput
-                    dataKey="email"
+                    dataKey="passwordOld"
                     formProps={fProps}
-                    placeholder="Email"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    textContentType="emailAddress"
-                  />
-                </StyledFormRow>
-                <StyledFormRow>
-                  <StyledFormikInput
-                    dataKey="code"
-                    formProps={fProps}
-                    placeholder="Code"
+                    placeholder="Old password"
+                    secureTextEntry
                   />
                 </StyledFormRow>
                 <StyledFormRow>
                   <StyledFormikInput
                     dataKey="password"
                     formProps={fProps}
-                    secureTextEntry
                     placeholder="New password"
-                    keyboardType={
-                      Platform.OS === 'android' ? 'visible-password' : undefined
-                    }
+                    secureTextEntry
+                  />
+                </StyledFormRow>
+                <StyledFormRow>
+                  <StyledFormikInput
+                    dataKey="passwordConfirm"
+                    formProps={fProps}
+                    placeholder="Confirm password"
+                    secureTextEntry
                   />
                 </StyledFormRow>
                 <StyledFormRow>
                   <StyledButton
                     onPress={fProps.handleSubmit}
-                    label={'Submit'}
+                    label={'Change'}
                   />
                 </StyledFormRow>
               </StyledFormContainer>
@@ -90,10 +84,10 @@ class PasswordResetScreen extends Component<Props> {
       </StyledScreenContainer>
     );
   }
-  private onPressReset = async (form: Model) => {
-    // NavigationService.navigate('App');
+  private onPressChange = async (form: Model) => {
     Alert.alert('not yet implemented');
+    // NavigationService.navigate('SignIn');
   };
 }
 
-export { PasswordResetScreen };
+export { PasswordChangeScreen };

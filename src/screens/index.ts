@@ -1,5 +1,4 @@
 export * from './Auth/ChallengeScreen';
-export * from './Auth/PasswordChangeScreen';
 export * from './Auth/PasswordForgotScreen';
 export * from './Auth/PasswordResetScreen';
 export * from './Auth/SignInScreen';
@@ -8,5 +7,6 @@ export * from './AuthLoadingScreen';
 export * from './ChatScreen';
 export * from './ContactsScreen';
 export * from './MessagesScreen';
+export * from './PasswordChangeScreen';
 export * from './ProfileScreen';
 export * from './SettingsScreen';

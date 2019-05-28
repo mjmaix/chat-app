@@ -15,18 +15,23 @@ import {
 } from '../../styled';
 import { NavigationService } from '../../utils';
 
+type Props = NavigationScreenProps;
+type Model = typeof formikInitialValues;
+
 const SignInSchema = Yup.object().shape({
-  password: Yup.string().required('Required'),
+  password: Yup.string()
+    .label('Password')
+    .required(),
   email: Yup.string()
-    .email('Invalid email')
-    .required('Required'),
+    .label('Email')
+    .email()
+    .required(),
 });
 
-type Props = NavigationScreenProps;
-interface SignInModel {
-  email: string;
-  password: string;
-}
+const formikInitialValues = {
+  email: '',
+  password: '',
+};
 
 class SignInScreen extends Component<Props> {
   public render() {
@@ -41,10 +46,7 @@ class SignInScreen extends Component<Props> {
         <StyledScreenContainer>
           <StyledFormOverImageContainer>
             <Formik
-              initialValues={{
-                email: '',
-                password: '',
-              }}
+              initialValues={formikInitialValues}
               validationSchema={SignInSchema}
               onSubmit={(values, actions) => {
                 Alert.alert('submit');
@@ -114,7 +116,7 @@ class SignInScreen extends Component<Props> {
     );
   }
 
-  private onPressSignIn = async (form: SignInModel) => {
+  private onPressSignIn = async (form: Model) => {
     await AsyncStorage.setItem('userToken', `${form.email}_${form.password}`);
     NavigationService.navigate('App');
   };
