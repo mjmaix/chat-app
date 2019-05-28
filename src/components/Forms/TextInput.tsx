@@ -22,14 +22,14 @@ export function FormikInput<T extends StringKeyedObject>(
 ) {
   const { formProps, dataKey, ...props2 } = props;
   // const isValidating = formProps.isValidating;
-  // const isError = formProps.touched[dataKey] && !!formProps.errors[dataKey];
+  const isTouched = formProps.touched[dataKey];
   const errorMessage = formProps.errors[dataKey] as string;
   const onChangeText = formProps.handleChange(dataKey);
 
   let builtInputProps: InputProps = {
     ...props2,
     onChangeText,
-    errorMessage,
+    errorMessage: isTouched ? errorMessage : undefined,
   };
   if (formProps.handleBlur(dataKey)) {
     builtInputProps = {
