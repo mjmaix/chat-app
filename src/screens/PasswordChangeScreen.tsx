@@ -17,21 +17,17 @@ type Props = NavigationScreenProps;
 type Model = typeof formikInitialValues;
 
 const PasswordChangeSchema = Yup.object().shape({
-  password: Yup.string()
-    .label('Password')
-    .required(),
-  passwordConfirm: Yup.string()
-    .label('Confirm password')
-    .oneOf([Yup.ref('password'), null], 'Passwords must match'),
   passwordOld: Yup.string()
     .label('Old password')
+    .required(),
+  password: Yup.string()
+    .label('New password')
     .required(),
 });
 
 const formikInitialValues = {
   oldPassword: '',
   password: '',
-  passwordConfirm: '',
 };
 
 class PasswordChangeScreen extends Component<Props> {
@@ -62,17 +58,6 @@ class PasswordChangeScreen extends Component<Props> {
                     <StyledTextInput
                       as={PasswordInput}
                       placeholder="New password"
-                    />
-                  </FormikInputWrapper>
-                </StyledFormRow>
-                <StyledFormRow>
-                  <FormikInputWrapper
-                    dataKey="passwordConfirm"
-                    formProps={fProps}
-                  >
-                    <StyledTextInput
-                      as={PasswordInput}
-                      placeholder="Confirm password"
                     />
                   </FormikInputWrapper>
                 </StyledFormRow>

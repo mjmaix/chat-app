@@ -22,9 +22,6 @@ const SignUpSchema = Yup.object().shape({
     .label('Password')
     .min(8)
     .required(),
-  passwordConfirm: Yup.string()
-    .label('Confirm password')
-    .oneOf([Yup.ref('password'), null], 'Passwords must match'),
   email: Yup.string()
     .label('Email')
     .email()
@@ -51,7 +48,6 @@ const SignUpSchema = Yup.object().shape({
 const formikInitialValues = {
   email: '',
   password: '',
-  passwordConfirm: '',
   familyName: '',
   givenName: '',
   phoneNumber: '',
@@ -118,18 +114,6 @@ class SignUpScreen extends Component<Props> {
                   </FormikInputWrapper>
                 </StyledFormRow>
 
-                <StyledFormRow>
-                  <FormikInputWrapper
-                    dataKey="passwordConfirm"
-                    formProps={fProps}
-                  >
-                    <StyledTextInput
-                      as={PasswordInput}
-                      placeholder="Confirm password"
-                      onSubmitEditing={fProps.handleSubmit}
-                    />
-                  </FormikInputWrapper>
-                </StyledFormRow>
                 <StyledFormRow>
                   <StyledButton
                     onPress={fProps.handleSubmit}
