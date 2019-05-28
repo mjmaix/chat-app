@@ -1,6 +1,17 @@
 import React from 'react';
 import { IconObject } from '../components';
-import { ChallengeScreen, ChatScreen, ContactsScreen, MessagesScreen, PasswordForgotScreen, PasswordResetScreen, ProfileScreen, SettingsScreen, SignInScreen, SignUpScreen } from '../screens';
+import {
+  ChallengeScreen,
+  ChatScreen,
+  ContactsScreen,
+  MessagesScreen,
+  PasswordForgotScreen,
+  PasswordResetScreen,
+  ProfileScreen,
+  SettingsScreen,
+  SignInScreen,
+  SignUpScreen,
+} from '../screens';
 
 interface Mapping {
   icon: IconObject;
@@ -14,7 +25,7 @@ interface Mappings {
 export const Mappings: Mappings = {
   Profile: {
     screen: ProfileScreen,
-    icon: { name: 'user', type: 'antdesign' },
+    icon: { name: 'user', type: 'feather' },
   },
   Settings: {
     screen: SettingsScreen,
@@ -54,10 +65,10 @@ export const Mappings: Mappings = {
   },
   MessageStack: {
     screen: null,
-    icon: { name: 'mail-outline', type: 'material' },
+    icon: { name: 'chat-bubble-outline', type: 'material' },
   },
   MoreStack: {
     screen: null,
-    icon: { name: 'more-horiz', type: 'material' },
+    icon: { name: 'user', type: 'feather' },
   },
 };
