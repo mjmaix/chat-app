@@ -93,6 +93,13 @@ def enableSeparateBuildPerCPUArchitecture = false
  */
 def enableProguardInReleaseBuilds = false
 
+/**
+ * Keychain passwords
+ */
+ def username = System.getProperty("user.name")
+ def storePass = getPassword(username, "CHAT_APP_RELEASE_STORE_PASSWORD")
+ def keyPass = getPassword(username, "CHAT_APP_RELEASE_KEY_PASSWORD")
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
@@ -108,6 +115,16 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    signingConfigs {
+        release {
+            if (project.hasProperty('CHAT_APP_RELEASE_STORE_FILE')) {
+                storeFile file(CHAT_APP_RELEASE_STORE_FILE)
+                keyAlias CHAT_APP_RELEASE_KEY_ALIAS
+                storePassword storePass
+                keyPassword keyPass
+            }
+        }
+    }
     splits {
         abi {
             reset()
@@ -118,6 +135,7 @@ android {
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
