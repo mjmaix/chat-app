@@ -1,12 +1,7 @@
 import { StyleSheet } from 'react-native';
+import { Input } from 'react-native-elements';
 import styled from 'styled-components/native';
-import {
-  Button,
-  containerStyles,
-  FormikInput,
-  formStyles,
-  TextInput,
-} from '../components';
+import { Button, containerStyles, formStyles } from '../components';
 import { StyleGuide } from '../core';
 
 const styles = StyleSheet.create({
@@ -50,9 +45,7 @@ export const StyledFormRow = styled.View`
   })}
 `;
 
-export const StyledTextInput = styled(TextInput).attrs({})``;
-
-export const StyledFormikInput = styled(FormikInput).attrs({})``;
+export const StyledTextInput = styled(Input).attrs({})``;
 
 export const StyledButton = styled(Button).attrs({})``;
 

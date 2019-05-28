@@ -4,12 +4,14 @@ import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import * as Yup from 'yup';
 import { Header } from '../../components';
+import { EmailInput } from '../../components/Inputs';
+import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
   StyledFormContainer,
-  StyledFormikInput,
   StyledFormRow,
   StyledScreenContainer,
+  StyledTextInput,
 } from '../../styled';
 
 interface ChallengeScreen {
@@ -62,21 +64,16 @@ class ChallengeScreen extends Component<Props> {
             return (
               <StyledFormContainer>
                 <StyledFormRow>
-                  <StyledFormikInput
-                    dataKey="email"
-                    formProps={fProps}
-                    placeholder="Email"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    textContentType="emailAddress"
-                  />
+                  <FormikInputWrapper dataKey="email" formProps={fProps}>
+                    <StyledTextInput as={EmailInput} />
+                  </FormikInputWrapper>
                 </StyledFormRow>
                 <StyledFormRow>
-                  <StyledFormikInput
-                    dataKey="code"
-                    formProps={fProps}
-                    placeholder={this.getDisplayText('placeholder')}
-                  />
+                  <FormikInputWrapper dataKey="code" formProps={fProps}>
+                    <StyledTextInput
+                      placeholder={this.getDisplayText('placeholder')}
+                    />
+                  </FormikInputWrapper>
                 </StyledFormRow>
                 <StyledFormRow>
                   <StyledButton

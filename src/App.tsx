@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { ThemeProvider as RneThemeProvider } from 'react-native-elements';
 import { ThemeProvider as ScThemeProvider } from 'styled-components';
-import { error, STORAGE_KEY, Theme, ThemeName, themes } from './core';
+import { error, STORAGE_KEY, ThemeHelper, ThemeName, themes } from './core';
 import { AppRoutes } from './routes';
 import './setup';
 import { NavigationService } from './utils';
@@ -12,12 +12,12 @@ type Theme = typeof themes[0];
 
 export default class App extends Component<{}> {
   public readonly state = {
-    theme: Theme.get(),
+    theme: ThemeHelper.get(),
     isReady: undefined,
   };
 
   public componentWillMount() {
-    Theme.addListener(theme => this.setState({ theme }));
+    ThemeHelper.addListener(theme => this.setState({ theme }));
   }
 
   public async componentDidMount() {
@@ -25,7 +25,7 @@ export default class App extends Component<{}> {
   }
 
   public componentWillUnmount() {
-    Theme.removeAllListeners();
+    ThemeHelper.removeAllListeners();
   }
 
   public render() {
@@ -52,8 +52,8 @@ export default class App extends Component<{}> {
   private async loadTheme() {
     try {
       const themeId = (await AsyncStorage.getItem(STORAGE_KEY)) as ThemeName;
-      Theme.set(themeId);
-      this.setState({ isReady: true, theme: Theme.get() });
+      ThemeHelper.set(themeId);
+      this.setState({ isReady: true, theme: ThemeHelper.get() });
     } catch (err) {
       this.setState({ isReady: true });
       error(err);

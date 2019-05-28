@@ -5,13 +5,15 @@ import { Alert, Image, ImageBackground } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import * as Yup from 'yup';
 import BannerImage from '../../../assets/icon_raw.jpg';
+import { EmailInput, PasswordInput } from '../../components/Inputs';
+import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
   StyledFormContainer,
-  StyledFormikInput,
   StyledFormOverImageContainer,
   StyledFormRow,
   StyledScreenContainer,
+  StyledTextInput,
 } from '../../styled';
 import { NavigationService } from '../../utils';
 
@@ -57,25 +59,17 @@ class SignInScreen extends Component<Props> {
                 return (
                   <StyledFormContainer>
                     <StyledFormRow>
-                      <StyledFormikInput
-                        dataKey="email"
-                        formProps={fProps}
-                        placeholder="Email"
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                        textContentType="emailAddress"
-                      />
+                      <FormikInputWrapper dataKey="email" formProps={fProps}>
+                        <StyledTextInput as={EmailInput} />
+                      </FormikInputWrapper>
                     </StyledFormRow>
                     <StyledFormRow>
-                      <StyledFormikInput
-                        dataKey="password"
-                        formProps={fProps}
-                        secureTextEntry
-                        clearTextOnFocus
-                        placeholder="Password"
-                        textContentType="password"
-                        onSubmitEditing={fProps.handleSubmit}
-                      />
+                      <FormikInputWrapper dataKey="password" formProps={fProps}>
+                        <StyledTextInput
+                          as={PasswordInput}
+                          onSubmitEditing={fProps.handleSubmit}
+                        />
+                      </FormikInputWrapper>
                     </StyledFormRow>
                     <StyledFormRow>
                       <StyledButton

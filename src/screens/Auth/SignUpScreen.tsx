@@ -1,15 +1,17 @@
 import { Formik } from 'formik';
 import React, { Component } from 'react';
-import { Alert, Platform } from 'react-native';
+import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import * as Yup from 'yup';
 import { Header } from '../../components';
+import { EmailInput, PasswordInput } from '../../components/Inputs';
+import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
   StyledFormContainer,
-  StyledFormikInput,
   StyledFormRow,
   StyledScreenContainer,
+  StyledTextInput,
 } from '../../styled';
 
 type Props = NavigationScreenProps;
@@ -73,69 +75,60 @@ class SignUpScreen extends Component<Props> {
             return (
               <StyledFormContainer>
                 <StyledFormRow>
-                  <StyledFormikInput
-                    dataKey="email"
-                    formProps={fProps}
-                    placeholder="Email"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    textContentType="emailAddress"
-                  />
-                </StyledFormRow>
-                <StyledFormRow>
-                  <StyledFormikInput
-                    dataKey="phoneNumber"
-                    formProps={fProps}
-                    placeholder="Mobile"
-                    keyboardType="phone-pad"
-                    autoCapitalize="none"
-                    textContentType="telephoneNumber"
-                  />
+                  <FormikInputWrapper dataKey="email" formProps={fProps}>
+                    <StyledTextInput as={EmailInput} />
+                  </FormikInputWrapper>
                 </StyledFormRow>
 
                 <StyledFormRow>
-                  <StyledFormikInput
-                    dataKey="givenName"
-                    formProps={fProps}
-                    placeholder="Given name"
-                    textContentType="givenName"
-                  />
+                  <FormikInputWrapper dataKey="phoneNumber" formProps={fProps}>
+                    <StyledTextInput
+                      placeholder="Mobile"
+                      keyboardType="phone-pad"
+                      autoCapitalize="none"
+                      textContentType="telephoneNumber"
+                    />
+                  </FormikInputWrapper>
                 </StyledFormRow>
 
                 <StyledFormRow>
-                  <StyledFormikInput
-                    dataKey="familyName"
-                    formProps={fProps}
-                    placeholder="Family name"
-                    textContentType="familyName"
-                  />
+                  <FormikInputWrapper dataKey="givenName" formProps={fProps}>
+                    <StyledTextInput
+                      placeholder="Given name"
+                      textContentType="givenName"
+                    />
+                  </FormikInputWrapper>
                 </StyledFormRow>
 
                 <StyledFormRow>
-                  <StyledFormikInput
-                    dataKey="password"
-                    formProps={fProps}
-                    placeholder="Password"
-                    keyboardType={
-                      Platform.OS === 'android' ? 'visible-password' : undefined
-                    }
-                    secureTextEntry
-                    textContentType="password"
-                  />
+                  <FormikInputWrapper dataKey="familyName" formProps={fProps}>
+                    <StyledTextInput
+                      placeholder="Family name"
+                      textContentType="familyName"
+                    />
+                  </FormikInputWrapper>
                 </StyledFormRow>
 
                 <StyledFormRow>
-                  <StyledFormikInput
+                  <FormikInputWrapper dataKey="password" formProps={fProps}>
+                    <StyledTextInput
+                      as={PasswordInput}
+                      onSubmitEditing={fProps.handleSubmit}
+                    />
+                  </FormikInputWrapper>
+                </StyledFormRow>
+
+                <StyledFormRow>
+                  <FormikInputWrapper
                     dataKey="passwordConfirm"
                     formProps={fProps}
-                    placeholder="Confirm password"
-                    keyboardType={
-                      Platform.OS === 'android' ? 'visible-password' : undefined
-                    }
-                    secureTextEntry
-                    textContentType="password"
-                    onSubmitEditing={fProps.handleSubmit}
-                  />
+                  >
+                    <StyledTextInput
+                      as={PasswordInput}
+                      placeholder="Confirm password"
+                      onSubmitEditing={fProps.handleSubmit}
+                    />
+                  </FormikInputWrapper>
                 </StyledFormRow>
                 <StyledFormRow>
                   <StyledButton

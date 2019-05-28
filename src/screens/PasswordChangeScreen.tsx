@@ -4,12 +4,14 @@ import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import * as Yup from 'yup';
 import { Header } from '../components';
+import { PasswordInput } from '../components/Inputs';
+import { FormikInputWrapper } from '../hocs';
 import {
   StyledButton,
   StyledFormContainer,
-  StyledFormikInput,
   StyledFormRow,
   StyledScreenContainer,
+  StyledTextInput,
 } from '../styled';
 type Props = NavigationScreenProps;
 type Model = typeof formikInitialValues;
@@ -48,28 +50,31 @@ class PasswordChangeScreen extends Component<Props> {
             return (
               <StyledFormContainer>
                 <StyledFormRow>
-                  <StyledFormikInput
-                    dataKey="passwordOld"
-                    formProps={fProps}
-                    placeholder="Old password"
-                    secureTextEntry
-                  />
+                  <FormikInputWrapper dataKey="passwordOld" formProps={fProps}>
+                    <StyledTextInput
+                      as={PasswordInput}
+                      placeholder="Old password"
+                    />
+                  </FormikInputWrapper>
                 </StyledFormRow>
                 <StyledFormRow>
-                  <StyledFormikInput
-                    dataKey="password"
-                    formProps={fProps}
-                    placeholder="New password"
-                    secureTextEntry
-                  />
+                  <FormikInputWrapper dataKey="password" formProps={fProps}>
+                    <StyledTextInput
+                      as={PasswordInput}
+                      placeholder="New password"
+                    />
+                  </FormikInputWrapper>
                 </StyledFormRow>
                 <StyledFormRow>
-                  <StyledFormikInput
+                  <FormikInputWrapper
                     dataKey="passwordConfirm"
                     formProps={fProps}
-                    placeholder="Confirm password"
-                    secureTextEntry
-                  />
+                  >
+                    <StyledTextInput
+                      as={PasswordInput}
+                      placeholder="Confirm password"
+                    />
+                  </FormikInputWrapper>
                 </StyledFormRow>
                 <StyledFormRow>
                   <StyledButton

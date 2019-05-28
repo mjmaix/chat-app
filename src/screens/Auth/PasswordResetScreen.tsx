@@ -1,15 +1,17 @@
 import { Formik } from 'formik';
 import React, { Component } from 'react';
-import { Alert, Platform } from 'react-native';
+import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import * as Yup from 'yup';
 import { Header } from '../../components';
+import { EmailInput, PasswordInput } from '../../components/Inputs';
+import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
   StyledFormContainer,
-  StyledFormikInput,
   StyledFormRow,
   StyledScreenContainer,
+  StyledTextInput,
 } from '../../styled';
 type Props = NavigationScreenProps;
 type Model = typeof formikInitialValues;
@@ -50,32 +52,22 @@ class PasswordResetScreen extends Component<Props> {
             return (
               <StyledFormContainer>
                 <StyledFormRow>
-                  <StyledFormikInput
-                    dataKey="email"
-                    formProps={fProps}
-                    placeholder="Email"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    textContentType="emailAddress"
-                  />
+                  <FormikInputWrapper dataKey="email" formProps={fProps}>
+                    <StyledTextInput as={EmailInput} />
+                  </FormikInputWrapper>
                 </StyledFormRow>
                 <StyledFormRow>
-                  <StyledFormikInput
-                    dataKey="code"
-                    formProps={fProps}
-                    placeholder="Code"
-                  />
+                  <FormikInputWrapper dataKey="code" formProps={fProps}>
+                    <StyledTextInput placeholder="Code" />
+                  </FormikInputWrapper>
                 </StyledFormRow>
                 <StyledFormRow>
-                  <StyledFormikInput
-                    dataKey="password"
-                    formProps={fProps}
-                    secureTextEntry
-                    placeholder="New password"
-                    keyboardType={
-                      Platform.OS === 'android' ? 'visible-password' : undefined
-                    }
-                  />
+                  <FormikInputWrapper dataKey="password" formProps={fProps}>
+                    <StyledTextInput
+                      as={PasswordInput}
+                      onSubmitEditing={fProps.handleSubmit}
+                    />
+                  </FormikInputWrapper>
                 </StyledFormRow>
                 <StyledFormRow>
                   <StyledButton

@@ -1,19 +1,18 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
 import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
-import { withTheme as rneWithTheme } from 'react-native-elements';
+import { ThemeProps, withTheme as rneWithTheme } from 'react-native-elements';
+import { NavigationScreenProps } from 'react-navigation';
 import { ThemeListItem } from '../components';
-import { STORAGE_KEY, Theme, themes } from '../core';
+import { STORAGE_KEY, Theme, ThemeHelper, themes } from '../core';
 import { StyledBoldText, StyledScreenContainer } from '../styled';
 
-type Theme = typeof themes[0];
-
 const saveThemeId = (item: Theme) => {
-  Theme.set(item.id);
+  ThemeHelper.set(item.id);
   void AsyncStorage.setItem(STORAGE_KEY, item.id);
 };
 
-const SettingsScreen = props => {
+const SettingsScreen = (props: ThemeProps<Theme> & NavigationScreenProps) => {
   const ListHeaderComp = (
     <StyledBoldText
       style={styles.headline}

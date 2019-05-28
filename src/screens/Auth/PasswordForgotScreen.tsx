@@ -4,12 +4,14 @@ import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import * as Yup from 'yup';
 import { Header } from '../../components';
+import { EmailInput } from '../../components/Inputs';
+import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
   StyledFormContainer,
-  StyledFormikInput,
   StyledFormRow,
   StyledScreenContainer,
+  StyledTextInput,
 } from '../../styled';
 import { NavigationService } from '../../utils';
 
@@ -46,14 +48,9 @@ class PasswordForgotScreen extends Component<Props> {
             return (
               <StyledFormContainer>
                 <StyledFormRow>
-                  <StyledFormikInput
-                    dataKey="email"
-                    formProps={fProps}
-                    placeholder="Email"
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    textContentType="emailAddress"
-                  />
+                  <FormikInputWrapper dataKey="email" formProps={fProps}>
+                    <StyledTextInput as={EmailInput} />
+                  </FormikInputWrapper>
                 </StyledFormRow>
                 <StyledFormRow>
                   <StyledButton onPress={fProps.handleSubmit} label={'Reset'} />
