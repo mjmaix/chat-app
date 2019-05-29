@@ -1,0 +1,8 @@
+app_identifier("com.mjabadilla.chatapp") # The bundle identifier of your app
+apple_id("michael.abadilla@icloud.com") # Your Apple email address
+
+itc_team_id("117135251") # App Store Connect Team ID
+team_id("QLWS2CFTC8") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile
