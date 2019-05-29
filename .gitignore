@@ -65,3 +65,4 @@ coverage
 # assets
 *.psd
 *.xcf
+ios/Chat.app.dSYM.zip
