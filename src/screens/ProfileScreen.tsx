@@ -7,7 +7,6 @@ import {
   StyledFormContainer,
   StyledFormRow,
   StyledTextInput,
-  StyledBottomContainer,
   StyledScrollView,
   StyledView,
 } from '../styled';
@@ -15,9 +14,8 @@ import { NavigationService } from '../utils';
 import { UpdateProfileSchema, StyleGuide } from '../core';
 import { Formik } from 'formik';
 import { EmailInput } from '../components/Inputs';
-import { Alert, ScrollView } from 'react-native';
+import { Alert } from 'react-native';
 import { FormikInputWrapper } from '../hocs';
-import { containerStyles, TabBarConsumer } from '../components';
 
 type Model = typeof formikInitialValues;
 
