@@ -2,9 +2,9 @@ import { Formik } from 'formik';
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
-import * as Yup from 'yup';
 import { Header } from '../../components';
 import { EmailInput, PasswordInput } from '../../components/Inputs';
+import { SignUpSchema } from '../../core';
 import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
@@ -16,34 +16,6 @@ import {
 
 type Props = NavigationScreenProps;
 type Model = typeof formikInitialValues;
-
-const SignUpSchema = Yup.object().shape({
-  password: Yup.string()
-    .label('Password')
-    .min(8)
-    .required(),
-  email: Yup.string()
-    .label('Email')
-    .email()
-    .required(),
-  familyName: Yup.string()
-    .label('Family name')
-    .notRequired()
-    .ensure(),
-  givenName: Yup.string()
-    .label('Given name')
-    .notRequired()
-    .ensure(),
-  phoneNumber: Yup.string()
-    .label('Mobile number')
-    .matches(/^[=+\s]*(?:[0-9][=+\s]*){8,}$/, 'Not a valid mobile number')
-    .required(),
-  picture: Yup.string()
-    .label('Profile picture')
-    .url()
-    .notRequired()
-    .ensure(),
-});
 
 const formikInitialValues = {
   email: '',

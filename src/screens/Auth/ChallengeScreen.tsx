@@ -2,17 +2,11 @@ import { Formik } from 'formik';
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
-import * as Yup from 'yup';
 import { Header } from '../../components';
 import { EmailInput } from '../../components/Inputs';
+import { ChallengeSchema } from '../../core';
 import { FormikInputWrapper } from '../../hocs';
-import {
-  StyledButton,
-  StyledFormContainer,
-  StyledFormRow,
-  StyledScreenContainer,
-  StyledTextInput,
-} from '../../styled';
+import { StyledButton, StyledFormContainer, StyledFormRow, StyledScreenContainer, StyledTextInput } from '../../styled';
 
 interface ChallengeScreen {
   title: string;
@@ -22,16 +16,7 @@ interface ChallengeScreen {
 type Props = ChallengeScreen & NavigationScreenProps;
 type Model = typeof formikInitialValues;
 
-const ChallengeSchema = Yup.object().shape({
-  email: Yup.string()
-    .label('Email')
-    .email()
-    .required(),
-  code: Yup.string()
-    .label('Code')
-    .email()
-    .required('Required'),
-});
+
 
 const formikInitialValues = {
   email: '',
@@ -101,3 +86,4 @@ class ChallengeScreen extends Component<Props> {
 }
 
 export { ChallengeScreen };
+

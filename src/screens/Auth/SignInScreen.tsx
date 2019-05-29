@@ -3,32 +3,15 @@ import { Formik } from 'formik';
 import React, { Component } from 'react';
 import { Alert, Image, ImageBackground } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
-import * as Yup from 'yup';
 import BannerImage from '../../../assets/icon_raw.jpg';
 import { EmailInput, PasswordInput } from '../../components/Inputs';
+import { SignInSchema } from '../../core';
 import { FormikInputWrapper } from '../../hocs';
-import {
-  StyledButton,
-  StyledFormContainer,
-  StyledFormOverImageContainer,
-  StyledFormRow,
-  StyledScreenContainer,
-  StyledTextInput,
-} from '../../styled';
+import { StyledButton, StyledFormContainer, StyledFormOverImageContainer, StyledFormRow, StyledScreenContainer, StyledTextInput } from '../../styled';
 import { NavigationService } from '../../utils';
-
+  
 type Props = NavigationScreenProps;
 type Model = typeof formikInitialValues;
-
-const SignInSchema = Yup.object().shape({
-  password: Yup.string()
-    .label('Password')
-    .required(),
-  email: Yup.string()
-    .label('Email')
-    .email()
-    .required(),
-});
 
 const formikInitialValues = {
   email: '',
@@ -126,10 +109,11 @@ class SignInScreen extends Component<Props> {
   private onPressConfirmCode = async () => {
     NavigationService.navigate('Challenge', {
       title: 'Confirmation',
-      message: 'We\'ve sent a verification code to your email.',
+      message: "We've sent a verification code to your email.",
       placeholder: 'Type here',
     });
   };
 }
 
 export { SignInScreen };
+

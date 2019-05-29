@@ -2,9 +2,9 @@ import { Formik } from 'formik';
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
-import * as Yup from 'yup';
 import { Header } from '../../components';
 import { EmailInput, PasswordInput } from '../../components/Inputs';
+import { PasswordResetSchema } from '../../core';
 import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
@@ -15,19 +15,6 @@ import {
 } from '../../styled';
 type Props = NavigationScreenProps;
 type Model = typeof formikInitialValues;
-
-const PasswordResetSchema = Yup.object().shape({
-  password: Yup.string()
-    .label('Password')
-    .required(),
-  code: Yup.string()
-    .label('Code')
-    .required(),
-  email: Yup.string()
-    .label('Email')
-    .email()
-    .required(),
-});
 
 const formikInitialValues = {
   email: '',
