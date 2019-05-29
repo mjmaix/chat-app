@@ -52,7 +52,7 @@ export const themes: Theme[] = [
     colors: {
       bgColor: 'white',
       primary: '#ec407a',
-      primarytext: 'black',
+      primarytext: 'white',
       primarylight: '#ff77a9',
       primarylighttext: 'black',
       primarydark: '#b4004e',
