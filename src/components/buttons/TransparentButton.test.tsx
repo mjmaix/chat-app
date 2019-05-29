@@ -3,7 +3,6 @@ import { fireEvent, render } from 'react-native-testing-library';
 import { TransparentButton as Button } from './TransparentButton';
 
 const onPressMock = jest.fn();
-const mockClickEvent = {};
 
 const createTestProps = (props?: object) => ({
   label: 'Text',
@@ -14,7 +13,7 @@ const createTestProps = (props?: object) => ({
 
 describe('TransparentButton', () => {
   const props = createTestProps();
-  const { getByText, getByTestId } = render(<Button {...props} />);
+  const { getByTestId } = render(<Button {...props} />);
   fireEvent.press(getByTestId('button'));
 
   it('should render a label', () => {

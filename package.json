@@ -30,6 +30,7 @@
     "eventemitter3": "^3.1.2",
     "formik": "^1.5.7",
     "hex-to-rgb": "^1.0.1",
+    "jest-styled-components": "^6.3.1",
     "lodash": "^4.17.11",
     "native-base-shoutem-theme": "^0.2.3",
     "react": "16.8.6",

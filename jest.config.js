@@ -1,18 +1,23 @@
 module.exports = {
   verbose: true,
   collectCoverage: true,
-  coverageReporters: ["json", "html"],
+  coverageReporters: ['json', 'html'],
 
-  preset: "react-native",
+  // preset: 'ts-jest/presets/js-with-ts',
+  preset: 'react-native',
   transform: {
-    ".+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js",
-    "\\.(ts|tsx)$": "ts-jest",
+    '.+\\.js$': '<rootDir>/node_modules/react-native/jest/preprocessor.js',
+    '\\.(ts|tsx)$': 'ts-jest',
   },
   globals: {
-    "ts-jest": {
-      tsConfig: "tsconfig.jest.json",
+    'ts-jest': {
+      tsConfig: 'tsconfig.jest.json',
     },
   },
-  moduleFileExtensions: ["ts", "tsx", "js"],
-  testRegex: "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+  moduleFileExtensions: ['ts', 'tsx', 'js'],
+  moduleNameMapper: {
+    'styled-components/native':
+      '<rootDir>/node_modules/styled-components/native/dist/styled-components.native.cjs.js',
+  },
+  testRegex: '(/__tests__/.*|\\.(test|spec|snap))\\.(ts|tsx|js)$',
 };

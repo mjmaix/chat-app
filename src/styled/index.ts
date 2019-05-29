@@ -11,6 +11,9 @@ const styles = StyleSheet.create({
 });
 
 export * from './StyledViews';
+export * from './StyledView';
+export * from './StyledScreenContainer';
+export * from './StyledScrollView';
 
 export const StyledBoldText = styled.Text`
   ${props => ({

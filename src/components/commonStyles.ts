@@ -12,6 +12,9 @@ export const formStyles = StyleSheet.create({
 });
 
 export const containerStyles = StyleSheet.create({
+  fullWidth: {
+    width: '100%',
+  },
   fullCenter: {
     flex: 1,
     alignItems: 'center',
