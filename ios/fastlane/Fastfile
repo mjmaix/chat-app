@@ -27,6 +27,19 @@ platform :ios do
     build_app(scheme: "Chat-release")
     upload_to_testflight
 
+    # Build is success
+    git_commit(
+      path: [
+        "./Chat/Info.plist",
+        "./Chat-tvOS/Info.plist",
+        "./Chat-tvOSTests/Info.plist",
+        "./ChatTests/Info.plist",
+        "./Chat.xcodeproj/project.pbxproj"
+      ],
+      message: "iOS fastlane file changes"
+    )
+    push_to_git_remote
+
     add_git_tag
     push_git_tags
   end
