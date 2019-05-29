@@ -39,7 +39,7 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allow chat to show city.</string>
-	<NSLocationAlwaysUsageDescription>
+	<key>NSLocationAlwaysUsageDescription></key>
 	<string>Allow to detect closest chat users.</string>
 	<key>UIAppFonts</key>
 	<array>
