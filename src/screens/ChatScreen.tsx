@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { GiftedChat } from 'react-native-gifted-chat';
+import { ThemeConsumer } from 'react-native-elements';
+import { Bubble, GiftedChat } from 'react-native-gifted-chat';
 import { IMessage, User } from 'react-native-gifted-chat/lib/types';
 import { NavigationScreenProps } from 'react-navigation';
+import { ThemedComponentProps } from 'styled-components';
 import { StyledScreenContainer } from '../styled';
+import { isLight } from '../utils';
 
 type Props = NavigationScreenProps;
 
@@ -40,15 +43,50 @@ class ChatScreen extends Component<Props, State> {
   }
   public render() {
     return (
-      <StyledScreenContainer>
-        <View style={styles.giftedChat}>
-          <GiftedChat
-            messages={this.state.messages}
-            onSend={messages => this.onSend(messages)}
-            user={this.state.myUser}
-          />
-        </View>
-      </StyledScreenContainer>
+      <ThemeConsumer>
+        {(props: ThemedComponentProps) => {
+          const { theme } = props;
+          const { colors } = theme;
+          return (
+            <StyledScreenContainer>
+              <View style={styles.giftedChat}>
+                <GiftedChat
+                  messages={this.state.messages}
+                  onSend={messages => this.onSend(messages)}
+                  user={this.state.myUser}
+                  renderBubble={bubbleProps => {
+                    return (
+                      <Bubble
+                        {...bubbleProps}
+                        textStyle={{
+                          right: {
+                            color: isLight(colors.primarylight)
+                              ? colors.primarylighttext
+                              : 'white',
+                          },
+                          left: {
+                            color: isLight(colors.secondarylight)
+                              ? colors.secondarylighttext
+                              : 'white',
+                          },
+                        }}
+                        wrapperStyle={{
+                          right: {
+                            backgroundColor: colors.primarylight,
+                          },
+                          left: {
+                            backgroundColor: colors.secondarylight,
+                          },
+                        }}
+                      />
+                    );
+                  }}
+                />
+              </View>
+            </StyledScreenContainer>
+          );
+        }}
+      </ThemeConsumer>
     );
   }
 
