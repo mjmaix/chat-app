@@ -19,9 +19,9 @@ export const StyledBoldText = styled.Text`
   })}
 `;
 
-export const StyledTextInput = styled(Input).attrs({})``;
+export const StyledTextInput = styled(Input).attrs(props => ({}))``;
 
-export const StyledButton = styled(Button).attrs({})``;
+export const StyledButton = styled(Button).attrs(props => ({}))``;
 
 export const StyledFormOverImageContainer = styled.View`
   background-color: 'rgba(255,255,255,0.3)';

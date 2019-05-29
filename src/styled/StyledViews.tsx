@@ -18,13 +18,13 @@ export const StyledScreenContainer = styled.SafeAreaView`
   })};
 `;
 
-export const StyledScrollView = styled(TabBarAwareScrollView).attrs({
+export const StyledScrollView = styled(TabBarAwareScrollView).attrs(props => ({
   contentContainerStyle: () => {
     return {
       flex: 1,
     };
   },
-})`
+}))`
   flex: 1;
 `;
 
