@@ -32,6 +32,12 @@ const MoreStack = createStackNavigator(
         title: 'Settings',
       }),
     },
+    Change: {
+      screen: Mappings.Change.screen,
+      navigationOptions: () => ({
+        title: 'Change password',
+      }),
+    },
   },
   {
     defaultNavigationOptions: ({

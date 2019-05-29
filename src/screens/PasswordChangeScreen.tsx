@@ -2,7 +2,6 @@ import { Formik } from 'formik';
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
-import { Header } from '../components';
 import { PasswordInput } from '../components/Inputs';
 import { PasswordChangeSchema } from '../core';
 import { FormikInputWrapper } from '../hocs';
@@ -25,7 +24,6 @@ class PasswordChangeScreen extends Component<Props> {
   public render() {
     return (
       <StyledScreenContainer>
-        <Header text={'Change password'} />
         <Formik
           initialValues={formikInitialValues}
           validationSchema={PasswordChangeSchema}
