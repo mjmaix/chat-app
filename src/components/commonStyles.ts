@@ -21,4 +21,8 @@ export const containerStyles = StyleSheet.create({
     position: 'absolute',
     top: 0,
   },
+  fixedBottom: {
+    position: 'absolute',
+    bottom: 0,
+  },
 });

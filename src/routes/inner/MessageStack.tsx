@@ -47,13 +47,13 @@ const MessageStack = createStackNavigator(
       navigation,
     }: NavigationScreenProps) => {
       const { theme } = screenProps as ThemedComponentProps;
-      const headerColor = theme.colors.primarydark;
+      const headerColor = theme.colors.primary;
 
       navigation.addListener('didFocus', () => {
         updateStatusBarStyle(headerColor);
       });
       return {
-        headerTintColor: theme.colors.primarydarktext,
+        headerTintColor: theme.colors.primarytext,
         headerStyle: { backgroundColor: headerColor },
       };
     },

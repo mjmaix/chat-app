@@ -11,6 +11,7 @@ import {
   SettingsScreen,
   SignInScreen,
   SignUpScreen,
+  PasswordChangeScreen,
 } from '../screens';
 
 interface Mapping {
@@ -54,6 +55,10 @@ export const Mappings: Mappings = {
   Forgot: {
     screen: PasswordForgotScreen,
     icon: { name: '', type: 'antdesign' },
+  },
+  Change: {
+    screen: PasswordChangeScreen,
+    icon: { name: 'lock', type: 'antdesign' },
   },
   Reset: {
     screen: PasswordResetScreen,
