@@ -1,0 +1,74 @@
+{
+    "identityPoolName": "chatlove0994aaff_identitypool_0994aaff",
+    "allowUnauthenticatedIdentities": false,
+    "lambdaLogPolicy": "chatlo_0994aaff_lambda_log_policy",
+    "openIdLambdaRoleName": "chatlo_0994aaff_openid_lambda_role",
+    "openIdRolePolicy": "chatlo_0994aaff_openid_pass_role_policy",
+    "openIdLambdaIAMPolicy": "chatlo_0994aaff_openid_lambda_iam_policy",
+    "openIdLogPolicy": "chatlo_0994aaff_openid_lambda_log_policy",
+    "userPoolName": "chatlove0994aaff_userpool_0994aaff",
+    "autoVerifiedAttributes": [
+        "email"
+    ],
+    "mfaConfiguration": "OFF",
+    "mfaTypes": [
+        "SMS Text Message"
+    ],
+    "roleName": "chatlo0994aaff_sns-role",
+    "roleExternalId": "chatlo0994aaff_role_external_id",
+    "policyName": "chatlo0994aaff-sns-policy",
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [],
+    "requiredAttributes": [
+        "email",
+        "family_name",
+        "given_name",
+        "phone_number"
+    ],
+    "userpoolClientName": "chatlo0994aaff_app_client",
+    "userpoolClientGenerateSecret": true,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientWriteAttributes": [
+        "email"
+    ],
+    "userpoolClientReadAttributes": [
+        "email"
+    ],
+    "mfaLambdaRole": "chatlo0994aaff_totp_lambda_role",
+    "mfaLambdaLogPolicy": "chatlo0994aaff_totp_lambda_log_policy",
+    "mfaPassRolePolicy": "chatlo0994aaff_totp_pass_role_policy",
+    "mfaLambdaIAMPolicy": "chatlo0994aaff_totp_lambda_iam_policy",
+    "userpoolClientLambdaRole": "chatlo0994aaff_userpoolclient_lambda_role",
+    "userpoolClientLogPolicy": "chatlo0994aaff_userpoolclient_lambda_log_policy",
+    "userpoolClientLambdaPolicy": "chatlo0994aaff_userpoolclient_lambda_iam_policy",
+    "userpoolClientSetAttributes": false,
+    "resourceName": "chatlove0994aaff",
+    "authSelections": "identityPoolAndUserPool",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    },
+    "unauthRoleArn": {
+        "Fn::GetAtt": [
+            "UnauthRole",
+            "Arn"
+        ]
+    },
+    "useDefault": "default",
+    "usernameAttributes": [
+        "email"
+    ]
+}
