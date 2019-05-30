@@ -4,7 +4,7 @@ import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { Header } from '../../components';
 import { EmailInput } from '../../components/Inputs';
-import { EmailOnlySchema, EmailOnlyModel } from '../../core';
+import { EmailOnlySchema, EmailModel } from '../../core';
 import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
@@ -16,10 +16,7 @@ import {
 import { NavigationService } from '../../utils';
 
 type Props = NavigationScreenProps;
-
-const initialValues = {
-  email: '',
-};
+type FormModel = typeof EmailModel;
 
 class PasswordForgotScreen extends Component<Props> {
   public render() {
@@ -29,8 +26,8 @@ class PasswordForgotScreen extends Component<Props> {
           title={'What is your email?'}
           message="We'll send a reset code."
         />
-        <Formik<EmailOnlyModel>
-          initialValues={initialValues}
+        <Formik<FormModel>
+          initialValues={EmailModel}
           validationSchema={EmailOnlySchema}
           onSubmit={(values, actions) => {
             this.onPressReset(values);
@@ -55,7 +52,7 @@ class PasswordForgotScreen extends Component<Props> {
     );
   }
 
-  private onPressReset = (form: EmailOnlyModel) => {
+  private onPressReset = (form: FormModel) => {
     Alert.alert('not yet implemented');
     NavigationService.navigate('Reset');
   };

@@ -14,6 +14,7 @@ import {
   StyledTextInput,
 } from '../../styled';
 type Props = NavigationScreenProps;
+type FormModel = typeof PasswordResetModel;
 
 const initialValues = {
   email: '',
@@ -27,7 +28,7 @@ class PasswordResetScreen extends Component<Props> {
     return (
       <StyledScreenContainer>
         <Header title={'Change password'} message="Type in the reset code" />
-        <Formik<PasswordResetModel>
+        <Formik<FormModel>
           initialValues={initialValues}
           validationSchema={PasswordResetSchema}
           onSubmit={(values, actions) => {
@@ -68,7 +69,7 @@ class PasswordResetScreen extends Component<Props> {
       </StyledScreenContainer>
     );
   }
-  private onPressReset = async (form: PasswordResetModel) => {
+  private onPressReset = async (form: FormModel) => {
     // NavigationService.navigate('App');
     Alert.alert('not yet implemented');
   };

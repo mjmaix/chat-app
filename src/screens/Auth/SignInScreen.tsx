@@ -5,7 +5,7 @@ import { Alert, Image, ImageBackground } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import BannerImage from '../../../assets/icon_raw.jpg';
 import { EmailInput, PasswordInput } from '../../components/Inputs';
-import { SignInSchema } from '../../core';
+import { SignInSchema, SignInModel } from '../../core';
 import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
@@ -18,12 +18,7 @@ import {
 import { NavigationService } from '../../utils';
 
 type Props = NavigationScreenProps;
-type Model = typeof formikInitialValues;
-
-const formikInitialValues = {
-  email: '',
-  password: '',
-};
+type FormModel = typeof SignInModel;
 
 class SignInScreen extends Component<Props> {
   public render() {
@@ -38,7 +33,7 @@ class SignInScreen extends Component<Props> {
         <StyledScreenContainer>
           <StyledFormOverImageContainer>
             <Formik
-              initialValues={formikInitialValues}
+              initialValues={SignInModel}
               validationSchema={SignInSchema}
               onSubmit={(values, actions) => {
                 Alert.alert('submit');
@@ -107,7 +102,7 @@ class SignInScreen extends Component<Props> {
     );
   }
 
-  private onPressSignIn = async (form: Model) => {
+  private onPressSignIn = async (form: FormModel) => {
     await AsyncStorage.setItem('userToken', `${form.email}_${form.password}`);
     NavigationService.navigate('App');
   };

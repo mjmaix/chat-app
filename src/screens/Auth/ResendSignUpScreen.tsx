@@ -14,13 +14,10 @@ import {
   StyledTextInput,
 } from '../../styled';
 import { NavigationService } from '../../utils';
-import { EmailOnlyModel } from '../../core/amplify/actions';
+import { EmailModel } from '../../core/amplify/actions';
 
 type Props = NavigationScreenProps;
-
-const initialValues = {
-  email: '',
-};
+type FormModel = typeof EmailModel;
 
 class ResendSignUpScreen extends Component<Props> {
   public render() {
@@ -30,8 +27,8 @@ class ResendSignUpScreen extends Component<Props> {
           title={'Resend confirmation email'}
           message={'What is the email you used to sign up?'}
         />
-        <Formik<EmailOnlyModel>
-          initialValues={initialValues}
+        <Formik<FormModel>
+          initialValues={EmailModel}
           validationSchema={EmailOnlySchema}
           onSubmit={(values, actions) => {
             this.onPressReset(values);
@@ -56,7 +53,7 @@ class ResendSignUpScreen extends Component<Props> {
     );
   }
 
-  private onPressReset = (form: EmailOnlyModel) => {
+  private onPressReset = (form: FormModel) => {
     Alert.alert('not yet implemented');
     NavigationService.navigate('Confirm');
   };

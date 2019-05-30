@@ -4,15 +4,7 @@ import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { Header } from '../../components';
 import { EmailInput, PasswordInput } from '../../components/Inputs';
-import {
-  SignUpSchema,
-  ProfileModel,
-  PasswordRequiredModel,
-  handleSignUp,
-  error,
-  handleConfirmSignUp,
-  ChallengeModel,
-} from '../../core';
+import { SignUpSchema, handleSignUp, error, SignUpModel } from '../../core';
 import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
@@ -24,23 +16,15 @@ import {
 import { NavigationService } from '../../utils';
 
 type Props = NavigationScreenProps;
-type Model = ProfileModel & PasswordRequiredModel;
-
-const initialValues: Model = {
-  email: '',
-  password: '',
-  familyName: '',
-  givenName: '',
-  phoneNumber: '',
-};
+type FormModel = typeof SignUpModel;
 
 class SignUpScreen extends Component<Props> {
   public render() {
     return (
       <StyledScreenContainer>
         <Header title={'Sign up'} message="Please fill in the details" />
-        <Formik<Model>
-          initialValues={initialValues}
+        <Formik<FormModel>
+          initialValues={SignUpModel}
           validationSchema={SignUpSchema}
           onSubmit={(values, actions) => {
             this.onPressSignUp(values);
@@ -107,7 +91,7 @@ class SignUpScreen extends Component<Props> {
     );
   }
 
-  private onPressSignUp = async (form: Model) => {
+  private onPressSignUp = async (form: FormModel) => {
     try {
       await handleSignUp(form);
 

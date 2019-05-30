@@ -11,21 +11,13 @@ import {
   StyledView,
 } from '../styled';
 import { NavigationService } from '../utils';
-import { UpdateProfileSchema, StyleGuide } from '../core';
+import { UpdateProfileSchema, StyleGuide, ProfileModel } from '../core';
 import { Formik } from 'formik';
 import { EmailInput } from '../components/Inputs';
 import { Alert } from 'react-native';
 import { FormikInputWrapper } from '../hocs';
 
-type Model = typeof formikInitialValues;
-
-const formikInitialValues = {
-  email: '',
-  familyName: '',
-  givenName: '',
-  phoneNumber: '',
-  picture: '',
-};
+type FormModel = typeof ProfileModel;
 
 const ProfileScreen = () => {
   const handleSignOutAsync = async () => {
@@ -36,7 +28,7 @@ const ProfileScreen = () => {
     NavigationService.navigate('Change');
   };
 
-  const onPressSignUp = (form: Model) => {
+  const onPressSignUp = (form: FormModel) => {
     Alert.alert('not yet implemented');
   };
 
@@ -62,7 +54,7 @@ const ProfileScreen = () => {
           }}
         />
         <Formik
-          initialValues={formikInitialValues}
+          initialValues={ProfileModel}
           validationSchema={UpdateProfileSchema}
           onSubmit={(values, actions) => {
             onPressSignUp(values);
