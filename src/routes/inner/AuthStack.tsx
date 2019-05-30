@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator, StackNavigatorConfig } from 'react-navigation';
 import { FixedBackHeader } from '../../components';
 import { Mappings } from '../mappings';
+import { Easing, Animated } from 'react-native';
 
 const options: StackNavigatorConfig = {
   headerMode: 'screen',
@@ -50,6 +51,14 @@ const AuthStack = createStackNavigator(
     },
     Reset: {
       screen: Mappings.Reset.screen,
+      navigationOptions: {
+        header: (
+          <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
+        ),
+      },
+    },
+    Loading: {
+      screen: Mappings.Loading.screen,
       navigationOptions: {
         header: (
           <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
