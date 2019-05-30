@@ -1,13 +1,21 @@
 import React from 'react';
-import { ActivityIndicator, AsyncStorage, StatusBar } from 'react-native';
+import { ActivityIndicator, StatusBar } from 'react-native';
 import { StyledScreenContainer } from '../styled';
-import { NavigationService } from '../utils';
+import { NavigationService, alertFail } from '../utils';
+import { Auth } from 'aws-amplify';
+import { info } from '../core';
 
 class AuthLoadingScreen extends React.Component<{}> {
   public async componentDidMount() {
-    const userToken = await AsyncStorage.getItem('userToken');
-    NavigationService.navigate(userToken ? 'App' : 'Auth');
+    try {
+      await Auth.currentAuthenticatedUser();
+      NavigationService.navigate('App');
+    } catch (err) {
+      info(err);
+      NavigationService.navigate('Auth');
+    }
   }
+
   public render() {
     return (
       <StyledScreenContainer>

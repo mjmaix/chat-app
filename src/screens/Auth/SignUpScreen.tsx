@@ -13,7 +13,7 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
-import { NavigationService } from '../../utils';
+import { NavigationService, alertOk, alertFail } from '../../utils';
 
 type Props = NavigationScreenProps;
 type FormModel = typeof SignUpModel;
@@ -94,16 +94,9 @@ class SignUpScreen extends Component<Props> {
   private onPressSignUp = async (form: FormModel) => {
     try {
       await handleSignUp(form);
-
-      Alert.alert('Success', undefined, [
-        {
-          text: 'OK',
-          onPress: () => NavigationService.navigate('Confirm'),
-        },
-      ]);
+      alertOk(() => NavigationService.navigate('Confirm'));
     } catch (err) {
-      error(err);
-      Alert.alert('Oops, failed', JSON.stringify(err));
+      alertFail(() => null, err);
     }
   };
 }

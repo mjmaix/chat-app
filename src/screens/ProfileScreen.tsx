@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
 import { Avatar } from 'react-native-elements';
 import {
@@ -11,24 +10,34 @@ import {
   StyledView,
 } from '../styled';
 import { NavigationService } from '../utils';
-import { UpdateProfileSchema, StyleGuide, ProfileModel } from '../core';
+import {
+  UpdateProfileSchema,
+  StyleGuide,
+  ProfileModel,
+  handleSignOut,
+} from '../core';
 import { Formik } from 'formik';
 import { EmailInput } from '../components/Inputs';
 import { Alert } from 'react-native';
 import { FormikInputWrapper } from '../hocs';
+import { alertFail, alertOk } from '../utils';
 
 type FormModel = typeof ProfileModel;
 
 const ProfileScreen = () => {
   const handleSignOutAsync = async () => {
-    await AsyncStorage.removeItem('userToken');
-    NavigationService.navigate('Auth');
+    try {
+      await handleSignOut();
+      alertOk(() => NavigationService.navigate('Auth'));
+    } catch (err) {
+      alertFail(() => null, err);
+    }
   };
   const handlePressChangePassword = () => {
     NavigationService.navigate('Change');
   };
 
-  const onPressSignUp = (form: FormModel) => {
+  const onSave = (form: FormModel) => {
     Alert.alert('not yet implemented');
   };
 
@@ -57,7 +66,7 @@ const ProfileScreen = () => {
           initialValues={ProfileModel}
           validationSchema={UpdateProfileSchema}
           onSubmit={(values, actions) => {
-            onPressSignUp(values);
+            onSave(values);
           }}
         >
           {fProps => {

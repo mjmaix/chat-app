@@ -6,6 +6,7 @@ import {
   ChallengeModel,
   PasswordResetModel,
   PasswordChangeModel,
+  SignInModel,
 } from './../models';
 import { Auth } from 'aws-amplify';
 
@@ -22,6 +23,15 @@ export const handleSignUp = async (data: typeof SignUpModel) => {
       phone_number: attrs.phoneNumber,
     },
   });
+};
+
+export const handleSignIn = async (data: typeof SignInModel) => {
+  const { email, password } = data;
+  return Auth.signIn({ username: email, password });
+};
+
+export const handleSignOut = async () => {
+  return Auth.signOut();
 };
 
 export const handleResend = async (data: typeof EmailModel) => {

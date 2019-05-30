@@ -1,6 +1,6 @@
 import React from 'react';
 import { BaseChallengeScreen } from './BaseChallengeScreen';
-import { NavigationService } from '../../utils';
+import { NavigationService, alertOk, alertFail } from '../../utils';
 import { error, handleConfirmSignUp } from '../../core';
 import { Alert } from 'react-native';
 
@@ -14,15 +14,9 @@ export const ConfirmSignUpScreen = () => {
         try {
           await handleConfirmSignUp(values);
 
-          Alert.alert('Success', undefined, [
-            {
-              text: 'OK',
-              onPress: () => NavigationService.navigate('SignIn'),
-            },
-          ]);
+          alertOk(() => NavigationService.navigate('SignIn'));
         } catch (err) {
-          error(err);
-          Alert.alert('Oops, failed', JSON.stringify(err));
+          alertFail(() => null, err);
         }
       }}
     />

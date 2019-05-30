@@ -1,11 +1,10 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import { Formik } from 'formik';
 import React, { Component } from 'react';
 import { Alert, Image, ImageBackground } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import BannerImage from '../../../assets/icon_raw.jpg';
 import { EmailInput, PasswordInput } from '../../components/Inputs';
-import { SignInSchema, SignInModel } from '../../core';
+import { SignInSchema, SignInModel, handleSignIn } from '../../core';
 import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
@@ -15,7 +14,7 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
-import { NavigationService } from '../../utils';
+import { NavigationService, alertOk, alertFail } from '../../utils';
 
 type Props = NavigationScreenProps;
 type FormModel = typeof SignInModel;
@@ -36,7 +35,6 @@ class SignInScreen extends Component<Props> {
               initialValues={SignInModel}
               validationSchema={SignInSchema}
               onSubmit={(values, actions) => {
-                Alert.alert('submit');
                 this.onPressSignIn(values);
               }}
             >
@@ -103,8 +101,12 @@ class SignInScreen extends Component<Props> {
   }
 
   private onPressSignIn = async (form: FormModel) => {
-    await AsyncStorage.setItem('userToken', `${form.email}_${form.password}`);
-    NavigationService.navigate('App');
+    try {
+      await handleSignIn(form);
+      NavigationService.navigate('App');
+    } catch (err) {
+      alertFail(() => null, err);
+    }
   };
 
   private onPressSignUp = async () => {
