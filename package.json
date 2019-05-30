@@ -5,7 +5,7 @@
   "scripts": {
     "start": "./scripts/killpackager.sh && node node_modules/react-native/local-cli/cli.js start -- --reset-cache",
     "test": "jest",
-    "lint": "tslint --project tsconfig.json",
+    "lint": "tslint --project tsconfig.json --config tslint.json",
     "postversion": "./node_modules/.bin/react-native-version",
     "debugger": "./scripts/run-debugger.sh",
     "ios": "npm run debugger && react-native run-ios",

@@ -5,7 +5,9 @@
     "tslint-config-prettier",
     "tslint-react-hooks"
   ],
-  "jsRules": {},
+  "jsRules": {
+    "object-literal-sort-keys": false
+  },
   "rules": {
     "ordered-imports": false,
     "member-ordering": false,
