@@ -4,7 +4,7 @@ import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { Header } from '../../components';
 import { EmailInput } from '../../components/Inputs';
-import { EmailOnlySchema, EmailOnlyModel } from '../../core';
+import { EmailOnlySchema } from '../../core';
 import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
@@ -14,6 +14,7 @@ import {
   StyledTextInput,
 } from '../../styled';
 import { NavigationService } from '../../utils';
+import { EmailOnlyModel } from '../../core/amplify/actions';
 
 type Props = NavigationScreenProps;
 
@@ -21,13 +22,13 @@ const initialValues = {
   email: '',
 };
 
-class PasswordForgotScreen extends Component<Props> {
+class ResendSignUpScreen extends Component<Props> {
   public render() {
     return (
       <StyledScreenContainer>
         <Header
-          title={'What is your email?'}
-          message="We'll send a reset code."
+          title={'Resend confirmation email'}
+          message={'What is the email you used to sign up?'}
         />
         <Formik<EmailOnlyModel>
           initialValues={initialValues}
@@ -57,8 +58,8 @@ class PasswordForgotScreen extends Component<Props> {
 
   private onPressReset = (form: EmailOnlyModel) => {
     Alert.alert('not yet implemented');
-    NavigationService.navigate('Reset');
+    NavigationService.navigate('Confirm');
   };
 }
 
-export { PasswordForgotScreen };
+export { ResendSignUpScreen };

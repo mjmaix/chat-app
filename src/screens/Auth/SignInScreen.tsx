@@ -7,9 +7,16 @@ import BannerImage from '../../../assets/icon_raw.jpg';
 import { EmailInput, PasswordInput } from '../../components/Inputs';
 import { SignInSchema } from '../../core';
 import { FormikInputWrapper } from '../../hocs';
-import { StyledButton, StyledFormContainer, StyledFormOverImageContainer, StyledFormRow, StyledScreenContainer, StyledTextInput } from '../../styled';
+import {
+  StyledButton,
+  StyledFormContainer,
+  StyledFormOverImageContainer,
+  StyledFormRow,
+  StyledScreenContainer,
+  StyledTextInput,
+} from '../../styled';
 import { NavigationService } from '../../utils';
-  
+
 type Props = NavigationScreenProps;
 type Model = typeof formikInitialValues;
 
@@ -86,6 +93,13 @@ class SignInScreen extends Component<Props> {
                   type="clear"
                 />
               </StyledFormRow>
+              <StyledFormRow>
+                <StyledButton
+                  onPress={this.onPressResend}
+                  label={'Resend confirm code'}
+                  type="clear"
+                />
+              </StyledFormRow>
             </StyledFormContainer>
           </StyledFormOverImageContainer>
         </StyledScreenContainer>
@@ -113,7 +127,10 @@ class SignInScreen extends Component<Props> {
       placeholder: 'Type here',
     });
   };
+
+  private onPressResend = async () => {
+    NavigationService.navigate('Resend');
+  };
 }
 
 export { SignInScreen };
-

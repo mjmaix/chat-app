@@ -32,6 +32,14 @@ const AuthStack = createStackNavigator(
         ),
       },
     },
+    Resend: {
+      screen: Mappings.Resend.screen,
+      navigationOptions: {
+        header: (
+          <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
+        ),
+      },
+    },
     Challenge: {
       screen: Mappings.Confirm.screen,
       navigationOptions: {

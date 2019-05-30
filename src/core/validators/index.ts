@@ -63,11 +63,10 @@ export const ChallengeSchema = Yup.object().shape({
     .required(),
   code: Yup.string()
     .label('Code')
-    .email()
     .required('Required'),
 });
 
-export const ForgotPasswordSchema = Yup.object().shape({
+export const EmailOnlySchema = Yup.object().shape({
   email: Yup.string()
     .label('Email')
     .email()

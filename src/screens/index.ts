@@ -1,4 +1,4 @@
-export * from './Auth/ChallengeScreen';
+export * from './Auth/ConfirmSignUpScreen';
 export * from './Auth/PasswordForgotScreen';
 export * from './Auth/PasswordResetScreen';
 export * from './Auth/SignInScreen';
@@ -10,3 +10,4 @@ export * from './MessagesScreen';
 export * from './PasswordChangeScreen';
 export * from './ProfileScreen';
 export * from './SettingsScreen';
+export * from './Auth/ResendSignUpScreen';

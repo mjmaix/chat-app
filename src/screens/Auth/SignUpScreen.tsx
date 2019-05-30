@@ -4,7 +4,15 @@ import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { Header } from '../../components';
 import { EmailInput, PasswordInput } from '../../components/Inputs';
-import { SignUpSchema } from '../../core';
+import {
+  SignUpSchema,
+  ProfileModel,
+  PasswordRequiredModel,
+  handleSignUp,
+  error,
+  handleConfirmSignUp,
+  ChallengeModel,
+} from '../../core';
 import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
@@ -13,27 +21,26 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
+import { NavigationService } from '../../utils';
 
 type Props = NavigationScreenProps;
-type Model = typeof formikInitialValues;
+type Model = ProfileModel & PasswordRequiredModel;
 
-const formikInitialValues = {
+const initialValues: Model = {
   email: '',
   password: '',
   familyName: '',
   givenName: '',
   phoneNumber: '',
-  picture: '',
 };
 
 class SignUpScreen extends Component<Props> {
   public render() {
-    const { navigation } = this.props;
     return (
       <StyledScreenContainer>
-        <Header text={'Sign up'} message="Please fill in the details" />
-        <Formik
-          initialValues={formikInitialValues}
+        <Header title={'Sign up'} message="Please fill in the details" />
+        <Formik<Model>
+          initialValues={initialValues}
           validationSchema={SignUpSchema}
           onSubmit={(values, actions) => {
             this.onPressSignUp(values);
@@ -101,8 +108,19 @@ class SignUpScreen extends Component<Props> {
   }
 
   private onPressSignUp = async (form: Model) => {
-    Alert.alert('not yet implemented');
-    // NavigationService.navigate('SignIn');
+    try {
+      await handleSignUp(form);
+
+      Alert.alert('Success', undefined, [
+        {
+          text: 'OK',
+          onPress: () => NavigationService.navigate('Confirm'),
+        },
+      ]);
+    } catch (err) {
+      error(err);
+      Alert.alert('Oops, failed', JSON.stringify(err));
+    }
   };
 }
 

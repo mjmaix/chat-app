@@ -1,10 +1,9 @@
-import { Formik } from 'formik';
+import { Formik, FormikActions } from 'formik';
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { Header } from '../../components';
-import { EmailInput, PasswordInput } from '../../components/Inputs';
-import { PasswordResetSchema, PasswordResetModel } from '../../core';
+import { EmailInput } from '../../components/Inputs';
+import { ChallengeSchema, ChallengeModel } from '../../core';
 import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
@@ -13,25 +12,28 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
-type Props = NavigationScreenProps;
 
-const initialValues = {
-  email: '',
-  password: '',
-  code: '',
-};
+interface OwnProps<T> {
+  title: string;
+  message: string;
+  placeholder: string;
+  onSubmit: (values: T, formikActions: FormikActions<T>) => Promise<any> | void;
+}
 
-class PasswordResetScreen extends Component<Props> {
+type FormModel = typeof ChallengeModel;
+type Props<T> = OwnProps<T> & Partial<NavigationScreenProps>;
+
+class BaseChallengeScreen<T extends FormModel> extends Component<Props<T>> {
   public render() {
-    const { navigation } = this.props;
+    const { title, message, placeholder } = this.props;
     return (
       <StyledScreenContainer>
-        <Header title={'Change password'} message="Type in the reset code" />
-        <Formik<PasswordResetModel>
-          initialValues={initialValues}
-          validationSchema={PasswordResetSchema}
+        <Header title={title} message={message} />
+        <Formik<T>
+          initialValues={ChallengeModel as T}
+          validationSchema={ChallengeSchema}
           onSubmit={(values, actions) => {
-            this.onPressReset(values);
+            this.props.onSubmit(values, actions);
           }}
         >
           {fProps => {
@@ -44,15 +46,7 @@ class PasswordResetScreen extends Component<Props> {
                 </StyledFormRow>
                 <StyledFormRow>
                   <FormikInputWrapper dataKey="code" formProps={fProps}>
-                    <StyledTextInput placeholder="Code" />
-                  </FormikInputWrapper>
-                </StyledFormRow>
-                <StyledFormRow>
-                  <FormikInputWrapper dataKey="password" formProps={fProps}>
-                    <StyledTextInput
-                      as={PasswordInput}
-                      onSubmitEditing={fProps.handleSubmit}
-                    />
+                    <StyledTextInput placeholder={placeholder} />
                   </FormikInputWrapper>
                 </StyledFormRow>
                 <StyledFormRow>
@@ -68,10 +62,6 @@ class PasswordResetScreen extends Component<Props> {
       </StyledScreenContainer>
     );
   }
-  private onPressReset = async (form: PasswordResetModel) => {
-    // NavigationService.navigate('App');
-    Alert.alert('not yet implemented');
-  };
 }
 
-export { PasswordResetScreen };
+export { BaseChallengeScreen };

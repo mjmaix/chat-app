@@ -1,7 +1,7 @@
+import { ConfirmSignUpScreen } from './../screens/Auth/ConfirmSignUpScreen';
 import React from 'react';
 import { IconObject } from '../components';
 import {
-  ChallengeScreen,
   ChatScreen,
   ContactsScreen,
   MessagesScreen,
@@ -12,6 +12,7 @@ import {
   SignInScreen,
   SignUpScreen,
   PasswordChangeScreen,
+  ResendSignUpScreen,
 } from '../screens';
 
 interface Mapping {
@@ -56,6 +57,10 @@ export const Mappings: Mappings = {
     screen: PasswordForgotScreen,
     icon: { name: '', type: 'antdesign' },
   },
+  Resend: {
+    screen: ResendSignUpScreen,
+    icon: { name: '', type: 'antdesign' },
+  },
   Change: {
     screen: PasswordChangeScreen,
     icon: { name: 'lock', type: 'antdesign' },
@@ -65,7 +70,7 @@ export const Mappings: Mappings = {
     icon: { name: '', type: 'antdesign' },
   },
   Confirm: {
-    screen: ChallengeScreen,
+    screen: ConfirmSignUpScreen,
     icon: { name: '', type: 'antdesign' },
   },
   MessageStack: {
