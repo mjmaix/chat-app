@@ -66,3 +66,4 @@ coverage
 *.psd
 *.xcf
 ios/Chat.app.dSYM.zip
+android/app/release/app.aab
