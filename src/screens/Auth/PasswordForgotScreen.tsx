@@ -4,7 +4,7 @@ import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { Header } from '../../components';
 import { EmailInput } from '../../components/Inputs';
-import { EmailOnlySchema, EmailModel } from '../../core';
+import { EmailOnlySchema, EmailModel, handleForgotPassword } from '../../core';
 import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
@@ -13,7 +13,7 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
-import { NavigationService } from '../../utils';
+import { NavigationService, alertFail, alertOk } from '../../utils';
 
 type Props = NavigationScreenProps;
 type FormModel = typeof EmailModel;
@@ -44,6 +44,13 @@ class PasswordForgotScreen extends Component<Props> {
                 <StyledFormRow>
                   <StyledButton onPress={fProps.handleSubmit} label={'Reset'} />
                 </StyledFormRow>
+                <StyledFormRow>
+                  <StyledButton
+                    onPress={this.onPressGotResetCode}
+                    label={'Have the reset code?'}
+                    type="clear"
+                  />
+                </StyledFormRow>
               </StyledFormContainer>
             );
           }}
@@ -52,8 +59,16 @@ class PasswordForgotScreen extends Component<Props> {
     );
   }
 
-  private onPressReset = (form: FormModel) => {
-    Alert.alert('not yet implemented');
+  private onPressReset = async (form: FormModel) => {
+    try {
+      await handleForgotPassword(form);
+      alertOk(() => NavigationService.navigate('Reset'));
+    } catch (err) {
+      alertFail(() => null, err);
+    }
+  };
+
+  private onPressGotResetCode = () => {
     NavigationService.navigate('Reset');
   };
 }

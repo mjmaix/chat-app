@@ -79,20 +79,6 @@ class SignInScreen extends Component<Props> {
                   type="clear"
                 />
               </StyledFormRow>
-              <StyledFormRow>
-                <StyledButton
-                  onPress={this.onPressConfirmCode}
-                  label={'Confirm code'}
-                  type="clear"
-                />
-              </StyledFormRow>
-              <StyledFormRow>
-                <StyledButton
-                  onPress={this.onPressResend}
-                  label={'Resend confirm code'}
-                  type="clear"
-                />
-              </StyledFormRow>
             </StyledFormContainer>
           </StyledFormOverImageContainer>
         </StyledScreenContainer>
@@ -109,24 +95,12 @@ class SignInScreen extends Component<Props> {
     }
   };
 
-  private onPressSignUp = async () => {
+  private onPressSignUp = () => {
     NavigationService.navigate('SignUp');
   };
 
-  private onPressForgotPassword = async () => {
+  private onPressForgotPassword = () => {
     NavigationService.navigate('Forgot');
-  };
-
-  private onPressConfirmCode = async () => {
-    NavigationService.navigate('Challenge', {
-      title: 'Confirmation',
-      message: "We've sent a verification code to your email.",
-      placeholder: 'Type here',
-    });
-  };
-
-  private onPressResend = async () => {
-    NavigationService.navigate('Resend');
   };
 }
 

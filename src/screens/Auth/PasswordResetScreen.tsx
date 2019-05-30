@@ -4,7 +4,11 @@ import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { Header } from '../../components';
 import { EmailInput, PasswordInput } from '../../components/Inputs';
-import { PasswordResetSchema, PasswordResetModel } from '../../core';
+import {
+  PasswordResetSchema,
+  PasswordResetModel,
+  handleForgotPasswordSubmit,
+} from '../../core';
 import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
@@ -13,6 +17,7 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
+import { NavigationService, alertFail, alertOk } from '../../utils';
 type Props = NavigationScreenProps;
 type FormModel = typeof PasswordResetModel;
 
@@ -70,8 +75,12 @@ class PasswordResetScreen extends Component<Props> {
     );
   }
   private onPressReset = async (form: FormModel) => {
-    // NavigationService.navigate('App');
-    Alert.alert('not yet implemented');
+    try {
+      await handleForgotPasswordSubmit(form);
+      alertOk(() => NavigationService.navigate('App'));
+    } catch (err) {
+      alertFail(() => null, err);
+    }
   };
 }
 

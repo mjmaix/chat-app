@@ -30,8 +30,8 @@ export const handleSignIn = async (data: typeof SignInModel) => {
   return Auth.signIn({ username: email, password });
 };
 
-export const handleSignOut = async () => {
-  return Auth.signOut();
+export const handleSignOut = async (global = false) => {
+  return Auth.signOut({ global });
 };
 
 export const handleResend = async (data: typeof EmailModel) => {
@@ -49,7 +49,8 @@ export const handleForgotPassword = async (data: typeof EmailModel) => {
 export const handleForgotPasswordSubmit = async (
   data: typeof PasswordResetModel,
 ) => {
-  return Auth.forgotPasswordSubmit(data.email, data.code, data.password);
+  await Auth.forgotPasswordSubmit(data.email, data.code, data.password);
+  return handleSignOut(true);
 };
 
 export const handleChangePasswordSubmit = async (

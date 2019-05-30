@@ -1,8 +1,7 @@
 import React from 'react';
 import { BaseChallengeScreen } from './BaseChallengeScreen';
 import { NavigationService, alertOk, alertFail } from '../../utils';
-import { error, handleConfirmSignUp } from '../../core';
-import { Alert } from 'react-native';
+import { handleConfirmSignUp } from '../../core';
 
 export const ConfirmSignUpScreen = () => {
   return (
