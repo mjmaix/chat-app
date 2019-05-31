@@ -4,5 +4,11 @@
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation"
 		}
+	},
+	"storage": {
+		"chatloveimages": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
+		}
 	}
 }
