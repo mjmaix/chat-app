@@ -1,11 +1,9 @@
 import { Formik } from 'formik';
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { PasswordInput } from '../components/Inputs';
 import {
   PasswordChangeSchema,
-  handleForgotPasswordSubmit,
   PasswordChangeModel,
   handleChangePasswordSubmit,
 } from '../core';
