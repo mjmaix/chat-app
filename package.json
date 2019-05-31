@@ -5,6 +5,7 @@
   "scripts": {
     "start": "./scripts/killpackager.sh && node node_modules/react-native/local-cli/cli.js start -- --reset-cache",
     "test": "jest",
+    "postinstall": "patch-package",
     "lint": "tslint --project tsconfig.json --config tslint.json",
     "postversion": "./node_modules/.bin/react-native-version",
     "debugger": "./scripts/run-debugger.sh",
@@ -24,7 +25,8 @@
     "xios:pod:install": "cd ios && pod install",
     "studio": "open -a /Applications/Android\\ Studio.app ./android/",
     "xcode": "open ios/Chat.xcodeproj",
-    "generator-rn-toolbox": "./scripts/generator-rn-toolbox.sh"
+    "generator-rn-toolbox": "./scripts/generator-rn-toolbox.sh",
+    "patch-package:update": "npx patch-package react-native-elements"
   },
   "dependencies": {
     "@react-native-community/async-storage": "1.3.3",
@@ -64,6 +66,7 @@
     "babel-plugin-styled-components": "^1.10.0",
     "jest": "24.8.0",
     "metro-react-native-babel-preset": "0.54.1",
+    "patch-package": "^6.1.2",
     "react-native-testing-library": "1.7.0",
     "react-native-version": "^3.1.0",
     "react-test-renderer": "16.8.6",
