@@ -1,24 +1,30 @@
 import { FormikProps } from 'formik';
 import React, { ReactElement } from 'react';
-import { InputProps } from 'react-native-elements';
+import { InputProps, ButtonProps } from 'react-native-elements';
+import _ from 'lodash';
 
 interface StringKeyedObject {
   [key: string]: any;
 }
 
-type SupportedCompProps = InputProps;
+type SupportedCompProps = InputProps | ButtonProps;
 
-interface FormikWrapperProps<
+interface FormikFormWrapperProps<
   T extends StringKeyedObject,
   S extends SupportedCompProps
 > {
-  dataKey: string;
   formProps: FormikProps<T>;
   children: ReactElement<S>;
 }
+interface FormikFieldWrapperProps<
+  T extends StringKeyedObject,
+  S extends SupportedCompProps
+> extends FormikFormWrapperProps<T, S> {
+  dataKey: string;
+}
 
 export function FormikInputWrapper<T extends StringKeyedObject>(
-  props: FormikWrapperProps<T, InputProps>,
+  props: FormikFieldWrapperProps<T, InputProps>,
 ) {
   const { children, formProps, dataKey, ...props2 } = props;
   // const isValidating = formProps.isValidating;
@@ -47,19 +53,19 @@ export function FormikInputWrapper<T extends StringKeyedObject>(
   return React.cloneElement(children, { ...builtInputProps });
 }
 
-// TODO: disable since no use for now.
 // Disabled color removes primary color on Sign in button
 // Use this for transactional forms like checkout
-// export function FormikButtonWrapper<T extends StringKeyedObject>(
-//   props: FormikWrapperProps<T, ButtonProps>,
-// ) {
-//   const { children, formProps } = props;
-//   const isValid = formProps.isValid;
-//   const onPress = formProps.handleSubmit;
+export function FormikButtonWrapper(
+  props: FormikFormWrapperProps<any, ButtonProps>,
+) {
+  const { children, formProps } = props;
+  const isValid = formProps.isValid;
+  const isTouched = !_.isEmpty(formProps.touched);
+  const onPress = formProps.handleSubmit;
 
-//   return React.cloneElement(children, {
-//     ...props,
-//     onPress,
-//     disabled: !isValid,
-//   });
-// }
+  return React.cloneElement(children, {
+    ...props,
+    onPress,
+    disabled: !isValid || !isTouched,
+  });
+}

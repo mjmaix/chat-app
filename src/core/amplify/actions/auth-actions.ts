@@ -1,4 +1,3 @@
-import { info } from './../../reports/index';
 import {
   ProfileModel,
   PasswordRequiredModel,
@@ -10,8 +9,29 @@ import {
   SignInModel,
 } from './../models';
 import { Auth } from 'aws-amplify';
+import { CognitoUser } from '@aws-amplify/auth';
+import { CurrentUserOpts } from '@aws-amplify/auth/lib/types';
 
 type SignUpModel = typeof ProfileModel & typeof PasswordRequiredModel;
+
+const getUserAttrs = (
+  user: CognitoUser & { attributes: CurrentUserAttributes },
+) => {
+  return {
+    email: user.attributes.email,
+    familyName: user.attributes.family_name,
+    givenName: user.attributes.given_name,
+    phoneNumber: user.attributes.phone_number,
+    picture: '',
+  } as typeof ProfileModel;
+};
+
+export const handleGetCurrentUserAttrs = async (opts: CurrentUserOpts) => {
+  const currentUser = await Auth.currentAuthenticatedUser(opts);
+  const attrs = getUserAttrs(currentUser);
+  return attrs;
+};
+
 export const handleSignUp = async (data: typeof SignUpModel) => {
   const { password, ...attrs } = data;
   return Auth.signUp({
@@ -53,8 +73,11 @@ export const handleCheckVerifiedContact = async () => {
   return Auth.verifiedContact(user);
 };
 
-export const handleVerifyEmail = async (data: typeof ChallengeModel) => {
-  return Auth.verifyCurrentUserAttributeSubmit(data.email, data.code);
+export const handleVerifyContact = async (
+  contact: Contact,
+  data: typeof ChallengeModel,
+) => {
+  return Auth.verifyCurrentUserAttributeSubmit(contact, data.code);
 };
 
 export const handleResend = async (data: typeof EmailModel) => {
@@ -87,17 +110,7 @@ export const handleCompleteNewPassword = async (
   data: typeof PasswordRequiredModel,
 ) => {
   const currentUser = await Auth.currentAuthenticatedUser();
-  const userAttrs = await Auth.userAttributes(currentUser);
-  info(userAttrs);
-  // const requiredAttributes: ProfileModel = {
-  //   email: userAttrs.email,
-  //   phoneNumber: userAttrs.phoneNumber,
-  //   givenName: userAttrs.givenName,
-  //   familyName: userAttrs.familyName,
-  // };
-  // return Auth.completeNewPassword(
-  //   currentUser,
-  //   data.password,
-  //   requiredAttributes,
-  // );
+  const attrs = getUserAttrs(currentUser);
+
+  return Auth.completeNewPassword(currentUser, data.password, attrs);
 };

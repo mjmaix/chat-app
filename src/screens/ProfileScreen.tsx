@@ -9,34 +9,47 @@ import {
   StyledScrollView,
   StyledView,
 } from '../styled';
-import { NavigationService } from '../utils';
+import { NavigationService, Busy } from '../utils';
 import {
   UpdateProfileSchema,
   StyleGuide,
   ProfileModel,
   handleSignOut,
-  handleVerifyEmail,
   handleCheckVerifiedContact,
+  handleUpdateProfile,
+  handleGetCurrentUserAttrs,
 } from '../core';
 import { Formik } from 'formik';
 import { EmailInput } from '../components/Inputs';
-import { Alert } from 'react-native';
-import { FormikInputWrapper } from '../hocs';
+import { FormikInputWrapper, FormikButtonWrapper } from '../hocs';
 import { alertFail, alertOk } from '../utils';
+import { Alert } from 'react-native';
 
 type FormModel = typeof ProfileModel;
 const InitialState: {
   verifiedStatus: VerifiedContact | null;
+  form: FormModel;
+  isFormReady: boolean;
 } = {
   verifiedStatus: null,
+  isFormReady: false,
+  form: ProfileModel,
 };
 
 class ProfileScreen extends Component<{}, typeof InitialState> {
   public state = InitialState;
   public async componentDidMount() {
-    const verifiedStatus = await handleCheckVerifiedContact();
-    this.setState({ verifiedStatus });
+    handleGetCurrentUserAttrs({ bypassCache: true }).then((form: FormModel) => {
+      this.setState({ form, isFormReady: true });
+    });
+    this.checkVerifiedContact();
   }
+
+  private checkVerifiedContact = () => {
+    handleCheckVerifiedContact().then(verifiedStatus => {
+      this.setState({ verifiedStatus });
+    });
+  };
 
   public renderExtraButtons = () => {
     const status = this.state.verifiedStatus;
@@ -71,7 +84,8 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
   private renderForm = () => {
     return (
       <Formik
-        initialValues={ProfileModel}
+        enableReinitialize
+        initialValues={this.state.form}
         validationSchema={UpdateProfileSchema}
         onSubmit={(values, actions) => {
           this.onSave(values);
@@ -120,7 +134,9 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
               </StyledFormRow>
 
               <StyledFormRow>
-                <StyledButton onPress={fProps.handleSubmit} label={'Save'} />
+                <FormikButtonWrapper formProps={fProps}>
+                  <StyledButton onPress={fProps.handleSubmit} label={'Save'} />
+                </FormikButtonWrapper>
               </StyledFormRow>
             </StyledFormContainer>
           );
@@ -165,8 +181,23 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
     NavigationService.navigate('VerifyEmail');
   };
 
-  private onSave = (form: FormModel) => {
-    Alert.alert('not yet implemented');
+  private onSave = async (form: FormModel) => {
+    try {
+      Busy.start();
+      await handleUpdateProfile(form);
+      this.checkVerifiedContact();
+      alertOk(() => {
+        const oldAttrs = this.state.form;
+        const newAttrs = form;
+        if (oldAttrs.email !== newAttrs.email) {
+          NavigationService.navigate('VerifyEmail');
+        }
+      });
+    } catch (err) {
+      alertFail(() => null, err);
+    } finally {
+      Busy.stop();
+    }
   };
 
   public render() {

@@ -75,7 +75,7 @@ export const Mappings: Mappings = {
     screen: ConfirmSignUpScreen,
     icon: { name: '', type: 'antdesign' },
   },
-  Verify: {
+  VerifyEmail: {
     screen: VerifyEmailScreen,
     icon: { name: '', type: 'antdesign' },
   },

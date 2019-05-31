@@ -12,25 +12,41 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
+import { TextInput } from 'react-native';
 
 interface OwnProps<T> {
   title?: string;
   message?: string;
   placeholder: string;
   onSubmit: (values: T, formikActions: FormikActions<T>) => Promise<any> | void;
+  initialValues?: FormModel;
+  disableFields?: [keyof FormModel];
 }
 
 type FormModel = typeof ChallengeModel;
 type Props<T> = OwnProps<T> & Partial<NavigationScreenProps>;
 
 class BaseChallengeScreen<T extends FormModel> extends Component<Props<T>> {
+  private isFieldDisabled = (fieldName: keyof FormModel) => {
+    const { disableFields } = this.props;
+    if (!disableFields) {
+      return false;
+    }
+    return disableFields.includes(fieldName);
+  };
+
+  private renderEmailInput = (props: any) => {
+    return <TextInput {...props} editable={!this.isFieldDisabled('email')} />;
+  };
+
   public render() {
-    const { title, message, placeholder } = this.props;
+    const { title, message, placeholder, initialValues } = this.props;
     return (
       <StyledScreenContainer>
         {(title || message) && <Header title={title} message={message} />}
         <Formik<T>
-          initialValues={ChallengeModel as T}
+          enableReinitialize
+          initialValues={{ ...(ChallengeModel as T), ...initialValues }}
           validationSchema={ChallengeSchema}
           onSubmit={(values, actions) => {
             this.props.onSubmit(values, actions);
@@ -41,7 +57,10 @@ class BaseChallengeScreen<T extends FormModel> extends Component<Props<T>> {
               <StyledFormContainer>
                 <StyledFormRow>
                   <FormikInputWrapper dataKey="email" formProps={fProps}>
-                    <StyledTextInput as={EmailInput} />
+                    <StyledTextInput
+                      as={EmailInput}
+                      inputComponent={this.renderEmailInput}
+                    />
                   </FormikInputWrapper>
                 </StyledFormRow>
                 <StyledFormRow>

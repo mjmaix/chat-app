@@ -38,6 +38,12 @@ const MoreStack = createStackNavigator(
         title: 'Change password',
       }),
     },
+    VerifyEmail: {
+      screen: Mappings.VerifyEmail.screen,
+      navigationOptions: () => ({
+        title: 'Verify email',
+      }),
+    },
   },
   {
     defaultNavigationOptions: ({

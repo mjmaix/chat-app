@@ -38,7 +38,7 @@ export class ThemeHelper {
   }
 
   private handleChange(data: Theme) {
-    info(data);
+    // info(data);
   }
 
   private loadTheme() {

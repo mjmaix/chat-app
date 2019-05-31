@@ -1,10 +1,4 @@
-export const ProfileModel: {
-  email: string;
-  familyName: string;
-  givenName: string;
-  phoneNumber: string;
-  picture?: string;
-} = {
+export const ProfileModel = {
   email: '',
   familyName: '',
   givenName: '',
