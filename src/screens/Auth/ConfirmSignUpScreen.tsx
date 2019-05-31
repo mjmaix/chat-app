@@ -1,6 +1,6 @@
 import React from 'react';
 import { BaseChallengeScreen } from './BaseChallengeScreen';
-import { NavigationService, alertOk, alertFail } from '../../utils';
+import { NavigationService, alertOk, alertFail, Busy } from '../../utils';
 import { handleConfirmSignUp } from '../../core';
 
 export const ConfirmSignUpScreen = () => {
@@ -11,11 +11,14 @@ export const ConfirmSignUpScreen = () => {
       placeholder={'Code'}
       onSubmit={async (values, actions) => {
         try {
+          Busy.start();
           await handleConfirmSignUp(values);
 
           alertOk(() => NavigationService.navigate('SignIn'));
         } catch (err) {
           alertFail(() => null, err);
+        } finally {
+          Busy.stop();
         }
       }}
     />

@@ -4,7 +4,7 @@ import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { Header } from '../../components';
 import { EmailInput } from '../../components/Inputs';
-import { EmailOnlySchema, EmailModel } from '../../core';
+import { EmailOnlySchema, EmailModel, handleResend } from '../../core';
 import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
@@ -13,7 +13,7 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
-import { NavigationService } from '../../utils';
+import { NavigationService, Busy, alertOk, alertFail } from '../../utils';
 
 type Props = NavigationScreenProps;
 type FormModel = typeof EmailModel;
@@ -52,9 +52,16 @@ class ResendSignUpScreen extends Component<Props> {
     );
   }
 
-  private onPressReset = (form: FormModel) => {
-    Alert.alert('not yet implemented');
-    NavigationService.navigate('Confirm');
+  private onPressReset = async (form: FormModel) => {
+    try {
+      Busy.start();
+      await handleResend(form);
+      alertOk(() => NavigationService.navigate('Confirm'));
+    } catch (err) {
+      alertFail(() => null, err);
+    } finally {
+      Busy.stop();
+    }
   };
 }
 

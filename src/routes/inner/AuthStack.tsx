@@ -57,14 +57,6 @@ const AuthStack = createStackNavigator(
         ),
       },
     },
-    Loading: {
-      screen: Mappings.Loading.screen,
-      navigationOptions: {
-        header: (
-          <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
-        ),
-      },
-    },
   },
   options,
 );

@@ -14,7 +14,7 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
-import { NavigationService, alertOk, alertFail } from '../../utils';
+import { NavigationService, alertFail, Busy } from '../../utils';
 
 type Props = NavigationScreenProps;
 type FormModel = typeof SignInModel;
@@ -88,10 +88,13 @@ class SignInScreen extends Component<Props> {
 
   private onPressSignIn = async (form: FormModel) => {
     try {
+      Busy.start();
       await handleSignIn(form);
       NavigationService.navigate('App');
     } catch (err) {
       alertFail(() => null, err);
+    } finally {
+      Busy.stop();
     }
   };
 

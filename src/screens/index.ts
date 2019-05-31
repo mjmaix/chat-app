@@ -11,5 +11,5 @@ export * from './MessagesScreen';
 export * from './PasswordChangeScreen';
 export * from './ProfileScreen';
 export * from './SettingsScreen';
-export * from './LoadingOverlayScreen';
+export * from './BusyOverlayScreen';
 export * from './NewPasswordScreen';

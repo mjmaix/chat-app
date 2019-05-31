@@ -13,7 +13,7 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
-import { NavigationService, alertOk, alertFail } from '../../utils';
+import { NavigationService, alertOk, alertFail, Busy } from '../../utils';
 
 type Props = NavigationScreenProps;
 type FormModel = typeof SignUpModel;
@@ -107,10 +107,13 @@ class SignUpScreen extends Component<Props> {
 
   private onPressSignUp = async (form: FormModel) => {
     try {
+      Busy.start();
       await handleSignUp(form);
       alertOk(() => NavigationService.navigate('Confirm'));
     } catch (err) {
       alertFail(() => null, err);
+    } finally {
+      Busy.stop();
     }
   };
 

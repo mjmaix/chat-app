@@ -13,7 +13,7 @@ import {
   SignUpScreen,
   PasswordChangeScreen,
   ResendSignUpScreen,
-  LoadingOverlayScreen,
+  BusyOverlayScreen,
 } from '../screens';
 
 interface Mapping {
@@ -74,8 +74,8 @@ export const Mappings: Mappings = {
     screen: ConfirmSignUpScreen,
     icon: { name: '', type: 'antdesign' },
   },
-  Loading: {
-    screen: LoadingOverlayScreen,
+  Busy: {
+    screen: BusyOverlayScreen,
     icon: { name: '', type: 'feather' },
   },
   // NOTE: Keep stacks at the bottom

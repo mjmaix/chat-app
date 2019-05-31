@@ -13,7 +13,7 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
-import { NavigationService, alertFail, alertOk } from '../../utils';
+import { NavigationService, alertFail, alertOk, Busy } from '../../utils';
 
 type Props = NavigationScreenProps;
 type FormModel = typeof EmailModel;
@@ -61,10 +61,13 @@ class PasswordForgotScreen extends Component<Props> {
 
   private onPressReset = async (form: FormModel) => {
     try {
+      Busy.start();
       await handleForgotPassword(form);
       alertOk(() => NavigationService.navigate('Reset'));
     } catch (err) {
       alertFail(() => null, err);
+    } finally {
+      Busy.stop();
     }
   };
 

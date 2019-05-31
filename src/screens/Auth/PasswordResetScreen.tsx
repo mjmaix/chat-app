@@ -17,7 +17,7 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
-import { NavigationService, alertFail, alertOk } from '../../utils';
+import { NavigationService, alertFail, alertOk, Busy } from '../../utils';
 type Props = NavigationScreenProps;
 type FormModel = typeof PasswordResetModel;
 
@@ -76,10 +76,13 @@ class PasswordResetScreen extends Component<Props> {
   }
   private onPressReset = async (form: FormModel) => {
     try {
+      Busy.start();
       await handleForgotPasswordSubmit(form);
       alertOk(() => NavigationService.navigate('App'));
     } catch (err) {
       alertFail(() => null, err);
+    } finally {
+      Busy.stop();
     }
   };
 }
