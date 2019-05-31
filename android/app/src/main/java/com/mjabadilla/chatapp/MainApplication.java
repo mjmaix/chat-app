@@ -3,6 +3,7 @@ package com.mjabadilla.chatapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.RNFetchBlob.RNFetchBlobPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.amazonaws.RNAWSCognitoPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
@@ -29,6 +30,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFetchBlobPackage(),
             new ImagePickerPackage(),
             new RNAWSCognitoPackage(),
             new RNDeviceInfo(),
