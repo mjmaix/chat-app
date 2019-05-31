@@ -14,6 +14,7 @@ import {
   PasswordChangeScreen,
   ResendSignUpScreen,
   BusyOverlayScreen,
+  VerifyEmailScreen,
 } from '../screens';
 
 interface Mapping {
@@ -72,6 +73,10 @@ export const Mappings: Mappings = {
   },
   Confirm: {
     screen: ConfirmSignUpScreen,
+    icon: { name: '', type: 'antdesign' },
+  },
+  Verify: {
+    screen: VerifyEmailScreen,
     icon: { name: '', type: 'antdesign' },
   },
   Busy: {

@@ -13,3 +13,4 @@ export * from './ProfileScreen';
 export * from './SettingsScreen';
 export * from './BusyOverlayScreen';
 export * from './NewPasswordScreen';
+export * from './VerifyEmailScreen';

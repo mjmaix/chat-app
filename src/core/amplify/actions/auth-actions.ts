@@ -35,6 +35,28 @@ export const handleSignOut = async (global = false) => {
   return Auth.signOut({ global });
 };
 
+export const handleUpdateProfile = async (data: typeof ProfileModel) => {
+  const { email, familyName, givenName, phoneNumber, picture } = data;
+  const user = await Auth.currentAuthenticatedUser();
+
+  return Auth.updateUserAttributes(user, {
+    email,
+    family_name: familyName,
+    given_name: givenName,
+    phone_number: phoneNumber,
+    picture,
+  });
+};
+
+export const handleCheckVerifiedContact = async () => {
+  const user = await Auth.currentAuthenticatedUser();
+  return Auth.verifiedContact(user);
+};
+
+export const handleVerifyEmail = async (data: typeof ChallengeModel) => {
+  return Auth.verifyCurrentUserAttributeSubmit(data.email, data.code);
+};
+
 export const handleResend = async (data: typeof EmailModel) => {
   return Auth.resendSignUp(data.email);
 };
