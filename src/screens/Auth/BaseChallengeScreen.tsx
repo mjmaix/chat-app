@@ -14,8 +14,8 @@ import {
 } from '../../styled';
 
 interface OwnProps<T> {
-  title: string;
-  message: string;
+  title?: string;
+  message?: string;
   placeholder: string;
   onSubmit: (values: T, formikActions: FormikActions<T>) => Promise<any> | void;
 }
@@ -28,7 +28,7 @@ class BaseChallengeScreen<T extends FormModel> extends Component<Props<T>> {
     const { title, message, placeholder } = this.props;
     return (
       <StyledScreenContainer>
-        <Header title={title} message={message} />
+        {(title || message) && <Header title={title} message={message} />}
         <Formik<T>
           initialValues={ChallengeModel as T}
           validationSchema={ChallengeSchema}

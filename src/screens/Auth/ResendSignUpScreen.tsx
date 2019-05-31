@@ -4,7 +4,7 @@ import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { Header } from '../../components';
 import { EmailInput } from '../../components/Inputs';
-import { EmailOnlySchema } from '../../core';
+import { EmailOnlySchema, EmailModel } from '../../core';
 import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
@@ -14,7 +14,6 @@ import {
   StyledTextInput,
 } from '../../styled';
 import { NavigationService } from '../../utils';
-import { EmailModel } from '../../core/amplify/actions';
 
 type Props = NavigationScreenProps;
 type FormModel = typeof EmailModel;

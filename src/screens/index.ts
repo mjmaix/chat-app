@@ -12,3 +12,4 @@ export * from './PasswordChangeScreen';
 export * from './ProfileScreen';
 export * from './SettingsScreen';
 export * from './LoadingOverlayScreen';
+export * from './NewPasswordScreen';

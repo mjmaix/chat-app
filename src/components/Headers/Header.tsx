@@ -5,14 +5,14 @@ import { HeaderText } from './HeaderText';
 import { styles } from './styles';
 
 interface HeaderProps extends TextProps {
-  title: string;
+  title?: string;
   message?: string;
 }
 
-export const Header = ({ title: text, message, ...props }: HeaderProps) => {
+export const Header = ({ title, message, ...props }: HeaderProps) => {
   return (
     <View style={styles.headerContainer}>
-      <HeaderText text={text} {...props} />
+      {!!title && <HeaderText text={title} {...props} />}
       {!!message && <HeaderSub message={message} {...props} />}
     </View>
   );

@@ -1,3 +1,4 @@
+import { info } from './../../reports/index';
 import {
   ProfileModel,
   PasswordRequiredModel,
@@ -57,11 +58,7 @@ export const handleChangePasswordSubmit = async (
   data: typeof PasswordChangeModel,
 ) => {
   const currentUser = await Auth.currentAuthenticatedUser();
-  return Auth.forgotPasswordSubmit(
-    currentUser,
-    data.oldPassword,
-    data.password,
-  );
+  return Auth.changePassword(currentUser, data.oldPassword, data.password);
 };
 
 export const handleCompleteNewPassword = async (
@@ -69,6 +66,7 @@ export const handleCompleteNewPassword = async (
 ) => {
   const currentUser = await Auth.currentAuthenticatedUser();
   const userAttrs = await Auth.userAttributes(currentUser);
+  info(userAttrs);
   // const requiredAttributes: ProfileModel = {
   //   email: userAttrs.email,
   //   phoneNumber: userAttrs.phoneNumber,

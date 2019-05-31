@@ -3,7 +3,12 @@ import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { PasswordInput } from '../components/Inputs';
-import { PasswordChangeSchema } from '../core';
+import {
+  PasswordChangeSchema,
+  handleForgotPasswordSubmit,
+  PasswordChangeModel,
+  handleChangePasswordSubmit,
+} from '../core';
 import { FormikInputWrapper } from '../hocs';
 import {
   StyledButton,
@@ -12,20 +17,16 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../styled';
+import { alertOk, NavigationService, alertFail } from '../utils';
 type Props = NavigationScreenProps;
-type Model = typeof formikInitialValues;
-
-const formikInitialValues = {
-  oldPassword: '',
-  password: '',
-};
+type Model = typeof PasswordChangeModel;
 
 class PasswordChangeScreen extends Component<Props> {
   public render() {
     return (
       <StyledScreenContainer>
         <Formik
-          initialValues={formikInitialValues}
+          initialValues={PasswordChangeModel}
           validationSchema={PasswordChangeSchema}
           onSubmit={(values, actions) => {
             this.onPressChange(values);
@@ -64,8 +65,12 @@ class PasswordChangeScreen extends Component<Props> {
     );
   }
   private onPressChange = async (form: Model) => {
-    Alert.alert('not yet implemented');
-    // NavigationService.navigate('SignIn');
+    try {
+      await handleChangePasswordSubmit(form);
+      alertOk(() => NavigationService.navigate('Profile'));
+    } catch (err) {
+      alertFail(() => null, err);
+    }
   };
 }
 
