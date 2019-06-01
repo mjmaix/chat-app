@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { BaseChallengeScreen } from './Auth/BaseChallengeScreen';
-import { NavigationService, alertOk, alertFail } from '../utils';
+import { BaseChallengeScreen } from '../Auth/BaseChallengeScreen';
+import { NavigationService, alertOk, alertFail } from '../../utils';
 import {
   handleVerifyContact,
   handleGetCurrentUserAttrs,
   ChallengeModel,
-} from '../core';
+} from '../../core';
 
 export const VerifyEmailScreen = () => {
   const [isFormReady, setFormReady] = useState(false);

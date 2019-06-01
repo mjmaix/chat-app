@@ -8,8 +8,8 @@ import {
   StyledTextInput,
   StyledScrollView,
   StyledView,
-} from '../styled';
-import { NavigationService, Busy, AsyncImagePicker } from '../utils';
+} from '../../styled';
+import { NavigationService, Busy, AsyncImagePicker } from '../../utils';
 import {
   UpdateProfileSchema,
   StyleGuide,
@@ -18,19 +18,19 @@ import {
   handleCheckVerifiedContact,
   handleUpdateProfile,
   handleGetCurrentUserAttrs,
-} from '../core';
+} from '../../core';
 import { Formik, FormikProps, FormikActions } from 'formik';
-import { EmailInput } from '../components/Inputs';
+import { EmailInput } from '../../components/Inputs';
 import {
   FormikInputWrapper,
   FormikButtonWrapper,
   withFormikImage,
   WithFormikConfig,
-} from '../hocs';
-import { alertFail, alertOk } from '../utils';
+} from '../../hocs';
+import { alertFail, alertOk } from '../../utils';
 import { Alert } from 'react-native';
 import { Storage } from 'aws-amplify';
-import { PreviewAvatar, PreviewAvatarProps } from '../components';
+import { PreviewAvatar, PreviewAvatarProps } from '../../components';
 
 type FormModel = typeof ProfileModel;
 const InitialState: {

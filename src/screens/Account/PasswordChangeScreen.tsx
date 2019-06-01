@@ -1,21 +1,21 @@
 import { Formik } from 'formik';
 import React, { Component } from 'react';
 import { NavigationScreenProps } from 'react-navigation';
-import { PasswordInput } from '../components/Inputs';
+import { PasswordInput } from '../../components/Inputs';
 import {
   PasswordChangeSchema,
   PasswordChangeModel,
   handleChangePasswordSubmit,
-} from '../core';
-import { FormikInputWrapper } from '../hocs';
+} from '../../core';
+import { FormikInputWrapper } from '../../hocs';
 import {
   StyledButton,
   StyledFormContainer,
   StyledFormRow,
   StyledScreenContainer,
   StyledTextInput,
-} from '../styled';
-import { alertOk, NavigationService, alertFail } from '../utils';
+} from '../../styled';
+import { alertOk, NavigationService, alertFail } from '../../utils';
 type Props = NavigationScreenProps;
 type Model = typeof PasswordChangeModel;
 
