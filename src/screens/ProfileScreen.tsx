@@ -19,7 +19,7 @@ import {
   handleUpdateProfile,
   handleGetCurrentUserAttrs,
 } from '../core';
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikProps, FormikActions } from 'formik';
 import { EmailInput } from '../components/Inputs';
 import {
   FormikInputWrapper,
@@ -94,9 +94,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
         enableReinitialize
         initialValues={this.state.form}
         validationSchema={UpdateProfileSchema}
-        onSubmit={(values, actions) => {
-          this.onSave(values);
-        }}
+        onSubmit={this.onSave}
       >
         {fProps => {
           return (
@@ -202,7 +200,10 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
     NavigationService.navigate('VerifyEmail');
   };
 
-  private onSave = async (form: FormModel) => {
+  private onSave = async <T extends FormModel>(
+    form: T,
+    actions: FormikActions<T>,
+  ) => {
     try {
       Busy.start();
       await handleUpdateProfile(form);
@@ -217,6 +218,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
     } catch (err) {
       alertFail(() => null, err);
     } finally {
+      actions.setSubmitting(false);
       Busy.stop();
     }
   };

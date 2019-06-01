@@ -1,8 +1,11 @@
 import { FormikProps } from 'formik';
-import React, { ReactElement, ElementType, ReactType, Component } from 'react';
-import { InputProps, ButtonProps } from 'react-native-elements';
+import React, { ReactElement, Component } from 'react';
+import { InputProps, ButtonProps, Icon } from 'react-native-elements';
 import _ from 'lodash';
 import { PreviewAvatarProps } from '../components';
+
+import * as Animatable from 'react-native-animatable';
+import { StyleGuide } from '../core';
 
 interface StringKeyedObject {
   [key: string]: any;
@@ -62,6 +65,19 @@ export function FormikInputWrapper<T extends StringKeyedObject>(
   return React.cloneElement(children, { ...builtProps });
 }
 
+const AnimatedLoadingIcon = () => (
+  <Animatable.View
+    animation="rotate"
+    easing="linear"
+    iterationCount="infinite"
+    style={{
+      paddingHorizontal: StyleGuide.gap.regular,
+    }}
+  >
+    <Icon type="feather" name="loader" size={15} color="black" />
+  </Animatable.View>
+);
+
 export function FormikButtonWrapper(
   props: FormikFormWrapperProps<any, ReactElement<ButtonProps>>,
 ) {
@@ -69,11 +85,14 @@ export function FormikButtonWrapper(
   const isValid = formProps.isValid;
   const isTouched = !_.isEmpty(formProps.touched);
   const onPress = formProps.handleSubmit;
+  const isSubmitting = formProps.isSubmitting;
 
   return React.cloneElement(children, {
     ...props,
     onPress,
-    disabled: !isValid || !isTouched,
+    disabled: !isValid || !isTouched || isSubmitting,
+    iconRight: true,
+    icon: isSubmitting ? AnimatedLoadingIcon : undefined,
   });
 }
 
