@@ -44,6 +44,11 @@ export const UpdateProfileSchema = Yup.object().shape({
     .label('Mobile number')
     .matches(/^[=+\s]*(?:[0-9][=+\s]*){8,}$/, 'Not a valid mobile number')
     .required(),
+  picture: Yup.string()
+    .label('Profile picture')
+    .url()
+    .notRequired()
+    .ensure(),
 });
 
 export const SignInSchema = Yup.object().shape({

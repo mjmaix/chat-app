@@ -9,7 +9,7 @@ import {
   StyledScrollView,
   StyledView,
 } from '../styled';
-import { NavigationService, Busy } from '../utils';
+import { NavigationService, Busy, AsyncImagePicker } from '../utils';
 import {
   UpdateProfileSchema,
   StyleGuide,
@@ -19,11 +19,18 @@ import {
   handleUpdateProfile,
   handleGetCurrentUserAttrs,
 } from '../core';
-import { Formik } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import { EmailInput } from '../components/Inputs';
-import { FormikInputWrapper, FormikButtonWrapper } from '../hocs';
+import {
+  FormikInputWrapper,
+  FormikButtonWrapper,
+  withFormikImage,
+  WithFormikConfig,
+} from '../hocs';
 import { alertFail, alertOk } from '../utils';
 import { Alert } from 'react-native';
+import { Storage } from 'aws-amplify';
+import { PreviewAvatar, PreviewAvatarProps } from '../components';
 
 type FormModel = typeof ProfileModel;
 const InitialState: {
@@ -33,7 +40,7 @@ const InitialState: {
 } = {
   verifiedStatus: null,
   isFormReady: false,
-  form: ProfileModel,
+  form: { ...ProfileModel, picture: 'https://placeimg.com/480/480/people' },
 };
 
 class ProfileScreen extends Component<{}, typeof InitialState> {
@@ -83,7 +90,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
 
   private renderForm = () => {
     return (
-      <Formik
+      <Formik<FormModel>
         enableReinitialize
         initialValues={this.state.form}
         validationSchema={UpdateProfileSchema}
@@ -94,6 +101,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
         {fProps => {
           return (
             <StyledFormContainer>
+              {this.renderAvatar(fProps)}
               <StyledFormRow>
                 <FormikInputWrapper dataKey="email" formProps={fProps}>
                   <StyledTextInput
@@ -145,23 +153,36 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
     );
   };
 
-  private renderAvatar = () => {
+  private renderAvatar = (fProps: FormikProps<FormModel>) => {
+    const FormikImageWrapper = withFormikImage<FormModel>(PreviewAvatar, {
+      dataKey: 'picture',
+      formProps: fProps,
+    });
     return (
-      <Avatar
-        rounded
-        showEditButton
-        icon={{
-          name: 'user',
-          type: 'feather',
-        }}
-        size="xlarge"
-        source={{ uri: 'https://placeimg.com/480/480/people' }}
-        onEditPress={() => Alert.alert('not yet implemented')}
-        containerStyle={{
-          padding: StyleGuide.gap.big,
-        }}
-      />
+      <StyledFormRow>
+        <StyledView
+          style={{
+            padding: StyleGuide.gap.big,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <FormikImageWrapper />
+        </StyledView>
+      </StyledFormRow>
     );
+  };
+
+  private handleUploadAvatar = async () => {
+    try {
+      const avatarPicker = new AsyncImagePicker();
+      const pickResponse = await avatarPicker.pickImage();
+      console.log('pickResponse', pickResponse);
+      const uploadResponse = await avatarPicker.uploadImage();
+      console.log('uploadReponse', uploadResponse);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   private handleSignOutAsync = async () => {
@@ -208,7 +229,6 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
             justifyContent: 'space-between',
           }}
         >
-          {this.renderAvatar()}
           {this.renderForm()}
           {this.renderExtraButtons()}
         </StyledScreenContainer>

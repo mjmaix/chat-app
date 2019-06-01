@@ -2,7 +2,7 @@ type Nullable<T> = T | null;
 declare module '*.jpg';
 
 /**
- * Cognito
+ * AWS Cognito
  */
 type Contact = 'email' | 'phone_number';
 interface VerifiedContact {
@@ -17,4 +17,13 @@ interface CurrentUserAttributes {
   phone_number: string;
   phone_number_verified: false;
   sub: string;
+}
+
+/**
+ * AWS Storage
+ */
+interface StorageConfig {
+  level: 'private' | 'protected' | 'public';
+  contentType: string;
+  progressCallback: (param: { loaded: number; total: number }) => void;
 }
