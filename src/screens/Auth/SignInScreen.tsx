@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import React, { Component } from 'react';
-import { Alert, Image, ImageBackground } from 'react-native';
+import { Image, ImageBackground } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import BannerImage from '../../../assets/icon_raw.jpg';
 import { EmailInput, PasswordInput } from '../../components/Inputs';
@@ -86,7 +86,7 @@ class SignInScreen extends Component<Props> {
     );
   }
 
-  private onPressSignIn = async (form: FormModel) => {
+  private onPressSignIn = async <T extends FormModel>(form: T) => {
     try {
       Busy.start();
       await handleSignIn(form);

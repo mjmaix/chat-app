@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button as RNEButton, ButtonProps } from 'react-native-elements';
+import { Button as RNEButton, ButtonProps, Icon } from 'react-native-elements';
 import { styles } from './styles';
 
 interface FormButtonProps extends ButtonProps {
