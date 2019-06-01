@@ -1,11 +1,11 @@
 import React from 'react';
 import { Alert } from 'react-native';
-import { SearchBar } from '../components';
+import { SearchBar } from '../../components';
 import {
   StyledBoldText,
   StyledScreenContainer,
   StyledTopContainer,
-} from '../styled';
+} from '../../styled';
 
 const MessagesScreen = () => {
   return (

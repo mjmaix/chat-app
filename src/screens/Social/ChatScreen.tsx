@@ -5,8 +5,8 @@ import { Bubble, GiftedChat } from 'react-native-gifted-chat';
 import { IMessage, User } from 'react-native-gifted-chat/lib/types';
 import { NavigationScreenProps } from 'react-navigation';
 import { ThemedComponentProps } from 'styled-components';
-import { StyledScreenContainer } from '../styled';
-import { isLight } from '../utils';
+import { StyledScreenContainer } from '../../styled';
+import { isLight } from '../../utils';
 
 type Props = NavigationScreenProps;
 

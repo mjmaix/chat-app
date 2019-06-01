@@ -1,5 +1,5 @@
 import React from 'react';
-import { BaseChallengeScreen } from './BaseChallengeScreen';
+import { BaseChallengeScreen } from '../Base/BaseChallengeScreen';
 import { NavigationService, alertOk, alertFail, Busy } from '../../utils';
 import { handleConfirmSignUp } from '../../core';
 

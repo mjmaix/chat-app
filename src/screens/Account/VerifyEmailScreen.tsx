@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BaseChallengeScreen } from '../Auth/BaseChallengeScreen';
+import { BaseChallengeScreen } from '../Base/BaseChallengeScreen';
 import { NavigationService, alertOk, alertFail } from '../../utils';
 import {
   handleVerifyContact,

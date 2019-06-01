@@ -4,8 +4,8 @@ import {
   StyledScreenContainer,
   StyledBlurredView,
   StyledTopContainer,
-} from '../styled';
-import { FixedBackHeader } from '../components';
+} from '../../styled';
+import { FixedBackHeader } from '../../components';
 
 export const BusyOverlayScreen = () => {
   return (
