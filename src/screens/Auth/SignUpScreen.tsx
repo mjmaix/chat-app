@@ -1,4 +1,4 @@
-import { Formik } from 'formik';
+import { Formik, FormikActions } from 'formik';
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
@@ -26,9 +26,7 @@ class SignUpScreen extends Component<Props> {
         <Formik<FormModel>
           initialValues={SignUpModel}
           validationSchema={SignUpSchema}
-          onSubmit={(values, actions) => {
-            this.onPressSignUp(values);
-          }}
+          onSubmit={this.onPressSignUp}
         >
           {fProps => {
             return (
@@ -105,7 +103,10 @@ class SignUpScreen extends Component<Props> {
     );
   }
 
-  private onPressSignUp = async (form: FormModel) => {
+  private onPressSignUp = async <T extends FormModel>(
+    form: T,
+    actions: FormikActions<T>,
+  ) => {
     try {
       Busy.start();
       await handleSignUp(form);
@@ -113,6 +114,7 @@ class SignUpScreen extends Component<Props> {
     } catch (err) {
       alertFail(() => null, err);
     } finally {
+      actions.setSubmitting(false);
       Busy.stop();
     }
   };

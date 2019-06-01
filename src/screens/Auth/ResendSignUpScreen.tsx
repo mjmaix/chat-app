@@ -1,4 +1,4 @@
-import { Formik } from 'formik';
+import { Formik, FormikActions } from 'formik';
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
@@ -29,9 +29,7 @@ class ResendSignUpScreen extends Component<Props> {
         <Formik<FormModel>
           initialValues={EmailModel}
           validationSchema={EmailOnlySchema}
-          onSubmit={(values, actions) => {
-            this.onPressReset(values);
-          }}
+          onSubmit={this.onPressReset}
         >
           {fProps => {
             return (
@@ -52,7 +50,10 @@ class ResendSignUpScreen extends Component<Props> {
     );
   }
 
-  private onPressReset = async (form: FormModel) => {
+  private onPressReset = async <T extends FormModel>(
+    form: T,
+    actions: FormikActions<T>,
+  ) => {
     try {
       Busy.start();
       await handleResend(form);
@@ -60,6 +61,7 @@ class ResendSignUpScreen extends Component<Props> {
     } catch (err) {
       alertFail(() => null, err);
     } finally {
+      actions.setSubmitting(false);
       Busy.stop();
     }
   };

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { BaseChallengeScreen } from './Auth/BaseChallengeScreen';
-import { NavigationService, alertOk, alertFail, Busy } from '../utils';
+import { NavigationService, alertOk, alertFail } from '../utils';
 import {
   handleVerifyContact,
   handleGetCurrentUserAttrs,
   ChallengeModel,
-  EmailModel,
 } from '../core';
 
 export const VerifyEmailScreen = () => {
@@ -30,13 +29,12 @@ export const VerifyEmailScreen = () => {
       }}
       onSubmit={async (values, actions) => {
         try {
-          Busy.start();
           await handleVerifyContact('email', values);
           alertOk(() => NavigationService.navigate('Profile'));
         } catch (err) {
           alertFail(() => null, err);
         } finally {
-          Busy.stop();
+          actions.setSubmitting(false);
         }
       }}
       disableFields={['email']}

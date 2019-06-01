@@ -13,11 +13,11 @@ export const ConfirmSignUpScreen = () => {
         try {
           Busy.start();
           await handleConfirmSignUp(values);
-
           alertOk(() => NavigationService.navigate('SignIn'));
         } catch (err) {
           alertFail(() => null, err);
         } finally {
+          actions.setSubmitting(false);
           Busy.stop();
         }
       }}
