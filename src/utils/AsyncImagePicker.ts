@@ -15,10 +15,18 @@ const avatarOptions = {
   },
 };
 
+const defaultStorageConfig: StorageConfig = {
+  level: 'private',
+  contentType: 'image/jpeg',
+  progressCallback: ({ loaded, total }) => {
+    console.log(`Uploaded: ${loaded}/${total}`);
+  },
+};
+
 export class AsyncImagePicker {
   public response: Nullable<ImagePickerResponse> = null;
 
-  private loadAssetToBase64 = async (filePath: string) => {
+  private static loadAssetToBase64 = async (filePath: string) => {
     let sureFilePath = filePath;
 
     if (Platform.OS === 'ios') {
@@ -34,37 +42,34 @@ export class AsyncImagePicker {
     }
   };
 
-  public uploadImage = async () => {
-    if (!this.response) {
+  // image: ImagePickerResponse
+  public static uploadImage = async (
+    imageUri: string,
+    storageConfig = defaultStorageConfig,
+  ) => {
+    if (!imageUri) {
       throw new Error('No image selected');
     }
     const ext = 'jpeg';
-    const { uri, fileSize, fileName } = this.response;
+    // const { uri, fileSize, fileName } = image;
 
+    const data = await AsyncImagePicker.loadAssetToBase64(imageUri);
+    console.log('uploadImage imageUri', imageUri);
+    console.log('uploadImage data', data);
     const uploadFileName = `profile_picture.${ext}`;
-    const data = await this.loadAssetToBase64(uri);
-
-    const storageConfig: StorageConfig = {
-      level: 'private',
-      contentType: 'image/jpeg',
-      progressCallback: ({ loaded, total }) => {
-        console.log(`Uploaded: ${loaded}/${total}`);
-      },
-    };
 
     try {
-      const storeResponse = await Storage.put(
-        uploadFileName,
-        data,
-        storageConfig,
-      );
-      console.log(storeResponse);
+      const result = await Storage.put(uploadFileName, data, storageConfig);
+      const s3Key = (result as S3Object).key;
+      console.log(result);
+      return s3Key;
     } catch (err) {
       console.error(err);
+      return '';
     }
   };
 
-  public pickImage = async () => {
+  public showImagePicker = async () => {
     return new Promise<Nullable<ImagePickerResponse>>((resolve, reject) => {
       RNImagePicker.showImagePicker(avatarOptions, response => {
         console.log('Response = ', response);

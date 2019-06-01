@@ -46,7 +46,6 @@ export const UpdateProfileSchema = Yup.object().shape({
     .required(),
   picture: Yup.string()
     .label('Profile picture')
-    .url()
     .notRequired()
     .ensure(),
 });

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Avatar } from 'react-native-elements';
 import {
   StyledScreenContainer,
   StyledButton,
@@ -9,7 +8,7 @@ import {
   StyledScrollView,
   StyledView,
 } from '../../styled';
-import { NavigationService, Busy, AsyncImagePicker } from '../../utils';
+import { NavigationService, AsyncImagePicker } from '../../utils';
 import {
   UpdateProfileSchema,
   StyleGuide,
@@ -25,30 +24,39 @@ import {
   FormikInputInjector,
   FormikButtonInjector,
   withFormikImage,
-  WithFormikConfig,
 } from '../../hocs';
 import { alertFail, alertOk } from '../../utils';
-import { Alert } from 'react-native';
+import { PreviewAvatar } from '../../components';
 import { Storage } from 'aws-amplify';
-import { PreviewAvatar, PreviewAvatarProps } from '../../components';
+import { ImageURISource } from 'react-native';
 
 type FormModel = typeof ProfileModel;
 const InitialState: {
   verifiedStatus: VerifiedContact | null;
   form: FormModel;
   isFormReady: boolean;
+  avatar?: string | null | undefined;
 } = {
   verifiedStatus: null,
   isFormReady: false,
-  form: { ...ProfileModel, picture: 'https://placeimg.com/480/480/people' },
+  form: { ...ProfileModel },
+  avatar: null,
 };
 
 class ProfileScreen extends Component<{}, typeof InitialState> {
   public state = InitialState;
   public async componentDidMount() {
-    handleGetCurrentUserAttrs({ bypassCache: true }).then((form: FormModel) => {
-      this.setState({ form, isFormReady: true });
-    });
+    handleGetCurrentUserAttrs({ bypassCache: true })
+      .then(form => {
+        return Promise.all([
+          form,
+          Storage.get(form.picture, { level: 'public' }),
+        ]);
+      })
+      .then(([form, picUrl]) => {
+        console.log('ProfileScreen.state.picUrl', picUrl);
+        this.setState({ form, avatar: picUrl as string, isFormReady: true });
+      });
     this.checkVerifiedContact();
   }
 
@@ -152,10 +160,14 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
   };
 
   private renderAvatar = (fProps: FormikProps<FormModel>) => {
-    const FormikImageWrapper = withFormikImage<FormModel>(PreviewAvatar, {
-      dataKey: 'picture',
-      formProps: fProps,
-    });
+    const FormikImageWrapper = withFormikImage<FormModel>(
+      PreviewAvatar,
+      {
+        dataKey: 'picture',
+        formProps: fProps,
+      },
+      this.state.avatar,
+    );
     return (
       <StyledFormRow>
         <StyledView
@@ -169,18 +181,6 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
         </StyledView>
       </StyledFormRow>
     );
-  };
-
-  private handleUploadAvatar = async () => {
-    try {
-      const avatarPicker = new AsyncImagePicker();
-      const pickResponse = await avatarPicker.pickImage();
-      console.log('pickResponse', pickResponse);
-      const uploadResponse = await avatarPicker.uploadImage();
-      console.log('uploadReponse', uploadResponse);
-    } catch (err) {
-      console.error(err);
-    }
   };
 
   private handleSignOutAsync = async () => {
@@ -204,14 +204,31 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
     form: T,
     actions: FormikActions<T>,
   ) => {
+    const oldAttrs = this.state.form;
+    const newAttrs = form;
+    const emailChanged = oldAttrs.email !== newAttrs.email;
+    const picChanged = oldAttrs.picture !== newAttrs.picture;
+
     try {
-      Busy.start();
-      await handleUpdateProfile(form);
+      const newForm = { ...form };
+      if (picChanged) {
+        const config: StorageConfig = {
+          level: 'public',
+          contentType: 'image/jpeg',
+          progressCallback: ({ loaded, total }) => {
+            console.log(`Uploaded: ${loaded}/${total}`);
+          },
+        };
+        const newPicUrl = await AsyncImagePicker.uploadImage(
+          newAttrs.picture,
+          config,
+        );
+        newForm.picture = newPicUrl;
+      }
+      await handleUpdateProfile(newForm);
       this.checkVerifiedContact();
       alertOk(() => {
-        const oldAttrs = this.state.form;
-        const newAttrs = form;
-        if (oldAttrs.email !== newAttrs.email) {
+        if (emailChanged) {
           NavigationService.navigate('VerifyEmail');
         }
       });
@@ -219,7 +236,6 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
       alertFail(() => null, err);
     } finally {
       actions.setSubmitting(false);
-      Busy.stop();
     }
   };
 

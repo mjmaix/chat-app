@@ -1,6 +1,7 @@
-import React, { useState, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { Avatar, Text } from 'react-native-elements';
 import { ImageURISource } from 'react-native';
+import { AsyncImagePicker } from '../../utils';
 
 export interface PreviewAvatarProps {
   handleChangeImage?: ((e: unknown) => void) | null | undefined;
@@ -17,7 +18,6 @@ export const PreviewAvatar = ({
   handleTouched,
   ...props
 }: PreviewAvatarProps) => {
-  const [preview, setPreview] = useState(source);
   return (
     <Fragment>
       <Avatar
@@ -29,9 +29,11 @@ export const PreviewAvatar = ({
         }}
         size="xlarge"
         source={source}
-        onEditPress={() => {
-          if (handleChangeImage) {
-            handleChangeImage('https://placeimg.com/482/482/people');
+        onEditPress={async () => {
+          const picker = new AsyncImagePicker();
+          const result = await picker.showImagePicker();
+          if (handleChangeImage && result) {
+            handleChangeImage(result.uri);
           }
           if (handleTouched) {
             handleTouched(true);

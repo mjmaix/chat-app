@@ -19,6 +19,9 @@ interface CurrentUserAttributes {
   sub: string;
 }
 
+interface S3Object {
+  key: string;
+}
 /**
  * AWS Storage
  */

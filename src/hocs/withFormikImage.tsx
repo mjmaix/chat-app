@@ -9,6 +9,7 @@ import { WithFormikConfig, StringKeyedObject } from '.';
 export function withFormikImage<T extends StringKeyedObject>(
   WrappedComp: React.ComponentType<PreviewAvatarProps>,
   props: WithFormikConfig<T>,
+  forceSource?: string | null | undefined,
 ) {
   const { formProps, dataKey } = props;
   const handleChangeImage = formProps.handleChange(dataKey);
@@ -23,11 +24,11 @@ export function withFormikImage<T extends StringKeyedObject>(
   };
 
   if (formProps.values[dataKey]) {
-    builtProps.source = { uri: formProps.values[dataKey] };
+    builtProps.source = { uri: forceSource || formProps.values[dataKey] };
   }
   return class extends Component<PreviewAvatarProps> {
     public render() {
-      return <WrappedComp {...this.props} {...builtProps} />;
+      return <WrappedComp {...builtProps} {...this.props} />;
     }
   };
 }
