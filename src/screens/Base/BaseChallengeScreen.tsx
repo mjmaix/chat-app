@@ -4,7 +4,7 @@ import { NavigationScreenProps } from 'react-navigation';
 import { Header } from '../../components';
 import { EmailInput } from '../../components/Inputs';
 import { ChallengeSchema, ChallengeModel } from '../../core';
-import { FormikInputWrapper } from '../../hocs';
+import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
   StyledFormContainer,
@@ -56,17 +56,17 @@ class BaseChallengeScreen<T extends FormModel> extends Component<Props<T>> {
             return (
               <StyledFormContainer>
                 <StyledFormRow>
-                  <FormikInputWrapper dataKey="email" formProps={fProps}>
+                  <FormikInputInjector dataKey="email" formProps={fProps}>
                     <StyledTextInput
                       as={EmailInput}
                       inputComponent={this.renderEmailInput}
                     />
-                  </FormikInputWrapper>
+                  </FormikInputInjector>
                 </StyledFormRow>
                 <StyledFormRow>
-                  <FormikInputWrapper dataKey="code" formProps={fProps}>
+                  <FormikInputInjector dataKey="code" formProps={fProps}>
                     <StyledTextInput placeholder={placeholder} />
-                  </FormikInputWrapper>
+                  </FormikInputInjector>
                 </StyledFormRow>
                 <StyledFormRow>
                   <StyledButton

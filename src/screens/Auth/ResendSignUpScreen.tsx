@@ -5,7 +5,7 @@ import { NavigationScreenProps } from 'react-navigation';
 import { Header } from '../../components';
 import { EmailInput } from '../../components/Inputs';
 import { EmailOnlySchema, EmailModel, handleResend } from '../../core';
-import { FormikInputWrapper } from '../../hocs';
+import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
   StyledFormContainer,
@@ -35,9 +35,9 @@ class ResendSignUpScreen extends Component<Props> {
             return (
               <StyledFormContainer>
                 <StyledFormRow>
-                  <FormikInputWrapper dataKey="email" formProps={fProps}>
+                  <FormikInputInjector dataKey="email" formProps={fProps}>
                     <StyledTextInput as={EmailInput} />
-                  </FormikInputWrapper>
+                  </FormikInputInjector>
                 </StyledFormRow>
                 <StyledFormRow>
                   <StyledButton onPress={fProps.handleSubmit} label={'Reset'} />

@@ -22,8 +22,8 @@ import {
 import { Formik, FormikProps, FormikActions } from 'formik';
 import { EmailInput } from '../../components/Inputs';
 import {
-  FormikInputWrapper,
-  FormikButtonWrapper,
+  FormikInputInjector,
+  FormikButtonInjector,
   withFormikImage,
   WithFormikConfig,
 } from '../../hocs';
@@ -101,48 +101,48 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
             <StyledFormContainer>
               {this.renderAvatar(fProps)}
               <StyledFormRow>
-                <FormikInputWrapper dataKey="email" formProps={fProps}>
+                <FormikInputInjector dataKey="email" formProps={fProps}>
                   <StyledTextInput
                     as={EmailInput}
                     label="Email"
                     placeholder=""
                   />
-                </FormikInputWrapper>
+                </FormikInputInjector>
               </StyledFormRow>
 
               <StyledFormRow>
-                <FormikInputWrapper dataKey="phoneNumber" formProps={fProps}>
+                <FormikInputInjector dataKey="phoneNumber" formProps={fProps}>
                   <StyledTextInput
                     label="Mobile"
                     keyboardType="phone-pad"
                     autoCapitalize="none"
                     textContentType="telephoneNumber"
                   />
-                </FormikInputWrapper>
+                </FormikInputInjector>
               </StyledFormRow>
 
               <StyledFormRow>
-                <FormikInputWrapper dataKey="givenName" formProps={fProps}>
+                <FormikInputInjector dataKey="givenName" formProps={fProps}>
                   <StyledTextInput
                     label="Given name"
                     textContentType="givenName"
                   />
-                </FormikInputWrapper>
+                </FormikInputInjector>
               </StyledFormRow>
 
               <StyledFormRow>
-                <FormikInputWrapper dataKey="familyName" formProps={fProps}>
+                <FormikInputInjector dataKey="familyName" formProps={fProps}>
                   <StyledTextInput
                     label="Family name"
                     textContentType="familyName"
                   />
-                </FormikInputWrapper>
+                </FormikInputInjector>
               </StyledFormRow>
 
               <StyledFormRow>
-                <FormikButtonWrapper formProps={fProps}>
+                <FormikButtonInjector formProps={fProps}>
                   <StyledButton onPress={fProps.handleSubmit} label={'Save'} />
-                </FormikButtonWrapper>
+                </FormikButtonInjector>
               </StyledFormRow>
             </StyledFormContainer>
           );

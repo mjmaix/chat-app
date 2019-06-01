@@ -5,7 +5,7 @@ import { NavigationScreenProps } from 'react-navigation';
 import BannerImage from '../../../assets/icon_raw.jpg';
 import { EmailInput, PasswordInput } from '../../components/Inputs';
 import { SignInSchema, SignInModel, handleSignIn } from '../../core';
-import { FormikInputWrapper } from '../../hocs';
+import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
   StyledFormContainer,
@@ -42,17 +42,20 @@ class SignInScreen extends Component<Props> {
                 return (
                   <StyledFormContainer>
                     <StyledFormRow>
-                      <FormikInputWrapper dataKey="email" formProps={fProps}>
+                      <FormikInputInjector dataKey="email" formProps={fProps}>
                         <StyledTextInput as={EmailInput} />
-                      </FormikInputWrapper>
+                      </FormikInputInjector>
                     </StyledFormRow>
                     <StyledFormRow>
-                      <FormikInputWrapper dataKey="password" formProps={fProps}>
+                      <FormikInputInjector
+                        dataKey="password"
+                        formProps={fProps}
+                      >
                         <StyledTextInput
                           as={PasswordInput}
                           onSubmitEditing={fProps.handleSubmit}
                         />
-                      </FormikInputWrapper>
+                      </FormikInputInjector>
                     </StyledFormRow>
                     <StyledFormRow>
                       <StyledButton

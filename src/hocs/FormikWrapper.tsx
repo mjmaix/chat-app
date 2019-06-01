@@ -35,7 +35,7 @@ export interface WithFormikConfig<T extends StringKeyedObject> {
   dataKey: string;
 }
 
-export function FormikInputWrapper<T extends StringKeyedObject>(
+export function FormikInputInjector<T extends StringKeyedObject>(
   props: FormikFieldWrapperProps<T, ReactElement<InputProps>>,
 ) {
   const { children, formProps, dataKey, ...props2 } = props;
@@ -78,7 +78,7 @@ const AnimatedLoadingIcon = () => (
   </Animatable.View>
 );
 
-export function FormikButtonWrapper(
+export function FormikButtonInjector(
   props: FormikFormWrapperProps<any, ReactElement<ButtonProps>>,
 ) {
   const { children, formProps } = props;

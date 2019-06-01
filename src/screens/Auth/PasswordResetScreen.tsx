@@ -8,7 +8,7 @@ import {
   PasswordResetModel,
   handleForgotPasswordSubmit,
 } from '../../core';
-import { FormikInputWrapper } from '../../hocs';
+import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
   StyledFormContainer,
@@ -41,22 +41,22 @@ class PasswordResetScreen extends Component<Props> {
             return (
               <StyledFormContainer>
                 <StyledFormRow>
-                  <FormikInputWrapper dataKey="email" formProps={fProps}>
+                  <FormikInputInjector dataKey="email" formProps={fProps}>
                     <StyledTextInput as={EmailInput} />
-                  </FormikInputWrapper>
+                  </FormikInputInjector>
                 </StyledFormRow>
                 <StyledFormRow>
-                  <FormikInputWrapper dataKey="code" formProps={fProps}>
+                  <FormikInputInjector dataKey="code" formProps={fProps}>
                     <StyledTextInput placeholder="Code" />
-                  </FormikInputWrapper>
+                  </FormikInputInjector>
                 </StyledFormRow>
                 <StyledFormRow>
-                  <FormikInputWrapper dataKey="password" formProps={fProps}>
+                  <FormikInputInjector dataKey="password" formProps={fProps}>
                     <StyledTextInput
                       as={PasswordInput}
                       onSubmitEditing={fProps.handleSubmit}
                     />
-                  </FormikInputWrapper>
+                  </FormikInputInjector>
                 </StyledFormRow>
                 <StyledFormRow>
                   <StyledButton

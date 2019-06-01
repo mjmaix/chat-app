@@ -7,7 +7,7 @@ import {
   PasswordChangeModel,
   handleChangePasswordSubmit,
 } from '../../core';
-import { FormikInputWrapper } from '../../hocs';
+import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
   StyledFormContainer,
@@ -34,20 +34,20 @@ class PasswordChangeScreen extends Component<Props> {
             return (
               <StyledFormContainer>
                 <StyledFormRow>
-                  <FormikInputWrapper dataKey="passwordOld" formProps={fProps}>
+                  <FormikInputInjector dataKey="passwordOld" formProps={fProps}>
                     <StyledTextInput
                       as={PasswordInput}
                       placeholder="Old password"
                     />
-                  </FormikInputWrapper>
+                  </FormikInputInjector>
                 </StyledFormRow>
                 <StyledFormRow>
-                  <FormikInputWrapper dataKey="password" formProps={fProps}>
+                  <FormikInputInjector dataKey="password" formProps={fProps}>
                     <StyledTextInput
                       as={PasswordInput}
                       placeholder="New password"
                     />
-                  </FormikInputWrapper>
+                  </FormikInputInjector>
                 </StyledFormRow>
                 <StyledFormRow>
                   <StyledButton

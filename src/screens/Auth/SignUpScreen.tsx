@@ -5,7 +5,7 @@ import { NavigationScreenProps } from 'react-navigation';
 import { Header } from '../../components';
 import { EmailInput, PasswordInput } from '../../components/Inputs';
 import { SignUpSchema, handleSignUp, error, SignUpModel } from '../../core';
-import { FormikInputWrapper } from '../../hocs';
+import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
   StyledFormContainer,
@@ -32,47 +32,47 @@ class SignUpScreen extends Component<Props> {
             return (
               <StyledFormContainer>
                 <StyledFormRow>
-                  <FormikInputWrapper dataKey="email" formProps={fProps}>
+                  <FormikInputInjector dataKey="email" formProps={fProps}>
                     <StyledTextInput as={EmailInput} />
-                  </FormikInputWrapper>
+                  </FormikInputInjector>
                 </StyledFormRow>
 
                 <StyledFormRow>
-                  <FormikInputWrapper dataKey="phoneNumber" formProps={fProps}>
+                  <FormikInputInjector dataKey="phoneNumber" formProps={fProps}>
                     <StyledTextInput
                       placeholder="Mobile"
                       keyboardType="phone-pad"
                       autoCapitalize="none"
                       textContentType="telephoneNumber"
                     />
-                  </FormikInputWrapper>
+                  </FormikInputInjector>
                 </StyledFormRow>
 
                 <StyledFormRow>
-                  <FormikInputWrapper dataKey="givenName" formProps={fProps}>
+                  <FormikInputInjector dataKey="givenName" formProps={fProps}>
                     <StyledTextInput
                       placeholder="Given name"
                       textContentType="givenName"
                     />
-                  </FormikInputWrapper>
+                  </FormikInputInjector>
                 </StyledFormRow>
 
                 <StyledFormRow>
-                  <FormikInputWrapper dataKey="familyName" formProps={fProps}>
+                  <FormikInputInjector dataKey="familyName" formProps={fProps}>
                     <StyledTextInput
                       placeholder="Family name"
                       textContentType="familyName"
                     />
-                  </FormikInputWrapper>
+                  </FormikInputInjector>
                 </StyledFormRow>
 
                 <StyledFormRow>
-                  <FormikInputWrapper dataKey="password" formProps={fProps}>
+                  <FormikInputInjector dataKey="password" formProps={fProps}>
                     <StyledTextInput
                       as={PasswordInput}
                       onSubmitEditing={fProps.handleSubmit}
                     />
-                  </FormikInputWrapper>
+                  </FormikInputInjector>
                 </StyledFormRow>
 
                 <StyledFormRow>
