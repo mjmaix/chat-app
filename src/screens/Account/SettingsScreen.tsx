@@ -3,6 +3,7 @@ import React from 'react';
 import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
 import { ThemeProps, withTheme as rneWithTheme } from 'react-native-elements';
 import { NavigationScreenProps } from 'react-navigation';
+
 import { ThemeListItem } from '../../components';
 import { STORAGE_KEY, Theme, ThemeHelper, themes } from '../../core';
 import { StyledBoldText, StyledScreenContainer } from '../../styled';

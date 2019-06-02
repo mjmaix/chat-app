@@ -1,4 +1,5 @@
 import { StatusBar } from 'react-native';
+
 import { isLight } from './color-utils';
 
 export const updateStatusBarStyle = (color?: string) => {

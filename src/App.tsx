@@ -1,11 +1,13 @@
+import './setup';
+
 import AsyncStorage from '@react-native-community/async-storage';
 import React, { Component } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { ThemeProvider as RneThemeProvider } from 'react-native-elements';
 import { ThemeProvider as ScThemeProvider } from 'styled-components';
-import { error, STORAGE_KEY, ThemeHelper, ThemeName, themes } from './core';
+
+import { STORAGE_KEY, ThemeHelper, ThemeName, error, themes } from './core';
 import { AppRoutes } from './routes';
-import './setup';
 import { NavigationService } from './utils';
 
 type Theme = typeof themes[0];

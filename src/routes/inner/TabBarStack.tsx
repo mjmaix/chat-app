@@ -4,6 +4,7 @@ import {
   createBottomTabNavigator,
 } from 'react-navigation';
 import { ThemedComponentProps } from 'styled-components';
+
 import { IconWithBadge, TabBarComponent } from '../../components';
 import { Mappings } from '../mappings';
 import MessageStack from './MessageStack';

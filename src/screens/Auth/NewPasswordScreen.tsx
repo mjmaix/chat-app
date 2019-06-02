@@ -1,7 +1,8 @@
 import React from 'react';
-import { BaseChallengeScreen } from '../Base/BaseChallengeScreen';
-import { NavigationService, alertOk, alertFail } from '../../utils';
+
 import { handleConfirmSignUp } from '../../core';
+import { NavigationService, alertFail, alertOk } from '../../utils';
+import { BaseChallengeScreen } from '../Base/BaseChallengeScreen';
 
 export const NewPasswordScreen = () => {
   return (

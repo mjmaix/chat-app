@@ -1,9 +1,10 @@
-import React from 'react';
-import { render } from 'react-native-testing-library';
 import 'jest-styled-components/native';
 
-import { StyledScreenContainer } from './StyledScreenContainer';
+import React from 'react';
 import { Text } from 'react-native';
+import { render } from 'react-native-testing-library';
+
+import { StyledScreenContainer } from './StyledScreenContainer';
 
 const createTestProps = (props?: object) => ({
   testID: 'testid',

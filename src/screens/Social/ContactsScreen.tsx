@@ -1,6 +1,7 @@
 import React from 'react';
 import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
+
 import { SearchBar, SimpleFlatList, UserListItem } from '../../components';
 import { User, users } from '../../core';
 import { StyledScreenContainer } from '../../styled';

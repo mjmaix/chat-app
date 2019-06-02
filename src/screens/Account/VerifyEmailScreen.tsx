@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { BaseChallengeScreen } from '../Base/BaseChallengeScreen';
-import { NavigationService, alertOk, alertFail } from '../../utils';
+import React, { useEffect, useState } from 'react';
+
 import {
-  handleVerifyContact,
-  handleGetCurrentUserAttrs,
   ChallengeModel,
+  handleGetCurrentUserAttrs,
+  handleVerifyContact,
 } from '../../core';
+import { NavigationService, alertFail, alertOk } from '../../utils';
+import { BaseChallengeScreen } from '../Base/BaseChallengeScreen';
 
 export const VerifyEmailScreen = () => {
   const [isFormReady, setFormReady] = useState(false);

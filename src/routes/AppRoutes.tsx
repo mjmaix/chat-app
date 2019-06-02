@@ -1,17 +1,17 @@
+import React from 'react';
+import { Animated, Easing } from 'react-native';
 import {
-  createAppContainer,
-  createSwitchNavigator,
-  createStackNavigator,
   StackNavigatorConfig,
+  createAppContainer,
+  createStackNavigator,
+  createSwitchNavigator,
 } from 'react-navigation';
-import { AuthLoadingScreen, BusyOverlayScreen } from '../screens';
+
+import { Transitions } from '../components/Navigation/Transitions';
+import { AuthLoadingScreen } from '../screens';
 import AuthStack from './inner/AuthStack';
 import TabBarStack from './inner/TabBarStack';
 import { Mappings } from './mappings';
-import { FixedBackHeader } from '../components';
-import React from 'react';
-import { Easing, Animated } from 'react-native';
-import { Transitions } from '../components/Navigation/Transitions';
 
 const SwitchNav = createSwitchNavigator(
   {

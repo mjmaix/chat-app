@@ -1,16 +1,17 @@
-import {
-  ProfileModel,
-  PasswordRequiredModel,
-  SignUpModel,
-  EmailModel,
-  ChallengeModel,
-  PasswordResetModel,
-  PasswordChangeModel,
-  SignInModel,
-} from './../models';
-import { Auth } from 'aws-amplify';
 import { CognitoUser } from '@aws-amplify/auth';
 import { CurrentUserOpts } from '@aws-amplify/auth/lib/types';
+import { Auth } from 'aws-amplify';
+
+import {
+  ChallengeModel,
+  EmailModel,
+  PasswordChangeModel,
+  PasswordRequiredModel,
+  PasswordResetModel,
+  ProfileModel,
+  SignInModel,
+  SignUpModel,
+} from './../models';
 
 type SignUpModel = typeof ProfileModel & typeof PasswordRequiredModel;
 

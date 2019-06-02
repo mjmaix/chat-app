@@ -1,4 +1,5 @@
 import { Alert } from 'react-native';
+
 import { error } from '../core';
 
 export const alertOk = (cb: () => void) => {

@@ -1,10 +1,12 @@
 import { Formik, FormikActions } from 'formik';
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
+import { Actions } from 'react-native-gifted-chat';
 import { NavigationScreenProps } from 'react-navigation';
+
 import { Header } from '../../components';
 import { EmailInput } from '../../components/Inputs';
-import { EmailOnlySchema, EmailModel, handleForgotPassword } from '../../core';
+import { EmailModel, EmailOnlySchema, handleForgotPassword } from '../../core';
 import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
@@ -13,8 +15,7 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
-import { NavigationService, alertFail, alertOk, Busy } from '../../utils';
-import { Actions } from 'react-native-gifted-chat';
+import { Busy, NavigationService, alertFail, alertOk } from '../../utils';
 
 type Props = NavigationScreenProps;
 type FormModel = typeof EmailModel;

@@ -1,6 +1,7 @@
 import React from 'react';
-import { createStackNavigator, NavigationScreenProps } from 'react-navigation';
+import { NavigationScreenProps, createStackNavigator } from 'react-navigation';
 import { ThemedComponentProps } from 'styled-components';
+
 import { HeaderIcon } from '../../components';
 import { updateStatusBarStyle } from '../../utils/StatusBarService';
 import { Mappings } from '../mappings';

@@ -1,8 +1,8 @@
 import React from 'react';
-import { createStackNavigator, StackNavigatorConfig } from 'react-navigation';
+import { StackNavigatorConfig, createStackNavigator } from 'react-navigation';
+
 import { FixedBackHeader } from '../../components';
 import { Mappings } from '../mappings';
-import { Easing, Animated } from 'react-native';
 
 const options: StackNavigatorConfig = {
   headerMode: 'screen',

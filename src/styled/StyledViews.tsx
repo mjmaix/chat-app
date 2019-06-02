@@ -1,5 +1,6 @@
-import { containerStyles, formStyles } from '../components';
 import styled from 'styled-components/native';
+
+import { containerStyles, formStyles } from '../components';
 
 export const StyledTopContainer = styled.View`
   ${props => ({

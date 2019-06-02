@@ -1,11 +1,12 @@
 import { Formik, FormikActions } from 'formik';
 import React, { Component } from 'react';
 import { NavigationScreenProps } from 'react-navigation';
+
 import { Header } from '../../components';
 import { EmailInput, PasswordInput } from '../../components/Inputs';
 import {
-  PasswordResetSchema,
   PasswordResetModel,
+  PasswordResetSchema,
   handleForgotPasswordSubmit,
 } from '../../core';
 import { FormikInputInjector } from '../../hocs';
@@ -16,7 +17,8 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
-import { NavigationService, alertFail, alertOk, Busy } from '../../utils';
+import { Busy, NavigationService, alertFail, alertOk } from '../../utils';
+
 type Props = NavigationScreenProps;
 type FormModel = typeof PasswordResetModel;
 

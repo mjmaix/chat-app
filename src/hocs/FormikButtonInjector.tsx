@@ -1,7 +1,8 @@
-import React, { ReactElement } from 'react';
-import { ButtonProps, Icon } from 'react-native-elements';
 import _ from 'lodash';
+import React, { ReactElement } from 'react';
 import * as Animatable from 'react-native-animatable';
+import { ButtonProps, Icon } from 'react-native-elements';
+
 import { StyleGuide } from '../core';
 import { FormikFormWrapperProps } from '.';
 

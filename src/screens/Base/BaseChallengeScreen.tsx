@@ -1,9 +1,11 @@
 import { Formik, FormikActions } from 'formik';
 import React, { Component } from 'react';
+import { TextInput } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
+
 import { Header } from '../../components';
 import { EmailInput } from '../../components/Inputs';
-import { ChallengeSchema, ChallengeModel } from '../../core';
+import { ChallengeModel, ChallengeSchema } from '../../core';
 import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
@@ -12,7 +14,6 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
-import { TextInput } from 'react-native';
 
 interface OwnProps<T> {
   title?: string;

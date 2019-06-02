@@ -1,9 +1,10 @@
-import React from 'react';
-import { render } from 'react-native-testing-library';
 import 'jest-styled-components/native';
 
-import { StyledView } from './StyledView';
+import React from 'react';
 import { Text } from 'react-native';
+import { render } from 'react-native-testing-library';
+
+import { StyledView } from './StyledView';
 
 const createTestProps = (props?: object) => ({
   testID: 'testid',

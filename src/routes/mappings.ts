@@ -1,19 +1,20 @@
-import { ConfirmSignUpScreen } from './../screens/Auth/ConfirmSignUpScreen';
 import React from 'react';
+
+import { ConfirmSignUpScreen } from './../screens/Auth/ConfirmSignUpScreen';
 import { IconObject } from '../components';
 import {
+  BusyOverlayScreen,
   ChatScreen,
   ContactsScreen,
   MessagesScreen,
+  PasswordChangeScreen,
   PasswordForgotScreen,
   PasswordResetScreen,
   ProfileScreen,
+  ResendSignUpScreen,
   SettingsScreen,
   SignInScreen,
   SignUpScreen,
-  PasswordChangeScreen,
-  ResendSignUpScreen,
-  BusyOverlayScreen,
   VerifyEmailScreen,
 } from '../screens';
 

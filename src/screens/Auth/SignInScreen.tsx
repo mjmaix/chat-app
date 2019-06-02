@@ -2,9 +2,10 @@ import { Formik } from 'formik';
 import React, { Component } from 'react';
 import { Image, ImageBackground } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
+
 import BannerImage from '../../../assets/icon_raw.jpg';
 import { EmailInput, PasswordInput } from '../../components/Inputs';
-import { SignInSchema, SignInModel, handleSignIn } from '../../core';
+import { SignInModel, SignInSchema, handleSignIn } from '../../core';
 import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
@@ -14,7 +15,7 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
-import { NavigationService, alertFail, Busy } from '../../utils';
+import { Busy, NavigationService, alertFail } from '../../utils';
 
 type Props = NavigationScreenProps;
 type FormModel = typeof SignInModel;

@@ -1,11 +1,12 @@
 import React from 'react';
 import { ActivityIndicator, SafeAreaView } from 'react-native';
+
+import { FixedBackHeader } from '../../components';
 import {
-  StyledScreenContainer,
   StyledBlurredView,
+  StyledScreenContainer,
   StyledTopContainer,
 } from '../../styled';
-import { FixedBackHeader } from '../../components';
 
 export const BusyOverlayScreen = () => {
   return (

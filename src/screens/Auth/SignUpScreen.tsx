@@ -1,10 +1,10 @@
 import { Formik, FormikActions } from 'formik';
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
+
 import { Header } from '../../components';
 import { EmailInput, PasswordInput } from '../../components/Inputs';
-import { SignUpSchema, handleSignUp, error, SignUpModel } from '../../core';
+import { SignUpModel, SignUpSchema, handleSignUp } from '../../core';
 import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
@@ -13,7 +13,7 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
-import { NavigationService, alertOk, alertFail, Busy } from '../../utils';
+import { Busy, NavigationService, alertFail, alertOk } from '../../utils';
 
 type Props = NavigationScreenProps;
 type FormModel = typeof SignUpModel;

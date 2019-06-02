@@ -1,8 +1,8 @@
+import _ from 'lodash';
 import React, { ReactElement } from 'react';
 import { InputProps } from 'react-native-elements';
-import _ from 'lodash';
 
-import { StringKeyedObject, SupportedComp, FormikFormWrapperProps } from '.';
+import { FormikFormWrapperProps, StringKeyedObject, SupportedComp } from '.';
 
 interface FormikFieldWrapperProps<
   T extends StringKeyedObject,
