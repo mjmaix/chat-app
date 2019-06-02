@@ -1,7 +1,9 @@
 import _ from 'lodash';
 import React from 'react';
 import { ImageURISource } from 'react-native';
+import { ImageProps } from 'react-native-elements';
 import { Subtract } from 'utility-types';
+import * as Yup from 'yup';
 
 import { PreviewAvatarProps } from '../components';
 import { StringKeyedObject, WithFormikConfig } from '.';
@@ -12,6 +14,7 @@ export interface InjectPreviewAvatarProps {
   handleTouched?: (v: boolean) => void;
   isSubmitting?: boolean;
   source?: ImageURISource | undefined;
+  imageProps?: Partial<ImageProps>;
 }
 
 type ReturnFunc = <
@@ -25,7 +28,7 @@ type ReturnFunc = <
 export function withFormikImage<T extends StringKeyedObject>(
   WrappedComp: React.ComponentType<PreviewAvatarProps>,
   config: WithFormikConfig<T>,
-  forceSource?: string | null | undefined,
+  forceUri?: string | null | undefined,
 ) {
   const { formProps, dataKey } = config;
   const handleChangeImage = formProps.handleChange(dataKey);
@@ -41,8 +44,20 @@ export function withFormikImage<T extends StringKeyedObject>(
     isSubmitting,
   };
 
-  if (formProps.values[dataKey]) {
-    builtProps.source = { uri: forceSource || formProps.values[dataKey] };
+  const val = formProps.values[dataKey];
+  const isUrl = Yup.string()
+    .url()
+    .required()
+    .isValidSync(val);
+  const isFilePath = Yup.string()
+    .matches(/^file:\/\//g)
+    .required()
+    .isValidSync(val);
+
+  if (isUrl || isFilePath) {
+    builtProps.source = { uri: val };
+  } else if (forceUri) {
+    builtProps.source = { uri: forceUri };
   }
   return (props => {
     return <WrappedComp {...builtProps} {...props} />;

@@ -49,6 +49,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
   public async componentDidMount() {
     handleGetCurrentUserAttrs({ bypassCache: true })
       .then(form => {
+        // NOTE: saved attribute is not a valid url but is a s3Key
         return Promise.all([
           form,
           Storage.get(form.picture, { level: 'protected' }),
