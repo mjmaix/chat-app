@@ -26,7 +26,7 @@
     "studio": "open -a /Applications/Android\\ Studio.app ./android/",
     "xcode": "open ios/Chat.xcodeproj",
     "generator-rn-toolbox": "./scripts/generator-rn-toolbox.sh",
-    "patch-package:update": "npx patch-package react-native-elements"
+    "patch-package:update": "npx patch-package react-native-elements metro"
   },
   "dependencies": {
     "@react-native-community/async-storage": "1.3.3",
