@@ -1,38 +1,30 @@
+import { Storage } from 'aws-amplify';
+import { Formik, FormikActions } from 'formik';
 import React, { Component } from 'react';
+
+import { FormikPreviewAvatar } from '../../components';
+import { EmailInput } from '../../components/Inputs';
 import {
-  StyledScreenContainer,
+  ProfileModel,
+  StyleGuide,
+  UpdateProfileSchema,
+  handleCheckVerifiedContact,
+  handleGetCurrentUserAttrs,
+  handleSignOut,
+  handleUpdateProfile,
+} from '../../core';
+import { FormikButtonInjector, FormikInputInjector } from '../../hocs';
+import {
   StyledButton,
   StyledFormContainer,
   StyledFormRow,
-  StyledTextInput,
+  StyledScreenContainer,
   StyledScrollView,
+  StyledTextInput,
   StyledView,
 } from '../../styled';
-import {
-  NavigationService,
-  AsyncImagePicker,
-  getExt,
-  getMime,
-} from '../../utils';
-import {
-  UpdateProfileSchema,
-  StyleGuide,
-  ProfileModel,
-  handleSignOut,
-  handleCheckVerifiedContact,
-  handleUpdateProfile,
-  handleGetCurrentUserAttrs,
-} from '../../core';
-import { Formik, FormikProps, FormikActions } from 'formik';
-import { EmailInput } from '../../components/Inputs';
-import {
-  FormikInputInjector,
-  FormikButtonInjector,
-  withFormikImage,
-} from '../../hocs';
+import { AsyncImagePicker, NavigationService, getMime } from '../../utils';
 import { alertFail, alertOk } from '../../utils';
-import { PreviewAvatar } from '../../components';
-import { Storage } from 'aws-amplify';
 
 type FormModel = typeof ProfileModel;
 const InitialState: {
@@ -112,7 +104,21 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
         {fProps => {
           return (
             <StyledFormContainer>
-              {this.renderAvatar(fProps)}
+              <StyledFormRow>
+                <StyledView
+                  style={{
+                    padding: StyleGuide.gap.big,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <FormikPreviewAvatar
+                    fProps={fProps}
+                    dataKey="picture"
+                    avatar={this.state.avatar}
+                  />
+                </StyledView>
+              </StyledFormRow>
               <StyledFormRow>
                 <FormikInputInjector dataKey="email" formProps={fProps}>
                   <StyledTextInput
@@ -122,7 +128,6 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
                   />
                 </FormikInputInjector>
               </StyledFormRow>
-
               <StyledFormRow>
                 <FormikInputInjector dataKey="phoneNumber" formProps={fProps}>
                   <StyledTextInput
@@ -133,7 +138,6 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
                   />
                 </FormikInputInjector>
               </StyledFormRow>
-
               <StyledFormRow>
                 <FormikInputInjector dataKey="givenName" formProps={fProps}>
                   <StyledTextInput
@@ -142,7 +146,6 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
                   />
                 </FormikInputInjector>
               </StyledFormRow>
-
               <StyledFormRow>
                 <FormikInputInjector dataKey="familyName" formProps={fProps}>
                   <StyledTextInput
@@ -151,7 +154,6 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
                   />
                 </FormikInputInjector>
               </StyledFormRow>
-
               <StyledFormRow>
                 <FormikButtonInjector formProps={fProps}>
                   <StyledButton onPress={fProps.handleSubmit} label={'Save'} />
@@ -161,30 +163,6 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
           );
         }}
       </Formik>
-    );
-  };
-
-  private renderAvatar = (fProps: FormikProps<FormModel>) => {
-    const FormikImageWrapper = withFormikImage<FormModel>(
-      PreviewAvatar,
-      {
-        dataKey: 'picture',
-        formProps: fProps,
-      },
-      this.state.avatar,
-    );
-    return (
-      <StyledFormRow>
-        <StyledView
-          style={{
-            padding: StyleGuide.gap.big,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <FormikImageWrapper />
-        </StyledView>
-      </StyledFormRow>
     );
   };
 
@@ -216,7 +194,6 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
 
     try {
       const newForm = { ...form };
-      const extName = getExt(newAttrs.picture);
       const mime = getMime(newAttrs.picture);
       if (picChanged) {
         const config: StorageConfig = {

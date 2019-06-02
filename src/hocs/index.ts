@@ -6,6 +6,7 @@ import { ReactElement } from 'react';
 export * from './FormikInputInjector';
 export * from './FormikButtonInjector';
 export * from './withFormikImage';
+export * from './withFormikMemoize';
 
 export type SupportedComp =
   | ReactElement<InputProps>

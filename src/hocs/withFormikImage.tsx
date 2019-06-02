@@ -8,10 +8,10 @@ import { WithFormikConfig, StringKeyedObject } from '.';
 // PROBLEM: prop typings passwith with cloneElement are lost
 export function withFormikImage<T extends StringKeyedObject>(
   WrappedComp: React.ComponentType<PreviewAvatarProps>,
-  props: WithFormikConfig<T>,
+  config: WithFormikConfig<T>,
   forceSource?: string | null | undefined,
 ) {
-  const { formProps, dataKey } = props;
+  const { formProps, dataKey } = config;
   const handleChangeImage = formProps.handleChange(dataKey);
 
   const handleTouched = (v: boolean) => formProps.setFieldTouched(dataKey, v);
@@ -26,9 +26,7 @@ export function withFormikImage<T extends StringKeyedObject>(
   if (formProps.values[dataKey]) {
     builtProps.source = { uri: forceSource || formProps.values[dataKey] };
   }
-  return class extends Component<PreviewAvatarProps> {
-    public render() {
-      return <WrappedComp {...builtProps} {...this.props} />;
-    }
+  return (props: PreviewAvatarProps) => {
+    return <WrappedComp {...builtProps} {...props} />;
   };
 }
