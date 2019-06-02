@@ -41,5 +41,5 @@ interface S3Object {
 interface StorageConfig {
   level: 'private' | 'protected' | 'public';
   contentType: string;
-  progressCallback: (param: { loaded: number; total: number }) => void;
+  progressCallback?: (param: { loaded: number; total: number }) => void;
 }
