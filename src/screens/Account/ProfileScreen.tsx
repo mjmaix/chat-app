@@ -8,7 +8,12 @@ import {
   StyledScrollView,
   StyledView,
 } from '../../styled';
-import { NavigationService, AsyncImagePicker } from '../../utils';
+import {
+  NavigationService,
+  AsyncImagePicker,
+  getExt,
+  getMime,
+} from '../../utils';
 import {
   UpdateProfileSchema,
   StyleGuide,
@@ -28,7 +33,6 @@ import {
 import { alertFail, alertOk } from '../../utils';
 import { PreviewAvatar } from '../../components';
 import { Storage } from 'aws-amplify';
-import { ImageURISource } from 'react-native';
 
 type FormModel = typeof ProfileModel;
 const InitialState: {
@@ -48,9 +52,10 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
   public async componentDidMount() {
     handleGetCurrentUserAttrs({ bypassCache: true })
       .then(form => {
+        console.log('form.picture', form.picture);
         return Promise.all([
           form,
-          Storage.get(form.picture, { level: 'public' }),
+          Storage.get(form.picture, { level: 'protected' }),
         ]);
       })
       .then(([form, picUrl]) => {
@@ -211,10 +216,12 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
 
     try {
       const newForm = { ...form };
+      const extName = getExt(newAttrs.picture);
+      const mime = getMime(newAttrs.picture);
       if (picChanged) {
         const config: StorageConfig = {
-          level: 'public',
-          contentType: 'image/jpeg',
+          level: 'protected',
+          contentType: mime,
           progressCallback: ({ loaded, total }) => {
             console.log(`Uploaded: ${loaded}/${total}`);
           },

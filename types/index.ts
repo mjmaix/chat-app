@@ -12,11 +12,24 @@ interface VerifiedContact {
 interface CurrentUserAttributes {
   email: string;
   email_verified: boolean;
-  family_name: string;
-  given_name: string;
   phone_number: string;
   phone_number_verified: false;
   sub: string;
+  family_name?: string;
+  given_name?: string;
+  picture?: string;
+  address?: string;
+  birthdate?: string;
+  gender?: string;
+  locale?: string;
+  middle_name?: string;
+  name?: string;
+  nickname?: string;
+  preferred_username?: string;
+  profile?: string;
+  timezone?: string;
+  updated_at?: string;
+  website?: string;
 }
 
 interface S3Object {

@@ -22,7 +22,7 @@ const getUserAttrs = (
     familyName: user.attributes.family_name,
     givenName: user.attributes.given_name,
     phoneNumber: user.attributes.phone_number,
-    picture: '',
+    picture: user.attributes.picture,
   } as typeof ProfileModel;
 };
 

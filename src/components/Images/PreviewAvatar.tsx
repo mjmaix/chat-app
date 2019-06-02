@@ -11,13 +11,15 @@ export interface PreviewAvatarProps {
 }
 
 // TODO: style errorMessage
-export const PreviewAvatar = ({
-  source,
-  handleChangeImage,
-  errorMessage,
-  handleTouched,
-  ...props
-}: PreviewAvatarProps) => {
+export const PreviewAvatar = (props: PreviewAvatarProps) => {
+  const {
+    source,
+    handleChangeImage,
+    errorMessage,
+    handleTouched,
+    ...props2
+  } = props;
+
   return (
     <Fragment>
       <Avatar
@@ -32,7 +34,7 @@ export const PreviewAvatar = ({
         onEditPress={async () => {
           const picker = new AsyncImagePicker();
           const result = await picker.showImagePicker();
-          if (handleChangeImage && result) {
+          if (handleChangeImage && result && !result.didCancel) {
             handleChangeImage(result.uri);
           }
           if (handleTouched) {

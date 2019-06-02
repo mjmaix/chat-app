@@ -3,6 +3,8 @@ import RNFetchBlob from 'rn-fetch-blob';
 import { Platform } from 'react-native';
 import { info, error } from '../core';
 import { Storage } from 'aws-amplify';
+import { Buffer } from 'buffer';
+import { getExt } from './getExt';
 
 const { fs } = RNFetchBlob;
 
@@ -35,7 +37,7 @@ export class AsyncImagePicker {
     }
     try {
       const data = await fs.readFile(sureFilePath, 'base64');
-      return data;
+      return new Buffer(data, 'base64');
     } catch (err) {
       error(err);
       return null;
@@ -50,13 +52,11 @@ export class AsyncImagePicker {
     if (!imageUri) {
       throw new Error('No image selected');
     }
-    const ext = 'jpeg';
-    // const { uri, fileSize, fileName } = image;
 
     const data = await AsyncImagePicker.loadAssetToBase64(imageUri);
     console.log('uploadImage imageUri', imageUri);
     console.log('uploadImage data', data);
-    const uploadFileName = `profile_picture.${ext}`;
+    const uploadFileName = `profile_picture.${getExt(imageUri)}`;
 
     try {
       const result = await Storage.put(uploadFileName, data, storageConfig);
