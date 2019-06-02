@@ -34,6 +34,7 @@
     "aws-amplify": "^1.1.28",
     "aws-amplify-react-native": "^2.1.12",
     "eventemitter3": "^3.1.2",
+    "ext-list": "^4.0.0",
     "formik": "^1.5.7",
     "hex-to-rgb": "^1.0.1",
     "jest-styled-components": "^6.3.1",
