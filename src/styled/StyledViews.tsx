@@ -16,7 +16,9 @@ export const StyledBottomContainer = styled.View`
   })}
 `;
 
-export const StyledFormContainer = styled.View`
+export const StyledFormContainer = styled.KeyboardAvoidingView.attrs(props => ({
+  behavior: 'padding',
+}))`
   ${props => ({
     ...formStyles.form,
   })}

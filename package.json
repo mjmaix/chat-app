@@ -10,6 +10,7 @@
     "postversion": "./node_modules/.bin/react-native-version",
     "debugger": "./scripts/run-debugger.sh",
     "ios": "npm run debugger && react-native run-ios",
+    "ios:se": "npm run ios -- --simulator 'iPhone SE'",
     "ios:tablet": "npm run ios -- --simulator 'iPad Air'",
     "ios:release": "react-native run-ios --configuration Release --scheme Chat-release",
     "android": "npm run debugger && react-native run-android",
