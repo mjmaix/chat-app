@@ -1,4 +1,8 @@
-export const ProfileModel = {
+interface FormModel {
+  [k: string]: string;
+}
+
+export const ProfileModel: FormModel = {
   email: '',
   familyName: '',
   givenName: '',
@@ -6,36 +10,36 @@ export const ProfileModel = {
   picture: '',
 };
 
-export const EmailModel = {
+export const EmailModel: FormModel = {
   email: '',
 };
 
-export const ChallengeModel = {
+export const ChallengeModel: FormModel = {
   email: '',
   code: '',
 };
 
-export const PasswordResetModel = {
+export const PasswordResetModel: FormModel = {
   email: '',
   password: '',
   code: '',
 };
 
-export const PasswordRequiredModel = {
+export const PasswordRequiredModel: FormModel = {
   password: '',
 };
 
-export const PasswordChangeModel = {
+export const PasswordChangeModel: FormModel = {
   ...PasswordRequiredModel,
   oldPassword: '',
 };
 
-export const SignUpModel = {
+export const SignUpModel: FormModel = {
   ...ProfileModel,
   ...PasswordRequiredModel,
 };
 
-export const SignInModel = {
+export const SignInModel: FormModel = {
   ...EmailModel,
   ...PasswordRequiredModel,
 };
