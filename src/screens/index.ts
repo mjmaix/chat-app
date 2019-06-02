@@ -17,3 +17,5 @@ export * from './Social/MessagesScreen';
 
 export * from './Common/AuthLoadingScreen';
 export * from './Common/BusyOverlayScreen';
+
+export * from './TestScreen';

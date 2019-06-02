@@ -41,8 +41,12 @@ const MessageStack = createStackNavigator(
         title: 'Chat',
       }),
     },
+    Test: {
+      screen: Mappings.Test.screen,
+    },
   },
   {
+    // initialRouteName: 'Test',
     defaultNavigationOptions: ({
       screenProps,
       navigation,

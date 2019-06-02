@@ -15,6 +15,7 @@ import {
   SettingsScreen,
   SignInScreen,
   SignUpScreen,
+  TestScreen,
   VerifyEmailScreen,
 } from '../screens';
 
@@ -82,6 +83,10 @@ export const Mappings: Mappings = {
   },
   Busy: {
     screen: BusyOverlayScreen,
+    icon: { name: '', type: 'feather' },
+  },
+  Test: {
+    screen: TestScreen,
     icon: { name: '', type: 'feather' },
   },
   // NOTE: Keep stacks at the bottom
