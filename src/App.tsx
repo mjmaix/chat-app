@@ -6,11 +6,9 @@ import { ActivityIndicator } from 'react-native';
 import { ThemeProvider as RneThemeProvider } from 'react-native-elements';
 import { ThemeProvider as ScThemeProvider } from 'styled-components';
 
-import { STORAGE_KEY, ThemeHelper, ThemeName, error, themes } from './core';
+import { STORAGE_KEY, ThemeHelper, ThemeName, error } from './core';
 import { AppRoutes } from './routes';
 import { NavigationService } from './utils';
-
-type Theme = typeof themes[0];
 
 export default class App extends Component<{}> {
   public readonly state = {
