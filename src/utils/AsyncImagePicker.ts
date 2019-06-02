@@ -70,6 +70,7 @@ export class AsyncImagePicker {
   public showImagePicker = async () => {
     return new Promise<Nullable<ImagePickerResponse>>((resolve, reject) => {
       RNImagePicker.showImagePicker(avatarOptions, response => {
+        // console.log('showImagePicker', response);
         if (response.didCancel) {
           resolve(null);
         } else if (response.error) {

@@ -50,7 +50,7 @@ export function withFormikImage<T extends StringKeyedObject>(
     .required()
     .isValidSync(val);
   const isFilePath = Yup.string()
-    .matches(/^file:\/\//g)
+    .matches(/^(file|content):\/\//g)
     .required()
     .isValidSync(val);
 
