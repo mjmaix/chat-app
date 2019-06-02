@@ -44,14 +44,12 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
   public async componentDidMount() {
     handleGetCurrentUserAttrs({ bypassCache: true })
       .then(form => {
-        console.log('form.picture', form.picture);
         return Promise.all([
           form,
           Storage.get(form.picture, { level: 'protected' }),
         ]);
       })
       .then(([form, picUrl]) => {
-        console.log('ProfileScreen.state.picUrl', picUrl);
         this.setState({ form, avatar: picUrl as string, isFormReady: true });
       });
     this.checkVerifiedContact();

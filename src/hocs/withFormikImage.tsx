@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
 import _ from 'lodash';
-import { PreviewAvatarProps } from '../components';
+import React, { Component } from 'react';
 
-import { WithFormikConfig, StringKeyedObject } from '.';
+import { PreviewAvatarProps } from '../components';
+import { StringKeyedObject, WithFormikConfig } from '.';
 
 // TODO: should refactor with React.cloneElement or is this a good pract?
 // PROBLEM: prop typings passwith with cloneElement are lost
@@ -13,6 +13,7 @@ export function withFormikImage<T extends StringKeyedObject>(
 ) {
   const { formProps, dataKey } = config;
   const handleChangeImage = formProps.handleChange(dataKey);
+  const isSubmitting = formProps.isSubmitting;
 
   const handleTouched = (v: boolean) => formProps.setFieldTouched(dataKey, v);
   const errorMessage = formProps.errors[dataKey] as string;
@@ -21,6 +22,7 @@ export function withFormikImage<T extends StringKeyedObject>(
     errorMessage,
     handleChangeImage,
     handleTouched,
+    isSubmitting,
   };
 
   if (formProps.values[dataKey]) {

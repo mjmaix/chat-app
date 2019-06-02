@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
-import { Avatar, Text } from 'react-native-elements';
 import { ImageURISource } from 'react-native';
+import { Avatar, Text } from 'react-native-elements';
+
 import { AsyncImagePicker } from '../../utils';
 
 export interface PreviewAvatarProps {
@@ -8,6 +9,7 @@ export interface PreviewAvatarProps {
   source?: ImageURISource | undefined;
   errorMessage?: string | undefined | null;
   handleTouched?: (v: boolean) => void;
+  isSubmitting?: boolean;
 }
 
 // TODO: style errorMessage
@@ -17,6 +19,7 @@ export const PreviewAvatar = (props: PreviewAvatarProps) => {
     handleChangeImage,
     errorMessage,
     handleTouched,
+    isSubmitting,
     ...props2
   } = props;
 
@@ -24,7 +27,7 @@ export const PreviewAvatar = (props: PreviewAvatarProps) => {
     <Fragment>
       <Avatar
         rounded
-        showEditButton
+        showEditButton={!isSubmitting}
         icon={{
           name: 'user',
           type: 'feather',
