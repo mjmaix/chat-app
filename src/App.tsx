@@ -52,11 +52,14 @@ export default class App extends Component<{}> {
   private async loadTheme() {
     try {
       const themeId = (await AsyncStorage.getItem(STORAGE_KEY)) as ThemeName;
-      ThemeHelper.set(themeId);
-      this.setState({ isReady: true, theme: ThemeHelper.get() });
+      if (themeId) {
+        ThemeHelper.set(themeId);
+        this.setState({ isReady: true, theme: ThemeHelper.get() });
+      }
     } catch (err) {
-      this.setState({ isReady: true });
       error(err);
+    } finally {
+      this.setState({ isReady: true });
     }
   }
 }

@@ -49,7 +49,7 @@ export class ThemeHelper {
   private getTheme: (key: ThemeName) => any = key => {
     const theme = _.find(this.themes, e => e.id === key);
     if (!theme) {
-      info('Theme not found');
+      info(`Theme not found: ${theme}`);
       return this.getTheme(DEFAULT_THEME);
     }
     return theme;

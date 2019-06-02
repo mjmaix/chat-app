@@ -1,6 +1,5 @@
 import { Color } from 'csstype';
 import { Colors as RneColors, Theme as RneTheme } from 'react-native-elements';
-import { ThemeName } from '.';
 
 export const DEFAULT_THEME: ThemeName = 'LIGHT BRILLIANT PINK';
 
