@@ -1,5 +1,5 @@
 import { Storage } from 'aws-amplify';
-import { Formik, FormikActions } from 'formik';
+import { Formik, FormikActions, FormikProps } from 'formik';
 import React, { Component } from 'react';
 
 import { FormikPreviewAvatar } from '../../components';
@@ -12,8 +12,13 @@ import {
   handleGetCurrentUserAttrs,
   handleSignOut,
   handleUpdateProfile,
+  info,
 } from '../../core';
-import { FormikButtonInjector, FormikInputInjector } from '../../hocs';
+import {
+  FormikButtonInjector,
+  FormikInputInjector,
+  withFormikMemoize,
+} from '../../hocs';
 import {
   StyledButton,
   StyledFormContainer,
@@ -61,7 +66,15 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
     });
   };
 
-  public renderExtraButtons = () => {
+  private renderAvatar = (fProps: FormikProps<FormModel>) => (
+    <FormikPreviewAvatar
+      fProps={fProps}
+      dataKey="picture"
+      avatar={this.state.avatar}
+    />
+  );
+
+  private renderExtraButtons = () => {
     const status = this.state.verifiedStatus;
     const showVerifyEmail = !!(
       status &&
@@ -92,6 +105,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
   };
 
   private renderForm = () => {
+    const MemoizedImageAvatar = withFormikMemoize(this.renderAvatar, 'picture');
     return (
       <Formik<FormModel>
         enableReinitialize
@@ -110,11 +124,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
                     alignItems: 'center',
                   }}
                 >
-                  <FormikPreviewAvatar
-                    fProps={fProps}
-                    dataKey="picture"
-                    avatar={this.state.avatar}
-                  />
+                  <MemoizedImageAvatar {...fProps} />
                 </StyledView>
               </StyledFormRow>
               <StyledFormRow>
@@ -198,7 +208,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
           level: 'protected',
           contentType: mime,
           progressCallback: ({ loaded, total }) => {
-            console.log(`Uploaded: ${loaded}/${total}`);
+            info(`Uploaded: ${loaded}/${total}`);
           },
         };
         const newPicUrl = await AsyncImagePicker.uploadImage(

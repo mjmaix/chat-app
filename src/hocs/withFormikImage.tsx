@@ -1,8 +1,24 @@
 import _ from 'lodash';
-import React, { Component } from 'react';
+import React from 'react';
+import { ImageURISource } from 'react-native';
+import { Subtract } from 'utility-types';
 
 import { PreviewAvatarProps } from '../components';
 import { StringKeyedObject, WithFormikConfig } from '.';
+
+export interface InjectPreviewAvatarProps {
+  errorMessage?: string | undefined | null;
+  handleChangeImage?: ((e: unknown) => void) | null | undefined;
+  handleTouched?: (v: boolean) => void;
+  isSubmitting?: boolean;
+  source?: ImageURISource | undefined;
+}
+
+type ReturnFunc = <
+  T extends Subtract<PreviewAvatarProps, InjectPreviewAvatarProps>
+>(
+  props: T,
+) => any;
 
 // TODO: should refactor with React.cloneElement or is this a good pract?
 // PROBLEM: prop typings passwith with cloneElement are lost
@@ -18,7 +34,7 @@ export function withFormikImage<T extends StringKeyedObject>(
   const handleTouched = (v: boolean) => formProps.setFieldTouched(dataKey, v);
   const errorMessage = formProps.errors[dataKey] as string;
 
-  const builtProps: Partial<PreviewAvatarProps> = {
+  const builtProps: Partial<InjectPreviewAvatarProps> = {
     errorMessage,
     handleChangeImage,
     handleTouched,
@@ -28,7 +44,7 @@ export function withFormikImage<T extends StringKeyedObject>(
   if (formProps.values[dataKey]) {
     builtProps.source = { uri: forceSource || formProps.values[dataKey] };
   }
-  return (props: PreviewAvatarProps) => {
+  return (props => {
     return <WrappedComp {...builtProps} {...props} />;
-  };
+  }) as ReturnFunc;
 }

@@ -1,6 +1,7 @@
-import React from 'react';
-import { StringKeyedObject, withFormikImage } from '../../hocs';
 import { FormikProps } from 'formik';
+import React from 'react';
+
+import { StringKeyedObject, withFormikImage } from '../../hocs';
 import { PreviewAvatar } from './PreviewAvatar';
 
 interface FormikProfileAvatarProps<T extends StringKeyedObject> {
@@ -21,5 +22,6 @@ export function FormikPreviewAvatar<T extends StringKeyedObject>(
     pictureConfig,
     props.avatar,
   );
+
   return <FormikImageWrapper />;
 }
