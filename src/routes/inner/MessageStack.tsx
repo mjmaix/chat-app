@@ -46,7 +46,7 @@ const MessageStack = createStackNavigator(
     },
   },
   {
-    // initialRouteName: 'Test',
+    initialRouteName: 'Test',
     defaultNavigationOptions: ({
       screenProps,
       navigation,
