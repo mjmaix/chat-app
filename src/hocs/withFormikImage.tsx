@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import { ImageURISource } from 'react-native';
 import { ImageProps } from 'react-native-elements';
@@ -15,6 +14,8 @@ export interface InjectPreviewAvatarProps {
   isSubmitting?: boolean;
   source?: ImageURISource | undefined;
   imageProps?: Partial<ImageProps>;
+  imgKey?: string;
+  level?: 'private' | 'protected' | 'public';
 }
 
 type ReturnFunc = <
@@ -23,12 +24,9 @@ type ReturnFunc = <
   props: T,
 ) => any;
 
-// TODO: should refactor with React.cloneElement or is this a good pract?
-// PROBLEM: prop typings passwith with cloneElement are lost
 export function withFormikImage<T extends StringKeyedObject>(
   WrappedComp: React.ComponentType<PreviewAvatarProps>,
   config: WithFormikConfig<T>,
-  forceUri?: string | null | undefined,
 ) {
   const { formProps, dataKey } = config;
   const handleChangeImage = formProps.handleChange(dataKey);
@@ -56,8 +54,8 @@ export function withFormikImage<T extends StringKeyedObject>(
 
   if (isUrl || isFilePath) {
     builtProps.source = { uri: val };
-  } else if (forceUri) {
-    builtProps.source = { uri: forceUri };
+  } else {
+    builtProps.imgKey = val;
   }
   return (props => {
     return <WrappedComp {...builtProps} {...props} />;

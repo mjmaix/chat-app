@@ -1,4 +1,3 @@
-import { Storage } from 'aws-amplify';
 import { Formik, FormikActions, FormikProps } from 'formik';
 import React, { Component, Fragment } from 'react';
 
@@ -38,28 +37,18 @@ const InitialState: {
   verifiedStatus: VerifiedContact | null;
   form: FormModel;
   isFormReady: boolean;
-  avatar?: string | null | undefined;
 } = {
   verifiedStatus: null,
   isFormReady: false,
   form: { ...ProfileModel },
-  avatar: null,
 };
 
 class ProfileScreen extends Component<{}, typeof InitialState> {
   public state = InitialState;
   public async componentDidMount() {
-    handleGetCurrentUserAttrs({ bypassCache: true })
-      .then(form => {
-        // NOTE: saved attribute is not a valid url but is a s3Key
-        return Promise.all([
-          form,
-          Storage.get(form.picture, { level: 'protected' }),
-        ]);
-      })
-      .then(([form, picUrl]) => {
-        this.setState({ form, avatar: picUrl as string, isFormReady: true });
-      });
+    handleGetCurrentUserAttrs({ bypassCache: false }).then(form => {
+      this.setState({ form, isFormReady: true });
+    });
     this.checkVerifiedContact();
   }
 
@@ -70,11 +59,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
   };
 
   private renderAvatar = (fProps: FormikProps<FormModel>) => (
-    <FormikPreviewAvatar
-      fProps={fProps}
-      dataKey="picture"
-      avatar={this.state.avatar}
-    />
+    <FormikPreviewAvatar fProps={fProps} dataKey="picture" />
   );
 
   private renderExtraButtons = () => {
@@ -217,7 +202,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
     try {
       const newForm = { ...form };
       const mime = getMime(newAttrs.picture);
-      if (picChanged) {
+      if (picChanged && mime) {
         const config: StorageConfig = {
           level: 'protected',
           contentType: mime,
