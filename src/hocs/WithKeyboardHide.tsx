@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { EmitterSubscription, Keyboard, View } from 'react-native';
+import { EmitterSubscription, Keyboard, Platform, View } from 'react-native';
 
 interface WithKeyboardHideProps {}
 
@@ -20,11 +20,11 @@ class WithKeyboardHide extends Component<
 
   public componentWillMount() {
     this.showListener = Keyboard.addListener(
-      'keyboardWillShow',
+      Platform.select({ ios: 'keyboardWillShow', android: 'keyboardDidShow' }),
       this.keyboardDidShow.bind(this),
     );
     this.hideListener = Keyboard.addListener(
-      'keyboardWillHide',
+      Platform.select({ ios: 'keyboardWillHide', android: 'keyboardDidHide' }),
       this.keyboardDidHide.bind(this),
     );
   }
