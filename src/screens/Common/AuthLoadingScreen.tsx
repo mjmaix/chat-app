@@ -2,7 +2,7 @@ import { Auth } from 'aws-amplify';
 import React from 'react';
 import { ActivityIndicator, StatusBar } from 'react-native';
 
-import { info } from '../../core';
+import { logInfo } from '../../core';
 import { StyledScreenContainer } from '../../styled';
 import { NavigationService, alertFail } from '../../utils';
 
@@ -12,7 +12,7 @@ class AuthLoadingScreen extends React.Component<{}> {
       await Auth.currentAuthenticatedUser();
       NavigationService.navigate('App');
     } catch (err) {
-      info(err);
+      logInfo(err);
       NavigationService.navigate('Auth');
     }
   }

@@ -6,7 +6,7 @@ import { ActivityIndicator } from 'react-native';
 import { ThemeProvider as RneThemeProvider } from 'react-native-elements';
 import { ThemeProvider as ScThemeProvider } from 'styled-components';
 
-import { STORAGE_KEY, ThemeHelper, ThemeName, error } from './core';
+import { STORAGE_KEY, ThemeHelper, ThemeName, logError } from './core';
 import { AppRoutes } from './routes';
 import { NavigationService } from './utils';
 
@@ -57,7 +57,7 @@ export default class App extends Component<{}> {
         this.setState({ isReady: true, theme: ThemeHelper.get() });
       }
     } catch (err) {
-      error(err);
+      logError(err);
     } finally {
       this.setState({ isReady: true });
     }

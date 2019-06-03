@@ -12,7 +12,7 @@ import {
   handleGetCurrentUserAttrs,
   handleSignOut,
   handleUpdateProfile,
-  info,
+  logInfo,
 } from '../../core';
 import { WrapKnownExceptions } from '../../core/errors';
 import {
@@ -222,7 +222,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
           level: 'protected',
           contentType: mime,
           progressCallback: ({ loaded, total }) => {
-            info(`Uploaded: ${loaded}/${total}`);
+            logInfo(`Uploaded: ${loaded}/${total}`);
           },
         };
         const newPicUrl = await AsyncImagePicker.uploadImage(

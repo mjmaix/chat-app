@@ -5,7 +5,7 @@ import { Platform } from 'react-native';
 import RNImagePicker, { ImagePickerResponse } from 'react-native-image-picker';
 import RNFetchBlob from 'rn-fetch-blob';
 
-import { error, info } from '../core';
+import { logError, logInfo } from '../core';
 import { getExt } from './getExt';
 
 const { fs } = RNFetchBlob;
@@ -32,14 +32,14 @@ export class AsyncImagePicker {
     let sureFilePath = filePath;
 
     if (Platform.OS === 'ios') {
-      info(`Read file: ${filePath}`);
+      logInfo(`Read file: ${filePath}`);
       sureFilePath = filePath.replace('file:/', '');
     }
     try {
       const data = await fs.readFile(sureFilePath, 'base64');
       return new Buffer(data, 'base64');
     } catch (err) {
-      error(err);
+      logError(err);
       return null;
     }
   };
@@ -56,7 +56,7 @@ export class AsyncImagePicker {
     const uploadFileName = `profile_picture.${getExt(imageUri)}`;
 
     try {
-      info(['Uploading', uploadFileName, storageConfig]);
+      logInfo(['Uploading', uploadFileName, storageConfig]);
       const result = await Storage.put(uploadFileName, data, storageConfig);
       const s3Key = (result as S3Object).key;
       return s3Key;
@@ -72,7 +72,7 @@ export class AsyncImagePicker {
         if (response.didCancel) {
           resolve(null);
         } else if (response.error) {
-          error(['showImagePicker', response.error]);
+          logError(['showImagePicker', response.error]);
           reject(response.error);
         } else if (response.customButton) {
           // console.log('User tapped custom button: ', response.customButton);

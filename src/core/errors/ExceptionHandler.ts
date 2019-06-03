@@ -1,4 +1,4 @@
-import { error as logError } from '../reports';
+import { logError } from '../reports';
 import { AwsException, AwsExceptions } from './AwsExceptions';
 
 /* tslint:disable:max-classes-per-file */
