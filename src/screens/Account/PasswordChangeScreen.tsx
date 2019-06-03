@@ -8,6 +8,7 @@ import {
   PasswordChangeSchema,
   handleChangePasswordSubmit,
 } from '../../core';
+import { SafeException } from '../../core/errors/ExceptionHandler';
 import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
@@ -77,7 +78,13 @@ class PasswordChangeScreen extends Component<Props> {
       await handleChangePasswordSubmit(form);
       alertOk(() => NavigationService.navigate('Profile'));
     } catch (err) {
-      actions.setFieldError('form', err.message);
+      let formError = err.message;
+      const changeError1 =
+        err instanceof SafeException && err.code === 'NotAuthorizedException';
+      if (changeError1) {
+        formError = 'Please provide correct old password.';
+      }
+      actions.setFieldError('form', formError);
       alertFail(() => null, err);
     }
   };
