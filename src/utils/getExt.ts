@@ -1,4 +1,4 @@
-import extList from 'ext-list';
+import mime from 'mime';
 
 export function getExt(filename: string) {
   const idx = filename.lastIndexOf('.');
@@ -8,7 +8,6 @@ export function getExt(filename: string) {
 
 export function getMime(filename: string) {
   const ext = getExt(filename);
-  const list: { [k: string]: string } = extList();
 
-  return list[ext];
+  return mime.getType(ext);
 }
