@@ -9,6 +9,7 @@ import { EmailModel, EmailOnlySchema, handleResend } from '../../core';
 import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
+  StyledErrorText,
   StyledFormContainer,
   StyledFormRow,
   StyledScreenContainer,
@@ -40,6 +41,11 @@ class ResendSignUpScreen extends Component<Props> {
                     <StyledTextInput as={EmailInput} />
                   </FormikInputInjector>
                 </StyledFormRow>
+
+                <StyledFormRow>
+                  <StyledErrorText message={fProps.errors.form} />
+                </StyledFormRow>
+
                 <StyledFormRow>
                   <StyledButton onPress={fProps.handleSubmit} label={'Reset'} />
                 </StyledFormRow>
@@ -60,6 +66,7 @@ class ResendSignUpScreen extends Component<Props> {
       await handleResend(form);
       alertOk(() => NavigationService.navigate('Confirm'));
     } catch (err) {
+      actions.setFieldError('form', err.message);
       alertFail(() => null, err);
     } finally {
       actions.setSubmitting(false);

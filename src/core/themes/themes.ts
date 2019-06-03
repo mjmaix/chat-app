@@ -1,5 +1,9 @@
 import { Color } from 'csstype';
-import { Colors as RneColors, Theme as RneTheme } from 'react-native-elements';
+import {
+  Colors as RneColors,
+  Theme as RneTheme,
+  colors,
+} from 'react-native-elements';
 
 export const DEFAULT_THEME: ThemeName = 'LIGHT BRILLIANT PINK';
 
@@ -49,6 +53,7 @@ export const themes: Theme[] = [
   {
     id: 'LIGHT BRILLIANT PINK',
     colors: {
+      ...colors,
       bgColor: 'white',
       primary: '#ec407a',
       primarytext: 'white',
@@ -69,6 +74,7 @@ export const themes: Theme[] = [
   {
     id: 'CYAN BLUE',
     colors: {
+      ...colors,
       bgColor: 'white',
       primary: '#01579b',
       primarytext: 'white',

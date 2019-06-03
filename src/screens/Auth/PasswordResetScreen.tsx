@@ -12,6 +12,7 @@ import {
 import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
+  StyledErrorText,
   StyledFormContainer,
   StyledFormRow,
   StyledScreenContainer,
@@ -47,11 +48,13 @@ class PasswordResetScreen extends Component<Props> {
                     <StyledTextInput as={EmailInput} />
                   </FormikInputInjector>
                 </StyledFormRow>
+
                 <StyledFormRow>
                   <FormikInputInjector dataKey="code" formProps={fProps}>
                     <StyledTextInput placeholder="Code" />
                   </FormikInputInjector>
                 </StyledFormRow>
+
                 <StyledFormRow>
                   <FormikInputInjector dataKey="password" formProps={fProps}>
                     <StyledTextInput
@@ -60,6 +63,11 @@ class PasswordResetScreen extends Component<Props> {
                     />
                   </FormikInputInjector>
                 </StyledFormRow>
+
+                <StyledFormRow>
+                  <StyledErrorText message={fProps.errors.form} />
+                </StyledFormRow>
+
                 <StyledFormRow>
                   <StyledButton
                     onPress={fProps.handleSubmit}
@@ -82,6 +90,7 @@ class PasswordResetScreen extends Component<Props> {
       await handleForgotPasswordSubmit(form);
       alertOk(() => NavigationService.navigate('App'));
     } catch (err) {
+      actions.setFieldError('form', err.message);
       alertFail(() => null, err);
     } finally {
       actions.setSubmitting(false);

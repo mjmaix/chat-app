@@ -8,6 +8,7 @@ import { SignUpModel, SignUpSchema, handleSignUp } from '../../core';
 import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
+  StyledErrorText,
   StyledFormContainer,
   StyledFormRow,
   StyledScreenContainer,
@@ -76,6 +77,10 @@ class SignUpScreen extends Component<Props> {
                 </StyledFormRow>
 
                 <StyledFormRow>
+                  <StyledErrorText message={fProps.errors.form} />
+                </StyledFormRow>
+
+                <StyledFormRow>
                   <StyledButton
                     onPress={fProps.handleSubmit}
                     label={'Sign up'}
@@ -112,6 +117,7 @@ class SignUpScreen extends Component<Props> {
       await handleSignUp(form);
       alertOk(() => NavigationService.navigate('Confirm'));
     } catch (err) {
+      actions.setFieldError('form', err.message);
       alertFail(() => null, err);
     } finally {
       actions.setSubmitting(false);

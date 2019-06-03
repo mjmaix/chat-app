@@ -9,6 +9,7 @@ import { ChallengeModel, ChallengeSchema } from '../../core';
 import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
+  StyledErrorText,
   StyledFormContainer,
   StyledFormRow,
   StyledScreenContainer,
@@ -68,6 +69,9 @@ class BaseChallengeScreen<T extends FormModel> extends Component<Props<T>> {
                   <FormikInputInjector dataKey="code" formProps={fProps}>
                     <StyledTextInput placeholder={placeholder} />
                   </FormikInputInjector>
+                </StyledFormRow>
+                <StyledFormRow>
+                  <StyledErrorText message={fProps.errors.form} />
                 </StyledFormRow>
                 <StyledFormRow>
                   <StyledButton

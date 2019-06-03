@@ -41,9 +41,11 @@ class PasswordForgotScreen extends Component<Props> {
                     <StyledTextInput as={EmailInput} />
                   </FormikInputInjector>
                 </StyledFormRow>
+
                 <StyledFormRow>
                   <StyledButton onPress={fProps.handleSubmit} label={'Reset'} />
                 </StyledFormRow>
+
                 <StyledFormRow>
                   <StyledButton
                     onPress={this.onPressGotResetCode}
@@ -68,6 +70,7 @@ class PasswordForgotScreen extends Component<Props> {
       await handleForgotPassword(form);
       alertOk(() => NavigationService.navigate('Reset'));
     } catch (err) {
+      actions.setFieldError('form', err.message);
       alertFail(() => null, err);
     } finally {
       actions.setSubmitting(false);

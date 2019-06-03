@@ -1,4 +1,4 @@
-import { Formik } from 'formik';
+import { Formik, FormikActions } from 'formik';
 import React, { Component } from 'react';
 import { NavigationScreenProps } from 'react-navigation';
 
@@ -11,12 +11,14 @@ import {
 import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
+  StyledErrorText,
   StyledFormContainer,
   StyledFormRow,
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
 import { NavigationService, alertFail, alertOk } from '../../utils';
+
 type Props = NavigationScreenProps;
 type Model = typeof PasswordChangeModel;
 
@@ -27,9 +29,7 @@ class PasswordChangeScreen extends Component<Props> {
         <Formik
           initialValues={PasswordChangeModel}
           validationSchema={PasswordChangeSchema}
-          onSubmit={(values, actions) => {
-            this.onPressChange(values);
-          }}
+          onSubmit={this.onPressChange}
         >
           {fProps => {
             return (
@@ -42,6 +42,7 @@ class PasswordChangeScreen extends Component<Props> {
                     />
                   </FormikInputInjector>
                 </StyledFormRow>
+
                 <StyledFormRow>
                   <FormikInputInjector dataKey="password" formProps={fProps}>
                     <StyledTextInput
@@ -50,6 +51,11 @@ class PasswordChangeScreen extends Component<Props> {
                     />
                   </FormikInputInjector>
                 </StyledFormRow>
+
+                <StyledFormRow>
+                  <StyledErrorText message={fProps.errors.form} />
+                </StyledFormRow>
+
                 <StyledFormRow>
                   <StyledButton
                     onPress={fProps.handleSubmit}
@@ -63,11 +69,15 @@ class PasswordChangeScreen extends Component<Props> {
       </StyledScreenContainer>
     );
   }
-  private onPressChange = async (form: Model) => {
+  private onPressChange = async <T extends Model>(
+    form: T,
+    actions: FormikActions<T>,
+  ) => {
     try {
       await handleChangePasswordSubmit(form);
       alertOk(() => NavigationService.navigate('Profile'));
     } catch (err) {
+      actions.setFieldError('form', err.message);
       alertFail(() => null, err);
     }
   };

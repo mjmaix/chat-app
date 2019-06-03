@@ -33,6 +33,7 @@ export const VerifyEmailScreen = () => {
           await handleVerifyContact('email', values);
           alertOk(() => NavigationService.navigate('Profile'));
         } catch (err) {
+          actions.setFieldError('form', err.message);
           alertFail(() => null, err);
         } finally {
           actions.setSubmitting(false);

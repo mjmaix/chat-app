@@ -1,4 +1,4 @@
-import { Formik } from 'formik';
+import { Formik, FormikActions } from 'formik';
 import React, { Component } from 'react';
 import { Image, ImageBackground } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
@@ -9,6 +9,7 @@ import { SignInModel, SignInSchema, handleSignIn } from '../../core';
 import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
+  StyledErrorText,
   StyledFormContainer,
   StyledFormOverImageContainer,
   StyledFormRow,
@@ -35,9 +36,7 @@ class SignInScreen extends Component<Props> {
             <Formik
               initialValues={SignInModel}
               validationSchema={SignInSchema}
-              onSubmit={(values, actions) => {
-                this.onPressSignIn(values);
-              }}
+              onSubmit={this.onPressSignIn}
             >
               {fProps => {
                 return (
@@ -47,6 +46,7 @@ class SignInScreen extends Component<Props> {
                         <StyledTextInput as={EmailInput} />
                       </FormikInputInjector>
                     </StyledFormRow>
+
                     <StyledFormRow>
                       <FormikInputInjector
                         dataKey="password"
@@ -58,6 +58,11 @@ class SignInScreen extends Component<Props> {
                         />
                       </FormikInputInjector>
                     </StyledFormRow>
+
+                    <StyledFormRow>
+                      <StyledErrorText message={fProps.errors.form} />
+                    </StyledFormRow>
+
                     <StyledFormRow>
                       <StyledButton
                         onPress={fProps.handleSubmit}
@@ -90,12 +95,16 @@ class SignInScreen extends Component<Props> {
     );
   }
 
-  private onPressSignIn = async <T extends FormModel>(form: T) => {
+  private onPressSignIn = async <T extends FormModel>(
+    form: T,
+    actions: FormikActions<T>,
+  ) => {
     try {
       Busy.start();
       await handleSignIn(form);
       NavigationService.navigate('App');
     } catch (err) {
+      actions.setFieldError('form', err.message);
       alertFail(() => null, err);
     } finally {
       Busy.stop();

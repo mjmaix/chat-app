@@ -1,6 +1,6 @@
 import { Storage } from 'aws-amplify';
 import { Formik, FormikActions, FormikProps } from 'formik';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import { FormikPreviewAvatar } from '../../components';
 import { EmailInput } from '../../components/Inputs';
@@ -21,6 +21,7 @@ import {
 } from '../../hocs';
 import {
   StyledButton,
+  StyledErrorText,
   StyledFormContainer,
   StyledFormRow,
   StyledScreenContainer,
@@ -83,7 +84,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
       status.unverified.email
     );
     return (
-      <StyledView>
+      <Fragment>
         <StyledButton
           label="Change password"
           onPress={this.handlePressChangePassword}
@@ -101,7 +102,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
           onPress={this.handleSignOutAsync}
           type="clear"
         />
-      </StyledView>
+      </Fragment>
     );
   };
 
@@ -128,6 +129,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
                   <MemoizedImageAvatar {...fProps} />
                 </StyledView>
               </StyledFormRow>
+
               <StyledFormRow>
                 <FormikInputInjector dataKey="email" formProps={fProps}>
                   <StyledTextInput
@@ -137,6 +139,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
                   />
                 </FormikInputInjector>
               </StyledFormRow>
+
               <StyledFormRow>
                 <FormikInputInjector dataKey="phoneNumber" formProps={fProps}>
                   <StyledTextInput
@@ -147,6 +150,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
                   />
                 </FormikInputInjector>
               </StyledFormRow>
+
               <StyledFormRow>
                 <FormikInputInjector dataKey="givenName" formProps={fProps}>
                   <StyledTextInput
@@ -155,6 +159,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
                   />
                 </FormikInputInjector>
               </StyledFormRow>
+
               <StyledFormRow>
                 <FormikInputInjector dataKey="familyName" formProps={fProps}>
                   <StyledTextInput
@@ -163,11 +168,18 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
                   />
                 </FormikInputInjector>
               </StyledFormRow>
+
+              <StyledFormRow>
+                <StyledErrorText message={fProps.errors.form} />
+              </StyledFormRow>
+
               <StyledFormRow>
                 <FormikButtonInjector formProps={fProps}>
                   <StyledButton onPress={fProps.handleSubmit} label={'Save'} />
                 </FormikButtonInjector>
               </StyledFormRow>
+
+              {this.renderExtraButtons()}
             </StyledFormContainer>
           );
         }}
@@ -226,7 +238,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
         }
       });
     } catch (err) {
-      alertFail(() => null, err);
+      actions.setFieldError('form', err.message);
     } finally {
       actions.setSubmitting(false);
     }
@@ -241,7 +253,6 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
           }}
         >
           {this.renderForm()}
-          {this.renderExtraButtons()}
         </StyledScreenContainer>
       </StyledScrollView>
     );

@@ -1,7 +1,8 @@
 import { StyleSheet } from 'react-native';
 import { Input, InputProps } from 'react-native-elements';
 import styled from 'styled-components/native';
-import { Button } from '../components';
+
+import { Button, ErrorText } from '../components';
 import { StyleGuide } from '../core';
 
 const styles = StyleSheet.create({
@@ -15,13 +16,8 @@ export * from './StyledView';
 export * from './StyledScreenContainer';
 export * from './StyledScrollView';
 export * from './StyledBlurredView';
-
-export const StyledBoldText = styled.Text`
-  ${props => ({
-    ...styles.text,
-    color: props.theme.colors.primary,
-  })}
-`;
+export * from './StyledFormContainer';
+export * from './StyledErrorComponents';
 
 export const StyledTextInput = styled(Input).attrs(props => ({}))``;
 
