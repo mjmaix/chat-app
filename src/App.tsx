@@ -13,7 +13,7 @@ import { NavigationService } from './utils';
 export default class App extends Component<{}> {
   public readonly state = {
     theme: ThemeHelper.get(),
-    isReady: undefined,
+    isThemeReady: false,
   };
 
   public componentWillMount() {
@@ -29,7 +29,8 @@ export default class App extends Component<{}> {
   }
 
   public render() {
-    if (!this.state.isReady) {
+    const { isThemeReady } = this.state;
+    if (!isThemeReady) {
       return <ActivityIndicator />;
     }
     const { theme } = this.state;
