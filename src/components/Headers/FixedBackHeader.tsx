@@ -1,8 +1,9 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Button, Icon, IconProps } from 'react-native-elements';
+
 import { StyleGuide } from '../../core';
-import { NavigationService } from '../../utils';
+import { DevBorders, NavigationService } from '../../utils';
 
 interface FixedBackHeaderProps {
   iconProps?: IconProps;
@@ -13,6 +14,7 @@ export const FixedBackHeader = ({ iconProps }: FixedBackHeaderProps) => {
   return (
     <SafeAreaView style={styles.container}>
       <Button
+        containerStyle={styles.buttonContainer}
         onPress={onPress}
         icon={<Icon name="chevron-left" type={'entypo'} {...iconProps} />}
         type="clear"
@@ -29,5 +31,8 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
+  },
+  buttonContainer: {
+    marginTop: StyleGuide.gap.big,
   },
 });

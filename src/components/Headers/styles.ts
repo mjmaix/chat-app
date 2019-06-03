@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+
 import { StyleGuide } from '../../core';
 
 export const styles = StyleSheet.create({
@@ -7,6 +8,6 @@ export const styles = StyleSheet.create({
   },
   headerContainer: {
     alignItems: 'center',
-    marginBottom: StyleGuide.gap.big,
+    marginVertical: StyleGuide.gap.big,
   },
 });
