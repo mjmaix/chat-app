@@ -9,7 +9,7 @@ import {
   PasswordResetSchema,
   handleForgotPasswordSubmit,
 } from '../../core';
-import { FormikInputInjector, WithKeyboardHide } from '../../hocs';
+import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
   StyledErrorText,
@@ -34,9 +34,7 @@ class PasswordResetScreen extends Component<Props> {
     const { navigation } = this.props;
     return (
       <StyledScreenContainer>
-        <WithKeyboardHide>
-          <Header title={'Change password'} message="Type in the reset code" />
-        </WithKeyboardHide>
+        <Header title={'Change password'} message="Type in the reset code" />
         <Formik<FormModel>
           initialValues={initialValues}
           validationSchema={PasswordResetSchema}

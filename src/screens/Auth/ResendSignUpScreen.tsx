@@ -5,7 +5,7 @@ import { NavigationScreenProps } from 'react-navigation';
 import { Header } from '../../components';
 import { EmailInput } from '../../components/Inputs';
 import { EmailModel, EmailOnlySchema, handleResend } from '../../core';
-import { FormikInputInjector, WithKeyboardHide } from '../../hocs';
+import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
   StyledErrorText,
@@ -23,12 +23,10 @@ class ResendSignUpScreen extends Component<Props> {
   public render() {
     return (
       <StyledScreenContainer>
-        <WithKeyboardHide>
-          <Header
-            title={'Resend confirmation email'}
-            message={'What is the email you used to sign up?'}
-          />
-        </WithKeyboardHide>
+        <Header
+          title={'Resend confirmation email'}
+          message={'What is the email you used to sign up?'}
+        />
         <Formik<FormModel>
           initialValues={EmailModel}
           validationSchema={EmailOnlySchema}

@@ -6,7 +6,7 @@ import { NavigationScreenProps } from 'react-navigation';
 import { Header } from '../../components';
 import { EmailInput } from '../../components/Inputs';
 import { ChallengeModel, ChallengeSchema } from '../../core';
-import { FormikInputInjector, WithKeyboardHide } from '../../hocs';
+import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
   StyledErrorText,
@@ -45,9 +45,7 @@ class BaseChallengeScreen<T extends FormModel> extends Component<Props<T>> {
     const { title, message, placeholder, initialValues } = this.props;
     return (
       <StyledScreenContainer>
-        <WithKeyboardHide>
-          <Header title={title} message={message} />
-        </WithKeyboardHide>
+        <Header title={title} message={message} />
         <Formik<T>
           enableReinitialize
           initialValues={{ ...(ChallengeModel as T), ...initialValues }}

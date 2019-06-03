@@ -7,7 +7,7 @@ import { NavigationScreenProps } from 'react-navigation';
 import { Header } from '../../components';
 import { EmailInput } from '../../components/Inputs';
 import { EmailModel, EmailOnlySchema, handleForgotPassword } from '../../core';
-import { FormikInputInjector, WithKeyboardHide } from '../../hocs';
+import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,
   StyledErrorText,
@@ -25,12 +25,10 @@ class PasswordForgotScreen extends Component<Props> {
   public render() {
     return (
       <StyledScreenContainer>
-        <WithKeyboardHide>
-          <Header
-            title={'What is your email?'}
-            message="We'll send a reset code."
-          />
-        </WithKeyboardHide>
+        <Header
+          title={'What is your email?'}
+          message="We'll send a reset code."
+        />
         <Formik<FormModel>
           initialValues={EmailModel}
           validationSchema={EmailOnlySchema}
