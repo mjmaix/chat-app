@@ -11,7 +11,13 @@ export const AwsNetworkError: AwsError = {
 };
 
 // Change password - wrong password
-export const InvalidParameterException = {
+export const InvalidParameterException: AwsError = {
   code: 'InvalidParameterException',
   name: 'Invalid Parameter Exception',
+};
+
+// Forgot password
+export const UserNotFoundException: AwsError = {
+  code: 'UserNotFoundException',
+  name: 'User Not Found Exception',
 };
