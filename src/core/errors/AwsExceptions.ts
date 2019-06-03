@@ -17,6 +17,13 @@ const NetworkingError: AwsException = {
     'Cannot to complete request. Failed to connect to network/internet.',
 };
 
+const NetworkError: AwsException = {
+  code: 'NetworkError',
+  name: 'Network Error',
+  safeMessage:
+    'Cannot to complete request. Failed to connect to network/internet.',
+};
+
 // Change password - wrong password
 const InvalidParameterException: AwsException = {
   code: 'InvalidParameterException',
@@ -46,6 +53,7 @@ const LimitExceededException: AwsException = {
 
 export const AwsExceptions: { [k: string]: AwsException } = {
   NetworkingError,
+  NetworkError,
   InvalidParameterException,
   UserNotFoundException,
   NotAuthorizedException,
