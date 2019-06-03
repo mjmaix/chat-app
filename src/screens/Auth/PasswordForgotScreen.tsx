@@ -1,7 +1,5 @@
 import { Formik, FormikActions } from 'formik';
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
-import { Actions } from 'react-native-gifted-chat';
 import { NavigationScreenProps } from 'react-navigation';
 
 import { Header } from '../../components';
