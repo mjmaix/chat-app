@@ -1,12 +1,11 @@
 import { Formik, FormikActions } from 'formik';
 import React, { Component } from 'react';
-import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 
 import { Header } from '../../components';
 import { EmailInput } from '../../components/Inputs';
 import { EmailModel, EmailOnlySchema, handleResend } from '../../core';
-import { FormikInputInjector } from '../../hocs';
+import { FormikInputInjector, WithKeyboardHide } from '../../hocs';
 import {
   StyledButton,
   StyledErrorText,
@@ -24,10 +23,12 @@ class ResendSignUpScreen extends Component<Props> {
   public render() {
     return (
       <StyledScreenContainer>
-        <Header
-          title={'Resend confirmation email'}
-          message={'What is the email you used to sign up?'}
-        />
+        <WithKeyboardHide>
+          <Header
+            title={'Resend confirmation email'}
+            message={'What is the email you used to sign up?'}
+          />
+        </WithKeyboardHide>
         <Formik<FormModel>
           initialValues={EmailModel}
           validationSchema={EmailOnlySchema}

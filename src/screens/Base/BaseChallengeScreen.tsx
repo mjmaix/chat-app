@@ -6,7 +6,7 @@ import { NavigationScreenProps } from 'react-navigation';
 import { Header } from '../../components';
 import { EmailInput } from '../../components/Inputs';
 import { ChallengeModel, ChallengeSchema } from '../../core';
-import { FormikInputInjector } from '../../hocs';
+import { FormikInputInjector, WithKeyboardHide } from '../../hocs';
 import {
   StyledButton,
   StyledErrorText,
@@ -45,7 +45,9 @@ class BaseChallengeScreen<T extends FormModel> extends Component<Props<T>> {
     const { title, message, placeholder, initialValues } = this.props;
     return (
       <StyledScreenContainer>
-        {(title || message) && <Header title={title} message={message} />}
+        <WithKeyboardHide>
+          <Header title={title} message={message} />
+        </WithKeyboardHide>
         <Formik<T>
           enableReinitialize
           initialValues={{ ...(ChallengeModel as T), ...initialValues }}
@@ -65,14 +67,17 @@ class BaseChallengeScreen<T extends FormModel> extends Component<Props<T>> {
                     />
                   </FormikInputInjector>
                 </StyledFormRow>
+
                 <StyledFormRow>
                   <FormikInputInjector dataKey="code" formProps={fProps}>
                     <StyledTextInput placeholder={placeholder} />
                   </FormikInputInjector>
                 </StyledFormRow>
+
                 <StyledFormRow>
-                  <StyledErrorText message={fProps.errors.form} />
+                  <StyledErrorText message={fProps.errors.form as string} />
                 </StyledFormRow>
+
                 <StyledFormRow>
                   <StyledButton
                     onPress={fProps.handleSubmit}

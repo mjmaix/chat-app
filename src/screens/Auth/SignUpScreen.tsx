@@ -5,7 +5,7 @@ import { NavigationScreenProps } from 'react-navigation';
 import { Header } from '../../components';
 import { EmailInput, PasswordInput } from '../../components/Inputs';
 import { SignUpModel, SignUpSchema, handleSignUp } from '../../core';
-import { FormikInputInjector } from '../../hocs';
+import { FormikInputInjector, WithKeyboardHide } from '../../hocs';
 import {
   StyledButton,
   StyledErrorText,
@@ -23,7 +23,9 @@ class SignUpScreen extends Component<Props> {
   public render() {
     return (
       <StyledScreenContainer>
-        <Header title={'Sign up'} message="Please fill in the details" />
+        <WithKeyboardHide>
+          <Header title={'Sign up'} message="Please fill in the details" />
+        </WithKeyboardHide>
         <Formik<FormModel>
           initialValues={SignUpModel}
           validationSchema={SignUpSchema}
