@@ -13,7 +13,8 @@ import {
   ProfileScreen,
   ResendSignUpScreen,
   SettingsScreen,
-  SignInScreen,
+  SignInChoicesScreen,
+  SignInEmailScreen,
   SignUpScreen,
   VerifyEmailScreen,
 } from '../screens';
@@ -48,8 +49,12 @@ export const Mappings: Mappings = {
     screen: ContactsScreen,
     icon: { name: 'contacts', type: 'antdesign' },
   },
-  SignIn: {
-    screen: SignInScreen,
+  SignInChoices: {
+    screen: SignInChoicesScreen,
+    icon: { name: '', type: 'antdesign' },
+  },
+  SignInEmail: {
+    screen: SignInEmailScreen,
     icon: { name: '', type: 'antdesign' },
   },
   SignUp: {

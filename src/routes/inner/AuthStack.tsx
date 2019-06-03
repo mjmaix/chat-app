@@ -7,14 +7,23 @@ import { Mappings } from '../mappings';
 const options: StackNavigatorConfig = {
   headerMode: 'screen',
   mode: 'modal',
+  initialRouteName: 'SignInChoices',
 };
 
 const AuthStack = createStackNavigator(
   {
-    SignIn: {
-      screen: Mappings.SignIn.screen,
+    SignInChoices: {
+      screen: Mappings.SignInChoices.screen,
       navigationOptions: {
         header: null,
+      },
+    },
+    SignInEmail: {
+      screen: Mappings.SignInEmail.screen,
+      navigationOptions: {
+        header: (
+          <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
+        ),
       },
     },
     SignUp: {
