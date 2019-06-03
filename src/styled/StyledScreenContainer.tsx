@@ -7,3 +7,9 @@ export const StyledScreenContainer = styled.SafeAreaView`
     ...containerStyles.fullCenter,
   })};
 `;
+
+export const StyledCenterContainer = styled.SafeAreaView`
+  ${props => ({
+    ...containerStyles.fullCenter,
+  })};
+`;
