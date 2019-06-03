@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { EmitterSubscription, Keyboard, Platform, View } from 'react-native';
+import { EmitterSubscription, Keyboard, View } from 'react-native';
 
 interface WithKeyboardHideProps {}
 

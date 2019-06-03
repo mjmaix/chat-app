@@ -69,26 +69,24 @@ class SignInScreen extends Component<Props> {
                         label={'Sign in'}
                       />
                     </StyledFormRow>
+                    <StyledFormRow>
+                      <StyledButton
+                        onPress={this.onPressSignUp}
+                        label={'Sign up'}
+                        type="outline"
+                      />
+                    </StyledFormRow>
+                    <StyledFormRow>
+                      <StyledButton
+                        onPress={this.onPressForgotPassword}
+                        label={'Forgot password?'}
+                        type="clear"
+                      />
+                    </StyledFormRow>
                   </StyledFormContainer>
                 );
               }}
             </Formik>
-            <StyledFormContainer>
-              <StyledFormRow>
-                <StyledButton
-                  onPress={this.onPressSignUp}
-                  label={'Sign up'}
-                  type="outline"
-                />
-              </StyledFormRow>
-              <StyledFormRow>
-                <StyledButton
-                  onPress={this.onPressForgotPassword}
-                  label={'Forgot password?'}
-                  type="clear"
-                />
-              </StyledFormRow>
-            </StyledFormContainer>
           </StyledFormOverImageContainer>
         </StyledScreenContainer>
       </ImageBackground>
