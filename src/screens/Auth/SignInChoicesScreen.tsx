@@ -9,6 +9,7 @@ import {
   StyledFormOverImageContainer,
   StyledFormRow,
   StyledScreenContainer,
+  StyledView,
 } from '../../styled';
 import { NavigationService } from '../../utils';
 
@@ -26,28 +27,32 @@ class SignInChoicesScreen extends Component<Props> {
       >
         <StyledScreenContainer>
           <StyledFormOverImageContainer>
-            <StyledFormRow>
-              <StyledButton
-                onPress={this.onPressSignInWithEmail}
-                label={'Sign in with email'}
-              />
-            </StyledFormRow>
+            <StyledFormContainer
+              as={StyledView} /* prevent scroll but retain form style*/
+            >
+              <StyledFormRow>
+                <StyledButton
+                  onPress={this.onPressSignInWithEmail}
+                  label={'Sign in with email'}
+                />
+              </StyledFormRow>
 
-            <StyledFormRow>
-              <StyledButton
-                onPress={this.onPressSignUp}
-                label={'Sign up'}
-                type="outline"
-              />
-            </StyledFormRow>
+              <StyledFormRow>
+                <StyledButton
+                  onPress={this.onPressSignUp}
+                  label={'Sign up'}
+                  type="outline"
+                />
+              </StyledFormRow>
 
-            <StyledFormRow>
-              <StyledButton
-                onPress={this.onPressForgotPassword}
-                label={'Forgot password?'}
-                type="clear"
-              />
-            </StyledFormRow>
+              <StyledFormRow>
+                <StyledButton
+                  onPress={this.onPressForgotPassword}
+                  label={'Forgot password?'}
+                  type="clear"
+                />
+              </StyledFormRow>
+            </StyledFormContainer>
           </StyledFormOverImageContainer>
         </StyledScreenContainer>
       </ImageBackground>
