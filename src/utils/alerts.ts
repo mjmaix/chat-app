@@ -1,7 +1,5 @@
 import { Alert } from 'react-native';
 
-import { error } from '../core';
-
 export const alertOk = (cb: () => void) => {
   Alert.alert('Success', undefined, [
     {
@@ -18,10 +16,11 @@ export const alertFail = (cb: () => void, err: Error) => {
       onPress: cb,
     },
   ];
-  error(err);
   Alert.alert(
     'Oops, failed',
-    __DEV__ ? JSON.stringify(err) : undefined,
+    __DEV__
+      ? JSON.stringify(err)
+      : 'Something went wrong. Check the form for more details.',
     cb ? okAction : undefined,
   );
 };
