@@ -1,11 +1,11 @@
-import { Formik, FormikActions } from 'formik';
+import { Formik, FormikActions, FormikProps } from 'formik';
 import React, { Component } from 'react';
 import { NavigationScreenProps } from 'react-navigation';
 
 import { Header } from '../../components';
 import { EmailInput, PasswordInput } from '../../components/Inputs';
 import { SignInModel, SignInSchema, handleSignIn } from '../../core';
-import { FormikInputInjector } from '../../hocs';
+import { FormikInputInjector, withFormikMemoize } from '../../hocs';
 import {
   StyledButton,
   StyledErrorText,
@@ -20,7 +20,15 @@ type Props = NavigationScreenProps;
 type FormModel = typeof SignInModel;
 
 class SignInEmailScreen extends Component<Props> {
+  public renderErrorText = (fProps: FormikProps<FormModel>) => (
+    <StyledErrorText message={fProps.errors.form} />
+  );
   public render() {
+    const MemoizedErrorText = withFormikMemoize(
+      this.renderErrorText,
+      'form',
+      true,
+    );
     return (
       <StyledScreenContainer>
         <Header title={'Sign in with email'} />
@@ -48,7 +56,7 @@ class SignInEmailScreen extends Component<Props> {
                 </StyledFormRow>
 
                 <StyledFormRow>
-                  <StyledErrorText message={fProps.errors.form} />
+                  <MemoizedErrorText {...fProps} />
                 </StyledFormRow>
 
                 <StyledFormRow>
@@ -77,6 +85,7 @@ class SignInEmailScreen extends Component<Props> {
       actions.setFieldError('form', err.message);
       alertFail(() => null, err);
     } finally {
+      actions.setSubmitting(false);
       Busy.stop();
     }
   };
