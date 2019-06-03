@@ -2,7 +2,7 @@ import { CognitoUser } from '@aws-amplify/auth';
 import { CurrentUserOpts } from '@aws-amplify/auth/lib/types';
 import { Auth } from 'aws-amplify';
 
-import { WrapKnownExceptions } from '../../errors/ExceptionHandler';
+import { WrapKnownExceptions } from '../../errors';
 import {
   ChallengeModel,
   EmailModel,

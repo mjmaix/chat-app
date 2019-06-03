@@ -3,12 +3,17 @@ export interface AwsException {
   name: string;
   message?: string;
   safeMessage: string;
+  region?: string;
+  hostname?: string;
+  retryable?: boolean;
+  time?: Date;
+  stack?: string;
 }
 
-const NetworkError: AwsException = {
-  code: 'NetworkError',
+const NetworkingError: AwsException = {
+  code: 'NetworkingError',
   name: 'Network Error',
-  safeMessage: 'Network Error',
+  safeMessage: 'Cannot access internet.',
 };
 
 // Change password - wrong password
@@ -16,7 +21,7 @@ const InvalidParameterException: AwsException = {
   code: 'InvalidParameterException',
   name: 'Invalid Parameter Exception',
   safeMessage:
-    'Use 8 or more characters with a mix of letters, numbers & symbols',
+    'Use 8 or more characters with a mix of letters, numbers & symbols.',
 };
 
 // Forgot password
@@ -39,7 +44,7 @@ const LimitExceededException: AwsException = {
 };
 
 export const AwsExceptions: { [k: string]: AwsException } = {
-  NetworkError,
+  NetworkingError,
   InvalidParameterException,
   UserNotFoundException,
   NotAuthorizedException,

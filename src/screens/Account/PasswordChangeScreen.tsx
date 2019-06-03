@@ -8,7 +8,7 @@ import {
   PasswordChangeSchema,
   handleChangePasswordSubmit,
 } from '../../core';
-import { SafeException } from '../../core/errors/ExceptionHandler';
+import { SafeException } from '../../core/errors';
 import { FormikInputInjector } from '../../hocs';
 import {
   StyledButton,

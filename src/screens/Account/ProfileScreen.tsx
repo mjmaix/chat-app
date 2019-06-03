@@ -14,6 +14,7 @@ import {
   handleUpdateProfile,
   info,
 } from '../../core';
+import { WrapKnownExceptions } from '../../core/errors';
 import {
   FormikButtonInjector,
   FormikInputInjector,
@@ -227,7 +228,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
         const newPicUrl = await AsyncImagePicker.uploadImage(
           newAttrs.picture,
           config,
-        );
+        ).catch(WrapKnownExceptions);
         newForm.picture = newPicUrl;
       }
       await handleUpdateProfile(newForm);
@@ -239,6 +240,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
       });
     } catch (err) {
       actions.setFieldError('form', err.message);
+      alertFail(() => null, err);
     } finally {
       actions.setSubmitting(false);
     }

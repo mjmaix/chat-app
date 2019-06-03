@@ -44,7 +44,6 @@ export class AsyncImagePicker {
     }
   };
 
-  // image: ImagePickerResponse
   public static uploadImage = async (
     imageUri: string,
     storageConfig = defaultStorageConfig,
@@ -62,8 +61,7 @@ export class AsyncImagePicker {
       const s3Key = (result as S3Object).key;
       return s3Key;
     } catch (err) {
-      error(err);
-      return '';
+      throw err;
     }
   };
 
