@@ -29,7 +29,7 @@ const getUserAttrs = (
 };
 
 export const handleGetCurrentUserAttrs = async (opts: CurrentUserOpts) => {
-  const currentUser = await Auth.currentAuthenticatedUser(opts).catch(
+  const currentUser = await Auth.currentUserPoolUser(opts).catch(
     WrapKnownExceptions,
   );
   const attrs = getUserAttrs(currentUser);
@@ -61,7 +61,7 @@ export const handleSignOut = async (global = false) => {
 
 export const handleUpdateProfile = async (data: typeof ProfileModel) => {
   const { email, familyName, givenName, phoneNumber, picture } = data;
-  const user = await Auth.currentAuthenticatedUser().catch(WrapKnownExceptions);
+  const user = await Auth.currentUserPoolUser().catch(WrapKnownExceptions);
 
   return Auth.updateUserAttributes(user, {
     email,
@@ -73,7 +73,7 @@ export const handleUpdateProfile = async (data: typeof ProfileModel) => {
 };
 
 export const handleCheckVerifiedContact = async () => {
-  const user = await Auth.currentAuthenticatedUser().catch(WrapKnownExceptions);
+  const user = await Auth.currentUserPoolUser().catch(WrapKnownExceptions);
   return Auth.verifiedContact(user).catch(WrapKnownExceptions);
 };
 
@@ -108,7 +108,7 @@ export const handleForgotPasswordSubmit = async (
 export const handleChangePasswordSubmit = async (
   data: typeof PasswordChangeModel,
 ) => {
-  const currentUser = await Auth.currentAuthenticatedUser().catch(
+  const currentUser = await Auth.currentUserPoolUser().catch(
     WrapKnownExceptions,
   );
   return Auth.changePassword(
@@ -121,7 +121,7 @@ export const handleChangePasswordSubmit = async (
 export const handleCompleteNewPassword = async (
   data: typeof PasswordRequiredModel,
 ) => {
-  const currentUser = await Auth.currentAuthenticatedUser().catch(
+  const currentUser = await Auth.currentUserPoolUser().catch(
     WrapKnownExceptions,
   );
   const attrs = getUserAttrs(currentUser);

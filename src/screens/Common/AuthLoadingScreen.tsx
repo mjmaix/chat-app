@@ -9,7 +9,7 @@ import { NavigationService, alertFail } from '../../utils';
 class AuthLoadingScreen extends React.Component<{}> {
   public async componentDidMount() {
     try {
-      await Auth.currentAuthenticatedUser();
+      const session = await Auth.currentUserPoolUser();
       NavigationService.navigate('App');
     } catch (err) {
       logInfo(err);
