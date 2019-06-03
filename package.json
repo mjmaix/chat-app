@@ -36,7 +36,6 @@
     "aws-amplify": "1.1.28",
     "aws-amplify-react-native": "^2.1.12",
     "base-64": "^0.1.0",
-    "buffer": "^5.2.1",
     "eventemitter3": "^3.1.2",
     "formik": "^1.5.7",
     "hex-to-rgb": "^1.0.1",

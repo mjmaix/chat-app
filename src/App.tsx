@@ -6,11 +6,16 @@ import { ActivityIndicator } from 'react-native';
 import { ThemeProvider as RneThemeProvider } from 'react-native-elements';
 import { ThemeProvider as ScThemeProvider } from 'styled-components';
 
-import { STORAGE_KEY, ThemeHelper, ThemeName, logError } from './core';
+import { STORAGE_KEY, Theme, ThemeHelper, ThemeName, logError } from './core';
 import { AppRoutes } from './routes';
 import { NavigationService } from './utils';
 
-export default class App extends Component<{}> {
+interface AppState {
+  theme: Nullable<Theme>;
+  isThemeReady: boolean;
+}
+
+export default class App extends Component<{}, AppState> {
   public readonly state = {
     theme: ThemeHelper.get(),
     isThemeReady: false,
@@ -55,12 +60,12 @@ export default class App extends Component<{}> {
       const themeId = (await AsyncStorage.getItem(STORAGE_KEY)) as ThemeName;
       if (themeId) {
         ThemeHelper.set(themeId);
-        this.setState({ isReady: true, theme: ThemeHelper.get() });
+        this.setState({ isThemeReady: true, theme: ThemeHelper.get() });
       }
     } catch (err) {
       logError(err);
     } finally {
-      this.setState({ isReady: true });
+      this.setState({ isThemeReady: true });
     }
   }
 }
