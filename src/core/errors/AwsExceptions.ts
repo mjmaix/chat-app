@@ -13,7 +13,8 @@ export interface AwsException {
 const NetworkingError: AwsException = {
   code: 'NetworkingError',
   name: 'Network Error',
-  safeMessage: 'Cannot access internet.',
+  safeMessage:
+    'Cannot to complete request. Failed to connect to network/internet.',
 };
 
 // Change password - wrong password
