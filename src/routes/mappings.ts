@@ -21,6 +21,7 @@ import {
   VerifyEmailScreen,
 } from '../screens';
 
+// TODO: rename to RouteName
 export type ScreenName =
   | 'Profile'
   | 'Settings'
@@ -38,6 +39,10 @@ export type ScreenName =
   | 'Confirm'
   | 'VerifyEmail'
   | 'Busy'
+  // parents
+  | 'AuthLoading'
+  | 'App'
+  | 'Auth'
   | 'MessageStack'
   | 'MoreStack';
 

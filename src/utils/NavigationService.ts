@@ -3,6 +3,8 @@ import {
   NavigationContainerComponent,
 } from 'react-navigation';
 
+import { ScreenName } from '../routes/mappings';
+
 let navigator: Nullable<NavigationContainerComponent>;
 
 function setTopLevelNavigator(
@@ -11,7 +13,7 @@ function setTopLevelNavigator(
   navigator = navigatorRef;
 }
 
-function navigate(routeName: string, params?: any) {
+function navigate(routeName: ScreenName, params?: any) {
   if (navigator) {
     navigator.dispatch(
       NavigationActions.navigate({
