@@ -126,7 +126,7 @@ class SignUpScreen extends Component<Props> {
   };
 
   private onPressConfirmCode = async () => {
-    NavigationService.navigate('Challenge', {
+    NavigationService.navigate('Confirm', {
       title: 'Confirmation',
       message: "We've sent a verification code to your email.",
       placeholder: 'Type here',
