@@ -1,87 +1,77 @@
 import * as Yup from 'yup';
 
-const emailRule = Yup.string()
+export const emailRule = Yup.string()
   .label('Email')
-  .email()
-  .required();
+  .email();
 
-const phoneRule = Yup.string()
+export const phoneNumberRule = Yup.string()
   .label('Mobile number')
-  .matches(/^[=+\s]*(?:[0-9][=+\s]*){8,}$/, 'Not a valid mobile number')
-  .required();
+  .matches(/^[=+\s]*(?:[0-9][=+\s]*){8,}$/, 'Not a valid mobile number');
+
+export const passwordRule = Yup.string()
+  .matches(
+    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
+    'Ensure that password is 8 to 64 characters long and contains a mix of upper and lower case characters, one numeric and one special character',
+  )
+  .label('Password')
+  .min(8);
+
+export const nameRule = Yup.string()
+  .label('Name')
+  .ensure();
+
+export const pictureRule = Yup.string()
+  .label('Profile picture')
+  .ensure();
+
+export const codeRule = Yup.string().label('Code');
 
 export const SignUpSchema = Yup.object().shape({
-  password: Yup.string()
-    .label('Password')
-    .min(8)
-    .required(),
-  email: emailRule,
-  familyName: Yup.string()
-    .label('Family name')
-    .notRequired()
-    .ensure(),
-  givenName: Yup.string()
-    .label('Given name')
-    .notRequired()
-    .ensure(),
-  phoneNumber: phoneRule,
-  picture: Yup.string()
-    .label('Profile picture')
-    .url()
-    .notRequired()
-    .ensure(),
+  password: passwordRule.required(),
+  email: emailRule.required(),
+  familyName: nameRule.label('Family name').notRequired(),
+  givenName: nameRule.label('Given name').notRequired(),
+  phoneNumber: phoneNumberRule.required(),
+  picture: pictureRule.notRequired(),
+});
+
+export const CompleteNewPasswordSchema = Yup.object().shape({
+  password: passwordRule.required(),
+  email: emailRule.notRequired(),
+  familyName: nameRule.label('Family name').notRequired(),
+  givenName: nameRule.label('Given name').notRequired(),
+  phoneNumber: phoneNumberRule.required(),
 });
 
 export const UpdateProfileSchema = Yup.object().shape({
-  email: emailRule,
-  familyName: Yup.string()
-    .label('Family name')
-    .notRequired()
-    .ensure(),
-  givenName: Yup.string()
-    .label('Given name')
-    .notRequired()
-    .ensure(),
-  phoneNumber: phoneRule,
-  picture: Yup.string()
-    .label('Profile picture')
-    .notRequired()
-    .ensure(),
+  email: emailRule.required(),
+  familyName: nameRule.label('Family name').notRequired(),
+  givenName: nameRule.label('Given name').notRequired(),
+  phoneNumber: phoneNumberRule.required(),
+  picture: pictureRule.notRequired(),
 });
 
 export const SignInSchema = Yup.object().shape({
-  password: Yup.string()
-    .label('Password')
-    .required(),
-  email: emailRule,
+  password: Yup.string().required(),
+  email: emailRule.required(),
 });
 
 export const ChallengeSchema = Yup.object().shape({
-  email: emailRule,
-  code: Yup.string()
-    .label('Code')
-    .required('Required'),
+  email: emailRule.required(),
+  code: codeRule.required('Required'),
 });
 
 export const EmailOnlySchema = Yup.object().shape({
-  email: emailRule,
+  email: emailRule.required(),
 });
 
 export const PasswordResetSchema = Yup.object().shape({
-  password: Yup.string()
-    .label('Password')
-    .required(),
-  code: Yup.string()
-    .label('Code')
-    .required(),
-  email: emailRule,
+  password: passwordRule.required(),
+  code: codeRule.required(),
+  email: emailRule.required(),
 });
 
 export const PasswordChangeSchema = Yup.object().shape({
-  passwordOld: Yup.string()
-    .label('Old password')
-    .required(),
-  password: Yup.string()
-    .label('New password')
-    .required(),
+  passwordOld: passwordRule.label('Old password').required(),
+  password: passwordRule.label('New password').required(),
 });

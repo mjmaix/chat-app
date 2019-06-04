@@ -8,6 +8,7 @@ export interface AwsException {
   retryable?: boolean;
   time?: Date;
   stack?: string;
+  knownMessages?: string[]; // logging existing message
 }
 
 const NetworkingError: AwsException = {
@@ -30,6 +31,7 @@ const InvalidParameterException: AwsException = {
   name: 'Invalid Parameter Exception',
   safeMessage:
     'Use 8 or more characters with a mix of letters, numbers & symbols.',
+  knownMessages: ['Invalid attributes given, given_name is missing'],
 };
 
 // Forgot password
@@ -51,6 +53,18 @@ const LimitExceededException: AwsException = {
   safeMessage: 'Attempt limit exceeded, please try after some time.',
 };
 
+const PasswordResetRequiredException: AwsException = {
+  code: 'PasswordResetRequiredException',
+  name: 'Password Reset Required Exception',
+  safeMessage: 'You must reset your password.',
+};
+
+const UserNotConfirmedException: AwsException = {
+  code: 'UserNotConfirmedException',
+  name: 'User Not Confirmed Exception',
+  safeMessage: 'You must confirm your account to complete registration.',
+};
+
 export const AwsExceptions: { [k: string]: AwsException } = {
   NetworkingError,
   NetworkError,
@@ -58,4 +72,6 @@ export const AwsExceptions: { [k: string]: AwsException } = {
   UserNotFoundException,
   NotAuthorizedException,
   LimitExceededException,
+  PasswordResetRequiredException,
+  UserNotConfirmedException,
 };

@@ -6,6 +6,7 @@ export * from './Auth/SignInEmailScreen';
 export * from './Auth/SignUpScreen';
 export * from './Auth/ResendSignUpScreen';
 export * from './Auth/NewPasswordScreen';
+export * from './Auth/CompleteNewPasswordScreen';
 
 export * from './Account/PasswordChangeScreen';
 export * from './Account/ProfileScreen';

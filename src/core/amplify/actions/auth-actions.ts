@@ -1,7 +1,9 @@
 import { CognitoUser } from '@aws-amplify/auth';
 import { CurrentUserOpts } from '@aws-amplify/auth/lib/types';
 import { Auth } from 'aws-amplify';
+import _ from 'lodash';
 
+import { NavigationService } from '../../../utils';
 import { WrapKnownExceptions } from '../../errors';
 import {
   ChallengeModel,
@@ -17,7 +19,7 @@ import {
 type SignUpModel = typeof ProfileModel & typeof PasswordRequiredModel;
 
 const getUserAttrs = (
-  user: CognitoUser & { attributes: CurrentUserAttributes },
+  user: CognitoUser & { attributes: ChatCurrentUserAttributes },
 ) => {
   return {
     email: user.attributes.email,
@@ -38,7 +40,7 @@ export const handleGetCurrentUserAttrs = async (opts: CurrentUserOpts) => {
 
 export const handleSignUp = async (data: typeof SignUpModel) => {
   const { password, ...attrs } = data;
-  return Auth.signUp({
+  const user = await Auth.signUp({
     username: attrs.email,
     password,
     attributes: {
@@ -48,11 +50,17 @@ export const handleSignUp = async (data: typeof SignUpModel) => {
       phone_number: attrs.phoneNumber,
     },
   }).catch(WrapKnownExceptions);
+
+  return user;
 };
 
 export const handleSignIn = async (data: typeof SignInModel) => {
   const { email, password } = data;
-  return Auth.signIn({ username: email, password }).catch(WrapKnownExceptions);
+  const user = await Auth.signIn({
+    username: email.toLowerCase(),
+    password,
+  }).catch(WrapKnownExceptions);
+  return user;
 };
 
 export const handleSignOut = async (global = false) => {
@@ -64,7 +72,7 @@ export const handleUpdateProfile = async (data: typeof ProfileModel) => {
   const user = await Auth.currentUserPoolUser().catch(WrapKnownExceptions);
 
   return Auth.updateUserAttributes(user, {
-    email,
+    email: email.toLowerCase(),
     family_name: familyName,
     given_name: givenName,
     phone_number: phoneNumber,
@@ -91,7 +99,9 @@ export const handleResend = async (data: typeof EmailModel) => {
 };
 
 export const handleConfirmSignUp = async (data: typeof ChallengeModel) => {
-  return Auth.confirmSignUp(data.email, data.code).catch(WrapKnownExceptions);
+  return Auth.confirmSignUp(data.email.toLowerCase(), data.code).catch(
+    WrapKnownExceptions,
+  );
 };
 
 export const handleForgotPassword = async (data: typeof EmailModel) => {
@@ -119,14 +129,20 @@ export const handleChangePasswordSubmit = async (
 };
 
 export const handleCompleteNewPassword = async (
-  data: typeof PasswordRequiredModel,
+  unAuthUser: ChatCognitoUser,
+  data: Partial<typeof SignUpModel> & typeof PasswordRequiredModel,
 ) => {
-  const currentUser = await Auth.currentUserPoolUser().catch(
-    WrapKnownExceptions,
+  const { requiredAttributes } = unAuthUser.challengeParam;
+  const camelCaseData = _.reduce(
+    data,
+    (acc, v, k) => ({ ...acc, [_.snakeCase(k)]: v }),
+    {},
   );
-  const attrs = getUserAttrs(currentUser);
+  const valueForReqdAttrs = _.pick(camelCaseData, requiredAttributes);
 
-  return Auth.completeNewPassword(currentUser, data.password, attrs).catch(
-    WrapKnownExceptions,
-  );
+  return Auth.completeNewPassword(
+    unAuthUser,
+    data.password,
+    valueForReqdAttrs,
+  ).catch(WrapKnownExceptions);
 };

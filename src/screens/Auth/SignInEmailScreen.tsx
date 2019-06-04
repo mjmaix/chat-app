@@ -79,9 +79,10 @@ class SignInEmailScreen extends Component<Props> {
     actions: FormikActions<T>,
   ) => {
     let transferScreen: ScreenName = 'App';
+    let user;
     try {
       Busy.start();
-      const user = await handleSignIn(form);
+      user = await handleSignIn(form);
       if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
         transferScreen = 'CompletePassword';
       }
@@ -91,7 +92,9 @@ class SignInEmailScreen extends Component<Props> {
     } finally {
       actions.setSubmitting(false);
       Busy.stop();
-      NavigationService.navigate(transferScreen);
+      NavigationService.navigate(transferScreen, {
+        unAuthUser: user,
+      });
     }
   };
 }
