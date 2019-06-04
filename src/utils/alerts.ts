@@ -9,7 +9,7 @@ export const alertOk = (cb: () => void) => {
   ]);
 };
 
-export const alertFail = (cb: () => void, err: Error) => {
+export const alertFail = (cb: () => void, err: Error | any) => {
   const okAction = [
     {
       text: 'OK',
