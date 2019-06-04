@@ -6,6 +6,7 @@ import { Header } from '../../components';
 import { EmailInput, PasswordInput } from '../../components/Inputs';
 import { SignInModel, SignInSchema, handleSignIn } from '../../core';
 import { FormikInputInjector, withFormikMemoize } from '../../hocs';
+import { ScreenName } from '../../routes/mappings';
 import {
   StyledButton,
   StyledErrorText,
@@ -77,16 +78,20 @@ class SignInEmailScreen extends Component<Props> {
     form: T,
     actions: FormikActions<T>,
   ) => {
+    let transferScreen: ScreenName = 'App';
     try {
       Busy.start();
-      await handleSignIn(form);
-      NavigationService.navigate('App');
+      const user = await handleSignIn(form);
+      if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
+        transferScreen = 'CompletePassword';
+      }
     } catch (err) {
       actions.setFieldError('form', err.message);
       alertFail(() => null, err);
     } finally {
       actions.setSubmitting(false);
       Busy.stop();
+      NavigationService.navigate(transferScreen);
     }
   };
 }
