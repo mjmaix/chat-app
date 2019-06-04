@@ -84,7 +84,7 @@ class SignInEmailScreen extends Component<Props> {
       Busy.start();
       user = await handleSignIn(form);
       if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
-        transferScreen = 'CompletePassword';
+        transferScreen = 'CompleteRegistration';
       }
     } catch (err) {
       actions.setFieldError('form', err.message);

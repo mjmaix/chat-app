@@ -9,7 +9,6 @@ import { EmailInput, PasswordInput } from '../../components/Inputs';
 import {
   PasswordRequiredModel,
   SignUpModel,
-  SignUpSchema,
   emailRule,
   handleCompleteNewPassword,
   nameRule,
@@ -27,16 +26,16 @@ import {
 } from '../../styled';
 import { Busy, NavigationService, alertFail, alertOk } from '../../utils';
 
-type CompleteNewPasswordScreenProps = NavigationScreenProps;
-interface CompleteNewPasswordScreenState {
+type CompleteRegistrationScreenProps = NavigationScreenProps;
+interface CompleteRegistrationScreenState {
   user: Nullable<ChatCognitoUser>;
 }
 type FormModel = Partial<typeof SignUpModel> & typeof PasswordRequiredModel; // NOTE: Partial just to complete blanks
 
 // FIXME: why need to recast as from this.state?
-class CompleteNewPasswordScreen extends Component<
-  CompleteNewPasswordScreenProps,
-  CompleteNewPasswordScreenState
+class CompleteRegistrationScreen extends Component<
+  CompleteRegistrationScreenProps,
+  CompleteRegistrationScreenState
 > {
   public readonly state = {
     user: null,
@@ -47,11 +46,6 @@ class CompleteNewPasswordScreen extends Component<
     this.setState({
       user: navigation.getParam('unAuthUser') as ChatCognitoUser,
     });
-  }
-
-  public componentDidCatch(err: any, info: any) {
-    console.log('componentDidCatch err', err);
-    console.log('componentDidCatch info', info);
   }
 
   public render() {
@@ -102,11 +96,7 @@ class CompleteNewPasswordScreen extends Component<
         <Formik<FormModel>
           initialValues={SignUpModel}
           validationSchema={validationSchema}
-          onSubmit={(values, actions) => {
-            console.log('onSubmit values', values);
-            console.log('onSubmit actions', actions);
-            this.onPressSubmit(values, actions);
-          }}
+          onSubmit={this.onPressSubmit}
         >
           {fProps => {
             return (
@@ -193,9 +183,8 @@ class CompleteNewPasswordScreen extends Component<
     form: T,
     actions: FormikActions<T>,
   ) => {
-    console.log('test', this.state);
     const { user } = this.state;
-    console.log('test2', user);
+
     if (user) {
       try {
         Busy.start();
@@ -212,4 +201,4 @@ class CompleteNewPasswordScreen extends Component<
   };
 }
 
-export { CompleteNewPasswordScreen };
+export { CompleteRegistrationScreen };

@@ -6,7 +6,7 @@ import { IconObject } from '../components';
 import {
   BusyOverlayScreen,
   ChatScreen,
-  CompleteNewPasswordScreen,
+  CompleteRegistrationScreen,
   ContactsScreen,
   MessagesScreen,
   PasswordChangeScreen,
@@ -34,7 +34,7 @@ export type ScreenName =
   | 'Forgot'
   | 'Resend'
   | 'Change'
-  | 'CompletePassword'
+  | 'CompleteRegistration'
   | 'Reset'
   | 'Confirm'
   | 'VerifyEmail'
@@ -51,7 +51,10 @@ interface Mapping {
   screen: React.ReactNode;
 }
 
-type Mappings = { [key in ScreenName]: Mapping };
+type RequiredMapping = Exclude<ScreenName, NonScreen>;
+
+type Mappings = { [key in RequiredMapping]: Mapping };
+type NonScreen = 'AuthLoading' | 'App' | 'Auth';
 
 export type StackRouteConfigMap = {
   [key in ScreenName]?: NavigationRouteConfig
@@ -102,8 +105,8 @@ export const Mappings: Mappings = {
     screen: PasswordChangeScreen,
     icon: { name: 'lock', type: 'antdesign' },
   },
-  CompletePassword: {
-    screen: CompleteNewPasswordScreen,
+  CompleteRegistration: {
+    screen: CompleteRegistrationScreen,
     icon: { name: 'lock', type: 'antdesign' },
   },
   Reset: {

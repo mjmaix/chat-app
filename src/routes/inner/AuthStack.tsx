@@ -49,8 +49,8 @@ const routeConfigMap: StackRouteConfigMap = {
       ),
     },
   },
-  CompletePassword: {
-    screen: Mappings.CompletePassword.screen,
+  CompleteRegistration: {
+    screen: Mappings.CompleteRegistration.screen,
     navigationOptions: {
       header: (
         <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
