@@ -6,7 +6,7 @@ import {
 import { ThemedComponentProps } from 'styled-components';
 
 import { IconWithBadge, TabBarComponent } from '../../components';
-import { Mappings } from '../mappings';
+import { Mappings, ScreenName } from '../mappings';
 import MessageStack from './MessageStack';
 import MoreStack from './MoreStack';
 
@@ -19,7 +19,7 @@ const navBarOptions: BottomTabNavigatorConfig = {
 
         return (
           <IconWithBadge
-            icon={Mappings[routeName].icon}
+            icon={Mappings[routeName as ScreenName].icon}
             color={tintColor || ''}
           />
         );

@@ -4,62 +4,57 @@ import { ThemedComponentProps } from 'styled-components';
 
 import { HeaderIcon } from '../../components';
 import { updateStatusBarStyle } from '../../utils/StatusBarService';
-import { Mappings } from '../mappings';
+import { Mappings, StackRouteConfigMap } from '../mappings';
 
-const MessageStack = createStackNavigator(
-  {
-    Messages: {
-      screen: Mappings.Messages.screen,
-      navigationOptions: ({
-        navigation,
-        screenProps,
-      }: NavigationScreenProps) => {
-        const { theme } = screenProps as ThemedComponentProps;
-        return {
-          title: 'Messages',
-          headerRight: (
-            <HeaderIcon
-              icon={{
-                ...Mappings.Contacts.icon,
-                iconStyle: { color: theme.colors.primarydarktext },
-              }}
-              onPress={() => navigation.navigate('Contacts')}
-            />
-          ),
-        };
-      },
-    },
-    Contacts: {
-      screen: Mappings.Contacts.screen,
-      navigationOptions: ({ navigation }: NavigationScreenProps) => ({
-        title: 'Contacts',
-      }),
-    },
-    Chat: {
-      screen: Mappings.Chat.screen,
-      navigationOptions: ({ navigation }: NavigationScreenProps) => ({
-        title: 'Chat',
-      }),
-    },
-  },
-  {
-    defaultNavigationOptions: ({
-      screenProps,
-      navigation,
-    }: NavigationScreenProps) => {
+const routeConfigMap: StackRouteConfigMap = {
+  Messages: {
+    screen: Mappings.Messages.screen,
+    navigationOptions: ({ navigation, screenProps }: NavigationScreenProps) => {
       const { theme } = screenProps as ThemedComponentProps;
-      const headerColor = theme.colors.primary;
-
-      navigation.addListener('didFocus', () => {
-        updateStatusBarStyle(headerColor);
-      });
       return {
-        headerTintColor: theme.colors.primarytext,
-        headerStyle: { backgroundColor: headerColor },
+        title: 'Messages',
+        headerRight: (
+          <HeaderIcon
+            icon={{
+              ...Mappings.Contacts.icon,
+              iconStyle: { color: theme.colors.primarydarktext },
+            }}
+            onPress={() => navigation.navigate('Contacts')}
+          />
+        ),
       };
     },
   },
-);
+  Contacts: {
+    screen: Mappings.Contacts.screen,
+    navigationOptions: ({ navigation }: NavigationScreenProps) => ({
+      title: 'Contacts',
+    }),
+  },
+  Chat: {
+    screen: Mappings.Chat.screen,
+    navigationOptions: ({ navigation }: NavigationScreenProps) => ({
+      title: 'Chat',
+    }),
+  },
+};
+const MessageStack = createStackNavigator(routeConfigMap, {
+  defaultNavigationOptions: ({
+    screenProps,
+    navigation,
+  }: NavigationScreenProps) => {
+    const { theme } = screenProps as ThemedComponentProps;
+    const headerColor = theme.colors.primary;
+
+    navigation.addListener('didFocus', () => {
+      updateStatusBarStyle(headerColor);
+    });
+    return {
+      headerTintColor: theme.colors.primarytext,
+      headerStyle: { backgroundColor: headerColor },
+    };
+  },
+});
 
 MessageStack.navigationOptions = ({ navigation }: NavigationScreenProps) => {
   let tabBarVisible = true;

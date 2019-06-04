@@ -1,10 +1,12 @@
 import React from 'react';
+import { NavigationRouteConfig } from 'react-navigation';
 
 import { ConfirmSignUpScreen } from './../screens/Auth/ConfirmSignUpScreen';
 import { IconObject } from '../components';
 import {
   BusyOverlayScreen,
   ChatScreen,
+  CompleteNewPasswordScreen,
   ContactsScreen,
   MessagesScreen,
   PasswordChangeScreen,
@@ -19,14 +21,36 @@ import {
   VerifyEmailScreen,
 } from '../screens';
 
+export type ScreenName =
+  | 'Profile'
+  | 'Settings'
+  | 'Messages'
+  | 'Chat'
+  | 'Contacts'
+  | 'SignInChoices'
+  | 'SignInEmail'
+  | 'SignUp'
+  | 'Forgot'
+  | 'Resend'
+  | 'Change'
+  | 'CompletePassword'
+  | 'Reset'
+  | 'Confirm'
+  | 'VerifyEmail'
+  | 'Busy'
+  | 'MessageStack'
+  | 'MoreStack';
+
 interface Mapping {
   icon: IconObject;
   screen: React.ReactNode;
 }
 
-interface Mappings {
-  [routeName: string]: Mapping;
-}
+type Mappings = { [key in ScreenName]: Mapping };
+
+export type StackRouteConfigMap = {
+  [key in ScreenName]?: NavigationRouteConfig
+};
 
 export const Mappings: Mappings = {
   Profile: {
@@ -71,6 +95,10 @@ export const Mappings: Mappings = {
   },
   Change: {
     screen: PasswordChangeScreen,
+    icon: { name: 'lock', type: 'antdesign' },
+  },
+  CompletePassword: {
+    screen: CompleteNewPasswordScreen,
     icon: { name: 'lock', type: 'antdesign' },
   },
   Reset: {
