@@ -14,7 +14,7 @@
   "roleExternalId": "chatlo0994aaff_role_external_id",
   "policyName": "chatlo0994aaff-sns-policy",
   "smsAuthenticationMessage": "Your Chat Love authentication code is {####}",
-  "smsVerificationMessage": "Your verification code is {####}",
+  "smsVerificationMessage": "Your Chat Love verification code is {####}",
   "emailVerificationSubject": "Your Chat Love verification code",
   "emailVerificationMessage": "Your Chat Love verification code is {####}",
   "defaultPasswordPolicy": true,
