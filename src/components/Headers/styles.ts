@@ -9,5 +9,6 @@ export const styles = StyleSheet.create({
   headerContainer: {
     alignItems: 'center',
     marginVertical: StyleGuide.gap.big,
+    marginHorizontal: StyleGuide.gap.big,
   },
 });
