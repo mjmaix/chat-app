@@ -2,6 +2,13 @@
   "name": "chat-app",
   "version": "1.0.2",
   "private": true,
+  "importSort": {
+    ".ts, .tsx": {
+      "parser": "typescript",
+      "style": "import-sort-style-module",
+      "options": {}
+    }
+  },
   "scripts": {
     "start": "./scripts/killpackager.sh && node node_modules/react-native/local-cli/cli.js start -- --reset-cache",
     "test": "jest",
