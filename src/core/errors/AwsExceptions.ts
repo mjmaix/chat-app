@@ -31,7 +31,10 @@ const InvalidParameterException: AwsException = {
   name: 'Invalid Parameter Exception',
   safeMessage:
     'Use 8 or more characters with a mix of letters, numbers & symbols.',
-  knownMessages: ['Invalid attributes given, given_name is missing'],
+  knownMessages: [
+    'Invalid attributes given, given_name is missing',
+    'User has not set up software token mfa',
+  ],
 };
 
 // Forgot password

@@ -67,6 +67,9 @@ declare global {
   interface S3Object {
     key: string;
   }
+
+  type MFAChoice = 'TOTP' | 'SMS' | 'NOMFA';
+
   /**
    * AWS Storage
    */
