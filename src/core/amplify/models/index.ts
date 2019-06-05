@@ -47,3 +47,9 @@ export const SignInModel: FormModel = {
   ...EmailModel,
   ...PasswordRequiredModel,
 };
+
+export const VerifyContactModel: FormModel = {
+  ...EmailModel,
+  ...CodeRequiredModel,
+  phone_number: '',
+};
