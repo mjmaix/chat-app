@@ -33,6 +33,14 @@ const routeConfigMap: StackRouteConfigMap = {
       ),
     },
   },
+  SignInCode: {
+    screen: Mappings.SignInCode.screen,
+    navigationOptions: {
+      header: (
+        <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
+      ),
+    },
+  },
   Forgot: {
     screen: Mappings.Forgot.screen,
     navigationOptions: {

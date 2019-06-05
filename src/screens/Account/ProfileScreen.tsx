@@ -1,3 +1,4 @@
+import { Auth } from 'aws-amplify';
 import { Formik, FormikActions, FormikProps } from 'formik';
 import React, { Component, Fragment } from 'react';
 
@@ -11,6 +12,8 @@ import {
   handleGetCurrentUserAttrs,
   handleSignOut,
   handleUpdateProfile,
+  handleVerifyContact,
+  handleVerifyContactResend,
   logInfo,
 } from '../../core';
 import { WrapKnownExceptions } from '../../core/errors';
@@ -29,7 +32,13 @@ import {
   StyledTextInput,
   StyledView,
 } from '../../styled';
-import { AsyncImagePicker, NavigationService, getMime } from '../../utils';
+import {
+  AsyncImagePicker,
+  Busy,
+  NavigationService,
+  getMime,
+  isConnected,
+} from '../../utils';
 import { alertFail, alertOk } from '../../utils';
 
 type FormModel = typeof ProfileModel;
@@ -53,9 +62,13 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
   }
 
   private checkVerifiedContact = () => {
-    handleCheckVerifiedContact().then(verifiedStatus => {
-      this.setState({ verifiedStatus });
-    });
+    isConnected()
+      .then(() => ({ bypassCache: true }))
+      .catch(() => ({ bypassCache: false }))
+      .then(opts => handleCheckVerifiedContact(opts))
+      .then(verifiedStatus => {
+        this.setState({ verifiedStatus });
+      });
   };
 
   private renderAvatar = (fProps: FormikProps<FormModel>) => (
@@ -69,6 +82,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
       status.unverified &&
       status.unverified.email
     );
+    const showVerifyPhone = false; // FIXME: disable since mobile verification always fail Expired
     return (
       <Fragment>
         <StyledButton
@@ -79,7 +93,28 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
         {showVerifyEmail && (
           <StyledButton
             label="Verify email"
-            onPress={this.handlePressVerifyEmail}
+            onPress={() => this.handlePressVerifyContact('email')}
+            type="clear"
+          />
+        )}
+        {showVerifyPhone && (
+          <StyledButton
+            label="Verify mobile"
+            onPress={() => this.handlePressVerifyContact('phone_number')}
+            type="clear"
+          />
+        )}
+        {showVerifyEmail && (
+          <StyledButton
+            label="Resend email code"
+            onPress={() => this.handlePressVerifyContactResend('email')}
+            type="clear"
+          />
+        )}
+        {showVerifyPhone && (
+          <StyledButton
+            label="Resend phone code"
+            onPress={() => this.handlePressVerifyContactResend('phone_number')}
             type="clear"
           />
         )}
@@ -186,8 +221,28 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
     NavigationService.navigate('Change');
   };
 
-  private handlePressVerifyEmail = () => {
-    NavigationService.navigate('VerifyEmail');
+  private handlePressVerifyContact = async (contact: Contact) => {
+    const currentUser = await Auth.currentUserPoolUser().catch(
+      WrapKnownExceptions,
+    );
+    const { attributes } = currentUser;
+    const contactValue = attributes[contact];
+    NavigationService.navigate('VerifyContact', {
+      contact,
+      contactValue,
+    });
+  };
+
+  private handlePressVerifyContactResend = async (contact: Contact) => {
+    try {
+      Busy.start();
+      await handleVerifyContactResend(contact);
+      alertOk(() => this.handlePressVerifyContact(contact));
+    } catch (err) {
+      alertFail(() => null, err);
+    } finally {
+      Busy.stop();
+    }
   };
 
   private onSave = async <T extends FormModel>(
@@ -220,7 +275,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
       this.checkVerifiedContact();
       alertOk(() => {
         if (emailChanged) {
-          NavigationService.navigate('VerifyEmail');
+          this.handlePressVerifyContactResend('email');
         }
       });
     } catch (err) {

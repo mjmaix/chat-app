@@ -10,6 +10,7 @@ import { NavigationService } from '../../../utils';
 import { WrapKnownExceptions } from '../../errors';
 import {
   ChallengeModel,
+  CodeRequiredModel,
   EmailModel,
   PasswordChangeModel,
   PasswordRequiredModel,
@@ -83,9 +84,10 @@ export const handleUpdateProfile = async (data: typeof ProfileModel) => {
   }).catch(WrapKnownExceptions);
 };
 
-export const handleCheckVerifiedContact = async () => {
-  const user = await Auth.currentUserPoolUser().catch(WrapKnownExceptions);
-  return Auth.verifiedContact(user).catch(WrapKnownExceptions);
+export const handleCheckVerifiedContact = async (opts?: CurrentUserOpts) => {
+  const user = await Auth.currentUserPoolUser(opts).catch(WrapKnownExceptions);
+  const verif = await Auth.verifiedContact(user).catch(WrapKnownExceptions);
+  return verif;
 };
 
 export const handleVerifyContact = async (
@@ -95,6 +97,10 @@ export const handleVerifyContact = async (
   return Auth.verifyCurrentUserAttributeSubmit(contact, data.code).catch(
     WrapKnownExceptions,
   );
+};
+
+export const handleVerifyContactResend = async (contact: Contact) => {
+  return Auth.verifyCurrentUserAttribute(contact).catch(WrapKnownExceptions);
 };
 
 export const handleResend = async (data: typeof EmailModel) => {
@@ -155,6 +161,13 @@ export const handleSetupMfaTotp = async () => {
   return Auth.setupTOTP(user).catch(WrapKnownExceptions);
 };
 
+export const handleVerifyMfaTotp = async (data: typeof CodeRequiredModel) => {
+  const user = await Auth.currentUserPoolUser().catch(WrapKnownExceptions);
+  await Auth.verifyTotpToken(user, data.code).catch(WrapKnownExceptions);
+
+  return Auth.setPreferredMFA(user, 'TOTP').catch(WrapKnownExceptions);
+};
+
 export const handleSetMfa = async (mfa: MFAChoice) => {
   const user = await Auth.currentUserPoolUser().catch(WrapKnownExceptions);
   return Auth.setPreferredMFA(user, mfa).catch(WrapKnownExceptions);
@@ -167,4 +180,14 @@ export const handleGetPreferredMfa: (
   return Auth.getPreferredMFA(user, opts).catch(WrapKnownExceptions) as Promise<
     MFAChoice
   >;
+};
+
+export const handleConfirmSignIn = async (
+  unAuthUser: ChatCognitoUser,
+  data: typeof CodeRequiredModel,
+) => {
+  const mfaType = unAuthUser.challengeName as Partial<ChallengeMfa>;
+  return Auth.confirmSignIn(unAuthUser, data.code, mfaType).catch(
+    WrapKnownExceptions,
+  );
 };

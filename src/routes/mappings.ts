@@ -89,6 +89,10 @@ export const Mappings: Mappings = {
     screen: MfaSelectScreen,
     icon: { type: 'entypo', name: '' },
   },
+  SignInCode: {
+    screen: SignInCodeScreen,
+    icon: { type: 'entypo', name: '' },
+  },
   MfaTotp: {
     screen: MfaTotpScreen,
     icon: { type: 'entypo', name: '' },

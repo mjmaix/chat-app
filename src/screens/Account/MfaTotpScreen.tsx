@@ -1,4 +1,4 @@
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikActions, FormikProps } from 'formik';
 import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Dimensions, Linking, Platform } from 'react-native';
@@ -8,10 +8,12 @@ import QRCode from 'react-native-qrcode-svg';
 import { Header, formStyles } from '../../components';
 import {
   CodeRequiredModel,
-  MfaSchema,
+  CodeSchema,
   ProfileModel,
   handleGetCurrentUserAttrs,
   handleSetupMfaTotp,
+  handleSignOut,
+  handleVerifyMfaTotp,
 } from '../../core';
 import { FormikInputInjector, withFormikMemoize } from '../../hocs';
 import {
@@ -22,7 +24,14 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
-import { alertFail, generateTotpLink, getBrandName } from '../../utils';
+import {
+  Busy,
+  NavigationService,
+  alertFail,
+  alertOk,
+  generateTotpLink,
+  getBrandName,
+} from '../../utils';
 
 interface MfaSmsProps {}
 type FormModel = typeof CodeRequiredModel;
@@ -34,6 +43,29 @@ const renderErrorText = (fProps: FormikProps<FormModel>) => (
   <StyledErrorText message={fProps.errors.form} />
 );
 const MemoizedErrorText = withFormikMemoize(renderErrorText, 'form', true);
+
+const onPressSubmit = async <T extends FormModel>(
+  form: T,
+  actions: FormikActions<T>,
+) => {
+  try {
+    Busy.start();
+    await handleVerifyMfaTotp(form);
+    alertOk(
+      async () => {
+        await handleSignOut();
+        NavigationService.navigate('AuthLoading');
+      },
+      { message: 'Please sign in again' },
+    );
+  } catch (err) {
+    actions.setFieldError('form', err.message);
+    alertFail(() => null, err);
+  } finally {
+    actions.setSubmitting(false);
+    Busy.stop();
+  }
+};
 
 export const MfaTotpScreen = (props: MfaSmsProps) => {
   const [code, setCode] = useState('');
@@ -62,8 +94,8 @@ export const MfaTotpScreen = (props: MfaSmsProps) => {
       <Formik<FormModel>
         enableReinitialize
         initialValues={CodeRequiredModel}
-        validationSchema={MfaSchema}
-        onSubmit={() => alertFail(() => null, 'not yet implemented')}
+        validationSchema={CodeSchema}
+        onSubmit={onPressSubmit}
       >
         {fProps => {
           return (
