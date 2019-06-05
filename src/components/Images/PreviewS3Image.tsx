@@ -5,7 +5,6 @@ import { View } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { logInfo } from '../../core';
-import { StyledCenterContainer } from '../../styled';
 import { containerStyles } from '../commonStyles';
 
 interface PreviewS3ImageProps {
@@ -34,9 +33,9 @@ class PreviewS3Image extends React.Component<
   public render() {
     if (!this.state.isConnected) {
       return (
-        <StyledCenterContainer>
+        <View style={containerStyles.fullCenter}>
           <Icon type={'material-community'} name={'signal-off'} size={80} />
-        </StyledCenterContainer>
+        </View>
       );
     }
     const { imgKey, level } = this.props;
