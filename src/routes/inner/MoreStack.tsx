@@ -44,10 +44,10 @@ const routeConfigMap: StackRouteConfigMap = {
       title: 'Change password',
     }),
   },
-  VerifyEmail: {
-    screen: Mappings.VerifyEmail.screen,
+  VerifyContact: {
+    screen: Mappings.VerifyContact.screen,
     navigationOptions: () => ({
-      title: 'Verify email',
+      title: 'Verify',
     }),
   },
   SelectMfa: {

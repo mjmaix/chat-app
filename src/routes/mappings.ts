@@ -20,9 +20,10 @@ import {
   SelectThemeScreen,
   SettingsScreen,
   SignInChoicesScreen,
+  SignInCodeScreen,
   SignInEmailScreen,
   SignUpScreen,
-  VerifyEmailScreen,
+  VerifyContactScreen,
 } from '../screens';
 
 // TODO: rename to RouteName
@@ -31,6 +32,7 @@ export type ScreenName =
   | 'Settings'
   | 'SelectTheme'
   | 'SelectMfa'
+  | 'SignInCode'
   | 'Mfa'
   | 'MfaTotp'
   | 'MfaSms'
@@ -46,7 +48,7 @@ export type ScreenName =
   | 'CompleteRegistration'
   | 'Reset'
   | 'Confirm'
-  | 'VerifyEmail'
+  | 'VerifyContact'
   | 'Busy'
   // parents
   | 'AuthLoading'
@@ -85,11 +87,11 @@ export const Mappings: Mappings = {
   },
   SelectMfa: {
     screen: MfaSelectScreen,
-    icon: { type: 'entypo', name: 'lock' },
+    icon: { type: 'entypo', name: '' },
   },
   MfaTotp: {
     screen: MfaTotpScreen,
-    icon: { type: 'entypo', name: 'lock' },
+    icon: { type: 'entypo', name: '' },
   },
   MfaSms: {
     screen: MfaSmsScreen,
@@ -143,8 +145,8 @@ export const Mappings: Mappings = {
     screen: ConfirmSignUpScreen,
     icon: { name: '', type: 'antdesign' },
   },
-  VerifyEmail: {
-    screen: VerifyEmailScreen,
+  VerifyContact: {
+    screen: VerifyContactScreen,
     icon: { name: '', type: 'antdesign' },
   },
   Busy: {

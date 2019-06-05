@@ -7,11 +7,12 @@ export * from './Auth/SignUpScreen';
 export * from './Auth/ResendSignUpScreen';
 export * from './Auth/NewPasswordScreen';
 export * from './Auth/CompleteRegistrationScreen';
+export * from './Auth/SignInCodeScreen';
 
 export * from './Account/PasswordChangeScreen';
 export * from './Account/ProfileScreen';
 export * from './Account/SelectThemeScreen';
-export * from './Account/VerifyEmailScreen';
+export * from './Account/VerifyContactScreen';
 export * from './Account/SettingsScreen';
 export * from './Account/MfaSelectScreen';
 export * from './Account/MfaSmsScreen';

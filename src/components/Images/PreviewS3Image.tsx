@@ -5,6 +5,7 @@ import { View } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import { logInfo } from '../../core';
+import { getNetInfo } from '../../utils';
 import { containerStyles } from '../commonStyles';
 
 interface PreviewS3ImageProps {
@@ -25,7 +26,7 @@ class PreviewS3Image extends React.Component<
     isConnected: false,
   };
   public componentDidMount() {
-    NetInfo.fetch().then(state => {
+    getNetInfo().then(state => {
       logInfo('Connection', state.isConnected, state.type);
       this.setState({ isConnected: state.isConnected, type: state.type });
     });

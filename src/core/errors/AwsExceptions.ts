@@ -68,7 +68,15 @@ const UserNotConfirmedException: AwsException = {
   safeMessage: 'You must confirm your account to complete registration.',
 };
 
+const ExpiredCodeException: AwsException = {
+  code: 'ExpiredCodeException',
+  safeMessage: 'Invalid code provided, please request a code again.',
+  knownMessages: ['Invalid code provided, please request a code again.'],
+  name: 'ExpiredCodeException',
+};
+
 export const AwsExceptions: { [k: string]: AwsException } = {
+  ExpiredCodeException,
   NetworkingError,
   NetworkError,
   InvalidParameterException,

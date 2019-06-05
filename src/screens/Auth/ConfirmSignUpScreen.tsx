@@ -14,7 +14,7 @@ export const ConfirmSignUpScreen = () => {
         try {
           Busy.start();
           await handleConfirmSignUp(values);
-          alertOk(() => NavigationService.navigate('SignIn'));
+          alertOk(() => NavigationService.navigate('SignInEmail'));
         } catch (err) {
           actions.setFieldError('form', err.message);
           alertFail(() => null, err);

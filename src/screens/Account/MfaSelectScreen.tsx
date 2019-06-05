@@ -15,8 +15,8 @@ interface State {
   userAttrs?: typeof ProfileModel;
 }
 
-const buttonLabels: string[] = ['Off', 'Sms', 'App'];
-const buttonMap: MFAChoice[] = ['NOMFA', 'SMS', 'TOTP'];
+const buttonLabels: string[] = ['Off', 'App']; // 'Sms'
+const buttonMap: MFAChoice[] = ['NOMFA', 'TOTP']; // 'SMS'
 
 class MfaSelectScreen extends React.Component<Props, State> {
   public readonly state = {

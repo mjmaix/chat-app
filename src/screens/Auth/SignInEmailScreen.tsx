@@ -78,23 +78,28 @@ class SignInEmailScreen extends Component<Props> {
     form: T,
     actions: FormikActions<T>,
   ) => {
-    let transferScreen: ScreenName = 'App';
+    let transferScreen: ScreenName | null = 'App';
     let user;
     try {
       Busy.start();
       user = await handleSignIn(form);
       if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
         transferScreen = 'CompleteRegistration';
+      } else if (user.challengeName === 'SOFTWARE_TOKEN_MFA') {
+        transferScreen = 'SignInCode';
       }
     } catch (err) {
+      transferScreen = null;
       actions.setFieldError('form', err.message);
       alertFail(() => null, err);
     } finally {
       actions.setSubmitting(false);
       Busy.stop();
-      NavigationService.navigate(transferScreen, {
-        unAuthUser: user,
-      });
+      if (transferScreen) {
+        NavigationService.navigate(transferScreen, {
+          unAuthUser: user,
+        });
+      }
     }
   };
 }
