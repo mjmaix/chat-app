@@ -1,16 +1,26 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet } from 'react-native';
 import { Button, Icon, IconProps } from 'react-native-elements';
 
 import { StyleGuide } from '../../core';
-import { DevBorders, NavigationService } from '../../utils';
+import { NavigationService, alertClose } from '../../utils';
 
 interface FixedBackHeaderProps {
   iconProps?: IconProps;
+  confirm?: boolean;
 }
 
-export const FixedBackHeader = ({ iconProps }: FixedBackHeaderProps) => {
-  const onPress = () => NavigationService.goBack();
+export const FixedBackHeader = ({
+  iconProps,
+  confirm,
+}: FixedBackHeaderProps) => {
+  const onPress = () => {
+    if (!confirm) {
+      NavigationService.goBack();
+    } else {
+      alertClose(NavigationService.goBack);
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <Button
