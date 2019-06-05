@@ -75,3 +75,7 @@ export const PasswordChangeSchema = Yup.object().shape({
   passwordOld: passwordRule.label('Old password').required(),
   password: passwordRule.label('New password').required(),
 });
+
+export const MfaSchema = Yup.object().shape({
+  code: codeRule.required(),
+});

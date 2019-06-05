@@ -10,8 +10,12 @@ export * from './Auth/CompleteRegistrationScreen';
 
 export * from './Account/PasswordChangeScreen';
 export * from './Account/ProfileScreen';
-export * from './Account/SettingsScreen';
+export * from './Account/SelectThemeScreen';
 export * from './Account/VerifyEmailScreen';
+export * from './Account/SettingsScreen';
+export * from './Account/MfaSelectScreen';
+export * from './Account/MfaSmsScreen';
+export * from './Account/MfaTotpScreen';
 
 export * from './Social/ChatScreen';
 export * from './Social/ContactsScreen';

@@ -9,11 +9,15 @@ import {
   CompleteRegistrationScreen,
   ContactsScreen,
   MessagesScreen,
+  MfaSelectScreen,
+  MfaSmsScreen,
+  MfaTotpScreen,
   PasswordChangeScreen,
   PasswordForgotScreen,
   PasswordResetScreen,
   ProfileScreen,
   ResendSignUpScreen,
+  SelectThemeScreen,
   SettingsScreen,
   SignInChoicesScreen,
   SignInEmailScreen,
@@ -25,6 +29,11 @@ import {
 export type ScreenName =
   | 'Profile'
   | 'Settings'
+  | 'SelectTheme'
+  | 'SelectMfa'
+  | 'Mfa'
+  | 'MfaTotp'
+  | 'MfaSms'
   | 'Messages'
   | 'Chat'
   | 'Contacts'
@@ -44,17 +53,18 @@ export type ScreenName =
   | 'App'
   | 'Auth'
   | 'MessageStack'
-  | 'MoreStack';
+  | 'MoreStack'
+  | 'MfaStack';
 
 interface Mapping {
   icon: IconObject;
   screen: React.ReactNode;
 }
 
-type RequiredMapping = Exclude<ScreenName, NonScreen>;
-
 type Mappings = { [key in RequiredMapping]: Mapping };
-type NonScreen = 'AuthLoading' | 'App' | 'Auth';
+type NoIconNonScreen = 'AuthLoading' | 'App' | 'Auth' | 'MfaStack' | 'Mfa';
+
+export type RequiredMapping = Exclude<ScreenName, NoIconNonScreen>;
 
 export type StackRouteConfigMap = {
   [key in ScreenName]?: NavigationRouteConfig
@@ -68,6 +78,22 @@ export const Mappings: Mappings = {
   Settings: {
     screen: SettingsScreen,
     icon: { type: 'antdesign', name: 'setting' },
+  },
+  SelectTheme: {
+    screen: SelectThemeScreen,
+    icon: { type: 'antdesign', name: 'bulb1' },
+  },
+  SelectMfa: {
+    screen: MfaSelectScreen,
+    icon: { type: 'entypo', name: 'lock' },
+  },
+  MfaTotp: {
+    screen: MfaTotpScreen,
+    icon: { type: 'entypo', name: 'lock' },
+  },
+  MfaSms: {
+    screen: MfaSmsScreen,
+    icon: { type: 'entypo', name: 'lock' },
   },
   Messages: {
     screen: MessagesScreen,
@@ -125,7 +151,7 @@ export const Mappings: Mappings = {
     screen: BusyOverlayScreen,
     icon: { name: '', type: 'feather' },
   },
-  // NOTE: Keep stacks at the bottom
+  // NOTE: Keep for tabbar icons
   MessageStack: {
     screen: null,
     icon: { name: 'chat-bubble-outline', type: 'material' },

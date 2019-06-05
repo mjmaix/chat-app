@@ -10,6 +10,10 @@ export const formStyles = StyleSheet.create({
   formItem: {
     paddingBottom: StyleGuide.gap.regular,
   },
+  formItemImage: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
 export const containerStyles = StyleSheet.create({

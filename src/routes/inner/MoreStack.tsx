@@ -32,6 +32,12 @@ const routeConfigMap: StackRouteConfigMap = {
       title: 'Settings',
     }),
   },
+  SelectTheme: {
+    screen: Mappings.SelectTheme.screen,
+    navigationOptions: () => ({
+      title: 'Select theme',
+    }),
+  },
   Change: {
     screen: Mappings.Change.screen,
     navigationOptions: () => ({
@@ -44,7 +50,14 @@ const routeConfigMap: StackRouteConfigMap = {
       title: 'Verify email',
     }),
   },
+  SelectMfa: {
+    screen: Mappings.SelectMfa.screen,
+    navigationOptions: () => ({
+      title: 'Configure MFA',
+    }),
+  },
 };
+
 const MoreStack = createStackNavigator(routeConfigMap, {
   defaultNavigationOptions: ({
     screenProps,

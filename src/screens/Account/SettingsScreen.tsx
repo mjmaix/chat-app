@@ -1,67 +1,47 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
-import { FlatList, ListRenderItemInfo, StyleSheet } from 'react-native';
-import { ThemeProps, withTheme as rneWithTheme } from 'react-native-elements';
-import { NavigationScreenProps } from 'react-navigation';
+import { ListRenderItem } from 'react-native';
+import { ListItem } from 'react-native-elements';
+import { FlatList, NavigationScreenProps } from 'react-navigation';
 
-import { ThemeListItem } from '../../components';
-import { STORAGE_KEY, Theme, ThemeHelper, themes } from '../../core';
-import { StyledBoldText, StyledScreenContainer } from '../../styled';
+import { NavigationService } from '../../utils';
 
-const saveThemeId = (item: Theme) => {
-  ThemeHelper.set(item.id);
-  void AsyncStorage.setItem(STORAGE_KEY, item.id);
-};
+type Props = NavigationScreenProps;
+interface State {
+  mfa: MFAChoice;
+  enableMfa: boolean;
+}
 
-const SettingsScreen = (props: ThemeProps<Theme> & NavigationScreenProps) => {
-  const ListHeaderComp = (
-    <StyledBoldText
-      style={styles.headline}
-    >{`Choose your theme:`}</StyledBoldText>
+class SettingsScreen extends React.Component<Props, State> {
+  public readonly state = { mfa: 'NOMFA' as MFAChoice, enableMfa: false };
+
+  public renderItem: ListRenderItem<any> = ({ item, index }) => (
+    <ListItem key={index} {...item} />
   );
 
-  const renderItem = (data: ListRenderItemInfo<Theme>) => {
+  public render() {
+    const { mfa, enableMfa } = this.state;
+    const list = [
+      {
+        title: 'Choose your theme',
+        onPress: () => NavigationService.navigate('SelectTheme'),
+        chevron: true,
+        bottomDivider: true,
+      },
+      {
+        title: 'Multi-factor authentication (MFA)',
+        onPress: () => NavigationService.navigate('SelectMfa'),
+        chevron: true,
+        bottomDivider: true,
+      },
+    ];
     return (
-      <ThemeListItem
-        item={data.item}
-        onPress={e => {
-          props.updateTheme(data.item);
-          saveThemeId(data.item);
-        }}
+      <FlatList<any>
+        keyExtractor={(item, i: number) => i.toString()}
+        data={list}
+        renderItem={this.renderItem}
       />
     );
-  };
+  }
+}
 
-  return (
-    <StyledScreenContainer>
-      <FlatList<Theme>
-        keyExtractor={d => `${d.id}`}
-        style={styles.flatListContainer}
-        ListHeaderComponent={ListHeaderComp}
-        data={themes}
-        renderItem={renderItem}
-      />
-    </StyledScreenContainer>
-  );
-};
-
-SettingsScreen.navigationOptions = {
-  drawerLabel: 'Settings',
-};
-
-const styles = StyleSheet.create({
-  flatListContainer: {
-    flex: 1,
-    width: '100%',
-  },
-  headline: {
-    marginTop: 60,
-    marginBottom: 20,
-    marginLeft: 20,
-    fontWeight: '200',
-    fontSize: 24,
-  },
-});
-
-const ThemedSettingsScreen = rneWithTheme(SettingsScreen);
-export { ThemedSettingsScreen as SettingsScreen };
+export { SettingsScreen };

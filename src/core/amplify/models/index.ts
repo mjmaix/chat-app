@@ -14,19 +14,23 @@ export const EmailModel: FormModel = {
   email: '',
 };
 
-export const ChallengeModel: FormModel = {
-  email: '',
+export const CodeRequiredModel: FormModel = {
   code: '',
 };
 
-export const PasswordResetModel: FormModel = {
-  email: '',
-  password: '',
-  code: '',
+export const ChallengeModel: FormModel = {
+  ...CodeRequiredModel,
+  ...EmailModel,
 };
 
 export const PasswordRequiredModel: FormModel = {
   password: '',
+};
+
+export const PasswordResetModel: FormModel = {
+  ...PasswordRequiredModel,
+  ...CodeRequiredModel,
+  ...EmailModel,
 };
 
 export const PasswordChangeModel: FormModel = {

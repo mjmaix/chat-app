@@ -9,14 +9,14 @@ import {
 
 import { Transitions } from '../components/Navigation/Transitions';
 import { AuthLoadingScreen } from '../screens';
+import AppStack from './inner/AppStack';
 import AuthStack from './inner/AuthStack';
-import TabBarStack from './inner/TabBarStack';
 import { Mappings } from './mappings';
 
 const SwitchNav = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
-    App: TabBarStack,
+    App: AppStack,
     Auth: AuthStack,
   },
   {
