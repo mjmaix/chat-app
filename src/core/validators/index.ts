@@ -61,6 +61,12 @@ export const ChallengeSchema = Yup.object().shape({
   code: codeRule.required('Required'),
 });
 
+export const VerifyContactSchema = Yup.object().shape({
+  email: emailRule.notRequired(),
+  phone_number: phoneNumberRule.notRequired(),
+  code: codeRule.required('Required'),
+});
+
 export const EmailOnlySchema = Yup.object().shape({
   email: emailRule.required(),
 });
@@ -76,6 +82,6 @@ export const PasswordChangeSchema = Yup.object().shape({
   password: passwordRule.label('New password').required(),
 });
 
-export const MfaSchema = Yup.object().shape({
+export const CodeSchema = Yup.object().shape({
   code: codeRule.required(),
 });
