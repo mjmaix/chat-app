@@ -37,9 +37,10 @@ declare global {
     website?: string;
   }
 
+  type ChallengeMfa = 'SOFTWARE_TOKEN_MFA' | 'SMS_MFA';
+
   type ChallengeName =
-    | 'SOFTWARE_TOKEN_MFA'
-    | 'SMS_MFA'
+    | ChallengeMfa
     | 'CUSTOM_CHALLENGE'
     | 'NEW_PASSWORD_REQUIRED'
     | 'MFA_SETUP';
@@ -57,6 +58,7 @@ declare global {
   interface ChallengeParam {
     requiredAttributes: ChatCognitoRequiredAttributes[];
     userAttributes: ChatChallengeUserAttributes;
+    FRIENDLY_DEVICE_NAME?: string;
   }
 
   interface ChatCognitoUser extends CognitoUser {
