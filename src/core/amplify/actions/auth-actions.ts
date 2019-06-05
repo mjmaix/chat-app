@@ -1,5 +1,8 @@
 import { CognitoUser } from '@aws-amplify/auth';
-import { CurrentUserOpts } from '@aws-amplify/auth/lib/types';
+import {
+  CurrentUserOpts,
+  GetPreferredMFAOpts,
+} from '@aws-amplify/auth/lib/types';
 import { Auth } from 'aws-amplify';
 import _ from 'lodash';
 
@@ -30,7 +33,7 @@ const getUserAttrs = (
   } as typeof ProfileModel;
 };
 
-export const handleGetCurrentUserAttrs = async (opts: CurrentUserOpts) => {
+export const handleGetCurrentUserAttrs = async (opts?: CurrentUserOpts) => {
   const currentUser = await Auth.currentUserPoolUser(opts).catch(
     WrapKnownExceptions,
   );
@@ -145,4 +148,23 @@ export const handleCompleteNewPassword = async (
     data.password,
     valueForReqdAttrs,
   ).catch(WrapKnownExceptions);
+};
+
+export const handleSetupMfaTotp = async () => {
+  const user = await Auth.currentUserPoolUser().catch(WrapKnownExceptions);
+  return Auth.setupTOTP(user).catch(WrapKnownExceptions);
+};
+
+export const handleSetMfa = async (mfa: MFAChoice) => {
+  const user = await Auth.currentUserPoolUser().catch(WrapKnownExceptions);
+  return Auth.setPreferredMFA(user, mfa).catch(WrapKnownExceptions);
+};
+
+export const handleGetPreferredMfa: (
+  opts?: GetPreferredMFAOpts,
+) => Promise<MFAChoice> = async opts => {
+  const user = await Auth.currentUserPoolUser().catch(WrapKnownExceptions);
+  return Auth.getPreferredMFA(user, opts).catch(WrapKnownExceptions) as Promise<
+    MFAChoice
+  >;
 };
