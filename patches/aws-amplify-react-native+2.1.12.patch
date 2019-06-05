@@ -1,0 +1,79 @@
+diff --git a/node_modules/aws-amplify-react-native/dist/Storage/S3Image.js b/node_modules/aws-amplify-react-native/dist/Storage/S3Image.js
+index 1cd33bd..d72f78d 100644
+--- a/node_modules/aws-amplify-react-native/dist/Storage/S3Image.js
++++ b/node_modules/aws-amplify-react-native/dist/Storage/S3Image.js
+@@ -14,6 +14,7 @@
+ import React, { Component } from 'react';
+ import { Image, StyleSheet } from 'react-native';
+ import { Storage, Logger } from 'aws-amplify';
++
+ import AmplifyTheme from '../AmplifyTheme';
+ 
+ const logger = new Logger('Storage.S3Image');
+@@ -22,16 +23,23 @@ export default class S3Image extends Component {
+     constructor(props) {
+         super(props);
+ 
++        this.mounted = true;
+         this.state = { src: null };
+     }
+ 
++    componentWillUnmount() {
++        this.mounted = false;
++    }
++
+     getImageSource() {
+         const { imgKey, level } = this.props;
+         Storage.get(imgKey, { level: level ? level : 'public' }).then(url => {
+             logger.debug(url);
+-            this.setState({
+-                src: { uri: url }
+-            });
++            if (this.mounted) {
++                this.setState({
++                    src: { uri: url }
++                });
++            }
+         }).catch(err => logger.warn(err));
+     }
+ 
+diff --git a/node_modules/aws-amplify-react-native/src/Storage/S3Image.js b/node_modules/aws-amplify-react-native/src/Storage/S3Image.js
+index bb5240e..791570c 100644
+--- a/node_modules/aws-amplify-react-native/src/Storage/S3Image.js
++++ b/node_modules/aws-amplify-react-native/src/Storage/S3Image.js
+@@ -20,6 +20,7 @@ import {
+     Storage,
+     Logger
+ } from 'aws-amplify';
++
+ import AmplifyTheme from '../AmplifyTheme';
+ 
+ const logger = new Logger('Storage.S3Image');
+@@ -28,17 +29,24 @@ export default class S3Image extends Component {
+     constructor(props) {
+         super(props);
+ 
++        this.mounted = true;
+         this.state = { src: null };
+     }
+     
++    componentWillUnmount() {
++        this.mounted = false;
++    }
++
+     getImageSource() {
+         const { imgKey, level } = this.props;
+         Storage.get(imgKey, { level : level? level : 'public'})
+             .then(url => {
+                 logger.debug(url);
+-                this.setState({
+-                    src: { uri: url }
+-                });
++                if (this.mounted) {
++                    this.setState({
++                        src: { uri: url }
++                    });
++                }
+             })
+             .catch(err => logger.warn(err));
+     }
