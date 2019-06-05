@@ -23,8 +23,8 @@ export const alertClose = (cb: () => void, opts: AlertOptions = {}) => {
   );
 };
 
-export const alertOk = (cb: () => void) => {
-  Alert.alert('Success', undefined, [
+export const alertOk = (cb: () => void, opts: AlertOptions = {}) => {
+  Alert.alert('Success', opts.message, [
     {
       text: 'OK',
       onPress: cb,

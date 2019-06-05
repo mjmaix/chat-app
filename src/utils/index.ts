@@ -9,3 +9,4 @@ export * from './isErrorMatch';
 export * from './getExt';
 export * from './packageUtil';
 export * from './mfa';
+export * from './networkUtil';
