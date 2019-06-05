@@ -33,13 +33,15 @@
     "email",
     "family_name",
     "given_name",
-    "phone_number"
+    "phone_number",
+    "picture"
   ],
   "userpoolClientReadAttributes": [
     "email",
     "family_name",
     "given_name",
-    "phone_number"
+    "phone_number",
+    "picture"
   ],
   "mfaLambdaRole": "chatlo0994aaff_totp_lambda_role",
   "mfaLambdaLogPolicy": "chatlo0994aaff_totp_lambda_log_policy",
