@@ -16,7 +16,7 @@ interface State {
 }
 
 const buttonLabels: string[] = ['Off', 'App']; // 'Sms'
-const buttonMap: MFAChoice[] = ['NOMFA', 'TOTP']; // 'SMS'
+const buttonMap: MFAChoice[] = ['NOMFA', 'SOFTWARE_TOKEN_MFA']; // 'SMS'
 
 class MfaSelectScreen extends React.Component<Props, State> {
   public readonly state = {
@@ -38,12 +38,13 @@ class MfaSelectScreen extends React.Component<Props, State> {
 
   private onSelectIndex = async (selectedIndex: number) => {
     try {
-      if (buttonMap[selectedIndex] === 'TOTP') {
+      if (buttonMap[selectedIndex] === 'SOFTWARE_TOKEN_MFA') {
         NavigationService.navigate('MfaTotp');
       } else if (buttonMap[selectedIndex] === 'SMS') {
         NavigationService.navigate('MfaSms');
       } else {
-        const data = await handleSetMfa(buttonMap[selectedIndex]);
+        const data = await handleSetMfa('NOMFA');
+        this.setState({ preferredMfa: 'NOMFA' });
       }
     } catch (err) {
       alertFail(() => null, err);

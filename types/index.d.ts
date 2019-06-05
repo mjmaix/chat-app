@@ -70,7 +70,7 @@ declare global {
     key: string;
   }
 
-  type MFAChoice = 'TOTP' | 'SMS' | 'NOMFA';
+  type MFAChoice = 'SOFTWARE_TOKEN_MFA' | 'SMS' | 'NOMFA';
 
   /**
    * AWS Storage
