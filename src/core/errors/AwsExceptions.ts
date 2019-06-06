@@ -83,7 +83,15 @@ const EnableSoftwareTokenMFAException: AwsException = {
   safeMessage: 'Code mismatch and fail enable Software Token MFA',
 };
 
+const UsernameExistsException: AwsException = {
+  code: 'UsernameExistsException',
+  name: 'Username Exists Exception',
+  safeMessage: 'An account with the given email already exists.',
+  knownMessages: ['An account with the given email already exists.'],
+};
+
 export const AwsExceptions: { [k: string]: AwsException } = {
+  UsernameExistsException,
   EnableSoftwareTokenMFAException,
   ExpiredCodeException,
   NetworkingError,
