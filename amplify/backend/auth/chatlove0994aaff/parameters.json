@@ -38,9 +38,11 @@
   ],
   "userpoolClientReadAttributes": [
     "email",
+    "email_verified",
     "family_name",
     "given_name",
     "phone_number",
+    "phone_number_verified",
     "picture"
   ],
   "mfaLambdaRole": "chatlo0994aaff_totp_lambda_role",
