@@ -3,22 +3,32 @@ import { SafeAreaView, StyleSheet } from 'react-native';
 import { Button, Icon, IconProps } from 'react-native-elements';
 
 import { StyleGuide } from '../../core';
+import { ScreenName } from '../../routes/mappings';
 import { NavigationService, alertClose } from '../../utils';
 
 interface FixedBackHeaderProps {
   iconProps?: IconProps;
   confirm?: boolean;
+  backTo?: ScreenName;
 }
 
 export const FixedBackHeader = ({
   iconProps,
   confirm,
+  backTo,
 }: FixedBackHeaderProps) => {
+  const backAction = () => {
+    if (backTo) {
+      NavigationService.navigate(backTo);
+    } else {
+      NavigationService.goBack();
+    }
+  };
   const onPress = () => {
     if (!confirm) {
-      NavigationService.goBack();
+      backAction();
     } else {
-      alertClose(NavigationService.goBack);
+      alertClose(() => backAction());
     }
   };
   return (
