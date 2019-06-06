@@ -35,8 +35,11 @@ const InvalidParameterException: AwsException = {
   mappedSafeMessages: {
     'Cannot reset password for the user as there is no registered/verified email or phone_number': true,
     'Attribute value for picture must not be null': true,
+    'Username cannot be of email format, since user pool is configured for email alias.':
+      'Invalid username format.',
   },
   knownMessages: [
+    'Username cannot be of email format, since user pool is configured for email alias.',
     'Attribute value for picture must not be null',
     'Cannot reset password for the user as there is no registered/verified email or phone_number',
     'Invalid attributes given, given_name is missing',

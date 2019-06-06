@@ -35,7 +35,11 @@ class SignInPhoneNumberScreen extends Component<Props> {
               <StyledFormContainer>
                 <StyledFormRow>
                   <FormikInputInjector dataKey="phoneNumber" formProps={fProps}>
-                    <StyledTextInput placeholder={'Mobile number'} />
+                    <StyledTextInput
+                      placeholder={'Mobile number'}
+                      textContentType="telephoneNumber"
+                      keyboardType="phone-pad"
+                    />
                   </FormikInputInjector>
                 </StyledFormRow>
 
