@@ -19,6 +19,7 @@ const routeConfigMap: StackRouteConfigMap = {
         <FixedBackHeader
           confirm
           iconProps={{ name: 'close', type: 'antdesign' }}
+          backTo="Settings"
         />
       ),
     }),
@@ -31,6 +32,7 @@ const routeConfigMap: StackRouteConfigMap = {
         <FixedBackHeader
           confirm
           iconProps={{ name: 'close', type: 'antdesign' }}
+          backTo="Settings"
         />
       ),
     }),
