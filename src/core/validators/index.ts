@@ -26,8 +26,8 @@ export const pictureRule = Yup.string()
 
 export const codeRule = Yup.string()
   .matches(
-    /^[0-9]{6,}$/,
-    'Ensure that code is 6 or more characters long and only consists of numbers.',
+    /^[0-9]{6,6}$/,
+    'Ensure that code is 6 characters long and only consists of numbers.',
   )
   .label('Code');
 
@@ -56,9 +56,14 @@ export const UpdateProfileSchema = Yup.object().shape({
   picture: pictureRule.notRequired(),
 });
 
-export const SignInSchema = Yup.object().shape({
+export const SignInEmailSchema = Yup.object().shape({
   password: Yup.string().required(),
   email: emailRule.required(),
+});
+
+export const SignInMobileSchema = Yup.object().shape({
+  password: Yup.string().required(),
+  phoneNumber: phoneNumberRule.required(),
 });
 
 export const ChallengeSchema = Yup.object().shape({
