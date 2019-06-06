@@ -54,12 +54,14 @@ class SignInChoicesScreen extends Component<Props> {
                 />
               </StyledFormRow>
 
-              <StyledFormRow>
-                <StyledButton
-                  onPress={this.onPressSignInWithPhoneNumber}
-                  label={'Sign in with Mobile'}
-                />
-              </StyledFormRow>
+              {false && (
+                <StyledFormRow>
+                  <StyledButton
+                    onPress={this.onPressSignInWithPhoneNumber}
+                    label={'Sign in with Mobile'}
+                  />
+                </StyledFormRow>
+              )}
 
               <StyledFormRow>
                 <StyledButton

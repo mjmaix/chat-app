@@ -129,20 +129,6 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
             type="clear"
           />
         )}
-        {showVerifyEmail && (
-          <StyledButton
-            label="Resend email code"
-            onPress={() => this.handlePressVerifyContactResend('email')}
-            type="clear"
-          />
-        )}
-        {showVerifyPhone && (
-          <StyledButton
-            label="Resend phone code"
-            onPress={() => this.handlePressVerifyContactResend('phone_number')}
-            type="clear"
-          />
-        )}
         <StyledButton
           label="Sign out"
           onPress={this.handleSignOutAsync}

@@ -48,7 +48,6 @@ const InvalidParameterException: AwsException = {
   ],
 };
 
-// Forgot password
 const UserNotFoundException: AwsException = {
   code: 'UserNotFoundException',
   name: 'User Not Found Exception',

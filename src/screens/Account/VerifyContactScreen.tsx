@@ -9,6 +9,7 @@ import {
   VerifyContactModel,
   VerifyContactSchema,
   handleVerifyContact,
+  handleVerifyContactResend,
 } from '../../core';
 import { FormikInputInjector } from '../../hocs';
 import { MemoFormikFormErrorText } from '../../hocs/MemoFormikFormErrorText';
@@ -19,7 +20,7 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
-import { NavigationService, alertFail, alertOk } from '../../utils';
+import { Busy, NavigationService, alertFail, alertOk } from '../../utils';
 
 interface VerifyContactScreenProps extends NavigationScreenProps {}
 type FormModel = typeof ChallengeModel;
@@ -39,6 +40,18 @@ const onSubmit = async (
   }
 };
 
+const handlePressVerifyContactResend = async (contact: Contact) => {
+  try {
+    Busy.start();
+    await handleVerifyContactResend(contact);
+    alertOk(() => null);
+  } catch (err) {
+    alertFail(() => null, err);
+  } finally {
+    Busy.stop();
+  }
+};
+
 export const VerifyContactScreen = (props: VerifyContactScreenProps) => {
   const [contact, setContact] = useState<Contact>('email');
   const [contactValue, setContactValue] = useState<string>('');
@@ -52,6 +65,9 @@ export const VerifyContactScreen = (props: VerifyContactScreenProps) => {
   if (!contactValue && !contact) {
     return null;
   }
+
+  const showVerifyEmail = contact === 'email';
+  const showVerifyPhone = contact === 'phone_number';
 
   return (
     <StyledScreenContainer>
@@ -100,6 +116,21 @@ export const VerifyContactScreen = (props: VerifyContactScreenProps) => {
               <StyledFormRow>
                 <StyledButton onPress={fProps.handleSubmit} label={'Submit'} />
               </StyledFormRow>
+
+              {showVerifyEmail && (
+                <StyledButton
+                  label="Resend email code"
+                  onPress={() => handlePressVerifyContactResend('email')}
+                  type="clear"
+                />
+              )}
+              {showVerifyPhone && (
+                <StyledButton
+                  label="Resend phone code"
+                  onPress={() => handlePressVerifyContactResend('phone_number')}
+                  type="clear"
+                />
+              )}
             </StyledFormContainer>
           );
         }}
