@@ -3,6 +3,7 @@ export interface AwsException {
   name: string;
   message?: string;
   safeMessage: string;
+  mappedSafeMessages?: { [key: string]: boolean | string };
   region?: string;
   hostname?: string;
   retryable?: boolean;
@@ -31,7 +32,11 @@ const InvalidParameterException: AwsException = {
   name: 'Invalid Parameter Exception',
   safeMessage:
     'Use 8 or more characters with a mix of letters, numbers & symbols.',
+  mappedSafeMessages: {
+    'Cannot reset password for the user as there is no registered/verified email or phone_number': true,
+  },
   knownMessages: [
+    'Cannot reset password for the user as there is no registered/verified email or phone_number',
     'Invalid attributes given, given_name is missing',
     'User has not set up software token mfa',
     "2 validation errors detected: Value 'Aaaa' at 'userCode' failed to satisfy constraint: Member must satisfy regular expression pattern: [0-9]+; Value 'Aaaa' at 'userCode' failed to satisfy constraint: Member must have length greater than or equal to 6",

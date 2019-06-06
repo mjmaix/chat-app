@@ -1,15 +1,32 @@
-import { alertFail } from '../../utils';
+import _ from 'lodash';
+
 import { logError, logInfo } from '../reports';
 import { AwsException, AwsExceptions } from './AwsExceptions';
 
 /* tslint:disable:max-classes-per-file */
 
+const pickSafeMessage = (listedException: AwsException, rawMessage: string) => {
+  let pickedMessage = listedException.safeMessage;
+
+  // NOTE: specific message?
+  const mappedMsgs = listedException.mappedSafeMessages;
+  if (mappedMsgs && mappedMsgs[rawMessage]) {
+    if (_.isBoolean(mappedMsgs[rawMessage])) {
+      pickedMessage = rawMessage; // NOTE: key is allowed if boolean
+    } else {
+      pickedMessage = mappedMsgs[rawMessage] as string; // NOTE: otherwise get the value as message
+    }
+  }
+
+  return pickedMessage;
+};
+
 export class SafeException extends Error {
   public code?: string;
   public constructor(error: AwsException) {
     super();
-    this.message = error.safeMessage;
     this.code = error.code;
+    this.message = pickSafeMessage(AwsExceptions[this.code], error.safeMessage);
   }
 }
 export class UncaughtException extends Error {}

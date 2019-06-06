@@ -1,5 +1,6 @@
-import { Formik, FormikActions } from 'formik';
+import { Formik, FormikActions, FormikProps } from 'formik';
 import React, { Component } from 'react';
+import { TextInput, TextInputProps } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 
 import { CodeInput, EmailInput, Header, PasswordInput } from '../../components';
@@ -19,34 +20,68 @@ import {
 } from '../../styled';
 import { Busy, NavigationService, alertFail, alertOk } from '../../utils';
 
-type Props = NavigationScreenProps;
 type FormModel = typeof PasswordResetModel;
+type Props = NavigationScreenProps;
+interface State {
+  form: FormModel;
+  disableEmailField: boolean;
+}
 
-const initialValues = {
-  email: '',
-  password: '',
-  code: '',
-};
+class PasswordResetScreen extends Component<Props, State> {
+  public readonly state: State = {
+    form: PasswordResetModel,
+    disableEmailField: false,
+  };
 
-class PasswordResetScreen extends Component<Props> {
-  public render() {
+  public componentDidMount() {
     const { navigation } = this.props;
+    const email = navigation.getParam('email');
+    if (!!email) {
+      this.setState(prev => ({
+        disableEmailField: true,
+        form: { ...prev.form, email },
+      }));
+    }
+  }
+
+  private renderEmail = (fProps: FormikProps<FormModel>) => {
+    const { disableEmailField } = this.state;
+
+    if (!disableEmailField) {
+      return (
+        <FormikInputInjector dataKey="email" formProps={fProps}>
+          {<StyledTextInput as={EmailInput} />}
+        </FormikInputInjector>
+      );
+    }
+    return (
+      <StyledTextInput
+        inputComponent={
+          // NOTE: avoid nasty forwardReft runtime exception, use class
+          // tslint:disable-next-line max-classes-per-file
+          class extends React.Component<TextInputProps> {
+            public render() {
+              return <TextInput {...this.props} editable={false} />;
+            }
+          }
+        }
+      />
+    );
+  };
+
+  public render() {
     return (
       <StyledScreenContainer>
         <Header title={'Change password'} message="Type in the reset code" />
         <Formik<FormModel>
-          initialValues={initialValues}
+          initialValues={this.state.form}
           validationSchema={PasswordResetSchema}
           onSubmit={this.onPressReset}
         >
           {fProps => {
             return (
               <StyledFormContainer>
-                <StyledFormRow>
-                  <FormikInputInjector dataKey="email" formProps={fProps}>
-                    <StyledTextInput as={EmailInput} />
-                  </FormikInputInjector>
-                </StyledFormRow>
+                <StyledFormRow>{this.renderEmail(fProps)}</StyledFormRow>
 
                 <StyledFormRow>
                   <FormikInputInjector dataKey="code" formProps={fProps}>
@@ -57,6 +92,7 @@ class PasswordResetScreen extends Component<Props> {
                 <StyledFormRow>
                   <FormikInputInjector dataKey="password" formProps={fProps}>
                     <StyledTextInput
+                      placeholder={'New password'}
                       as={PasswordInput}
                       onSubmitEditing={fProps.handleSubmit}
                     />
