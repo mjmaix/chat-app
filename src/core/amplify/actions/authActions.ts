@@ -196,7 +196,7 @@ export const handleVerifyMfaSms = async (data: typeof CodeRequiredModel) => {
   return handleSetMfa('SMS');
 };
 
-export const handleSetMfa = async (mfa: SetPreferredMfa) => {
+export const handleSetMfa = async (mfa: MfaOption) => {
   const user = await Auth.currentUserPoolUser().catch(WrapKnownExceptions);
   return Auth.setPreferredMFA(user, mfa).catch(WrapKnownExceptions);
 };
