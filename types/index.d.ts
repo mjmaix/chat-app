@@ -37,6 +37,8 @@ declare global {
     website?: string;
   }
 
+  type SetPreferredMfa = 'TOTP' | 'SMS' | 'NOMFA';
+
   type ChallengeMfa = 'SOFTWARE_TOKEN_MFA' | 'SMS_MFA';
 
   type ChallengeName =

@@ -24,7 +24,12 @@ export const pictureRule = Yup.string()
   .label('Profile picture')
   .ensure();
 
-export const codeRule = Yup.string().label('Code');
+export const codeRule = Yup.string()
+  .matches(
+    /^[0-9]{6,}$/,
+    'Ensure that code is 6 or more characters long and only consists of numbers.',
+  )
+  .label('Code');
 
 export const SignUpSchema = Yup.object().shape({
   password: passwordRule.required(),

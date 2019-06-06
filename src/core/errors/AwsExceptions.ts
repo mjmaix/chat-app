@@ -34,6 +34,7 @@ const InvalidParameterException: AwsException = {
   knownMessages: [
     'Invalid attributes given, given_name is missing',
     'User has not set up software token mfa',
+    "2 validation errors detected: Value 'Aaaa' at 'userCode' failed to satisfy constraint: Member must satisfy regular expression pattern: [0-9]+; Value 'Aaaa' at 'userCode' failed to satisfy constraint: Member must have length greater than or equal to 6",
   ],
 };
 
@@ -72,10 +73,18 @@ const ExpiredCodeException: AwsException = {
   code: 'ExpiredCodeException',
   safeMessage: 'Invalid code provided, please request a code again.',
   knownMessages: ['Invalid code provided, please request a code again.'],
-  name: 'ExpiredCodeException',
+  name: 'Expired Code Exception',
+};
+
+const EnableSoftwareTokenMFAException: AwsException = {
+  code: 'EnableSoftwareTokenMFAException',
+  knownMessages: ['Code mismatch and fail enable Software Token MFA'],
+  name: 'Enable Software Token MFA Exception',
+  safeMessage: 'Code mismatch and fail enable Software Token MFA',
 };
 
 export const AwsExceptions: { [k: string]: AwsException } = {
+  EnableSoftwareTokenMFAException,
   ExpiredCodeException,
   NetworkingError,
   NetworkError,

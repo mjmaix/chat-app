@@ -1,7 +1,9 @@
-import { Alert, AlertIOS, AlertStatic, Platform } from 'react-native';
+import { Alert } from 'react-native';
 
 interface AlertOptions {
+  title?: string;
   message?: string;
+  cancelable?: boolean;
 }
 
 export const alertClose = (cb: () => void, opts: AlertOptions = {}) => {
@@ -19,17 +21,40 @@ export const alertClose = (cb: () => void, opts: AlertOptions = {}) => {
         style: 'cancel',
       },
     ],
-    { cancelable: false },
+    { cancelable: opts.cancelable },
+  );
+};
+
+export const alertConfirm = (cb: () => void, opts: AlertOptions = {}) => {
+  Alert.alert(
+    opts.title || 'Are you sure?',
+    opts.message,
+    [
+      {
+        text: 'Yes',
+        onPress: cb,
+      },
+      {
+        text: 'No',
+        style: 'cancel',
+      },
+    ],
+    { cancelable: opts.cancelable },
   );
 };
 
 export const alertOk = (cb: () => void, opts: AlertOptions = {}) => {
-  Alert.alert('Success', opts.message, [
-    {
-      text: 'OK',
-      onPress: cb,
-    },
-  ]);
+  Alert.alert(
+    opts.title || 'Success',
+    opts.message,
+    [
+      {
+        text: 'OK',
+        onPress: cb,
+      },
+    ],
+    { cancelable: opts.cancelable },
+  );
 };
 
 export const alertFail = (cb: () => void, err: Error | any) => {
