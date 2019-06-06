@@ -11,7 +11,6 @@ import {
   handleGetCurrentUserAttrs,
   handleSignOut,
   handleUpdateProfile,
-  handleVerifyContact,
   handleVerifyContactResend,
   logInfo,
 } from '../../core';
@@ -21,9 +20,9 @@ import {
   FormikInputInjector,
   withFormikMemoize,
 } from '../../hocs';
+import { MemoFormikFormErrorText } from '../../hocs/MemoFormikFormErrorText';
 import {
   StyledButton,
-  StyledErrorText,
   StyledFormContainer,
   StyledFormRow,
   StyledScreenContainer,
@@ -190,7 +189,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
               </StyledFormRow>
 
               <StyledFormRow>
-                <StyledErrorText message={fProps.errors.form} />
+                <MemoFormikFormErrorText {...fProps} />
               </StyledFormRow>
 
               <StyledFormRow>

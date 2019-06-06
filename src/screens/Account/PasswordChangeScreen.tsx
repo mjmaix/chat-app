@@ -10,9 +10,9 @@ import {
 } from '../../core';
 import { SafeException } from '../../core/errors';
 import { FormikInputInjector } from '../../hocs';
+import { MemoFormikFormErrorText } from '../../hocs/MemoFormikFormErrorText';
 import {
   StyledButton,
-  StyledErrorText,
   StyledFormContainer,
   StyledFormRow,
   StyledScreenContainer,
@@ -54,7 +54,7 @@ class PasswordChangeScreen extends Component<Props> {
                 </StyledFormRow>
 
                 <StyledFormRow>
-                  <StyledErrorText message={fProps.errors.form} />
+                  <MemoFormikFormErrorText {...fProps} />
                 </StyledFormRow>
 
                 <StyledFormRow>

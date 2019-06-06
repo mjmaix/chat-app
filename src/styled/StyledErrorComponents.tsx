@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 
-import { ErrorText } from '../components';
+import { ErrorText } from '../components/Forms/ErrorText';
 
 const styles = StyleSheet.create({
   text: {

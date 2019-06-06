@@ -15,10 +15,10 @@ import {
   handleSignOut,
   handleVerifyMfaTotp,
 } from '../../core';
-import { FormikInputInjector, withFormikMemoize } from '../../hocs';
+import { FormikInputInjector } from '../../hocs';
+import { MemoFormikFormErrorText } from '../../hocs/MemoFormikFormErrorText';
 import {
   StyledButton,
-  StyledErrorText,
   StyledFormContainer,
   StyledFormRow,
   StyledScreenContainer,
@@ -38,11 +38,6 @@ type FormModel = typeof CodeRequiredModel;
 
 const { width } = Dimensions.get('window');
 const qrCodeSize = width * 0.8;
-
-const renderErrorText = (fProps: FormikProps<FormModel>) => (
-  <StyledErrorText message={fProps.errors.form} />
-);
-const MemoizedErrorText = withFormikMemoize(renderErrorText, 'form', true);
 
 const onPressSubmit = async <T extends FormModel>(
   form: T,
@@ -129,7 +124,7 @@ export const MfaTotpScreen = (props: MfaSmsProps) => {
               </StyledFormRow>
 
               <StyledFormRow>
-                <MemoizedErrorText {...fProps} />
+                <MemoFormikFormErrorText {...fProps} />
               </StyledFormRow>
               <StyledFormRow>
                 <StyledButton onPress={fProps.handleSubmit} label={'Verify'} />

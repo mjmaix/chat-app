@@ -17,11 +17,7 @@ export function FormikPreviewAvatar<T extends StringKeyedObject>(
     dataKey: props.dataKey,
     formProps: props.fProps,
   };
-  const FormikImageWrapper = withFormikImage<T>(
-    PreviewAvatar,
-    pictureConfig,
-    props.avatar,
-  );
+  const FormikImageWrapper = withFormikImage<T>(PreviewAvatar, pictureConfig);
 
   return <FormikImageWrapper />;
 }

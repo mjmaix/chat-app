@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 import { TextInput } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 
-import {CodeInput, EmailInput, Header} from '../../components';
+import { CodeInput, EmailInput, Header } from '../../components';
 import { ChallengeModel, ChallengeSchema } from '../../core';
 import { FormikInputInjector } from '../../hocs';
+import { MemoFormikFormErrorText } from '../../hocs/MemoFormikFormErrorText';
 import {
   StyledButton,
-  StyledErrorText,
   StyledFormContainer,
   StyledFormRow,
   StyledScreenContainer,
@@ -67,15 +67,12 @@ class BaseChallengeScreen<T extends FormModel> extends Component<Props<T>> {
 
                 <StyledFormRow>
                   <FormikInputInjector dataKey="code" formProps={fProps}>
-                    <StyledTextInput
-                      placeholder={placeholder}
-                      as={CodeInput}
-                    />
+                    <StyledTextInput placeholder={placeholder} as={CodeInput} />
                   </FormikInputInjector>
                 </StyledFormRow>
 
                 <StyledFormRow>
-                  <StyledErrorText message={fProps.errors.form as string} />
+                  <MemoFormikFormErrorText {...fProps} />
                 </StyledFormRow>
 
                 <StyledFormRow>

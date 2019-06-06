@@ -4,11 +4,11 @@ import { NavigationScreenProps } from 'react-navigation';
 
 import { EmailInput, Header, PasswordInput } from '../../components';
 import { SignInModel, SignInSchema, handleSignIn } from '../../core';
-import { FormikInputInjector, withFormikMemoize } from '../../hocs';
+import { FormikInputInjector } from '../../hocs';
+import { MemoFormikFormErrorText } from '../../hocs/MemoFormikFormErrorText';
 import { ScreenName } from '../../routes/mappings';
 import {
   StyledButton,
-  StyledErrorText,
   StyledFormContainer,
   StyledFormRow,
   StyledScreenContainer,
@@ -20,15 +20,7 @@ type Props = NavigationScreenProps;
 type FormModel = typeof SignInModel;
 
 class SignInEmailScreen extends Component<Props> {
-  public renderErrorText = (fProps: FormikProps<FormModel>) => (
-    <StyledErrorText message={fProps.errors.form} />
-  );
   public render() {
-    const MemoizedErrorText = withFormikMemoize(
-      this.renderErrorText,
-      'form',
-      true,
-    );
     return (
       <StyledScreenContainer>
         <Header title={'Sign in with email'} />
@@ -56,7 +48,7 @@ class SignInEmailScreen extends Component<Props> {
                 </StyledFormRow>
 
                 <StyledFormRow>
-                  <MemoizedErrorText {...fProps} />
+                  <MemoFormikFormErrorText {...fProps} />
                 </StyledFormRow>
 
                 <StyledFormRow>

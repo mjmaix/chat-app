@@ -5,9 +5,9 @@ import { NavigationScreenProps } from 'react-navigation';
 import { EmailInput, Header } from '../../components';
 import { EmailModel, EmailOnlySchema, handleForgotPassword } from '../../core';
 import { FormikInputInjector } from '../../hocs';
+import { MemoFormikFormErrorText } from '../../hocs/MemoFormikFormErrorText';
 import {
   StyledButton,
-  StyledErrorText,
   StyledFormContainer,
   StyledFormRow,
   StyledScreenContainer,
@@ -41,7 +41,7 @@ class PasswordForgotScreen extends Component<Props> {
                 </StyledFormRow>
 
                 <StyledFormRow>
-                  <StyledErrorText message={fProps.errors.form} />
+                  <MemoFormikFormErrorText {...fProps} />
                 </StyledFormRow>
 
                 <StyledFormRow>

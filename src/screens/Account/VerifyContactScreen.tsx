@@ -11,9 +11,9 @@ import {
   handleVerifyContact,
 } from '../../core';
 import { FormikInputInjector } from '../../hocs';
+import { MemoFormikFormErrorText } from '../../hocs/MemoFormikFormErrorText';
 import {
   StyledButton,
-  StyledErrorText,
   StyledFormContainer,
   StyledFormRow,
   StyledScreenContainer,
@@ -94,7 +94,7 @@ export const VerifyContactScreen = (props: VerifyContactScreenProps) => {
               </StyledFormRow>
 
               <StyledFormRow>
-                <StyledErrorText message={fProps.errors.form as string} />
+                <MemoFormikFormErrorText {...fProps} />
               </StyledFormRow>
 
               <StyledFormRow>

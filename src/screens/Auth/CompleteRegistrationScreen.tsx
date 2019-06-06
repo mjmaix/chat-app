@@ -15,9 +15,9 @@ import {
   phoneNumberRule,
 } from '../../core';
 import { FormikInputInjector } from '../../hocs';
+import { MemoFormikFormErrorText } from '../../hocs/MemoFormikFormErrorText';
 import {
   StyledButton,
-  StyledErrorText,
   StyledFormContainer,
   StyledFormRow,
   StyledScreenContainer,
@@ -25,35 +25,31 @@ import {
 } from '../../styled';
 import { Busy, NavigationService, alertFail, alertOk } from '../../utils';
 
-type CompleteRegistrationScreenProps = NavigationScreenProps;
-interface CompleteRegistrationScreenState {
+type Props = NavigationScreenProps;
+interface State {
   user?: ChatCognitoUser;
 }
 type FormModel = Partial<typeof SignUpModel> & typeof PasswordRequiredModel; // NOTE: Partial just to complete blanks
 
-// FIXME: why need to recast as from this.state? why typescript not checking previous undefined/null filters
-class CompleteRegistrationScreen extends Component<
-  CompleteRegistrationScreenProps,
-  CompleteRegistrationScreenState
-> {
-  public readonly state = {
+class CompleteRegistrationScreen extends Component<Props, State> {
+  public readonly state: State = {
     user: undefined,
   };
 
   public componentDidMount() {
     const { navigation } = this.props;
     this.setState({
-      user: navigation.getParam('unAuthUser') as ChatCognitoUser,
+      user: navigation.getParam('unAuthUser'),
     });
   }
 
   public render() {
     const { user } = this.state;
-    if (!user || !(user || ({} as ChatCognitoUser)).challengeParam) {
+    if (!user || !user.challengeParam) {
       return null;
     }
     const { challengeParam } = user;
-    if (!(challengeParam as ChallengeParam).requiredAttributes) {
+    if (!challengeParam.requiredAttributes) {
       return null;
     }
 
@@ -162,7 +158,7 @@ class CompleteRegistrationScreen extends Component<
                 )}
 
                 <StyledFormRow>
-                  <StyledErrorText message={fProps.errors.form} />
+                  <MemoFormikFormErrorText {...fProps} />
                 </StyledFormRow>
 
                 <StyledFormRow>

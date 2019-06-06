@@ -9,6 +9,7 @@ export * from './FormikButtonInjector';
 export * from './withFormikImage';
 export * from './withFormikMemoize';
 export * from './WithKeyboardHide';
+export * from './MemoFormikFormErrorText';
 
 export type SupportedComp =
   | ReactElement<InputProps>

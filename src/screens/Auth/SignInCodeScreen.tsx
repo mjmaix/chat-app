@@ -6,9 +6,9 @@ import { NavigationScreenProps } from 'react-navigation';
 import { CodeInput, Header } from '../../components';
 import { CodeRequiredModel, CodeSchema, handleConfirmSignIn } from '../../core';
 import { FormikInputInjector } from '../../hocs';
+import { MemoFormikFormErrorText } from '../../hocs/MemoFormikFormErrorText';
 import {
   StyledButton,
-  StyledErrorText,
   StyledFormContainer,
   StyledFormRow,
   StyledScreenContainer,
@@ -73,7 +73,7 @@ export const SignInCodeScreen = (props: SignInCodeScreenProps) => {
               </StyledFormRow>
 
               <StyledFormRow>
-                <StyledErrorText message={fProps.errors.form} />
+                <MemoFormikFormErrorText {...fProps} />
               </StyledFormRow>
 
               <StyledFormRow>

@@ -12,7 +12,7 @@ interface State {
 }
 
 class SettingsScreen extends React.Component<Props, State> {
-  public readonly state = { mfa: 'NOMFA' as MFAChoice, enableMfa: false };
+  public readonly state: State = { mfa: 'NOMFA', enableMfa: false };
 
   public renderItem: ListRenderItem<any> = ({ item, index }) => (
     <ListItem key={index} {...item} />
