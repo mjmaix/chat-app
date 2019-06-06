@@ -8,6 +8,7 @@ export * from './Auth/ResendSignUpScreen';
 export * from './Auth/NewPasswordScreen';
 export * from './Auth/CompleteRegistrationScreen';
 export * from './Auth/SignInCodeScreen';
+export * from './Auth/SignInPhoneNumberScreen';
 
 export * from './Account/PasswordChangeScreen';
 export * from './Account/ProfileScreen';

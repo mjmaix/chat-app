@@ -62,7 +62,7 @@ export const handleSignIn = async (data: typeof SignInModel) => {
   logInfo('[START] handleSignIn');
   const { email, password, phoneNumber } = data;
   const user = await Auth.signIn({
-    username: email.toLowerCase(),
+    username: email.toLowerCase() || phoneNumber,
     password,
   }).catch(WrapKnownExceptions);
   return user;
@@ -179,7 +179,21 @@ export const handleVerifyMfaTotp = async (data: typeof CodeRequiredModel) => {
   const user = await Auth.currentUserPoolUser().catch(WrapKnownExceptions);
   await Auth.verifyTotpToken(user, data.code).catch(WrapKnownExceptions);
 
-  return Auth.setPreferredMFA(user, 'TOTP').catch(WrapKnownExceptions);
+  return handleSetMfa('TOTP');
+};
+
+export const handleSetupMfaSms = async () => {
+  logInfo('[START] handleSetupMfaSms');
+  const user = await Auth.currentUserPoolUser().catch(WrapKnownExceptions);
+  return Auth.enableSMS(user).catch(WrapKnownExceptions);
+};
+
+export const handleVerifyMfaSms = async (data: typeof CodeRequiredModel) => {
+  logInfo('[START] handleVerifyMfaSms');
+  const user = await Auth.currentUserPoolUser().catch(WrapKnownExceptions);
+  await Auth.verifyTotpToken(user, data.code).catch(WrapKnownExceptions);
+
+  return handleSetMfa('SMS');
 };
 
 export const handleSetMfa = async (mfa: SetPreferredMfa) => {
@@ -187,11 +201,15 @@ export const handleSetMfa = async (mfa: SetPreferredMfa) => {
   return Auth.setPreferredMFA(user, mfa).catch(WrapKnownExceptions);
 };
 
+export const handleGetPreferredMfa = async (opts?: GetPreferredMFAOpts) => {
   logInfo('[START] handleGetPreferredMfa');
   const user = await Auth.currentUserPoolUser().catch(WrapKnownExceptions);
-  return Auth.getPreferredMFA(user, opts).catch(WrapKnownExceptions) as Promise<
-    MFAChoice
-  >;
+
+  const preferred = await Auth.getPreferredMFA(user, opts).catch(
+    WrapKnownExceptions,
+  );
+
+  return preferred as MfaChallengeType;
 };
 
 export const handleConfirmSignIn = async (

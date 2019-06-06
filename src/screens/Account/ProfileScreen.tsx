@@ -61,12 +61,18 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
   private willFocusListener?: NavigationEventSubscription;
 
   public async componentDidMount() {
-    handleGetCurrentUserAttrs({ bypassCache: false }).then(form => {
-      this.setState(prev => ({
-        form: { ...prev.form, ...form },
-        isFormReady: true,
-      }));
-    });
+    isConnected()
+      .then(() => ({ bypassCache: true }))
+      .catch(() => ({ bypassCache: false }))
+      .then(ops => {
+        return handleGetCurrentUserAttrs(ops);
+      })
+      .then(form => {
+        this.setState(prev => ({
+          form: { ...prev.form, ...form },
+          isFormReady: true,
+        }));
+      });
     const { navigation } = this.props;
     this.willFocusListener = navigation.addListener('willFocus', () => {
       this.checkVerifiedContact();
@@ -93,14 +99,15 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
     <FormikPreviewAvatar fProps={fProps} dataKey="picture" />
   );
 
+  private getShowContact = (contact: Contact) => {
+    const status = this.state.verifiedStatus;
+    return !!(status && status.unverified && status.unverified[contact]);
+  };
+
   private renderExtraButtons = () => {
     const status = this.state.verifiedStatus;
-    const showVerifyEmail = !!(
-      status &&
-      status.unverified &&
-      status.unverified.email
-    );
-    const showVerifyPhone = false; // FIXME: disable since mobile verification always fail Expired
+    const showVerifyEmail = this.getShowContact('email');
+    const showVerifyPhone = this.getShowContact('phone_number'); // FIXME: disable since mobile verification always fail Expired
     return (
       <Fragment>
         <StyledButton

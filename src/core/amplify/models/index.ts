@@ -14,6 +14,10 @@ export const EmailModel: FormModel = {
   email: '',
 };
 
+export const PhoneNumberModel: FormModel = {
+  phoneNumber: '',
+};
+
 export const CodeRequiredModel: FormModel = {
   code: '',
 };
@@ -45,6 +49,7 @@ export const SignUpModel: FormModel = {
 
 export const SignInModel: FormModel = {
   ...EmailModel,
+  ...PhoneNumberModel,
   ...PasswordRequiredModel,
 };
 

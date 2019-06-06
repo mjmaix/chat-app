@@ -15,18 +15,22 @@ import {
 type Props = NavigationScreenProps;
 interface State {
   isReady: boolean;
-  preferredMfa: MFAChoice;
+  preferredMfa: MfaChallengeType;
   qrCode?: string;
   userAttrs?: typeof ProfileModel;
 }
 
-const buttonLabels: string[] = ['Off', 'App']; // 'Sms'
-const buttonMap: MFAChoice[] = ['NOMFA', 'SOFTWARE_TOKEN_MFA', 'SMS']; // 'SMS'
+const buttonLabels: string[] = ['Off', 'App', 'Sms']; //
+const buttonMap: MfaChallengeType[] = [
+  'NOMFA',
+  'SOFTWARE_TOKEN_MFA',
+  'SMS_MFA',
+]; // 'SMS'
 
 class MfaSelectScreen extends React.Component<Props, State> {
   public readonly state = {
     isReady: false,
-    preferredMfa: 'NOMFA' as MFAChoice,
+    preferredMfa: 'NOMFA' as MfaChallengeType,
     qrCode: undefined,
     userAttrs: ProfileModel,
   };
@@ -36,7 +40,7 @@ class MfaSelectScreen extends React.Component<Props, State> {
       .then(() => ({ bypassCache: true }))
       .catch(() => ({ bypassCache: false }))
       .then(opts => handleGetPreferredMfa(opts))
-      .then((prefMfa: MFAChoice) => {
+      .then((prefMfa: MfaChallengeType) => {
         this.setState({ isReady: true, preferredMfa: prefMfa });
       });
   }
@@ -56,17 +60,17 @@ class MfaSelectScreen extends React.Component<Props, State> {
           },
           {
             cancelable: true,
-            message: 'Setup a new one using Time-based One-time password.',
+            message: 'Setup App based MFA.',
           },
         );
-      } else if (buttonMap[selectedIndex] === 'SMS' && 'SMS' !== pref) {
+      } else if (buttonMap[selectedIndex] === 'SMS_MFA' && 'SMS_MFA' !== pref) {
         alertConfirm(
           () => {
             NavigationService.navigate('MfaSms');
           },
           {
             cancelable: true,
-            message: 'Setup a new one using SMS',
+            message: 'Setup SMS based password MFA.',
           },
         );
       } else {

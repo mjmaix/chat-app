@@ -37,12 +37,14 @@ declare global {
     website?: string;
   }
 
-  type SetPreferredMfa = 'TOTP' | 'SMS' | 'NOMFA';
-
-  type ChallengeMfa = 'SOFTWARE_TOKEN_MFA' | 'SMS_MFA';
+  type MfaMethod = 'TOTP' | 'SMS' | 'NOMFA';
+  type MfaChallengeType = 'SOFTWARE_TOKEN_MFA' | 'SMS_MFA' | 'NOMFA';
+  type MfaOption = 'TOTP' | 'SMS' | 'NOMFA';
+  type MfaSignIn = 'SMS_MFA' | 'SOFTWARE_TOKEN_MFA';
 
   type ChallengeName =
-    | ChallengeMfa
+    | MfaOption
+    | MfaMethod
     | 'CUSTOM_CHALLENGE'
     | 'NEW_PASSWORD_REQUIRED'
     | 'MFA_SETUP';
@@ -71,8 +73,6 @@ declare global {
   interface S3Object {
     key: string;
   }
-
-  type MFAChoice = 'SOFTWARE_TOKEN_MFA' | 'SMS' | 'NOMFA';
 
   /**
    * AWS Storage

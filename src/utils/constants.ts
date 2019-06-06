@@ -1,0 +1,1 @@
+export const MFA_CHALLENGES = ['SOFTWARE_TOKEN_MFA', 'SMS_MFA'];

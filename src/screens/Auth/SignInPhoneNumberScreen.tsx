@@ -2,8 +2,8 @@ import { Formik, FormikActions, FormikProps } from 'formik';
 import React, { Component } from 'react';
 import { NavigationScreenProps } from 'react-navigation';
 
-import { EmailInput, Header, PasswordInput } from '../../components';
-import { SignInEmailSchema, SignInModel, handleSignIn } from '../../core';
+import { Header, PasswordInput } from '../../components';
+import { SignInMobileSchema, SignInModel, handleSignIn } from '../../core';
 import { FormikInputInjector } from '../../hocs';
 import { MemoFormikFormErrorText } from '../../hocs/MemoFormikFormErrorText';
 import { ScreenName } from '../../routes/mappings';
@@ -20,22 +20,22 @@ import { MFA_CHALLENGES } from '../../utils/constants';
 type Props = NavigationScreenProps;
 type FormModel = typeof SignInModel;
 
-class SignInEmailScreen extends Component<Props> {
+class SignInPhoneNumberScreen extends Component<Props> {
   public render() {
     return (
       <StyledScreenContainer>
-        <Header title={'Sign in with Email'} />
+        <Header title={'Sign in with Mobile'} />
         <Formik
           initialValues={SignInModel}
-          validationSchema={SignInEmailSchema}
+          validationSchema={SignInMobileSchema}
           onSubmit={this.onPressSignIn}
         >
           {fProps => {
             return (
               <StyledFormContainer>
                 <StyledFormRow>
-                  <FormikInputInjector dataKey="email" formProps={fProps}>
-                    <StyledTextInput as={EmailInput} />
+                  <FormikInputInjector dataKey="phoneNumber" formProps={fProps}>
+                    <StyledTextInput placeholder={'Mobile number'} />
                   </FormikInputInjector>
                 </StyledFormRow>
 
@@ -96,4 +96,4 @@ class SignInEmailScreen extends Component<Props> {
   };
 }
 
-export { SignInEmailScreen };
+export { SignInPhoneNumberScreen };

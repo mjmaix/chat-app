@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Image, ImageBackground } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
+import { ThemedComponentProps, withTheme } from 'styled-components';
 
 import BannerImage from '../../../assets/icon_raw.jpg';
+import { Header } from '../../components';
 import {
   StyledButton,
   StyledFormContainer,
@@ -11,12 +13,13 @@ import {
   StyledScreenContainer,
   StyledView,
 } from '../../styled';
-import { NavigationService } from '../../utils';
+import { NavigationService, getBrandName } from '../../utils';
 
-type Props = NavigationScreenProps;
+type Props = NavigationScreenProps & ThemedComponentProps;
 
 class SignInChoicesScreen extends Component<Props> {
   public render() {
+    const { theme } = this.props;
     return (
       <ImageBackground
         source={Image.resolveAssetSource(BannerImage)}
@@ -27,13 +30,34 @@ class SignInChoicesScreen extends Component<Props> {
       >
         <StyledScreenContainer>
           <StyledFormOverImageContainer>
+            <Header
+              title={getBrandName()}
+              headerStyle={{
+                color: theme.colors.primary,
+                shadowColor: theme.colors.primarytext,
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5,
+              }}
+            />
             <StyledFormContainer
               as={StyledView} /* prevent scroll but retain form style*/
             >
               <StyledFormRow>
                 <StyledButton
                   onPress={this.onPressSignInWithEmail}
-                  label={'Sign in with email'}
+                  label={'Sign in with Email'}
+                />
+              </StyledFormRow>
+
+              <StyledFormRow>
+                <StyledButton
+                  onPress={this.onPressSignInWithPhoneNumber}
+                  label={'Sign in with Mobile'}
                 />
               </StyledFormRow>
 
@@ -63,6 +87,10 @@ class SignInChoicesScreen extends Component<Props> {
     NavigationService.navigate('SignInEmail');
   };
 
+  private onPressSignInWithPhoneNumber = () => {
+    NavigationService.navigate('SignInPhoneNumber');
+  };
+
   private onPressSignUp = () => {
     NavigationService.navigate('SignUp');
   };
@@ -72,4 +100,6 @@ class SignInChoicesScreen extends Component<Props> {
   };
 }
 
-export { SignInChoicesScreen };
+const ThemedSignInChoicesScreen = withTheme(SignInChoicesScreen);
+
+export { ThemedSignInChoicesScreen as SignInChoicesScreen };

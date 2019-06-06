@@ -22,6 +22,7 @@ import {
   SignInChoicesScreen,
   SignInCodeScreen,
   SignInEmailScreen,
+  SignInPhoneNumberScreen,
   SignUpScreen,
   VerifyContactScreen,
 } from '../screens';
@@ -41,6 +42,7 @@ export type ScreenName =
   | 'Contacts'
   | 'SignInChoices'
   | 'SignInEmail'
+  | 'SignInPhoneNumber'
   | 'SignUp'
   | 'Forgot'
   | 'Resend'
@@ -119,6 +121,10 @@ export const Mappings: Mappings = {
   },
   SignInEmail: {
     screen: SignInEmailScreen,
+    icon: { name: '', type: 'antdesign' },
+  },
+  SignInPhoneNumber: {
+    screen: SignInPhoneNumberScreen,
     icon: { name: '', type: 'antdesign' },
   },
   SignUp: {

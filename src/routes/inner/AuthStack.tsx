@@ -25,6 +25,14 @@ const routeConfigMap: StackRouteConfigMap = {
       ),
     },
   },
+  SignInPhoneNumber: {
+    screen: Mappings.SignInPhoneNumber.screen,
+    navigationOptions: {
+      header: (
+        <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
+      ),
+    },
+  },
   SignUp: {
     screen: Mappings.SignUp.screen,
     navigationOptions: {

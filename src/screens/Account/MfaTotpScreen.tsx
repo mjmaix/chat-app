@@ -33,7 +33,7 @@ import {
   getBrandName,
 } from '../../utils';
 
-interface MfaSmsProps {}
+interface MfaTotpProps {}
 type FormModel = typeof CodeRequiredModel;
 
 const { width } = Dimensions.get('window');
@@ -62,7 +62,7 @@ const onPressSubmit = async <T extends FormModel>(
   }
 };
 
-export const MfaTotpScreen = (props: MfaSmsProps) => {
+export const MfaTotpScreen = (props: MfaTotpProps) => {
   const [code, setCode] = useState('');
   const [userAttrs, setUserAttrs] = useState<typeof ProfileModel>(ProfileModel);
 
