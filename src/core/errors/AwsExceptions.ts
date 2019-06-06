@@ -34,8 +34,10 @@ const InvalidParameterException: AwsException = {
     'Use 8 or more characters with a mix of letters, numbers & symbols.',
   mappedSafeMessages: {
     'Cannot reset password for the user as there is no registered/verified email or phone_number': true,
+    'Attribute value for picture must not be null': true,
   },
   knownMessages: [
+    'Attribute value for picture must not be null',
     'Cannot reset password for the user as there is no registered/verified email or phone_number',
     'Invalid attributes given, given_name is missing',
     'User has not set up software token mfa',
@@ -95,7 +97,16 @@ const UsernameExistsException: AwsException = {
   knownMessages: ['An account with the given email already exists.'],
 };
 
+const CodeMismatchException: AwsException = {
+  code: 'CodeMismatchException',
+  message: 'Invalid verification code provided, please try again.',
+  name: 'Code Mismatc hException',
+  safeMessage: 'Invalid verification code provided, please try again.',
+  knownMessages: ['Invalid verification code provided, please try again.'],
+};
+
 export const AwsExceptions: { [k: string]: AwsException } = {
+  CodeMismatchException,
   UsernameExistsException,
   EnableSoftwareTokenMFAException,
   ExpiredCodeException,

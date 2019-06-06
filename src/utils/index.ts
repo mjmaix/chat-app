@@ -1,5 +1,5 @@
 export * from './borders';
-export * from './color-utils';
+export * from './colorUtils';
 export * from './contrast';
 export * from './NavigationService';
 export * from './alerts';

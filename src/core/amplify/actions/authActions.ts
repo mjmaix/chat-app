@@ -17,7 +17,7 @@ import {
   ProfileModel,
   SignInModel,
   SignUpModel,
-} from './../models';
+} from '../models';
 
 type SignUpModel = typeof ProfileModel & typeof PasswordRequiredModel;
 
@@ -79,7 +79,7 @@ export const handleUpdateProfile = async (data: typeof ProfileModel) => {
     family_name: familyName,
     given_name: givenName,
     phone_number: phoneNumber,
-    picture,
+    picture: picture || '', // TODO: workaround, https://github.com/jaredpalmer/formik/pull/728 - wait for formik to support Yup transform during validation
   }).catch(WrapKnownExceptions);
 };
 

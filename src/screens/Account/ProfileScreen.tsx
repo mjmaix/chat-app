@@ -1,6 +1,10 @@
 import { Auth } from 'aws-amplify';
 import { Formik, FormikActions, FormikProps } from 'formik';
 import React, { Component, Fragment } from 'react';
+import {
+  NavigationEventSubscription,
+  NavigationScreenProps,
+} from 'react-navigation';
 
 import { EmailInput, FormikPreviewAvatar } from '../../components';
 import {
@@ -39,7 +43,9 @@ import {
 } from '../../utils';
 import { alertFail, alertOk } from '../../utils';
 
+interface Props extends NavigationScreenProps {}
 type FormModel = typeof ProfileModel;
+
 const InitialState: {
   verifiedStatus: VerifiedContact | null;
   form: FormModel;
@@ -50,13 +56,27 @@ const InitialState: {
   form: { ...ProfileModel },
 };
 
-class ProfileScreen extends Component<{}, typeof InitialState> {
+class ProfileScreen extends Component<Props, typeof InitialState> {
   public state = InitialState;
+  private willFocusListener?: NavigationEventSubscription;
+
   public async componentDidMount() {
     handleGetCurrentUserAttrs({ bypassCache: false }).then(form => {
-      this.setState({ form, isFormReady: true });
+      this.setState(prev => ({
+        form: { ...prev.form, ...form },
+        isFormReady: true,
+      }));
     });
-    this.checkVerifiedContact();
+    const { navigation } = this.props;
+    this.willFocusListener = navigation.addListener('willFocus', () => {
+      this.checkVerifiedContact();
+    });
+  }
+
+  public componentWillUnmount() {
+    if (this.willFocusListener) {
+      this.willFocusListener.remove();
+    }
   }
 
   private checkVerifiedContact = () => {
@@ -254,11 +274,11 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
 
     try {
       const newForm: FormModel = { ...form };
-      const mime = getMime(newAttrs.picture);
-      if (picChanged && mime) {
+      if (picChanged) {
+        const mime = getMime(newAttrs.picture);
         const config: StorageConfig = {
           level: 'protected',
-          contentType: mime,
+          contentType: mime || 'image/jpg',
           progressCallback: ({ loaded, total }) => {
             logInfo(`Uploaded: ${loaded}/${total}`);
           },
