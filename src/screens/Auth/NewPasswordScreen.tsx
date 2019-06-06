@@ -12,7 +12,7 @@ export const NewPasswordScreen = () => {
       onSubmit={async (values, actions) => {
         try {
           await handleConfirmSignUp(values);
-          alertOk(() => NavigationService.navigate('SignIn'));
+          alertOk(() => NavigationService.navigate('SignInEmail'));
         } catch (err) {
           actions.setFieldError('form', err.message);
           alertFail(() => null, err);
