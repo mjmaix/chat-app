@@ -2,8 +2,7 @@ import { Formik, FormikActions, FormikProps } from 'formik';
 import React, { Component } from 'react';
 import { NavigationScreenProps } from 'react-navigation';
 
-import { Header } from '../../components';
-import { EmailInput, PasswordInput } from '../../components/Inputs';
+import { EmailInput, Header, PasswordInput } from '../../components';
 import { SignInModel, SignInSchema, handleSignIn } from '../../core';
 import { FormikInputInjector, withFormikMemoize } from '../../hocs';
 import { ScreenName } from '../../routes/mappings';

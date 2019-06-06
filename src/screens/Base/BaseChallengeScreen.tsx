@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import { TextInput } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 
-import { Header } from '../../components';
-import { EmailInput } from '../../components/Inputs';
+import {CodeInput, EmailInput, Header} from '../../components';
 import { ChallengeModel, ChallengeSchema } from '../../core';
 import { FormikInputInjector } from '../../hocs';
 import {
@@ -68,7 +67,10 @@ class BaseChallengeScreen<T extends FormModel> extends Component<Props<T>> {
 
                 <StyledFormRow>
                   <FormikInputInjector dataKey="code" formProps={fProps}>
-                    <StyledTextInput placeholder={placeholder} />
+                    <StyledTextInput
+                      placeholder={placeholder}
+                      as={CodeInput}
+                    />
                   </FormikInputInjector>
                 </StyledFormRow>
 

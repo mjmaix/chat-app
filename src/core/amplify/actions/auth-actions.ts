@@ -6,7 +6,6 @@ import {
 import { Auth } from 'aws-amplify';
 import _ from 'lodash';
 
-import { NavigationService } from '../../../utils';
 import { WrapKnownExceptions } from '../../errors';
 import {
   ChallengeModel,
@@ -168,7 +167,7 @@ export const handleVerifyMfaTotp = async (data: typeof CodeRequiredModel) => {
   return Auth.setPreferredMFA(user, 'TOTP').catch(WrapKnownExceptions);
 };
 
-export const handleSetMfa = async (mfa: MFAChoice) => {
+export const handleSetMfa = async (mfa: SetPreferredMfa) => {
   const user = await Auth.currentUserPoolUser().catch(WrapKnownExceptions);
   return Auth.setPreferredMFA(user, mfa).catch(WrapKnownExceptions);
 };

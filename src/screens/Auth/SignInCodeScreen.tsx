@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 
-import { Header } from '../../components';
+import { CodeInput, Header } from '../../components';
 import { CodeRequiredModel, CodeSchema, handleConfirmSignIn } from '../../core';
 import { FormikInputInjector } from '../../hocs';
 import {
@@ -68,7 +68,7 @@ export const SignInCodeScreen = (props: SignInCodeScreenProps) => {
             <StyledFormContainer>
               <StyledFormRow>
                 <FormikInputInjector dataKey="code" formProps={fProps}>
-                  <StyledTextInput placeholder="MFA verification code" />
+                  <StyledTextInput placeholder="MFA code" as={CodeInput} />
                 </FormikInputInjector>
               </StyledFormRow>
 

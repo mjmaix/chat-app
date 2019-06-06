@@ -1,3 +1,3 @@
 export * from './EmailInput';
-// export * from './MobileInput';
+export * from './CodeInput';
 export * from './PasswordInput';

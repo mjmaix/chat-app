@@ -7,3 +7,4 @@ export * from './Lists';
 export * from './SearchBars';
 export * from './Navigation';
 export * from './Images';
+export * from './Inputs';

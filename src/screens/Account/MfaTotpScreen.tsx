@@ -5,7 +5,7 @@ import { ActivityIndicator, Dimensions, Linking, Platform } from 'react-native';
 import { Image } from 'react-native-elements';
 import QRCode from 'react-native-qrcode-svg';
 
-import { Header, formStyles } from '../../components';
+import { CodeInput, Header, formStyles } from '../../components';
 import {
   CodeRequiredModel,
   CodeSchema,
@@ -124,7 +124,7 @@ export const MfaTotpScreen = (props: MfaSmsProps) => {
               </StyledFormRow>
               <StyledFormRow>
                 <FormikInputInjector dataKey="code" formProps={fProps}>
-                  <StyledTextInput placeholder="MFA code" />
+                  <StyledTextInput placeholder="MFA code" as={CodeInput} />
                 </FormikInputInjector>
               </StyledFormRow>
 

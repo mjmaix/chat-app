@@ -2,8 +2,7 @@ import { Formik, FormikActions } from 'formik';
 import React, { Component } from 'react';
 import { NavigationScreenProps } from 'react-navigation';
 
-import { Header } from '../../components';
-import { EmailInput } from '../../components/Inputs';
+import { EmailInput, Header } from '../../components';
 import { EmailModel, EmailOnlySchema, handleResend } from '../../core';
 import { FormikInputInjector } from '../../hocs';
 import {

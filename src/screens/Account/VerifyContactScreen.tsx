@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { TextInput, TextInputProps } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 
-import { Header } from '../../components';
-import { EmailInput } from '../../components/Inputs';
+import { CodeInput } from '../../components';
 import {
   ChallengeModel,
   VerifyContactModel,
@@ -90,7 +89,7 @@ export const VerifyContactScreen = (props: VerifyContactScreenProps) => {
 
               <StyledFormRow>
                 <FormikInputInjector dataKey="code" formProps={fProps}>
-                  <StyledTextInput placeholder={'Code'} />
+                  <StyledTextInput as={CodeInput} />
                 </FormikInputInjector>
               </StyledFormRow>
 

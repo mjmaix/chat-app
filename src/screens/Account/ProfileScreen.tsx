@@ -2,8 +2,7 @@ import { Auth } from 'aws-amplify';
 import { Formik, FormikActions, FormikProps } from 'formik';
 import React, { Component, Fragment } from 'react';
 
-import { FormikPreviewAvatar } from '../../components';
-import { EmailInput } from '../../components/Inputs';
+import { EmailInput, FormikPreviewAvatar } from '../../components';
 import {
   ProfileModel,
   StyleGuide,
@@ -255,7 +254,7 @@ class ProfileScreen extends Component<{}, typeof InitialState> {
     const picChanged = oldAttrs.picture !== newAttrs.picture;
 
     try {
-      const newForm = { ...form };
+      const newForm: FormModel = { ...form };
       const mime = getMime(newAttrs.picture);
       if (picChanged && mime) {
         const config: StorageConfig = {

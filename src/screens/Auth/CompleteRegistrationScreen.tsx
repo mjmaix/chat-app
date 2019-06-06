@@ -4,8 +4,7 @@ import React, { Component } from 'react';
 import { NavigationScreenProps } from 'react-navigation';
 import * as Yup from 'yup';
 
-import { Header } from '../../components';
-import { EmailInput, PasswordInput } from '../../components/Inputs';
+import { EmailInput, Header, PasswordInput } from '../../components';
 import {
   PasswordRequiredModel,
   SignUpModel,
@@ -28,17 +27,17 @@ import { Busy, NavigationService, alertFail, alertOk } from '../../utils';
 
 type CompleteRegistrationScreenProps = NavigationScreenProps;
 interface CompleteRegistrationScreenState {
-  user: Nullable<ChatCognitoUser>;
+  user?: ChatCognitoUser;
 }
 type FormModel = Partial<typeof SignUpModel> & typeof PasswordRequiredModel; // NOTE: Partial just to complete blanks
 
-// FIXME: why need to recast as from this.state?
+// FIXME: why need to recast as from this.state? why typescript not checking previous undefined/null filters
 class CompleteRegistrationScreen extends Component<
   CompleteRegistrationScreenProps,
   CompleteRegistrationScreenState
 > {
   public readonly state = {
-    user: null,
+    user: undefined,
   };
 
   public componentDidMount() {
@@ -50,7 +49,7 @@ class CompleteRegistrationScreen extends Component<
 
   public render() {
     const { user } = this.state;
-    if (!user || !(user as ChatCognitoUser).challengeParam) {
+    if (!user || !(user || ({} as ChatCognitoUser)).challengeParam) {
       return null;
     }
     const { challengeParam } = user;

@@ -2,7 +2,7 @@ import { Formik, FormikActions } from 'formik';
 import React, { Component } from 'react';
 import { NavigationScreenProps } from 'react-navigation';
 
-import { PasswordInput } from '../../components/Inputs';
+import { PasswordInput } from '../../components';
 import {
   PasswordChangeModel,
   PasswordChangeSchema,

@@ -2,8 +2,7 @@ import { Formik, FormikActions } from 'formik';
 import React, { Component } from 'react';
 import { NavigationScreenProps } from 'react-navigation';
 
-import { Header } from '../../components';
-import { EmailInput, PasswordInput } from '../../components/Inputs';
+import { CodeInput, EmailInput, Header, PasswordInput } from '../../components';
 import {
   PasswordResetModel,
   PasswordResetSchema,
@@ -51,7 +50,7 @@ class PasswordResetScreen extends Component<Props> {
 
                 <StyledFormRow>
                   <FormikInputInjector dataKey="code" formProps={fProps}>
-                    <StyledTextInput placeholder="Code" />
+                    <StyledTextInput as={CodeInput} />
                   </FormikInputInjector>
                 </StyledFormRow>
 
