@@ -127,7 +127,10 @@ export const MfaTotpScreen = (props: MfaTotpProps) => {
                 <MemoFormikFormErrorText {...fProps} />
               </StyledFormRow>
               <StyledFormRow>
-                <StyledButton onPress={fProps.handleSubmit} label={'Verify'} />
+                <StyledButton
+                  onPress={fProps.handleSubmit}
+                  label={'Activate'}
+                />
               </StyledFormRow>
             </StyledFormContainer>
           );

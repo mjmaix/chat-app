@@ -5,12 +5,17 @@ import { ListItem } from 'react-native-elements';
 import { FlatList, NavigationScreenProps } from 'react-navigation';
 
 import { ProfileModel, handleGetPreferredMfa, handleSetMfa } from '../../core';
+import { handlePressVerifyContact } from '../../core/amplify/actions/eventActions';
 import {
   NavigationService,
   alertConfirm,
   alertFail,
-  isConnected,
+  alertOk,
 } from '../../utils';
+import {
+  asyncGetCurrentUserOpts,
+  asyncIsContactVerified,
+} from '../../utils/amplifyAuthUtils';
 
 type Props = NavigationScreenProps;
 interface State {
@@ -20,7 +25,7 @@ interface State {
   userAttrs?: typeof ProfileModel;
 }
 
-const buttonLabels: string[] = ['Off', 'App', 'Sms']; //
+const buttonLabels: string[] = ['Off', 'App']; // TODO: include 'Sms' once AWS supports email + phone_number verification codes
 const buttonMap: MfaChallengeType[] = [
   'NOMFA',
   'SOFTWARE_TOKEN_MFA',
@@ -36,9 +41,7 @@ class MfaSelectScreen extends React.Component<Props, State> {
   };
 
   public componentDidMount() {
-    isConnected()
-      .then(() => ({ bypassCache: true }))
-      .catch(() => ({ bypassCache: false }))
+    asyncGetCurrentUserOpts()
       .then(opts => handleGetPreferredMfa(opts))
       .then((prefMfa: MfaChallengeType) => {
         this.setState({ isReady: true, preferredMfa: prefMfa });
@@ -54,41 +57,70 @@ class MfaSelectScreen extends React.Component<Props, State> {
       const sel = buttonMap[selectedIndex];
       const pref = this.state.preferredMfa; // NOTE: re-click disabled, workaround for disableStyle as gray
       if (sel === 'SOFTWARE_TOKEN_MFA' && 'SOFTWARE_TOKEN_MFA' !== pref) {
-        alertConfirm(
-          () => {
-            NavigationService.navigate('MfaTotp');
-          },
-          {
-            cancelable: true,
-            message: 'Setup App based MFA.',
-          },
-        );
+        const isEmailVerified = await asyncIsContactVerified('email');
+        if (isEmailVerified) {
+          this.handlePressSoftwareTokenMfa();
+        } else {
+          alertOk(() => handlePressVerifyContact('email'), {
+            title: 'Needs verified email',
+            message: 'Proceed to verify email screen to request code.',
+          });
+        }
       } else if (buttonMap[selectedIndex] === 'SMS_MFA' && 'SMS_MFA' !== pref) {
-        alertConfirm(
-          () => {
-            NavigationService.navigate('MfaSms');
-          },
-          {
-            cancelable: true,
-            message: 'Setup SMS based password MFA.',
-          },
-        );
+        const isMobileVerified = await asyncIsContactVerified('phone_number');
+        if (isMobileVerified) {
+          this.handlePressSmsMfa();
+        } else {
+          alertOk(() => handlePressVerifyContact('email'), {
+            title: 'Needs verified mobile',
+            message: 'Proceed to verify mobile screen to request code.',
+          });
+        }
       } else {
-        alertConfirm(
-          async () => {
-            const data = await handleSetMfa('NOMFA');
-            this.setState({ preferredMfa: 'NOMFA' });
-          },
-          {
-            cancelable: true,
-            message: 'Turn-off MFA',
-          },
-        );
+        this.handlePressNoMfa();
       }
     } catch (err) {
       alertFail(() => null, err);
     }
   };
+
+  private handlePressNoMfa() {
+    alertConfirm(
+      async () => {
+        // FIXME: does not trigger challenge code https://github.com/aws-amplify/amplify-js/issues/804
+        const data = await handleSetMfa('NOMFA');
+        this.setState({ preferredMfa: 'NOMFA' });
+      },
+      {
+        cancelable: true,
+        message: 'Turn-off MFA',
+      },
+    );
+  }
+
+  private handlePressSmsMfa() {
+    alertConfirm(
+      () => {
+        NavigationService.navigate('MfaSms');
+      },
+      {
+        cancelable: true,
+        message: 'Setup SMS based password MFA.',
+      },
+    );
+  }
+
+  private handlePressSoftwareTokenMfa() {
+    alertConfirm(
+      () => {
+        NavigationService.navigate('MfaTotp');
+      },
+      {
+        cancelable: true,
+        message: 'Setup App based MFA.',
+      },
+    );
+  }
 
   public render() {
     const { isReady, preferredMfa } = this.state;
