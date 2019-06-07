@@ -5,7 +5,6 @@ import { NavigationScreenProps } from 'react-navigation';
 
 import { CodeInput } from '../../components';
 import {
-  ChallengeModel,
   VerifyContactModel,
   VerifyContactSchema,
   handleVerifyContact,
@@ -23,14 +22,14 @@ import {
 import { Busy, NavigationService, alertFail, alertOk } from '../../utils';
 
 interface VerifyContactScreenProps extends NavigationScreenProps {}
-type FormModel = typeof ChallengeModel;
+type FormModel = typeof VerifyContactModel;
 
 const onSubmit = async (
   values: FormModel,
   actions: FormikActions<FormModel>,
 ) => {
   try {
-    await handleVerifyContact('email', values);
+    await handleVerifyContact(values);
     alertOk(() => NavigationService.navigate('Profile'));
   } catch (err) {
     actions.setFieldError('form', err.message);
@@ -75,6 +74,7 @@ export const VerifyContactScreen = (props: VerifyContactScreenProps) => {
         enableReinitialize
         initialValues={{
           ...VerifyContactModel,
+          contact,
           [contact as string]: contactValue,
         }}
         validationSchema={VerifyContactSchema}

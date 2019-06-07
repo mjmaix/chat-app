@@ -19,6 +19,7 @@ import {
   SignInModel,
   SignUpModel,
 } from '../models';
+import { VerifyContactModel } from '../models/index';
 
 type SignUpModel = typeof ProfileModel & typeof PasswordRequiredModel;
 
@@ -85,13 +86,17 @@ export const handleUpdateProfile = async (data: typeof ProfileModel) => {
   const { email, familyName, givenName, phoneNumber, picture } = data;
   const user = await Auth.currentUserPoolUser().catch(WrapKnownExceptions);
 
-  return Auth.updateUserAttributes(user, {
+  const buildAttrs: any = {
     email: email.toLowerCase(),
     family_name: familyName,
     given_name: givenName,
-    phone_number: phoneNumber,
     picture: picture || '', // TODO: workaround, https://github.com/jaredpalmer/formik/pull/728 - wait for formik to support Yup transform during validation
-  }).catch(WrapKnownExceptions);
+  };
+  if (phoneNumber) {
+    buildAttrs.phone_number = phoneNumber || '';
+  }
+
+  return Auth.updateUserAttributes(user, buildAttrs).catch(WrapKnownExceptions);
 };
 
 export const handleCheckVerifiedContact = async (opts?: CurrentUserOpts) => {
@@ -101,14 +106,15 @@ export const handleCheckVerifiedContact = async (opts?: CurrentUserOpts) => {
   return verif;
 };
 
-export const handleVerifyContact = async (
-  contact: Contact,
-  data: typeof ChallengeModel,
-) => {
-  logInfo('[START] handleVerifyContact');
-  return Auth.verifyCurrentUserAttributeSubmit(contact, data.code).catch(
-    WrapKnownExceptions,
-  );
+export const handleVerifyContact = async (data: typeof VerifyContactModel) => {
+  logInfo('[START] handleVerifyContact', data);
+  const contact = data.contact as Contact;
+  const verif = await Auth.verifyCurrentUserAttributeSubmit(
+    contact,
+    data.code,
+  ).catch(WrapKnownExceptions);
+
+  return verif;
 };
 
 export const handleVerifyContactResend = async (contact: Contact) => {

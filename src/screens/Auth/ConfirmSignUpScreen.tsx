@@ -1,11 +1,58 @@
-import React, { useEffect, useState } from 'react';
+import { Formik, FormikActions } from 'formik';
+import React, { Fragment, useEffect, useState } from 'react';
 import { NavigationScreenProps } from 'react-navigation';
 
-import { ChallengeModel, handleConfirmSignUp } from '../../core';
+import { CodeInput, EmailInput, Header } from '../../components';
+import {
+  ChallengeModel,
+  ChallengeSchema,
+  EmailModel,
+  handleConfirmSignUp,
+  handleResend,
+} from '../../core';
+import { FormikInputInjector } from '../../hocs';
+import { MemoFormikFormErrorText } from '../../hocs/MemoFormikFormErrorText';
+import {
+  StyledButton,
+  StyledFormContainer,
+  StyledFormRow,
+  StyledScreenContainer,
+  StyledTextInput,
+} from '../../styled';
 import { Busy, NavigationService, alertFail, alertOk } from '../../utils';
 import { BaseChallengeScreen } from '../Base/BaseChallengeScreen';
 
 interface Props extends NavigationScreenProps {}
+type FormModel = typeof ChallengeModel;
+
+const onPressResend = async <T extends typeof EmailModel>(form: T) => {
+  try {
+    Busy.start();
+    await handleResend(form);
+    alertOk(() => null);
+  } catch (err) {
+    alertFail(() => null, err);
+  } finally {
+    Busy.stop();
+  }
+};
+
+const onSubmit = async <T extends FormModel>(
+  values: T,
+  actions: FormikActions<T>,
+) => {
+  try {
+    Busy.start();
+    await handleConfirmSignUp(values);
+    alertOk(() => NavigationService.navigate('SignInEmail'));
+  } catch (err) {
+    actions.setFieldError('form', err.message);
+    alertFail(() => null, err);
+  } finally {
+    actions.setSubmitting(false);
+    Busy.stop();
+  }
+};
 
 export const ConfirmSignUpScreen = (props: Props) => {
   const [email, setEmail] = useState('');
@@ -16,26 +63,58 @@ export const ConfirmSignUpScreen = (props: Props) => {
       setEmail(paramEmail);
     }
   }, []);
+  const emailProvided = email ? false : true;
   return (
-    <BaseChallengeScreen
-      title={'Confirm sign up'}
-      message={'Provide the code sent to your email.'}
-      placeholder={'Code'}
-      disableFields={email ? [email] : undefined}
-      initialValues={{ ...ChallengeModel, email }}
-      onSubmit={async (values, actions) => {
-        try {
-          Busy.start();
-          await handleConfirmSignUp(values);
-          alertOk(() => NavigationService.navigate('SignInEmail'));
-        } catch (err) {
-          actions.setFieldError('form', err.message);
-          alertFail(() => null, err);
-        } finally {
-          actions.setSubmitting(false);
-          Busy.stop();
-        }
-      }}
-    />
+    <StyledScreenContainer>
+      <Header
+        title={'Confirm sign up'}
+        message={'Provide the code sent to your email.'}
+      />
+      <Formik<FormModel>
+        enableReinitialize
+        initialValues={{ ...ChallengeModel, email }}
+        validationSchema={ChallengeSchema}
+        onSubmit={(values, actions) => {
+          onSubmit(values, actions);
+        }}
+      >
+        {fProps => {
+          return (
+            <StyledFormContainer>
+              <StyledFormRow>
+                <FormikInputInjector dataKey="email" formProps={fProps}>
+                  <StyledTextInput as={EmailInput} editable={emailProvided} />
+                </FormikInputInjector>
+              </StyledFormRow>
+
+              <StyledFormRow>
+                <FormikInputInjector dataKey="code" formProps={fProps}>
+                  <StyledTextInput as={CodeInput} />
+                </FormikInputInjector>
+              </StyledFormRow>
+
+              <StyledFormRow>
+                <MemoFormikFormErrorText {...fProps} />
+              </StyledFormRow>
+
+              <StyledFormRow>
+                <StyledButton onPress={fProps.handleSubmit} label={'Submit'} />
+              </StyledFormRow>
+              <StyledFormRow>
+                <StyledButton
+                  onPress={() =>
+                    onPressResend({
+                      email: email || fProps.values.email,
+                    })
+                  }
+                  label={'Resend confirmation code'}
+                  type="outline"
+                />
+              </StyledFormRow>
+            </StyledFormContainer>
+          );
+        }}
+      </Formik>
+    </StyledScreenContainer>
   );
 };

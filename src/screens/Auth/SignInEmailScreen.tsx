@@ -3,7 +3,12 @@ import React, { Component } from 'react';
 import { NavigationScreenProps } from 'react-navigation';
 
 import { EmailInput, Header, PasswordInput } from '../../components';
-import { SignInEmailSchema, SignInModel, handleSignIn } from '../../core';
+import {
+  SafeException,
+  SignInEmailSchema,
+  SignInModel,
+  handleSignIn,
+} from '../../core';
 import { FormikInputInjector } from '../../hocs';
 import { MemoFormikFormErrorText } from '../../hocs/MemoFormikFormErrorText';
 import { ScreenName } from '../../routes/mappings';
@@ -82,14 +87,24 @@ class SignInEmailScreen extends Component<Props> {
       }
     } catch (err) {
       transferScreen = null;
-      actions.setFieldError('form', err.message);
-      alertFail(() => null, err);
+      if (err.code === 'UserNotConfirmedException') {
+        const safeErr: SafeException = err;
+        transferScreen = 'Confirm';
+        alertFail(() => null, err, {
+          title: 'Account not confirmed',
+          message: safeErr.message,
+        });
+      } else {
+        actions.setFieldError('form', err.message);
+        alertFail(() => null, err);
+      }
     } finally {
       actions.setSubmitting(false);
       Busy.stop();
       if (transferScreen) {
         NavigationService.navigate(transferScreen, {
           unAuthUser: user,
+          email: form.email,
         });
       }
     }

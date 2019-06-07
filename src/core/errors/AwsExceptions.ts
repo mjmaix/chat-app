@@ -39,6 +39,7 @@ const InvalidParameterException: AwsException = {
       'Invalid username format.',
   },
   knownMessages: [
+    'Invalid user attributes: phone_number: Required attribute cannot be deleted.',
     'Username cannot be of email format, since user pool is configured for email alias.',
     'Attribute value for picture must not be null',
     'Cannot reset password for the user as there is no registered/verified email or phone_number',

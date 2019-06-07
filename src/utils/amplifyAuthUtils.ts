@@ -9,5 +9,5 @@ export const asyncGetCurrentUserOpts = () =>
 export const asyncIsContactVerified = async (contact: Contact) => {
   const opts = await asyncGetCurrentUserOpts();
   const status: VerifiedContact = await handleCheckVerifiedContact(opts);
-  return !!(status && status.unverified && status.unverified[contact]);
+  return !!(status && status.verified && status.verified[contact]);
 };

@@ -4,9 +4,10 @@ export const emailRule = Yup.string()
   .label('Email')
   .email();
 
+const optionalMobilePattern = /^$|^[=+\s]*(?:[0-9][=+\s]*){8,}$/;
 export const phoneNumberRule = Yup.string()
   .label('Mobile number')
-  .matches(/^[=+\s]*(?:[0-9][=+\s]*){8,}$/, 'Not a valid mobile number');
+  .matches(optionalMobilePattern, 'Not a valid mobile number');
 
 export const passwordRule = Yup.string()
   .matches(
@@ -36,7 +37,7 @@ export const SignUpSchema = Yup.object().shape({
   email: emailRule.required(),
   familyName: nameRule.label('Family name').notRequired(),
   givenName: nameRule.label('Given name').notRequired(),
-  phoneNumber: phoneNumberRule.required(),
+  phoneNumber: phoneNumberRule.notRequired(),
   picture: pictureRule.notRequired(),
 });
 
@@ -52,7 +53,7 @@ export const UpdateProfileSchema = Yup.object().shape({
   email: emailRule.required(),
   familyName: nameRule.label('Family name').notRequired(),
   givenName: nameRule.label('Given name').notRequired(),
-  phoneNumber: phoneNumberRule.required(),
+  phoneNumber: phoneNumberRule.notRequired(),
   picture: pictureRule.notRequired(),
 });
 

@@ -50,11 +50,13 @@ interface Props extends NavigationScreenProps {}
 type FormModel = typeof ProfileModel;
 
 const InitialState: {
-  verifiedStatus: VerifiedContact | null;
+  showVerifyEmail: boolean;
+  showVerifyPhone: boolean;
   form: FormModel;
   isFormReady: boolean;
 } = {
-  verifiedStatus: null,
+  showVerifyEmail: false,
+  showVerifyPhone: false,
   isFormReady: false,
   form: { ...ProfileModel },
 };
@@ -86,12 +88,11 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
     }
   }
 
-  private checkVerifiedContact = () => {
-    asyncGetCurrentUserOpts()
-      .then(opts => handleCheckVerifiedContact(opts))
-      .then(verifiedStatus => {
-        this.setState({ verifiedStatus });
-      });
+  private checkVerifiedContact = async () => {
+    const showVerifyEmail = !(await asyncIsContactVerified('email'));
+    // const showVerifyPhone = !(await asyncIsContactVerified('phone_number'));
+
+    this.setState({ showVerifyEmail });
   };
 
   private renderAvatar = (fProps: FormikProps<FormModel>) => (
@@ -99,8 +100,7 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
   );
 
   private renderExtraButtons = () => {
-    const showVerifyEmail = asyncIsContactVerified('email');
-    const showVerifyPhone = asyncIsContactVerified('phone_number'); // FIXME: disable since mobile verification always fail Expired
+    const { showVerifyEmail, showVerifyPhone } = this.state;
     return (
       <Fragment>
         <StyledButton
@@ -166,17 +166,6 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
               </StyledFormRow>
 
               <StyledFormRow>
-                <FormikInputInjector dataKey="phoneNumber" formProps={fProps}>
-                  <StyledTextInput
-                    label="Mobile"
-                    keyboardType="phone-pad"
-                    autoCapitalize="none"
-                    textContentType="telephoneNumber"
-                  />
-                </FormikInputInjector>
-              </StyledFormRow>
-
-              <StyledFormRow>
                 <FormikInputInjector dataKey="givenName" formProps={fProps}>
                   <StyledTextInput
                     label="Given name"
@@ -190,6 +179,17 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
                   <StyledTextInput
                     label="Family name"
                     textContentType="familyName"
+                  />
+                </FormikInputInjector>
+              </StyledFormRow>
+
+              <StyledFormRow>
+                <FormikInputInjector dataKey="phoneNumber" formProps={fProps}>
+                  <StyledTextInput
+                    label="Mobile"
+                    keyboardType="phone-pad"
+                    autoCapitalize="none"
+                    textContentType="telephoneNumber"
                   />
                 </FormikInputInjector>
               </StyledFormRow>

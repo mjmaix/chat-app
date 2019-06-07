@@ -57,7 +57,11 @@ export const alertOk = (cb: () => void, opts: AlertOptions = {}) => {
   );
 };
 
-export const alertFail = (cb: () => void, err: Error | any) => {
+export const alertFail = (
+  cb: () => void,
+  err: Error | any,
+  opts: AlertOptions = {},
+) => {
   const okAction = [
     {
       text: 'OK',
@@ -65,10 +69,8 @@ export const alertFail = (cb: () => void, err: Error | any) => {
     },
   ];
   Alert.alert(
-    'Oops, failed',
-    __DEV__
-      ? JSON.stringify(err)
-      : 'Something went wrong. Check the form for more details.',
+    opts.title || 'Oops, failed',
+    opts.message || 'Something went wrong. Check the form for more details.',
     cb ? okAction : undefined,
   );
 };
