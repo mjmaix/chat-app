@@ -1,9 +1,8 @@
 import { Formik, FormikActions } from 'formik';
 import React, { Component } from 'react';
-import { TextInput, TextInputProps } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 
-import { CodeInput, EmailInput, Header } from '../../components';
+import { CodeInput, Header } from '../../components';
 import { ChallengeModel, ChallengeSchema } from '../../core';
 import { FormikInputInjector } from '../../hocs';
 import { MemoFormikFormErrorText } from '../../hocs/MemoFormikFormErrorText';
@@ -14,8 +13,6 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
-
-/* tslint:disable:max-classes-per-file */
 
 interface OwnProps<T> {
   title?: string;
@@ -40,7 +37,7 @@ class BaseChallengeScreen<T extends FormModel> extends Component<Props<T>> {
 
   public render() {
     const { title, message, placeholder, initialValues } = this.props;
-    const isInputEditable = !this.isFieldDisabled('email');
+    const isEmailDisabled = this.isFieldDisabled('email');
     return (
       <StyledScreenContainer>
         <Header title={title} message={message} />
@@ -57,21 +54,7 @@ class BaseChallengeScreen<T extends FormModel> extends Component<Props<T>> {
               <StyledFormContainer>
                 <StyledFormRow>
                   <FormikInputInjector dataKey="email" formProps={fProps}>
-                    <StyledTextInput
-                      as={EmailInput}
-                      inputComponent={
-                        class extends React.Component<TextInputProps> {
-                          public render() {
-                            return (
-                              <TextInput
-                                {...this.props}
-                                editable={isInputEditable}
-                              />
-                            );
-                          }
-                        }
-                      }
-                    />
+                    <StyledTextInput editable={isEmailDisabled} />
                   </FormikInputInjector>
                 </StyledFormRow>
 

@@ -1,4 +1,3 @@
-import { Auth } from 'aws-amplify';
 import { Formik, FormikActions, FormikProps } from 'formik';
 import React, { Component, Fragment } from 'react';
 import {
@@ -18,6 +17,7 @@ import {
   handleVerifyContactResend,
   logInfo,
 } from '../../core';
+import { handleGetCurrentUserRawAttrs } from '../../core/amplify/actions/authActions';
 import { WrapKnownExceptions } from '../../core/errors';
 import {
   FormikButtonInjector,
@@ -42,6 +42,10 @@ import {
   isConnected,
 } from '../../utils';
 import { alertFail, alertOk } from '../../utils';
+import {
+  asyncGetCurrentUserOpts,
+  asyncIsContactVerified,
+} from '../../utils/amplifyAuthUtils';
 
 interface Props extends NavigationScreenProps {}
 type FormModel = typeof ProfileModel;
@@ -61,9 +65,7 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
   private willFocusListener?: NavigationEventSubscription;
 
   public async componentDidMount() {
-    isConnected()
-      .then(() => ({ bypassCache: true }))
-      .catch(() => ({ bypassCache: false }))
+    asyncGetCurrentUserOpts()
       .then(ops => {
         return handleGetCurrentUserAttrs(ops);
       })
@@ -86,9 +88,7 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
   }
 
   private checkVerifiedContact = () => {
-    isConnected()
-      .then(() => ({ bypassCache: true }))
-      .catch(() => ({ bypassCache: false }))
+    asyncGetCurrentUserOpts()
       .then(opts => handleCheckVerifiedContact(opts))
       .then(verifiedStatus => {
         this.setState({ verifiedStatus });
@@ -99,15 +99,9 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
     <FormikPreviewAvatar fProps={fProps} dataKey="picture" />
   );
 
-  private getShowContact = (contact: Contact) => {
-    const status = this.state.verifiedStatus;
-    return !!(status && status.unverified && status.unverified[contact]);
-  };
-
   private renderExtraButtons = () => {
-    const status = this.state.verifiedStatus;
-    const showVerifyEmail = this.getShowContact('email');
-    const showVerifyPhone = this.getShowContact('phone_number'); // FIXME: disable since mobile verification always fail Expired
+    const showVerifyEmail = asyncIsContactVerified('email');
+    const showVerifyPhone = asyncIsContactVerified('phone_number'); // FIXME: disable since mobile verification always fail Expired
     return (
       <Fragment>
         <StyledButton
@@ -233,10 +227,8 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
   };
 
   private handlePressVerifyContact = async (contact: Contact) => {
-    const currentUser = await Auth.currentUserPoolUser().catch(
-      WrapKnownExceptions,
-    );
-    const { attributes } = currentUser;
+    const opts = await asyncGetCurrentUserOpts();
+    const attributes = await handleGetCurrentUserRawAttrs(opts);
     const contactValue = attributes[contact];
     NavigationService.navigate('VerifyContact', {
       contact,

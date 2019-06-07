@@ -19,7 +19,11 @@ export * from './StyledBlurredView';
 export * from './StyledFormContainer';
 export * from './StyledErrorComponents';
 
-export const StyledTextInput = styled(Input).attrs(props => ({}))``;
+export const StyledTextInput = styled(Input).attrs(props => {
+  return {
+    editable: props.editable,
+  };
+})``;
 
 export const StyledButton = styled(Button).attrs(props => ({}))``;
 

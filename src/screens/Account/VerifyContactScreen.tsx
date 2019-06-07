@@ -119,14 +119,14 @@ export const VerifyContactScreen = (props: VerifyContactScreenProps) => {
 
               {showVerifyEmail && (
                 <StyledButton
-                  label="Resend email code"
+                  label="Request email code"
                   onPress={() => handlePressVerifyContactResend('email')}
                   type="clear"
                 />
               )}
               {showVerifyPhone && (
                 <StyledButton
-                  label="Resend phone code"
+                  label="Request phone code"
                   onPress={() => handlePressVerifyContactResend('phone_number')}
                   type="clear"
                 />

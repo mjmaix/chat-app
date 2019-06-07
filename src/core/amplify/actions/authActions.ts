@@ -42,6 +42,13 @@ export const handleGetCurrentUserAttrs = async (opts?: CurrentUserOpts) => {
   return attrs;
 };
 
+export const handleGetCurrentUserRawAttrs = async (opts?: CurrentUserOpts) => {
+  const currentUser = await Auth.currentUserPoolUser(opts).catch(
+    WrapKnownExceptions,
+  );
+  return currentUser.attributes;
+};
+
 export const handleSignUp = async (data: typeof SignUpModel) => {
   const { password, ...attrs } = data;
   const user = await Auth.signUp({

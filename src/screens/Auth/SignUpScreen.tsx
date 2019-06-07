@@ -114,7 +114,9 @@ class SignUpScreen extends Component<Props> {
     try {
       Busy.start();
       await handleSignUp(form);
-      alertOk(() => NavigationService.navigate('Confirm'));
+      alertOk(() =>
+        NavigationService.navigate('Confirm', { email: form.email }),
+      );
     } catch (err) {
       actions.setFieldError('form', err.message);
       alertFail(() => null, err);
