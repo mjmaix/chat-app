@@ -25,7 +25,7 @@
     "Requires Numbers",
     "Requires Symbols"
   ],
-  "requiredAttributes": ["email", "family_name", "given_name", "phone_number"],
+  "requiredAttributes": ["email", "family_name", "given_name"],
   "userpoolClientName": "chatlo0994aaff_app_client",
   "userpoolClientGenerateSecret": true,
   "userpoolClientRefreshTokenValidity": "90",
@@ -68,7 +68,7 @@
     "Fn::GetAtt": ["UnauthRole", "Arn"]
   },
   "useDefault": "manual",
-  "usernameAttributes": ["email", "phone_number"],
+  "usernameAttributes": ["email"],
   "thirdPartyAuth": false,
   "hostedUI": false
 }
