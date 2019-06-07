@@ -1,6 +1,6 @@
 import { Formik, FormikActions } from 'formik';
 import React, { Component } from 'react';
-import { TextInput } from 'react-native';
+import { TextInput, TextInputProps } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 
 import { CodeInput, EmailInput, Header } from '../../components';
@@ -14,6 +14,8 @@ import {
   StyledScreenContainer,
   StyledTextInput,
 } from '../../styled';
+
+/* tslint:disable:max-classes-per-file */
 
 interface OwnProps<T> {
   title?: string;
@@ -36,12 +38,9 @@ class BaseChallengeScreen<T extends FormModel> extends Component<Props<T>> {
     return disableFields.includes(fieldName);
   };
 
-  private renderEmailInput = (props: any) => {
-    return <TextInput {...props} editable={!this.isFieldDisabled('email')} />;
-  };
-
   public render() {
     const { title, message, placeholder, initialValues } = this.props;
+    const isInputEditable = !this.isFieldDisabled('email');
     return (
       <StyledScreenContainer>
         <Header title={title} message={message} />
@@ -60,7 +59,18 @@ class BaseChallengeScreen<T extends FormModel> extends Component<Props<T>> {
                   <FormikInputInjector dataKey="email" formProps={fProps}>
                     <StyledTextInput
                       as={EmailInput}
-                      inputComponent={this.renderEmailInput}
+                      inputComponent={
+                        class extends React.Component<TextInputProps> {
+                          public render() {
+                            return (
+                              <TextInput
+                                {...this.props}
+                                editable={isInputEditable}
+                              />
+                            );
+                          }
+                        }
+                      }
                     />
                   </FormikInputInjector>
                 </StyledFormRow>
