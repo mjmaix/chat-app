@@ -23,10 +23,10 @@ const pickSafeMessage = (listedException: AwsException, rawMessage: string) => {
 
 export class SafeException extends Error {
   public code?: string;
-  public constructor(error: AwsException) {
+  public constructor(error: AwsException, rawMessage: string) {
     super();
     this.code = error.code;
-    this.message = pickSafeMessage(AwsExceptions[this.code], error.safeMessage);
+    this.message = pickSafeMessage(AwsExceptions[this.code], rawMessage);
   }
 }
 export class UncaughtException extends Error {}
@@ -37,7 +37,10 @@ export const WrapKnownExceptions = (rawError: any) => {
     const code: string = rawError.code;
     const registeredError: AwsException = AwsExceptions[code];
     if (registeredError) {
-      throw new SafeException(registeredError);
+      throw new SafeException(
+        registeredError,
+        rawError.message || rawError.code || rawError,
+      );
     }
   }
   logError('[EXCEPTION] uncaught', typeof rawError, rawError);

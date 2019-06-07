@@ -45,6 +45,7 @@ const InvalidParameterException: AwsException = {
     'Invalid attributes given, given_name is missing',
     'User has not set up software token mfa',
     "2 validation errors detected: Value 'Aaaa' at 'userCode' failed to satisfy constraint: Member must satisfy regular expression pattern: [0-9]+; Value 'Aaaa' at 'userCode' failed to satisfy constraint: Member must have length greater than or equal to 6",
+    'Invalid attribute name. Only phone_number and email can be verified.',
   ],
 };
 
@@ -58,6 +59,10 @@ const NotAuthorizedException: AwsException = {
   code: 'NotAuthorizedException',
   name: 'Not Authorized Exception',
   safeMessage: 'Incorrect username or password.',
+  knownMessages: ['User is disabled'],
+  mappedSafeMessages: {
+    'User is disabled': true,
+  },
 };
 
 const LimitExceededException: AwsException = {
@@ -75,7 +80,8 @@ const PasswordResetRequiredException: AwsException = {
 const UserNotConfirmedException: AwsException = {
   code: 'UserNotConfirmedException',
   name: 'User Not Confirmed Exception',
-  safeMessage: 'You must confirm your account to complete registration.',
+  safeMessage: 'You must confirm your account first.',
+  knownMessages: ['User is not confirmed.'],
 };
 
 const ExpiredCodeException: AwsException = {
@@ -107,7 +113,17 @@ const CodeMismatchException: AwsException = {
   knownMessages: ['Invalid verification code provided, please try again.'],
 };
 
+const CodeDeliveryFailureException: AwsException = {
+  code: 'CodeDeliveryFailureException',
+  message:
+    'Amazon SES account is in Sandbox. Verify Send-to email address or Amazon SES Account',
+  name: 'CodeDeliveryFailureException',
+  safeMessage:
+    'Mail service problem. Please contact support for assistance or try again later',
+};
+
 export const AwsExceptions: { [k: string]: AwsException } = {
+  CodeDeliveryFailureException,
   CodeMismatchException,
   UsernameExistsException,
   EnableSoftwareTokenMFAException,
