@@ -21,7 +21,10 @@ const routeConfigMap: StackRouteConfigMap = {
     screen: Mappings.SignInEmail.screen,
     navigationOptions: {
       header: (
-        <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
+        <FixedBackHeader
+          backTo="SignInChoices"
+          iconProps={{ name: 'close', type: 'antdesign' }}
+        />
       ),
     },
   },
@@ -29,7 +32,10 @@ const routeConfigMap: StackRouteConfigMap = {
     screen: Mappings.SignInPhoneNumber.screen,
     navigationOptions: {
       header: (
-        <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
+        <FixedBackHeader
+          backTo="SignInChoices"
+          iconProps={{ name: 'close', type: 'antdesign' }}
+        />
       ),
     },
   },
@@ -37,7 +43,10 @@ const routeConfigMap: StackRouteConfigMap = {
     screen: Mappings.SignUp.screen,
     navigationOptions: {
       header: (
-        <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
+        <FixedBackHeader
+          backTo="SignInChoices"
+          iconProps={{ name: 'close', type: 'antdesign' }}
+        />
       ),
     },
   },
@@ -45,7 +54,10 @@ const routeConfigMap: StackRouteConfigMap = {
     screen: Mappings.SignInCode.screen,
     navigationOptions: {
       header: (
-        <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
+        <FixedBackHeader
+          backTo="SignInChoices"
+          iconProps={{ name: 'close', type: 'antdesign' }}
+        />
       ),
     },
   },
@@ -53,7 +65,10 @@ const routeConfigMap: StackRouteConfigMap = {
     screen: Mappings.Forgot.screen,
     navigationOptions: {
       header: (
-        <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
+        <FixedBackHeader
+          backTo="SignInChoices"
+          iconProps={{ name: 'close', type: 'antdesign' }}
+        />
       ),
     },
   },
@@ -61,7 +76,10 @@ const routeConfigMap: StackRouteConfigMap = {
     screen: Mappings.Resend.screen,
     navigationOptions: {
       header: (
-        <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
+        <FixedBackHeader
+          backTo="SignInChoices"
+          iconProps={{ name: 'close', type: 'antdesign' }}
+        />
       ),
     },
   },
@@ -69,7 +87,10 @@ const routeConfigMap: StackRouteConfigMap = {
     screen: Mappings.CompleteRegistration.screen,
     navigationOptions: {
       header: (
-        <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
+        <FixedBackHeader
+          backTo="SignInChoices"
+          iconProps={{ name: 'close', type: 'antdesign' }}
+        />
       ),
     },
   },
@@ -77,7 +98,10 @@ const routeConfigMap: StackRouteConfigMap = {
     screen: Mappings.Confirm.screen,
     navigationOptions: {
       header: (
-        <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
+        <FixedBackHeader
+          backTo="SignInChoices"
+          iconProps={{ name: 'close', type: 'antdesign' }}
+        />
       ),
     },
   },
@@ -85,7 +109,10 @@ const routeConfigMap: StackRouteConfigMap = {
     screen: Mappings.Reset.screen,
     navigationOptions: {
       header: (
-        <FixedBackHeader iconProps={{ name: 'close', type: 'antdesign' }} />
+        <FixedBackHeader
+          backTo="SignInChoices"
+          iconProps={{ name: 'close', type: 'antdesign' }}
+        />
       ),
     },
   },
