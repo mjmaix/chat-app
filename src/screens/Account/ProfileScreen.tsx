@@ -17,7 +17,7 @@ import {
   handleVerifyContactResend,
   logInfo,
 } from '../../core';
-import { handleGetCurrentUserRawAttrs } from '../../core/amplify/actions/authActions';
+import { handlePressVerifyContact } from '../../core/amplify/actions/eventActions';
 import { WrapKnownExceptions } from '../../core/errors';
 import {
   FormikButtonInjector,
@@ -39,7 +39,6 @@ import {
   Busy,
   NavigationService,
   getMime,
-  isConnected,
 } from '../../utils';
 import { alertFail, alertOk } from '../../utils';
 import {
@@ -112,14 +111,14 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
         {showVerifyEmail && (
           <StyledButton
             label="Verify email"
-            onPress={() => this.handlePressVerifyContact('email')}
+            onPress={() => handlePressVerifyContact('email')}
             type="clear"
           />
         )}
         {showVerifyPhone && (
           <StyledButton
             label="Verify mobile"
-            onPress={() => this.handlePressVerifyContact('phone_number')}
+            onPress={() => handlePressVerifyContact('phone_number')}
             type="clear"
           />
         )}
@@ -226,21 +225,11 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
     NavigationService.navigate('Change');
   };
 
-  private handlePressVerifyContact = async (contact: Contact) => {
-    const opts = await asyncGetCurrentUserOpts();
-    const attributes = await handleGetCurrentUserRawAttrs(opts);
-    const contactValue = attributes[contact];
-    NavigationService.navigate('VerifyContact', {
-      contact,
-      contactValue,
-    });
-  };
-
   private handlePressVerifyContactResend = async (contact: Contact) => {
     try {
       Busy.start();
       await handleVerifyContactResend(contact);
-      alertOk(() => this.handlePressVerifyContact(contact));
+      alertOk(() => handlePressVerifyContact(contact));
     } catch (err) {
       alertFail(() => null, err);
     } finally {

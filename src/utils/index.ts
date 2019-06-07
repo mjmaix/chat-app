@@ -11,3 +11,4 @@ export * from './packageUtil';
 export * from './mfa';
 export * from './networkUtil';
 export * from './constants';
+export * from './amplifyAuthUtils';
