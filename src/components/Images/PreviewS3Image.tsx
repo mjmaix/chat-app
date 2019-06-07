@@ -25,11 +25,19 @@ class PreviewS3Image extends React.Component<
   public readonly state = {
     isConnected: false,
   };
+  private mounted?: boolean;
   public componentDidMount() {
+    this.mounted = true;
     getNetInfo().then(state => {
       logInfo('Connection', state.isConnected, state.type);
-      this.setState({ isConnected: state.isConnected, type: state.type });
+      if (this.mounted) {
+        this.setState({ isConnected: state.isConnected, type: state.type });
+      }
     });
+  }
+
+  public componentWillUnmount() {
+    this.mounted = false;
   }
   public render() {
     if (!this.state.isConnected) {
