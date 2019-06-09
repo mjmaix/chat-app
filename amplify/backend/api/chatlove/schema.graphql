@@ -1,0 +1,14 @@
+type ClRoom @model {
+  id: ID!
+  messages: [ClMessage] @connection(name: "RoomMessages", keyField: "roomId", sortField: "when")
+  createdAt: AWSDateTime
+}
+
+type ClMessage @model {
+  id: ID!
+  content: String!
+  when: String!
+  roomId: ID
+  room: ClRoom @connection(name: "RoomMessages", keyField: "roomId")
+  createdAt: AWSDateTime
+}
