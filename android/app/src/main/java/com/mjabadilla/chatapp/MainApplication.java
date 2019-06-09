@@ -8,7 +8,6 @@ import com.reactnativecommunity.netinfo.NetInfoPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.amazonaws.RNAWSCognitoPackage;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
@@ -37,7 +36,6 @@ public class MainApplication extends Application implements ReactApplication {
             new RNFetchBlobPackage(),
             new ImagePickerPackage(),
             new RNAWSCognitoPackage(),
-            new RNDeviceInfo(),
             new VectorIconsPackage(),
             new RNGestureHandlerPackage(),
             new AsyncStoragePackage()
