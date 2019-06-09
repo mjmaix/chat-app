@@ -2,12 +2,14 @@ import './setup';
 
 import AsyncStorage from '@react-native-community/async-storage';
 import React, { Component } from 'react';
+import { ApolloProvider } from 'react-apollo';
 import { ActivityIndicator } from 'react-native';
 import { ThemeProvider as RneThemeProvider } from 'react-native-elements';
 import { ThemeProvider as ScThemeProvider } from 'styled-components';
 
 import { STORAGE_KEY, Theme, ThemeHelper, ThemeName, logError } from './core';
 import { AppRoutes } from './routes';
+import { apolloClient } from './setup';
 import { NavigationService } from './utils';
 
 interface AppState {
@@ -40,18 +42,20 @@ export default class App extends Component<{}, AppState> {
     }
     const { theme } = this.state;
     return (
-      <ScThemeProvider theme={theme}>
-        <RneThemeProvider theme={theme}>
-          <AppRoutes
-            screenProps={{
-              theme: this.state.theme,
-            }}
-            ref={navigatorRef => {
-              NavigationService.setTopLevelNavigator(navigatorRef);
-            }}
-          />
-        </RneThemeProvider>
-      </ScThemeProvider>
+      <ApolloProvider client={apolloClient}>
+        <ScThemeProvider theme={theme}>
+          <RneThemeProvider theme={theme}>
+            <AppRoutes
+              screenProps={{
+                theme: this.state.theme,
+              }}
+              ref={navigatorRef => {
+                NavigationService.setTopLevelNavigator(navigatorRef);
+              }}
+            />
+          </RneThemeProvider>
+        </ScThemeProvider>
+      </ApolloProvider>
     );
   }
 
