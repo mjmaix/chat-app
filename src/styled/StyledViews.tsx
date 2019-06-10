@@ -1,6 +1,12 @@
+import { RefAttributes } from 'react';
+import { View, ViewProps } from 'react-native';
 import styled from 'styled-components/native';
 
 import { containerStyles, formStyles } from '../components';
+import { StyleGuide } from '../core';
+
+type StyledBottomContainerProps = ViewProps &
+  RefAttributes<View> & { rightContent?: boolean };
 
 export const StyledTopContainer = styled.View`
   ${props => ({
@@ -9,10 +15,13 @@ export const StyledTopContainer = styled.View`
   })}
 `;
 
-export const StyledBottomContainer = styled.View`
+export const StyledBottomContainer = styled.View<StyledBottomContainerProps>`
   ${props => ({
     ...containerStyles.fixedBottom,
     ...containerStyles.fullWidth,
+    ...(props.rightContent
+      ? { padding: StyleGuide.gap.regular, alignItems: 'flex-end' }
+      : {}),
   })}
 `;
 
