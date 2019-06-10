@@ -3,8 +3,8 @@
 
 export type CreateClRoomInput = {
   id?: string | null,
-  createdAt: string,
-  updatedAt: string,
+  createdAt?: string | null,
+  updatedAt?: string | null,
 };
 
 export type UpdateClRoomInput = {
@@ -86,6 +86,16 @@ export type ModelClMessageFilterInput = {
   not?: ModelClMessageFilterInput | null,
 };
 
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
 export type CreateClRoomMutationVariables = {
   input: CreateClRoomInput,
 };
@@ -107,8 +117,8 @@ export type CreateClRoomMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    createdAt: string,
-    updatedAt: string,
+    createdAt: string | null,
+    updatedAt: string | null,
   } | null,
 };
 
@@ -133,8 +143,8 @@ export type UpdateClRoomMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    createdAt: string,
-    updatedAt: string,
+    createdAt: string | null,
+    updatedAt: string | null,
   } | null,
 };
 
@@ -159,8 +169,8 @@ export type DeleteClRoomMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    createdAt: string,
-    updatedAt: string,
+    createdAt: string | null,
+    updatedAt: string | null,
   } | null,
 };
 
@@ -183,8 +193,8 @@ export type CreateClMessageMutation = {
         __typename: "ModelClMessageConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string,
-      updatedAt: string,
+      createdAt: string | null,
+      updatedAt: string | null,
     } | null,
     createdAt: string | null,
   } | null,
@@ -209,8 +219,8 @@ export type UpdateClMessageMutation = {
         __typename: "ModelClMessageConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string,
-      updatedAt: string,
+      createdAt: string | null,
+      updatedAt: string | null,
     } | null,
     createdAt: string | null,
   } | null,
@@ -235,8 +245,8 @@ export type DeleteClMessageMutation = {
         __typename: "ModelClMessageConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string,
-      updatedAt: string,
+      createdAt: string | null,
+      updatedAt: string | null,
     } | null,
     createdAt: string | null,
   } | null,
@@ -263,8 +273,8 @@ export type GetClRoomQuery = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    createdAt: string,
-    updatedAt: string,
+    createdAt: string | null,
+    updatedAt: string | null,
   } | null,
 };
 
@@ -284,8 +294,8 @@ export type ListClRoomsQuery = {
         __typename: "ModelClMessageConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string,
-      updatedAt: string,
+      createdAt: string | null,
+      updatedAt: string | null,
     } | null > | null,
     nextToken: string | null,
   } | null,
@@ -310,8 +320,8 @@ export type GetClMessageQuery = {
         __typename: "ModelClMessageConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string,
-      updatedAt: string,
+      createdAt: string | null,
+      updatedAt: string | null,
     } | null,
     createdAt: string | null,
   } | null,
@@ -336,8 +346,38 @@ export type ListClMessagesQuery = {
       room:  {
         __typename: "ClRoom",
         id: string,
-        createdAt: string,
-        updatedAt: string,
+        createdAt: string | null,
+        updatedAt: string | null,
+      } | null,
+      createdAt: string | null,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type MyMessagesQueryVariables = {
+  owner?: string | null,
+  createdAt?: ModelStringKeyConditionInput | null,
+  filter?: ModelClMessageFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type MyMessagesQuery = {
+  myMessages:  {
+    __typename: "ModelClMessageConnection",
+    items:  Array< {
+      __typename: "ClMessage",
+      id: string,
+      content: string,
+      owner: string | null,
+      when: string,
+      roomId: string | null,
+      room:  {
+        __typename: "ClRoom",
+        id: string,
+        createdAt: string | null,
+        updatedAt: string | null,
       } | null,
       createdAt: string | null,
     } | null > | null,
@@ -362,8 +402,8 @@ export type OnCreateClRoomSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    createdAt: string,
-    updatedAt: string,
+    createdAt: string | null,
+    updatedAt: string | null,
   } | null,
 };
 
@@ -384,8 +424,8 @@ export type OnUpdateClRoomSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    createdAt: string,
-    updatedAt: string,
+    createdAt: string | null,
+    updatedAt: string | null,
   } | null,
 };
 
@@ -406,8 +446,8 @@ export type OnDeleteClRoomSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    createdAt: string,
-    updatedAt: string,
+    createdAt: string | null,
+    updatedAt: string | null,
   } | null,
 };
 
@@ -426,8 +466,8 @@ export type OnCreateClMessageSubscription = {
         __typename: "ModelClMessageConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string,
-      updatedAt: string,
+      createdAt: string | null,
+      updatedAt: string | null,
     } | null,
     createdAt: string | null,
   } | null,
@@ -448,8 +488,8 @@ export type OnUpdateClMessageSubscription = {
         __typename: "ModelClMessageConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string,
-      updatedAt: string,
+      createdAt: string | null,
+      updatedAt: string | null,
     } | null,
     createdAt: string | null,
   } | null,
@@ -470,8 +510,8 @@ export type OnDeleteClMessageSubscription = {
         __typename: "ModelClMessageConnection",
         nextToken: string | null,
       } | null,
-      createdAt: string,
-      updatedAt: string,
+      createdAt: string | null,
+      updatedAt: string | null,
     } | null,
     createdAt: string | null,
   } | null,

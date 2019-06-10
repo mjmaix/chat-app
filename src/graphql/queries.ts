@@ -80,3 +80,34 @@ export const listClMessages = `query ListClMessages(
   }
 }
 `;
+export const myMessages = `query MyMessages(
+  $owner: String
+  $createdAt: ModelStringKeyConditionInput
+  $filter: ModelClMessageFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  myMessages(
+    owner: $owner
+    createdAt: $createdAt
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      content
+      owner
+      when
+      roomId
+      room {
+        id
+        createdAt
+        updatedAt
+      }
+      createdAt
+    }
+    nextToken
+  }
+}
+`;

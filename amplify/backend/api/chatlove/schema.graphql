@@ -1,22 +1,61 @@
-type ClRoom @model
-{
+type ClUser 
+  @model 
+  @auth(rules: [{ allow: owner, ownerField: "id", queries: null }]) {
   id: ID!
-  messages: [ClMessage] @connection(name: "RoomMessages", keyField: "roomId", sortField: "when")
-  createdAt: AWSDateTime!
-  updatedAt: AWSDateTime!
+  username: String!
+  conversations: [ClConvoLink] @connection(name: "UserLinks")
+  messages: [ClMessage] @connection(name: "UserMessages")
+	createdAt: AWSDateTime
+	updatedAt: AWSDateTime
 }
 
-type ClMessage @model
-  @auth(
-    rules: [
-      {allow: owner, ownerField: "owner", mutations: [create, update, delete]},
-  ])
-{
+type ClConversation
+  @model(
+    mutations: { create: "createConvo" }
+    queries: { get: "getConvo" }
+    subscriptions: null
+  )
+  @auth(rules: [{ allow: owner, ownerField: "members" }]) {
   id: ID!
+  messages: [ClMessage] @connection(name: "ConvoMsgs", sortField: "createdAt")
+  associated: [ClConvoLink] @connection(name: "AssociatedLinks")
+  name: String!
+  members: [String!]!
+	createdAt: AWSDateTime
+	updatedAt: AWSDateTime
+}
+
+type ClMessage 
+  @model(subscriptions: null, queries: null) 
+  @auth(rules: [{ allow: owner, ownerField: "authorId" }]) {
+  id: ID!
+  author: ClUser @connection(name: "UserMessages", keyField: "authorId")
+  authorId: String
   content: String!
-  owner: String
-  when: String!
-  roomId: ID
-  room: ClRoom @connection(name: "RoomMessages", keyField: "roomId")
-  createdAt: AWSDateTime
+  conversation: ClConversation! @connection(name: "ConvoMsgs", sortField: "createdAt")
+  messageConversationId: ID!
+	createdAt: AWSDateTime
+	updatedAt: AWSDateTime
+}
+
+type ClConvoLink 
+  @model(
+    mutations: { create: "createConvoLink", update: "updateConvoLink" }
+    queries: null
+    subscriptions: null
+  ) {
+  id: ID!
+  user: ClUser! @connection(name: "UserLinks")
+  convoLinkUserId: ID
+  conversation: ClConversation! @connection(name: "AssociatedLinks")
+  convoLinkConversationId: ID!
+	createdAt: String
+	updatedAt: String
+}
+
+type ClSubscription {
+  onCreateConvoLink(convoLinkUserId: ID!): ClConvoLink
+    @aws_subscribe(mutations: ["createConvoLink"])
+  onCreateMessage(messageConversationId: ID!): ClMessage
+    @aws_subscribe(mutations: ["createMessage"])
 }
