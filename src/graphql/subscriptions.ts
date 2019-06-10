@@ -8,6 +8,7 @@ export const onCreateClRoom = `subscription OnCreateClRoom {
       items {
         id
         content
+        owner
         when
         roomId
         createdAt
@@ -16,8 +17,6 @@ export const onCreateClRoom = `subscription OnCreateClRoom {
     }
     createdAt
     updatedAt
-    owner1
-    owner2
   }
 }
 `;
@@ -28,6 +27,7 @@ export const onUpdateClRoom = `subscription OnUpdateClRoom {
       items {
         id
         content
+        owner
         when
         roomId
         createdAt
@@ -36,8 +36,6 @@ export const onUpdateClRoom = `subscription OnUpdateClRoom {
     }
     createdAt
     updatedAt
-    owner1
-    owner2
   }
 }
 `;
@@ -48,6 +46,7 @@ export const onDeleteClRoom = `subscription OnDeleteClRoom {
       items {
         id
         content
+        owner
         when
         roomId
         createdAt
@@ -56,8 +55,6 @@ export const onDeleteClRoom = `subscription OnDeleteClRoom {
     }
     createdAt
     updatedAt
-    owner1
-    owner2
   }
 }
 `;
@@ -65,6 +62,7 @@ export const onCreateClMessage = `subscription OnCreateClMessage {
   onCreateClMessage {
     id
     content
+    owner
     when
     roomId
     room {
@@ -74,8 +72,6 @@ export const onCreateClMessage = `subscription OnCreateClMessage {
       }
       createdAt
       updatedAt
-      owner1
-      owner2
     }
     createdAt
   }
@@ -85,6 +81,7 @@ export const onUpdateClMessage = `subscription OnUpdateClMessage {
   onUpdateClMessage {
     id
     content
+    owner
     when
     roomId
     room {
@@ -94,8 +91,6 @@ export const onUpdateClMessage = `subscription OnUpdateClMessage {
       }
       createdAt
       updatedAt
-      owner1
-      owner2
     }
     createdAt
   }
@@ -105,6 +100,7 @@ export const onDeleteClMessage = `subscription OnDeleteClMessage {
   onDeleteClMessage {
     id
     content
+    owner
     when
     roomId
     room {
@@ -114,31 +110,8 @@ export const onDeleteClMessage = `subscription OnDeleteClMessage {
       }
       createdAt
       updatedAt
-      owner1
-      owner2
     }
     createdAt
-  }
-}
-`;
-export const onCreateClUser = `subscription OnCreateClUser {
-  onCreateClUser {
-    id
-    username
-  }
-}
-`;
-export const onUpdateClUser = `subscription OnUpdateClUser {
-  onUpdateClUser {
-    id
-    username
-  }
-}
-`;
-export const onDeleteClUser = `subscription OnDeleteClUser {
-  onDeleteClUser {
-    id
-    username
   }
 }
 `;

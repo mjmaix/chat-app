@@ -8,6 +8,7 @@ export const createClRoom = `mutation CreateClRoom($input: CreateClRoomInput!) {
       items {
         id
         content
+        owner
         when
         roomId
         createdAt
@@ -16,8 +17,6 @@ export const createClRoom = `mutation CreateClRoom($input: CreateClRoomInput!) {
     }
     createdAt
     updatedAt
-    owner1
-    owner2
   }
 }
 `;
@@ -28,6 +27,7 @@ export const updateClRoom = `mutation UpdateClRoom($input: UpdateClRoomInput!) {
       items {
         id
         content
+        owner
         when
         roomId
         createdAt
@@ -36,8 +36,6 @@ export const updateClRoom = `mutation UpdateClRoom($input: UpdateClRoomInput!) {
     }
     createdAt
     updatedAt
-    owner1
-    owner2
   }
 }
 `;
@@ -48,6 +46,7 @@ export const deleteClRoom = `mutation DeleteClRoom($input: DeleteClRoomInput!) {
       items {
         id
         content
+        owner
         when
         roomId
         createdAt
@@ -56,8 +55,6 @@ export const deleteClRoom = `mutation DeleteClRoom($input: DeleteClRoomInput!) {
     }
     createdAt
     updatedAt
-    owner1
-    owner2
   }
 }
 `;
@@ -65,6 +62,7 @@ export const createClMessage = `mutation CreateClMessage($input: CreateClMessage
   createClMessage(input: $input) {
     id
     content
+    owner
     when
     roomId
     room {
@@ -74,8 +72,6 @@ export const createClMessage = `mutation CreateClMessage($input: CreateClMessage
       }
       createdAt
       updatedAt
-      owner1
-      owner2
     }
     createdAt
   }
@@ -85,6 +81,7 @@ export const updateClMessage = `mutation UpdateClMessage($input: UpdateClMessage
   updateClMessage(input: $input) {
     id
     content
+    owner
     when
     roomId
     room {
@@ -94,8 +91,6 @@ export const updateClMessage = `mutation UpdateClMessage($input: UpdateClMessage
       }
       createdAt
       updatedAt
-      owner1
-      owner2
     }
     createdAt
   }
@@ -105,6 +100,7 @@ export const deleteClMessage = `mutation DeleteClMessage($input: DeleteClMessage
   deleteClMessage(input: $input) {
     id
     content
+    owner
     when
     roomId
     room {
@@ -114,31 +110,8 @@ export const deleteClMessage = `mutation DeleteClMessage($input: DeleteClMessage
       }
       createdAt
       updatedAt
-      owner1
-      owner2
     }
     createdAt
-  }
-}
-`;
-export const createClUser = `mutation CreateClUser($input: CreateClUserInput!) {
-  createClUser(input: $input) {
-    id
-    username
-  }
-}
-`;
-export const updateClUser = `mutation UpdateClUser($input: UpdateClUserInput!) {
-  updateClUser(input: $input) {
-    id
-    username
-  }
-}
-`;
-export const deleteClUser = `mutation DeleteClUser($input: DeleteClUserInput!) {
-  deleteClUser(input: $input) {
-    id
-    username
   }
 }
 `;
