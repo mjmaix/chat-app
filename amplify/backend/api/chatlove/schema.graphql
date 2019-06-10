@@ -14,7 +14,7 @@ type ClMessage @model
 {
   id: ID!
   content: String!
-  owner: String!
+  owner: String
   when: String!
   roomId: ID
   room: ClRoom @connection(name: "RoomMessages", keyField: "roomId")
