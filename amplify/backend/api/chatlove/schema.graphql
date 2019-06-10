@@ -1,7 +1,16 @@
-type ClRoom @model {
+type ClRoom @model
+@auth(
+  rules: [
+    { allow: owner, ownerField: "owner1", operations: [create, update, read] },
+    { allow: owner, ownerField: "owner2", operations: [create, update, read] }
+  ])
+{
   id: ID!
   messages: [ClMessage] @connection(name: "RoomMessages", keyField: "roomId", sortField: "when")
-  createdAt: AWSDateTime
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  owner1: String!
+  owner2: String!
 }
 
 type ClMessage @model {
@@ -11,4 +20,9 @@ type ClMessage @model {
   roomId: ID
   room: ClRoom @connection(name: "RoomMessages", keyField: "roomId")
   createdAt: AWSDateTime
+}
+
+type ClUser @model {
+  id: ID!
+  username: String!
 }

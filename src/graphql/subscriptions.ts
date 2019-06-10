@@ -15,6 +15,9 @@ export const onCreateClRoom = `subscription OnCreateClRoom {
       nextToken
     }
     createdAt
+    updatedAt
+    owner1
+    owner2
   }
 }
 `;
@@ -32,6 +35,9 @@ export const onUpdateClRoom = `subscription OnUpdateClRoom {
       nextToken
     }
     createdAt
+    updatedAt
+    owner1
+    owner2
   }
 }
 `;
@@ -49,6 +55,9 @@ export const onDeleteClRoom = `subscription OnDeleteClRoom {
       nextToken
     }
     createdAt
+    updatedAt
+    owner1
+    owner2
   }
 }
 `;
@@ -64,6 +73,9 @@ export const onCreateClMessage = `subscription OnCreateClMessage {
         nextToken
       }
       createdAt
+      updatedAt
+      owner1
+      owner2
     }
     createdAt
   }
@@ -81,6 +93,9 @@ export const onUpdateClMessage = `subscription OnUpdateClMessage {
         nextToken
       }
       createdAt
+      updatedAt
+      owner1
+      owner2
     }
     createdAt
   }
@@ -98,8 +113,32 @@ export const onDeleteClMessage = `subscription OnDeleteClMessage {
         nextToken
       }
       createdAt
+      updatedAt
+      owner1
+      owner2
     }
     createdAt
+  }
+}
+`;
+export const onCreateClUser = `subscription OnCreateClUser {
+  onCreateClUser {
+    id
+    username
+  }
+}
+`;
+export const onUpdateClUser = `subscription OnUpdateClUser {
+  onUpdateClUser {
+    id
+    username
+  }
+}
+`;
+export const onDeleteClUser = `subscription OnDeleteClUser {
+  onDeleteClUser {
+    id
+    username
   }
 }
 `;
