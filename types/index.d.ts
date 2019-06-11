@@ -14,7 +14,7 @@ declare global {
     unverified: { [key in Contact]?: string };
   }
 
-  interface ChatCurrentUserAttributes {
+  interface ChatUserAttributes {
     email: string;
     email_verified: boolean;
     phone_number: string;
@@ -35,6 +35,10 @@ declare global {
     timezone?: string;
     updated_at?: string;
     website?: string;
+  }
+
+  interface ChatCognitoUser extends CognitoUser {
+    attributes: ChatUserAttributes;
   }
 
   type MfaMethod = 'TOTP' | 'SMS' | 'NOMFA';

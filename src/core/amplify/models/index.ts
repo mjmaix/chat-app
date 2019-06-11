@@ -4,9 +4,9 @@ interface FormModel {
 
 export const ProfileModel: FormModel = {
   email: '',
-  familyName: '',
-  givenName: '',
-  phoneNumber: '',
+  family_name: '',
+  given_name: '',
+  phone_number: '',
   picture: '',
 };
 
@@ -15,7 +15,7 @@ export const EmailModel: FormModel = {
 };
 
 export const PhoneNumberModel: FormModel = {
-  phoneNumber: '',
+  phone_number: '',
 };
 
 export const CodeRequiredModel: FormModel = {

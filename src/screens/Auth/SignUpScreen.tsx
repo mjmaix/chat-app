@@ -39,7 +39,7 @@ class SignUpScreen extends Component<Props> {
                 {/* 
                 // TODO: the only way to have verified email and phone_number is to validate email first 
                 <StyledFormRow>
-                  <FormikInputInjector dataKey="phoneNumber" formProps={fProps}>
+                  <FormikInputInjector dataKey="phone_number" formProps={fProps}>
                     <StyledTextInput
                       placeholder="Mobile"
                       keyboardType="phone-pad"
@@ -50,7 +50,7 @@ class SignUpScreen extends Component<Props> {
                 </StyledFormRow> */}
 
                 <StyledFormRow>
-                  <FormikInputInjector dataKey="givenName" formProps={fProps}>
+                  <FormikInputInjector dataKey="given_name" formProps={fProps}>
                     <StyledTextInput
                       placeholder="Given name"
                       textContentType="givenName"
@@ -59,7 +59,7 @@ class SignUpScreen extends Component<Props> {
                 </StyledFormRow>
 
                 <StyledFormRow>
-                  <FormikInputInjector dataKey="familyName" formProps={fProps}>
+                  <FormikInputInjector dataKey="family_name" formProps={fProps}>
                     <StyledTextInput
                       placeholder="Family name"
                       textContentType="familyName"

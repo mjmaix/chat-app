@@ -72,7 +72,16 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
       })
       .then(form => {
         this.setState(prev => ({
-          form: { ...prev.form, ...form },
+          form: {
+            ...prev.form,
+            ...{
+              email: form.email || '',
+              family_name: form.family_name || '',
+              given_name: form.given_name || '',
+              phone_number: form.phone_number || '',
+              picture: form.picture || '',
+            },
+          },
           isFormReady: true,
         }));
       });
@@ -166,7 +175,7 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
               </StyledFormRow>
 
               <StyledFormRow>
-                <FormikInputInjector dataKey="givenName" formProps={fProps}>
+                <FormikInputInjector dataKey="given_name" formProps={fProps}>
                   <StyledTextInput
                     label="Given name"
                     textContentType="givenName"
@@ -175,7 +184,7 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
               </StyledFormRow>
 
               <StyledFormRow>
-                <FormikInputInjector dataKey="familyName" formProps={fProps}>
+                <FormikInputInjector dataKey="family_name" formProps={fProps}>
                   <StyledTextInput
                     label="Family name"
                     textContentType="familyName"
@@ -184,7 +193,7 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
               </StyledFormRow>
 
               <StyledFormRow>
-                <FormikInputInjector dataKey="phoneNumber" formProps={fProps}>
+                <FormikInputInjector dataKey="phone_number" formProps={fProps}>
                   <StyledTextInput
                     label="Mobile"
                     keyboardType="phone-pad"

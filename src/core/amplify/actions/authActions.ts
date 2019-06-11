@@ -23,24 +23,11 @@ import { VerifyContactModel } from '../models/index';
 
 type SignUpModel = typeof ProfileModel & typeof PasswordRequiredModel;
 
-const getUserAttrs = (
-  user: CognitoUser & { attributes: ChatCurrentUserAttributes },
-) => {
-  return {
-    email: user.attributes.email,
-    familyName: user.attributes.family_name,
-    givenName: user.attributes.given_name,
-    phoneNumber: user.attributes.phone_number,
-    picture: user.attributes.picture,
-  } as typeof ProfileModel;
-};
-
 export const handleGetCurrentUserAttrs = async (opts?: CurrentUserOpts) => {
-  const currentUser = await Auth.currentUserPoolUser(opts).catch(
-    WrapKnownExceptions,
-  );
-  const attrs = getUserAttrs(currentUser);
-  return attrs;
+  const currentUser: ChatCognitoUser = await Auth.currentUserPoolUser(
+    opts,
+  ).catch(WrapKnownExceptions);
+  return currentUser.attributes;
 };
 
 export const handleGetCurrentUserRawAttrs = async (opts?: CurrentUserOpts) => {
@@ -57,9 +44,9 @@ export const handleSignUp = async (data: typeof SignUpModel) => {
     password,
     attributes: {
       email: attrs.email,
-      family_name: attrs.familyName,
-      given_name: attrs.givenName,
-      phone_number: attrs.phoneNumber,
+      family_name: attrs.family_name,
+      given_name: attrs.given_name,
+      phone_number: attrs.phone_number,
     },
   }).catch(WrapKnownExceptions);
 
@@ -68,9 +55,9 @@ export const handleSignUp = async (data: typeof SignUpModel) => {
 
 export const handleSignIn = async (data: typeof SignInModel) => {
   logInfo('[START] handleSignIn');
-  const { email, password, phoneNumber } = data;
+  const { email, password, phone_number } = data;
   const user = await Auth.signIn({
-    username: email.toLowerCase() || phoneNumber,
+    username: email.toLowerCase() || phone_number,
     password,
   }).catch(WrapKnownExceptions);
   return user;
@@ -83,17 +70,17 @@ export const handleSignOut = async (global = false) => {
 
 export const handleUpdateProfile = async (data: typeof ProfileModel) => {
   logInfo('[START] handleUpdateProfile');
-  const { email, familyName, givenName, phoneNumber, picture } = data;
+  const { email, family_name, given_name, phone_number, picture } = data;
   const user = await Auth.currentUserPoolUser().catch(WrapKnownExceptions);
 
   const buildAttrs: any = {
     email: email.toLowerCase(),
-    family_name: familyName,
-    given_name: givenName,
+    family_name,
+    given_name,
     picture: picture || '', // TODO: workaround, https://github.com/jaredpalmer/formik/pull/728 - wait for formik to support Yup transform during validation
   };
-  if (phoneNumber) {
-    buildAttrs.phone_number = phoneNumber || '';
+  if (phone_number) {
+    buildAttrs.phone_number = phone_number || '';
   }
 
   return Auth.updateUserAttributes(user, buildAttrs).catch(WrapKnownExceptions);

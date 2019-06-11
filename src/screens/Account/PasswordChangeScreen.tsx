@@ -36,7 +36,10 @@ class PasswordChangeScreen extends Component<Props> {
             return (
               <StyledFormContainer>
                 <StyledFormRow>
-                  <FormikInputInjector dataKey="passwordOld" formProps={fProps}>
+                  <FormikInputInjector
+                    dataKey="password_old"
+                    formProps={fProps}
+                  >
                     <StyledTextInput
                       as={PasswordInput}
                       placeholder="Old password"

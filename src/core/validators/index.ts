@@ -35,25 +35,25 @@ export const codeRule = Yup.string()
 export const SignUpSchema = Yup.object().shape({
   password: passwordRule.required(),
   email: emailRule.required(),
-  familyName: nameRule.label('Family name').notRequired(),
-  givenName: nameRule.label('Given name').notRequired(),
-  phoneNumber: phoneNumberRule.notRequired(),
+  family_name: nameRule.label('Family name').notRequired(),
+  given_name: nameRule.label('Given name').notRequired(),
+  phone_number: phoneNumberRule.notRequired(),
   picture: pictureRule.notRequired(),
 });
 
 export const CompleteNewPasswordSchema = Yup.object().shape({
   password: passwordRule.required(),
   email: emailRule.notRequired(),
-  familyName: nameRule.label('Family name').notRequired(),
-  givenName: nameRule.label('Given name').notRequired(),
-  phoneNumber: phoneNumberRule.required(),
+  family_name: nameRule.label('Family name').notRequired(),
+  given_name: nameRule.label('Given name').notRequired(),
+  phone_umber: phoneNumberRule.required(),
 });
 
 export const UpdateProfileSchema = Yup.object().shape({
   email: emailRule.required(),
-  familyName: nameRule.label('Family name').notRequired(),
-  givenName: nameRule.label('Given name').notRequired(),
-  phoneNumber: phoneNumberRule.notRequired(),
+  family_name: nameRule.label('Family name').notRequired(),
+  given_name: nameRule.label('Given name').notRequired(),
+  phone_umber: phoneNumberRule.notRequired(),
   picture: pictureRule.notRequired(),
 });
 
@@ -64,7 +64,7 @@ export const SignInEmailSchema = Yup.object().shape({
 
 export const SignInMobileSchema = Yup.object().shape({
   password: Yup.string().required(),
-  phoneNumber: phoneNumberRule.required(),
+  phone_umber: phoneNumberRule.required(),
 });
 
 export const ChallengeSchema = Yup.object().shape({
@@ -89,7 +89,7 @@ export const PasswordResetSchema = Yup.object().shape({
 });
 
 export const PasswordChangeSchema = Yup.object().shape({
-  passwordOld: passwordRule.label('Old password').required(),
+  password_old: passwordRule.label('Old password').required(),
   password: passwordRule.label('New password').required(),
 });
 

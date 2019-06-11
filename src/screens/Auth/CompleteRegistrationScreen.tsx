@@ -66,15 +66,15 @@ class CompleteRegistrationScreen extends Component<Props, State> {
     }
 
     if (showPhoneNumberField) {
-      schemaFields.phoneNumber = phoneNumberRule.required();
+      schemaFields.phone_number = phoneNumberRule.required();
     }
 
     if (showGivenNameField) {
-      schemaFields.givenName = nameRule.label('Given name').required();
+      schemaFields.given_name = nameRule.label('Given name').required();
     }
 
     if (showFamilyNameField) {
-      schemaFields.familyName = nameRule.label('Family name').required();
+      schemaFields.family_name = nameRule.label('Family name').required();
     }
 
     if (showPasswordField) {
@@ -107,7 +107,7 @@ class CompleteRegistrationScreen extends Component<Props, State> {
                 {showPhoneNumberField && (
                   <StyledFormRow>
                     <FormikInputInjector
-                      dataKey="phoneNumber"
+                      dataKey="phone_number"
                       formProps={fProps}
                     >
                       <StyledTextInput
@@ -122,7 +122,10 @@ class CompleteRegistrationScreen extends Component<Props, State> {
 
                 {showGivenNameField && (
                   <StyledFormRow>
-                    <FormikInputInjector dataKey="givenName" formProps={fProps}>
+                    <FormikInputInjector
+                      dataKey="given_name"
+                      formProps={fProps}
+                    >
                       <StyledTextInput
                         placeholder="Given name"
                         textContentType="givenName"
@@ -134,7 +137,7 @@ class CompleteRegistrationScreen extends Component<Props, State> {
                 {showFamilyNameField && (
                   <StyledFormRow>
                     <FormikInputInjector
-                      dataKey="familyName"
+                      dataKey="family_name"
                       formProps={fProps}
                     >
                       <StyledTextInput
