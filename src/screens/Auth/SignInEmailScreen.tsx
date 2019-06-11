@@ -1,4 +1,4 @@
-import { Formik, FormikActions, FormikProps } from 'formik';
+import { Formik, FormikActions } from 'formik';
 import React, { Component } from 'react';
 import { NavigationScreenProps } from 'react-navigation';
 
@@ -9,6 +9,7 @@ import {
   SignInModel,
   handleSignIn,
 } from '../../core';
+import { handleNewSignedInUser } from '../../core/amplify/actions/eventActions';
 import { FormikInputInjector } from '../../hocs';
 import { MemoFormikFormErrorText } from '../../hocs/MemoFormikFormErrorText';
 import { ScreenName } from '../../routes/mappings';
@@ -84,6 +85,8 @@ class SignInEmailScreen extends Component<Props> {
         transferScreen = 'CompleteRegistration';
       } else if (MFA_CHALLENGES.includes(user.challengeName)) {
         transferScreen = 'SignInCode';
+      } else if (!user.challengeName) {
+        handleNewSignedInUser();
       }
     } catch (err) {
       transferScreen = null;

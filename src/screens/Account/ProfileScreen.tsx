@@ -10,7 +10,6 @@ import {
   ProfileModel,
   StyleGuide,
   UpdateProfileSchema,
-  handleCheckVerifiedContact,
   handleGetCurrentUserAttrs,
   handleSignOut,
   handleUpdateProfile,

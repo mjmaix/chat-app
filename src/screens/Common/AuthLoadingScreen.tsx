@@ -4,7 +4,7 @@ import { ActivityIndicator, StatusBar } from 'react-native';
 
 import { logInfo } from '../../core';
 import { StyledScreenContainer } from '../../styled';
-import { NavigationService, alertFail } from '../../utils';
+import { NavigationService } from '../../utils';
 
 class AuthLoadingScreen extends React.Component<{}> {
   public async componentDidMount() {

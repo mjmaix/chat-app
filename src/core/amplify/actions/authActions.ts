@@ -30,11 +30,11 @@ export const handleGetCurrentUserAttrs = async (opts?: CurrentUserOpts) => {
   return currentUser.attributes;
 };
 
-export const handleGetCurrentUserRawAttrs = async (opts?: CurrentUserOpts) => {
+export const handleGetCurrentUser = async (opts?: CurrentUserOpts) => {
   const currentUser = await Auth.currentUserPoolUser(opts).catch(
     WrapKnownExceptions,
   );
-  return currentUser.attributes;
+  return currentUser as ChatCognitoUser;
 };
 
 export const handleSignUp = async (data: typeof SignUpModel) => {
