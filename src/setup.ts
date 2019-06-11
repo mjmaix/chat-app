@@ -8,6 +8,7 @@ import awsmobile from '../aws-exports';
 YellowBox.ignoreWarnings(['Warning: Async']);
 Amplify.configure(awsmobile);
 
+// TODO: refactor to separate module
 export const apolloClient = new AWSAppSyncClient({
   url: awsmobile.aws_appsync_graphqlEndpoint,
   region: awsmobile.aws_appsync_region,

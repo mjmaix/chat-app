@@ -1,18 +1,14 @@
 // tslint:disable
 // this is an auto generated file. This will be overwritten
 
-export const onCreateClRoom = `subscription OnCreateClRoom {
-  onCreateClRoom {
+export const onCreateClUser = `subscription OnCreateClUser {
+  onCreateClUser {
     id
+    username
+    conversations {
+      nextToken
+    }
     messages {
-      items {
-        id
-        content
-        owner
-        when
-        roomId
-        createdAt
-      }
       nextToken
     }
     createdAt
@@ -20,18 +16,14 @@ export const onCreateClRoom = `subscription OnCreateClRoom {
   }
 }
 `;
-export const onUpdateClRoom = `subscription OnUpdateClRoom {
-  onUpdateClRoom {
+export const onUpdateClUser = `subscription OnUpdateClUser {
+  onUpdateClUser {
     id
+    username
+    conversations {
+      nextToken
+    }
     messages {
-      items {
-        id
-        content
-        owner
-        when
-        roomId
-        createdAt
-      }
       nextToken
     }
     createdAt
@@ -39,79 +31,18 @@ export const onUpdateClRoom = `subscription OnUpdateClRoom {
   }
 }
 `;
-export const onDeleteClRoom = `subscription OnDeleteClRoom {
-  onDeleteClRoom {
+export const onDeleteClUser = `subscription OnDeleteClUser {
+  onDeleteClUser {
     id
+    username
+    conversations {
+      nextToken
+    }
     messages {
-      items {
-        id
-        content
-        owner
-        when
-        roomId
-        createdAt
-      }
       nextToken
     }
     createdAt
     updatedAt
-  }
-}
-`;
-export const onCreateClMessage = `subscription OnCreateClMessage {
-  onCreateClMessage {
-    id
-    content
-    owner
-    when
-    roomId
-    room {
-      id
-      messages {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    createdAt
-  }
-}
-`;
-export const onUpdateClMessage = `subscription OnUpdateClMessage {
-  onUpdateClMessage {
-    id
-    content
-    owner
-    when
-    roomId
-    room {
-      id
-      messages {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    createdAt
-  }
-}
-`;
-export const onDeleteClMessage = `subscription OnDeleteClMessage {
-  onDeleteClMessage {
-    id
-    content
-    owner
-    when
-    roomId
-    room {
-      id
-      messages {
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-    createdAt
   }
 }
 `;

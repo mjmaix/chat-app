@@ -1,51 +1,84 @@
 /* tslint:disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateClRoomInput = {
+export type CreateClUserInput = {
   id?: string | null,
+  username: string,
   createdAt?: string | null,
   updatedAt?: string | null,
 };
 
-export type UpdateClRoomInput = {
+export type UpdateClUserInput = {
   id: string,
+  username?: string | null,
   createdAt?: string | null,
   updatedAt?: string | null,
 };
 
-export type DeleteClRoomInput = {
+export type DeleteClUserInput = {
   id?: string | null,
+};
+
+export type CreateClConversationInput = {
+  id?: string | null,
+  name: string,
+  members: Array< string >,
+  createdAt?: string | null,
+  updatedAt?: string | null,
 };
 
 export type CreateClMessageInput = {
   id?: string | null,
+  authorId?: string | null,
   content: string,
-  owner?: string | null,
-  when: string,
-  roomId?: string | null,
+  messageConversationId: string,
   createdAt?: string | null,
+  updatedAt?: string | null,
+  clMessageConversationId: string,
 };
 
 export type UpdateClMessageInput = {
   id: string,
+  authorId?: string | null,
   content?: string | null,
-  owner?: string | null,
-  when?: string | null,
-  roomId?: string | null,
+  messageConversationId?: string | null,
   createdAt?: string | null,
+  updatedAt?: string | null,
+  clMessageConversationId?: string | null,
 };
 
 export type DeleteClMessageInput = {
   id?: string | null,
 };
 
-export type ModelClRoomFilterInput = {
+export type CreateClConvoLinkInput = {
+  id?: string | null,
+  convoLinkUserId?: string | null,
+  convoLinkConversationId: string,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  clConvoLinkUserId: string,
+  clConvoLinkConversationId: string,
+};
+
+export type UpdateClConvoLinkInput = {
+  id: string,
+  convoLinkUserId?: string | null,
+  convoLinkConversationId?: string | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  clConvoLinkUserId?: string | null,
+  clConvoLinkConversationId?: string | null,
+};
+
+export type ModelClUserFilterInput = {
   id?: ModelIDFilterInput | null,
+  username?: ModelStringFilterInput | null,
   createdAt?: ModelStringFilterInput | null,
   updatedAt?: ModelStringFilterInput | null,
-  and?: Array< ModelClRoomFilterInput | null > | null,
-  or?: Array< ModelClRoomFilterInput | null > | null,
-  not?: ModelClRoomFilterInput | null,
+  and?: Array< ModelClUserFilterInput | null > | null,
+  or?: Array< ModelClUserFilterInput | null > | null,
+  not?: ModelClUserFilterInput | null,
 };
 
 export type ModelIDFilterInput = {
@@ -74,47 +107,21 @@ export type ModelStringFilterInput = {
   beginsWith?: string | null,
 };
 
-export type ModelClMessageFilterInput = {
-  id?: ModelIDFilterInput | null,
-  content?: ModelStringFilterInput | null,
-  owner?: ModelStringFilterInput | null,
-  when?: ModelStringFilterInput | null,
-  roomId?: ModelIDFilterInput | null,
-  createdAt?: ModelStringFilterInput | null,
-  and?: Array< ModelClMessageFilterInput | null > | null,
-  or?: Array< ModelClMessageFilterInput | null > | null,
-  not?: ModelClMessageFilterInput | null,
+export type CreateClUserMutationVariables = {
+  input: CreateClUserInput,
 };
 
-export type ModelStringKeyConditionInput = {
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-};
-
-export type CreateClRoomMutationVariables = {
-  input: CreateClRoomInput,
-};
-
-export type CreateClRoomMutation = {
-  createClRoom:  {
-    __typename: "ClRoom",
+export type CreateClUserMutation = {
+  createClUser:  {
+    __typename: "ClUser",
     id: string,
+    username: string,
+    conversations:  {
+      __typename: "ModelClConvoLinkConnection",
+      nextToken: string | null,
+    } | null,
     messages:  {
       __typename: "ModelClMessageConnection",
-      items:  Array< {
-        __typename: "ClMessage",
-        id: string,
-        content: string,
-        owner: string | null,
-        when: string,
-        roomId: string | null,
-        createdAt: string | null,
-      } | null > | null,
       nextToken: string | null,
     } | null,
     createdAt: string | null,
@@ -122,25 +129,21 @@ export type CreateClRoomMutation = {
   } | null,
 };
 
-export type UpdateClRoomMutationVariables = {
-  input: UpdateClRoomInput,
+export type UpdateClUserMutationVariables = {
+  input: UpdateClUserInput,
 };
 
-export type UpdateClRoomMutation = {
-  updateClRoom:  {
-    __typename: "ClRoom",
+export type UpdateClUserMutation = {
+  updateClUser:  {
+    __typename: "ClUser",
     id: string,
+    username: string,
+    conversations:  {
+      __typename: "ModelClConvoLinkConnection",
+      nextToken: string | null,
+    } | null,
     messages:  {
       __typename: "ModelClMessageConnection",
-      items:  Array< {
-        __typename: "ClMessage",
-        id: string,
-        content: string,
-        owner: string | null,
-        when: string,
-        roomId: string | null,
-        createdAt: string | null,
-      } | null > | null,
       nextToken: string | null,
     } | null,
     createdAt: string | null,
@@ -148,27 +151,46 @@ export type UpdateClRoomMutation = {
   } | null,
 };
 
-export type DeleteClRoomMutationVariables = {
-  input: DeleteClRoomInput,
+export type DeleteClUserMutationVariables = {
+  input: DeleteClUserInput,
 };
 
-export type DeleteClRoomMutation = {
-  deleteClRoom:  {
-    __typename: "ClRoom",
+export type DeleteClUserMutation = {
+  deleteClUser:  {
+    __typename: "ClUser",
+    id: string,
+    username: string,
+    conversations:  {
+      __typename: "ModelClConvoLinkConnection",
+      nextToken: string | null,
+    } | null,
+    messages:  {
+      __typename: "ModelClMessageConnection",
+      nextToken: string | null,
+    } | null,
+    createdAt: string | null,
+    updatedAt: string | null,
+  } | null,
+};
+
+export type CreateConvoMutationVariables = {
+  input: CreateClConversationInput,
+};
+
+export type CreateConvoMutation = {
+  createConvo:  {
+    __typename: "ClConversation",
     id: string,
     messages:  {
       __typename: "ModelClMessageConnection",
-      items:  Array< {
-        __typename: "ClMessage",
-        id: string,
-        content: string,
-        owner: string | null,
-        when: string,
-        roomId: string | null,
-        createdAt: string | null,
-      } | null > | null,
       nextToken: string | null,
     } | null,
+    associated:  {
+      __typename: "ModelClConvoLinkConnection",
+      nextToken: string | null,
+    } | null,
+    name: string,
+    members: Array< string >,
     createdAt: string | null,
     updatedAt: string | null,
   } | null,
@@ -182,21 +204,26 @@ export type CreateClMessageMutation = {
   createClMessage:  {
     __typename: "ClMessage",
     id: string,
-    content: string,
-    owner: string | null,
-    when: string,
-    roomId: string | null,
-    room:  {
-      __typename: "ClRoom",
+    author:  {
+      __typename: "ClUser",
       id: string,
-      messages:  {
-        __typename: "ModelClMessageConnection",
-        nextToken: string | null,
-      } | null,
+      username: string,
       createdAt: string | null,
       updatedAt: string | null,
     } | null,
+    authorId: string | null,
+    content: string,
+    conversation:  {
+      __typename: "ClConversation",
+      id: string,
+      name: string,
+      members: Array< string >,
+      createdAt: string | null,
+      updatedAt: string | null,
+    },
+    messageConversationId: string,
     createdAt: string | null,
+    updatedAt: string | null,
   } | null,
 };
 
@@ -208,21 +235,26 @@ export type UpdateClMessageMutation = {
   updateClMessage:  {
     __typename: "ClMessage",
     id: string,
-    content: string,
-    owner: string | null,
-    when: string,
-    roomId: string | null,
-    room:  {
-      __typename: "ClRoom",
+    author:  {
+      __typename: "ClUser",
       id: string,
-      messages:  {
-        __typename: "ModelClMessageConnection",
-        nextToken: string | null,
-      } | null,
+      username: string,
       createdAt: string | null,
       updatedAt: string | null,
     } | null,
+    authorId: string | null,
+    content: string,
+    conversation:  {
+      __typename: "ClConversation",
+      id: string,
+      name: string,
+      members: Array< string >,
+      createdAt: string | null,
+      updatedAt: string | null,
+    },
+    messageConversationId: string,
     createdAt: string | null,
+    updatedAt: string | null,
   } | null,
 };
 
@@ -234,43 +266,104 @@ export type DeleteClMessageMutation = {
   deleteClMessage:  {
     __typename: "ClMessage",
     id: string,
-    content: string,
-    owner: string | null,
-    when: string,
-    roomId: string | null,
-    room:  {
-      __typename: "ClRoom",
+    author:  {
+      __typename: "ClUser",
       id: string,
-      messages:  {
-        __typename: "ModelClMessageConnection",
-        nextToken: string | null,
-      } | null,
+      username: string,
       createdAt: string | null,
       updatedAt: string | null,
     } | null,
+    authorId: string | null,
+    content: string,
+    conversation:  {
+      __typename: "ClConversation",
+      id: string,
+      name: string,
+      members: Array< string >,
+      createdAt: string | null,
+      updatedAt: string | null,
+    },
+    messageConversationId: string,
     createdAt: string | null,
+    updatedAt: string | null,
   } | null,
 };
 
-export type GetClRoomQueryVariables = {
+export type CreateConvoLinkMutationVariables = {
+  input: CreateClConvoLinkInput,
+};
+
+export type CreateConvoLinkMutation = {
+  createConvoLink:  {
+    __typename: "ClConvoLink",
+    id: string,
+    user:  {
+      __typename: "ClUser",
+      id: string,
+      username: string,
+      createdAt: string | null,
+      updatedAt: string | null,
+    },
+    convoLinkUserId: string | null,
+    conversation:  {
+      __typename: "ClConversation",
+      id: string,
+      name: string,
+      members: Array< string >,
+      createdAt: string | null,
+      updatedAt: string | null,
+    },
+    convoLinkConversationId: string,
+    createdAt: string | null,
+    updatedAt: string | null,
+  } | null,
+};
+
+export type UpdateConvoLinkMutationVariables = {
+  input: UpdateClConvoLinkInput,
+};
+
+export type UpdateConvoLinkMutation = {
+  updateConvoLink:  {
+    __typename: "ClConvoLink",
+    id: string,
+    user:  {
+      __typename: "ClUser",
+      id: string,
+      username: string,
+      createdAt: string | null,
+      updatedAt: string | null,
+    },
+    convoLinkUserId: string | null,
+    conversation:  {
+      __typename: "ClConversation",
+      id: string,
+      name: string,
+      members: Array< string >,
+      createdAt: string | null,
+      updatedAt: string | null,
+    },
+    convoLinkConversationId: string,
+    createdAt: string | null,
+    updatedAt: string | null,
+  } | null,
+};
+
+export type GetClUserQueryVariables = {
   id: string,
 };
 
-export type GetClRoomQuery = {
-  getClRoom:  {
-    __typename: "ClRoom",
+export type GetClUserQuery = {
+  getClUser:  {
+    __typename: "ClUser",
     id: string,
+    username: string,
+    conversations:  {
+      __typename: "ModelClConvoLinkConnection",
+      nextToken: string | null,
+    } | null,
     messages:  {
       __typename: "ModelClMessageConnection",
-      items:  Array< {
-        __typename: "ClMessage",
-        id: string,
-        content: string,
-        owner: string | null,
-        when: string,
-        roomId: string | null,
-        createdAt: string | null,
-      } | null > | null,
       nextToken: string | null,
     } | null,
     createdAt: string | null,
@@ -278,22 +371,19 @@ export type GetClRoomQuery = {
   } | null,
 };
 
-export type ListClRoomsQueryVariables = {
-  filter?: ModelClRoomFilterInput | null,
+export type ListClUsersQueryVariables = {
+  filter?: ModelClUserFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListClRoomsQuery = {
-  listClRooms:  {
-    __typename: "ModelClRoomConnection",
+export type ListClUsersQuery = {
+  listClUsers:  {
+    __typename: "ModelClUserConnection",
     items:  Array< {
-      __typename: "ClRoom",
+      __typename: "ClUser",
       id: string,
-      messages:  {
-        __typename: "ModelClMessageConnection",
-        nextToken: string | null,
-      } | null,
+      username: string,
       createdAt: string | null,
       updatedAt: string | null,
     } | null > | null,
@@ -301,105 +391,40 @@ export type ListClRoomsQuery = {
   } | null,
 };
 
-export type GetClMessageQueryVariables = {
+export type GetConvoQueryVariables = {
   id: string,
 };
 
-export type GetClMessageQuery = {
-  getClMessage:  {
-    __typename: "ClMessage",
-    id: string,
-    content: string,
-    owner: string | null,
-    when: string,
-    roomId: string | null,
-    room:  {
-      __typename: "ClRoom",
-      id: string,
-      messages:  {
-        __typename: "ModelClMessageConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string | null,
-      updatedAt: string | null,
-    } | null,
-    createdAt: string | null,
-  } | null,
-};
-
-export type ListClMessagesQueryVariables = {
-  filter?: ModelClMessageFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListClMessagesQuery = {
-  listClMessages:  {
-    __typename: "ModelClMessageConnection",
-    items:  Array< {
-      __typename: "ClMessage",
-      id: string,
-      content: string,
-      owner: string | null,
-      when: string,
-      roomId: string | null,
-      room:  {
-        __typename: "ClRoom",
-        id: string,
-        createdAt: string | null,
-        updatedAt: string | null,
-      } | null,
-      createdAt: string | null,
-    } | null > | null,
-    nextToken: string | null,
-  } | null,
-};
-
-export type MyMessagesQueryVariables = {
-  owner?: string | null,
-  createdAt?: ModelStringKeyConditionInput | null,
-  filter?: ModelClMessageFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type MyMessagesQuery = {
-  myMessages:  {
-    __typename: "ModelClMessageConnection",
-    items:  Array< {
-      __typename: "ClMessage",
-      id: string,
-      content: string,
-      owner: string | null,
-      when: string,
-      roomId: string | null,
-      room:  {
-        __typename: "ClRoom",
-        id: string,
-        createdAt: string | null,
-        updatedAt: string | null,
-      } | null,
-      createdAt: string | null,
-    } | null > | null,
-    nextToken: string | null,
-  } | null,
-};
-
-export type OnCreateClRoomSubscription = {
-  onCreateClRoom:  {
-    __typename: "ClRoom",
+export type GetConvoQuery = {
+  getConvo:  {
+    __typename: "ClConversation",
     id: string,
     messages:  {
       __typename: "ModelClMessageConnection",
-      items:  Array< {
-        __typename: "ClMessage",
-        id: string,
-        content: string,
-        owner: string | null,
-        when: string,
-        roomId: string | null,
-        createdAt: string | null,
-      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    associated:  {
+      __typename: "ModelClConvoLinkConnection",
+      nextToken: string | null,
+    } | null,
+    name: string,
+    members: Array< string >,
+    createdAt: string | null,
+    updatedAt: string | null,
+  } | null,
+};
+
+export type OnCreateClUserSubscription = {
+  onCreateClUser:  {
+    __typename: "ClUser",
+    id: string,
+    username: string,
+    conversations:  {
+      __typename: "ModelClConvoLinkConnection",
+      nextToken: string | null,
+    } | null,
+    messages:  {
+      __typename: "ModelClMessageConnection",
       nextToken: string | null,
     } | null,
     createdAt: string | null,
@@ -407,21 +432,17 @@ export type OnCreateClRoomSubscription = {
   } | null,
 };
 
-export type OnUpdateClRoomSubscription = {
-  onUpdateClRoom:  {
-    __typename: "ClRoom",
+export type OnUpdateClUserSubscription = {
+  onUpdateClUser:  {
+    __typename: "ClUser",
     id: string,
+    username: string,
+    conversations:  {
+      __typename: "ModelClConvoLinkConnection",
+      nextToken: string | null,
+    } | null,
     messages:  {
       __typename: "ModelClMessageConnection",
-      items:  Array< {
-        __typename: "ClMessage",
-        id: string,
-        content: string,
-        owner: string | null,
-        when: string,
-        roomId: string | null,
-        createdAt: string | null,
-      } | null > | null,
       nextToken: string | null,
     } | null,
     createdAt: string | null,
@@ -429,90 +450,20 @@ export type OnUpdateClRoomSubscription = {
   } | null,
 };
 
-export type OnDeleteClRoomSubscription = {
-  onDeleteClRoom:  {
-    __typename: "ClRoom",
+export type OnDeleteClUserSubscription = {
+  onDeleteClUser:  {
+    __typename: "ClUser",
     id: string,
+    username: string,
+    conversations:  {
+      __typename: "ModelClConvoLinkConnection",
+      nextToken: string | null,
+    } | null,
     messages:  {
       __typename: "ModelClMessageConnection",
-      items:  Array< {
-        __typename: "ClMessage",
-        id: string,
-        content: string,
-        owner: string | null,
-        when: string,
-        roomId: string | null,
-        createdAt: string | null,
-      } | null > | null,
       nextToken: string | null,
     } | null,
     createdAt: string | null,
     updatedAt: string | null,
-  } | null,
-};
-
-export type OnCreateClMessageSubscription = {
-  onCreateClMessage:  {
-    __typename: "ClMessage",
-    id: string,
-    content: string,
-    owner: string | null,
-    when: string,
-    roomId: string | null,
-    room:  {
-      __typename: "ClRoom",
-      id: string,
-      messages:  {
-        __typename: "ModelClMessageConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string | null,
-      updatedAt: string | null,
-    } | null,
-    createdAt: string | null,
-  } | null,
-};
-
-export type OnUpdateClMessageSubscription = {
-  onUpdateClMessage:  {
-    __typename: "ClMessage",
-    id: string,
-    content: string,
-    owner: string | null,
-    when: string,
-    roomId: string | null,
-    room:  {
-      __typename: "ClRoom",
-      id: string,
-      messages:  {
-        __typename: "ModelClMessageConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string | null,
-      updatedAt: string | null,
-    } | null,
-    createdAt: string | null,
-  } | null,
-};
-
-export type OnDeleteClMessageSubscription = {
-  onDeleteClMessage:  {
-    __typename: "ClMessage",
-    id: string,
-    content: string,
-    owner: string | null,
-    when: string,
-    roomId: string | null,
-    room:  {
-      __typename: "ClRoom",
-      id: string,
-      messages:  {
-        __typename: "ModelClMessageConnection",
-        nextToken: string | null,
-      } | null,
-      createdAt: string | null,
-      updatedAt: string | null,
-    } | null,
-    createdAt: string | null,
   } | null,
 };

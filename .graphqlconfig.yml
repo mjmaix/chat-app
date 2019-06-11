@@ -1,11 +1,13 @@
 projects:
   chatlove:
     schemaPath: src/graphql/schema.json
-    includes: src/graphql/**/*.js
+    includes:
+      - src/graphql/**/*.ts
     excludes:
       - ./amplify/**
     extensions:
       amplify:
-        codeGenTarget: javascript
-        generatedFileName: ''
+        codeGenTarget: typescript
+        generatedFileName: src/API.ts
         docsFilePath: src/graphql
+        maxDepth: 2
