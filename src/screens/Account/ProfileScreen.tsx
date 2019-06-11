@@ -11,12 +11,12 @@ import {
   StyleGuide,
   UpdateProfileSchema,
   handleGetCurrentUserAttrs,
+  handlePressVerifyContact,
   handleSignOut,
   handleUpdateProfile,
   handleVerifyContactResend,
   logInfo,
 } from '../../core';
-import { handlePressVerifyContact } from '../../core/amplify/actions/eventActions';
 import { WrapKnownExceptions } from '../../core/errors';
 import {
   FormikButtonInjector,

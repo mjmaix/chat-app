@@ -2,11 +2,13 @@ import { Formik, FormikActions } from 'formik';
 import React, { useEffect } from 'react';
 
 import { CodeInput, Header } from '../../components';
-import { CodeRequiredModel, CodeSchema, handleSignOut } from '../../core';
 import {
+  CodeRequiredModel,
+  CodeSchema,
   handleSetupMfaSms,
+  handleSignOut,
   handleVerifyMfaSms,
-} from '../../core/amplify/actions/authActions';
+} from '../../core';
 import { FormikInputInjector } from '../../hocs';
 import { MemoFormikFormErrorText } from '../../hocs/MemoFormikFormErrorText';
 import {

@@ -7,9 +7,9 @@ import {
   SafeException,
   SignInEmailSchema,
   SignInModel,
+  handleNewSignedInUser,
   handleSignIn,
 } from '../../core';
-import { handleNewSignedInUser } from '../../core/amplify/actions/eventActions';
 import { FormikInputInjector } from '../../hocs';
 import { MemoFormikFormErrorText } from '../../hocs/MemoFormikFormErrorText';
 import { ScreenName } from '../../routes/mappings';

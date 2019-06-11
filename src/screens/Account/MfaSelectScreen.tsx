@@ -4,8 +4,12 @@ import { ListRenderItem } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { FlatList, NavigationScreenProps } from 'react-navigation';
 
-import { ProfileModel, handleGetPreferredMfa, handleSetMfa } from '../../core';
-import { handlePressVerifyContact } from '../../core/amplify/actions/eventActions';
+import {
+  ProfileModel,
+  handleGetPreferredMfa,
+  handlePressVerifyContact,
+  handleSetMfa,
+} from '../../core';
 import {
   NavigationService,
   alertConfirm,

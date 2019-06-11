@@ -1,4 +1,4 @@
-import { handleCheckVerifiedContact } from '../core/amplify/actions/authActions';
+import { handleCheckVerifiedContact } from '../core';
 import { isConnected } from '../utils/networkUtil';
 
 export const asyncGetCurrentUserOpts = () =>
