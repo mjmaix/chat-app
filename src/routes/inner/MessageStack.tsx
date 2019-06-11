@@ -27,9 +27,21 @@ const routeConfigMap: StackRouteConfigMap = {
   },
   Contacts: {
     screen: Mappings.Contacts.screen,
-    navigationOptions: ({ navigation }: NavigationScreenProps) => ({
-      title: 'Contacts',
-    }),
+    navigationOptions: ({ navigation, screenProps }: NavigationScreenProps) => {
+      const { theme } = screenProps as ThemedComponentProps;
+      return {
+        title: 'Contacts',
+        headerRight: (
+          <HeaderIcon
+            icon={{
+              ...Mappings.Messages.icon,
+              iconStyle: { color: theme.colors.primarydarktext },
+            }}
+            onPress={() => navigation.navigate('Messages')}
+          />
+        ),
+      };
+    },
   },
   Chat: {
     screen: Mappings.Chat.screen,
@@ -39,6 +51,7 @@ const routeConfigMap: StackRouteConfigMap = {
   },
 };
 const MessageStack = createStackNavigator(routeConfigMap, {
+  initialRouteName: 'Contacts',
   defaultNavigationOptions: ({
     screenProps,
     navigation,

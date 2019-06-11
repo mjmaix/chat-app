@@ -6,6 +6,7 @@ import {
   CreateClUserMutation,
   CreateConvoLinkMutation,
   CreateConvoMutation,
+  UpdateClUserMutation,
 } from '../../API';
 import * as mutations from '../../graphql/mutations';
 import { apolloClient as client } from '../../setup';
@@ -25,6 +26,7 @@ export const handleCreateClUser = async (user: ChatCognitoUser) => {
         input: {
           id: user.getUsername(),
           username: user.getUsername(),
+          email: user.attributes.email,
         },
       },
     });
@@ -33,6 +35,26 @@ export const handleCreateClUser = async (user: ChatCognitoUser) => {
   } catch (e) {
     logRecord({
       name: 'CreateUserError',
+      attributes: {
+        error: e.message,
+      },
+    });
+  }
+};
+
+export const handleUpdateClUser = async (user: ChatCognitoUser) => {
+  try {
+    const response = await client.mutate<UpdateClUserMutation>({
+      mutation: gql(mutations.updateClUser),
+      variables: {
+        input: { id: user.getUsername(), email: user.attributes.email },
+      },
+    });
+    assertErrors(response);
+    return response.data.updateClUser;
+  } catch (e) {
+    logRecord({
+      name: 'UpdateUserError',
       attributes: {
         error: e.message,
       },

@@ -52,16 +52,18 @@ const handlePressVerifyContactResend = async (contact: Contact) => {
 };
 
 export const VerifyContactScreen = (props: VerifyContactScreenProps) => {
-  const [contact, setContact] = useState<Contact>('email');
-  const [contactValue, setContactValue] = useState<string>('');
+  const [contact, setContact] = useState<Contact | null>(null);
+  const [contactValue, setContactValue] = useState<string | null>(null);
 
   useEffect(() => {
     const { navigation } = props;
-    setContact(navigation.getParam('contact'));
-    setContactValue(navigation.getParam('contactValue'));
+    if (!contact || !contactValue) {
+      setContact(navigation.getParam('contact'));
+      setContactValue(navigation.getParam('contactValue'));
+    }
   });
 
-  if (!contactValue && !contact) {
+  if (!contactValue || !contact) {
     return null;
   }
 

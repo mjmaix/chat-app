@@ -37,6 +37,19 @@ const routeConfigMap: StackRouteConfigMap = {
       ),
     }),
   },
+  NewMessage: {
+    screen: Mappings.NewMessage.screen,
+    navigationOptions: () => ({
+      title: 'New Message',
+      header: (
+        <FixedBackHeader
+          confirm
+          iconProps={{ name: 'close', type: 'antdesign' }}
+          backTo="Messages"
+        />
+      ),
+    }),
+  },
 };
 
 const MfaStack = createStackNavigator(routeConfigMap, options);

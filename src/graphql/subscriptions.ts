@@ -4,7 +4,6 @@
 export const onCreateClUser = `subscription OnCreateClUser {
   onCreateClUser {
     id
-    username
     conversations {
       items {
         id
@@ -24,6 +23,8 @@ export const onCreateClUser = `subscription OnCreateClUser {
       }
       nextToken
     }
+    username
+    email
     createdAt
     updatedAt
   }
@@ -32,7 +33,6 @@ export const onCreateClUser = `subscription OnCreateClUser {
 export const onUpdateClUser = `subscription OnUpdateClUser {
   onUpdateClUser {
     id
-    username
     conversations {
       items {
         id
@@ -52,6 +52,8 @@ export const onUpdateClUser = `subscription OnUpdateClUser {
       }
       nextToken
     }
+    username
+    email
     createdAt
     updatedAt
   }
@@ -60,7 +62,6 @@ export const onUpdateClUser = `subscription OnUpdateClUser {
 export const onDeleteClUser = `subscription OnDeleteClUser {
   onDeleteClUser {
     id
-    username
     conversations {
       items {
         id
@@ -80,6 +81,8 @@ export const onDeleteClUser = `subscription OnDeleteClUser {
       }
       nextToken
     }
+    username
+    email
     createdAt
     updatedAt
   }

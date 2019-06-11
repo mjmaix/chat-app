@@ -4,7 +4,6 @@
 export const getClUser = `query GetClUser($id: ID!) {
   getClUser(id: $id) {
     id
-    username
     conversations {
       items {
         id
@@ -24,6 +23,8 @@ export const getClUser = `query GetClUser($id: ID!) {
       }
       nextToken
     }
+    username
+    email
     createdAt
     updatedAt
   }
@@ -37,13 +38,14 @@ export const listClUsers = `query ListClUsers(
   listClUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      username
       conversations {
         nextToken
       }
       messages {
         nextToken
       }
+      username
+      email
       createdAt
       updatedAt
     }

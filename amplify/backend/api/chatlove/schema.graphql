@@ -1,10 +1,15 @@
 type ClUser
   @model
   @auth(rules: [{ allow: owner, ownerField: "id", queries: null }]) {
-  id: ID!
+  id: ID! @auth(rules: [{ allow: owner, ownerField: "username" }])
+  conversations: [ClConvoLink]
+    @connection(name: "UserLinks")
+    @auth(rules: [{ allow: owner, ownerField: "username" }])
+  messages: [ClMessage]
+    @connection(name: "UserMessages")
+    @auth(rules: [{ allow: owner, ownerField: "username" }])
   username: String
-  conversations: [ClConvoLink] @connection(name: "UserLinks")
-  messages: [ClMessage] @connection(name: "UserMessages")
+  email: String!
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
 }

@@ -4,6 +4,7 @@
 export type CreateClUserInput = {
   id?: string | null,
   username?: string | null,
+  email: string,
   createdAt?: string | null,
   updatedAt?: string | null,
 };
@@ -11,6 +12,7 @@ export type CreateClUserInput = {
 export type UpdateClUserInput = {
   id: string,
   username?: string | null,
+  email?: string | null,
   createdAt?: string | null,
   updatedAt?: string | null,
 };
@@ -72,6 +74,7 @@ export type UpdateClConvoLinkInput = {
 export type ModelClUserFilterInput = {
   id?: ModelIDFilterInput | null,
   username?: ModelStringFilterInput | null,
+  email?: ModelStringFilterInput | null,
   createdAt?: ModelStringFilterInput | null,
   updatedAt?: ModelStringFilterInput | null,
   and?: Array< ModelClUserFilterInput | null > | null,
@@ -113,7 +116,6 @@ export type CreateClUserMutation = {
   createClUser:  {
     __typename: "ClUser",
     id: string,
-    username: string | null,
     conversations:  {
       __typename: "ModelClConvoLinkConnection",
       items:  Array< {
@@ -137,6 +139,8 @@ export type CreateClUserMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    username: string | null,
+    email: string,
     createdAt: string | null,
     updatedAt: string | null,
   } | null,
@@ -150,7 +154,6 @@ export type UpdateClUserMutation = {
   updateClUser:  {
     __typename: "ClUser",
     id: string,
-    username: string | null,
     conversations:  {
       __typename: "ModelClConvoLinkConnection",
       items:  Array< {
@@ -174,6 +177,8 @@ export type UpdateClUserMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    username: string | null,
+    email: string,
     createdAt: string | null,
     updatedAt: string | null,
   } | null,
@@ -187,7 +192,6 @@ export type DeleteClUserMutation = {
   deleteClUser:  {
     __typename: "ClUser",
     id: string,
-    username: string | null,
     conversations:  {
       __typename: "ModelClConvoLinkConnection",
       items:  Array< {
@@ -211,6 +215,8 @@ export type DeleteClUserMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    username: string | null,
+    email: string,
     createdAt: string | null,
     updatedAt: string | null,
   } | null,
@@ -265,7 +271,6 @@ export type CreateClMessageMutation = {
     author:  {
       __typename: "ClUser",
       id: string,
-      username: string | null,
       conversations:  {
         __typename: "ModelClConvoLinkConnection",
         nextToken: string | null,
@@ -274,6 +279,8 @@ export type CreateClMessageMutation = {
         __typename: "ModelClMessageConnection",
         nextToken: string | null,
       } | null,
+      username: string | null,
+      email: string,
       createdAt: string | null,
       updatedAt: string | null,
     } | null,
@@ -311,7 +318,6 @@ export type UpdateClMessageMutation = {
     author:  {
       __typename: "ClUser",
       id: string,
-      username: string | null,
       conversations:  {
         __typename: "ModelClConvoLinkConnection",
         nextToken: string | null,
@@ -320,6 +326,8 @@ export type UpdateClMessageMutation = {
         __typename: "ModelClMessageConnection",
         nextToken: string | null,
       } | null,
+      username: string | null,
+      email: string,
       createdAt: string | null,
       updatedAt: string | null,
     } | null,
@@ -357,7 +365,6 @@ export type DeleteClMessageMutation = {
     author:  {
       __typename: "ClUser",
       id: string,
-      username: string | null,
       conversations:  {
         __typename: "ModelClConvoLinkConnection",
         nextToken: string | null,
@@ -366,6 +373,8 @@ export type DeleteClMessageMutation = {
         __typename: "ModelClMessageConnection",
         nextToken: string | null,
       } | null,
+      username: string | null,
+      email: string,
       createdAt: string | null,
       updatedAt: string | null,
     } | null,
@@ -403,7 +412,6 @@ export type CreateConvoLinkMutation = {
     user:  {
       __typename: "ClUser",
       id: string,
-      username: string | null,
       conversations:  {
         __typename: "ModelClConvoLinkConnection",
         nextToken: string | null,
@@ -412,6 +420,8 @@ export type CreateConvoLinkMutation = {
         __typename: "ModelClMessageConnection",
         nextToken: string | null,
       } | null,
+      username: string | null,
+      email: string,
       createdAt: string | null,
       updatedAt: string | null,
     },
@@ -448,7 +458,6 @@ export type UpdateConvoLinkMutation = {
     user:  {
       __typename: "ClUser",
       id: string,
-      username: string | null,
       conversations:  {
         __typename: "ModelClConvoLinkConnection",
         nextToken: string | null,
@@ -457,6 +466,8 @@ export type UpdateConvoLinkMutation = {
         __typename: "ModelClMessageConnection",
         nextToken: string | null,
       } | null,
+      username: string | null,
+      email: string,
       createdAt: string | null,
       updatedAt: string | null,
     },
@@ -490,7 +501,6 @@ export type GetClUserQuery = {
   getClUser:  {
     __typename: "ClUser",
     id: string,
-    username: string | null,
     conversations:  {
       __typename: "ModelClConvoLinkConnection",
       items:  Array< {
@@ -514,6 +524,8 @@ export type GetClUserQuery = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    username: string | null,
+    email: string,
     createdAt: string | null,
     updatedAt: string | null,
   } | null,
@@ -531,7 +543,6 @@ export type ListClUsersQuery = {
     items:  Array< {
       __typename: "ClUser",
       id: string,
-      username: string | null,
       conversations:  {
         __typename: "ModelClConvoLinkConnection",
         nextToken: string | null,
@@ -540,6 +551,8 @@ export type ListClUsersQuery = {
         __typename: "ModelClMessageConnection",
         nextToken: string | null,
       } | null,
+      username: string | null,
+      email: string,
       createdAt: string | null,
       updatedAt: string | null,
     } | null > | null,
@@ -589,7 +602,6 @@ export type OnCreateClUserSubscription = {
   onCreateClUser:  {
     __typename: "ClUser",
     id: string,
-    username: string | null,
     conversations:  {
       __typename: "ModelClConvoLinkConnection",
       items:  Array< {
@@ -613,6 +625,8 @@ export type OnCreateClUserSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    username: string | null,
+    email: string,
     createdAt: string | null,
     updatedAt: string | null,
   } | null,
@@ -622,7 +636,6 @@ export type OnUpdateClUserSubscription = {
   onUpdateClUser:  {
     __typename: "ClUser",
     id: string,
-    username: string | null,
     conversations:  {
       __typename: "ModelClConvoLinkConnection",
       items:  Array< {
@@ -646,6 +659,8 @@ export type OnUpdateClUserSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    username: string | null,
+    email: string,
     createdAt: string | null,
     updatedAt: string | null,
   } | null,
@@ -655,7 +670,6 @@ export type OnDeleteClUserSubscription = {
   onDeleteClUser:  {
     __typename: "ClUser",
     id: string,
-    username: string | null,
     conversations:  {
       __typename: "ModelClConvoLinkConnection",
       items:  Array< {
@@ -679,6 +693,8 @@ export type OnDeleteClUserSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    username: string | null,
+    email: string,
     createdAt: string | null,
     updatedAt: string | null,
   } | null,
