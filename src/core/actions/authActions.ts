@@ -6,8 +6,7 @@ import {
 import { Auth } from 'aws-amplify';
 import _ from 'lodash';
 
-import { WrapKnownExceptions } from '../../errors';
-import { logInfo } from '../../reports';
+import { WrapKnownExceptions } from '../errors';
 import {
   ChallengeModel,
   CodeRequiredModel,
@@ -20,6 +19,7 @@ import {
   SignUpModel,
 } from '../models';
 import { VerifyContactModel } from '../models/index';
+import { logInfo } from '../reports';
 
 type SignUpModel = typeof ProfileModel & typeof PasswordRequiredModel;
 

@@ -1,6 +1,6 @@
-import { logInfo } from '../../../core';
-import { NavigationService } from '../../../utils';
-import { asyncGetCurrentUserOpts } from '../../../utils/amplifyAuthUtils';
+import { logInfo } from '../../core';
+import { NavigationService } from '../../utils';
+import { asyncGetCurrentUserOpts } from '../../utils/amplifyAuthUtils';
 import { handleGetCurrentUser, handleGetCurrentUserAttrs } from './authActions';
 import { handleCreateClUser } from './mutationActions';
 import { handleGetClUser } from './queryActions';

@@ -1,10 +1,10 @@
 import gql from 'graphql-tag';
 
-import { ApolloQueryResult } from '../../../../node_modules/apollo-client/core/types';
-import { GetClUserQuery } from '../../../API';
-import * as queries from '../../../graphql/queries';
-import { apolloClient as client } from '../../../setup';
-import { logReport as logRecord } from '../../reports/index';
+import { ApolloQueryResult } from '../../../node_modules/apollo-client/core/types';
+import { GetClUserQuery } from '../../API';
+import * as queries from '../../graphql/queries';
+import { apolloClient as client } from '../../setup';
+import { logReport as logRecord } from '../reports/index';
 
 const assertErrors = (response: ApolloQueryResult<GetClUserQuery>) => {
   if (response && response.errors && response.errors.length > 0) {
