@@ -6,9 +6,22 @@ export const onCreateClUser = `subscription OnCreateClUser {
     id
     username
     conversations {
+      items {
+        id
+        convoLinkUserId
+        createdAt
+        updatedAt
+      }
       nextToken
     }
     messages {
+      items {
+        id
+        content
+        messageConversationId
+        createdAt
+        updatedAt
+      }
       nextToken
     }
     createdAt
@@ -21,9 +34,22 @@ export const onUpdateClUser = `subscription OnUpdateClUser {
     id
     username
     conversations {
+      items {
+        id
+        convoLinkUserId
+        createdAt
+        updatedAt
+      }
       nextToken
     }
     messages {
+      items {
+        id
+        content
+        messageConversationId
+        createdAt
+        updatedAt
+      }
       nextToken
     }
     createdAt
@@ -36,9 +62,22 @@ export const onDeleteClUser = `subscription OnDeleteClUser {
     id
     username
     conversations {
+      items {
+        id
+        convoLinkUserId
+        createdAt
+        updatedAt
+      }
       nextToken
     }
     messages {
+      items {
+        id
+        content
+        messageConversationId
+        createdAt
+        updatedAt
+      }
       nextToken
     }
     createdAt

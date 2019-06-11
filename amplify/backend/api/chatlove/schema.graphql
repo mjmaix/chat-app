@@ -2,7 +2,7 @@ type ClUser
   @model
   @auth(rules: [{ allow: owner, ownerField: "id", queries: null }]) {
   id: ID!
-  username: String!
+  username: String
   conversations: [ClConvoLink] @connection(name: "UserLinks")
   messages: [ClMessage] @connection(name: "UserMessages")
   createdAt: AWSDateTime
@@ -20,21 +20,20 @@ type ClConversation
   messages: [ClMessage] @connection(name: "ConvoMsgs", sortField: "createdAt")
   associated: [ClConvoLink] @connection(name: "AssociatedLinks")
   name: String!
-  members: [String!]!
+  members: [String!]
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
 }
 
 type ClMessage
   @model(subscriptions: null, queries: null)
-  @auth(rules: [{ allow: owner, ownerField: "authorId" }]) {
+  @auth(rules: [{ allow: owner, ownerField: "author" }]) {
   id: ID!
-  author: ClUser @connection(name: "UserMessages", keyField: "authorId")
-  authorId: String
+  author: ClUser @connection(name: "UserMessages")
   content: String!
   conversation: ClConversation!
     @connection(name: "ConvoMsgs", sortField: "createdAt")
-  messageConversationId: ID!
+  messageConversationId: ID
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
 }
@@ -47,11 +46,10 @@ type ClConvoLink
   ) {
   id: ID!
   user: ClUser! @connection(name: "UserLinks")
-  convoLinkUserId: ID
+  convoLinkUserId: String
   conversation: ClConversation! @connection(name: "AssociatedLinks")
-  convoLinkConversationId: ID!
-  createdAt: String
-  updatedAt: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
 }
 
 type ClSubscription {
