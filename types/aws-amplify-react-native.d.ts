@@ -14,6 +14,8 @@ declare module 'aws-amplify-react-native' {
     resizeMode?: ImageResizeMode;
     body?: Body;
     contentType?: ContentType;
+    track?: boolean;
+    identityId?: string;
   }
 
   interface S3ImageState {
