@@ -22,19 +22,22 @@ export const handleCreateClUser = async (
   user: ChatCognitoUser,
   identityId?: string,
 ) => {
+  const newUser = {
+    id: user.getUsername(),
+    username: user.getUsername(),
+    email: user.attributes.email,
+    familyName: user.attributes.family_name,
+    givenName: user.attributes.given_name,
+    avatar: user.attributes.picture,
+    identityId,
+  };
   try {
     const response = await client.mutate<CreateClUserMutation>({
       mutation: gql(mutations.createClUser),
+      // TODO: test first
+      // optimisticResponse: { __typename: 'ClUser', createClUser: newUser },
       variables: {
-        input: {
-          id: user.getUsername(),
-          username: user.getUsername(),
-          email: user.attributes.email,
-          familyName: user.attributes.family_name,
-          givenName: user.attributes.given_name,
-          avatar: user.attributes.profile,
-          identityId,
-        },
+        input: newUser,
       },
     });
     assertErrors(response);
@@ -54,18 +57,22 @@ export const handleUpdateClUser = async (
   identityId?: string,
 ) => {
   try {
+    const newUser = {
+      id: user.getUsername(),
+      email: user.attributes.email,
+      familyName: user.attributes.family_name,
+      givenName: user.attributes.given_name,
+      avatar: user.attributes.picture,
+      identityId,
+    };
     const response = await client.mutate<UpdateClUserMutation>({
       mutation: gql(mutations.updateClUser),
+      // TODO: test first
+      // optimisticResponse: { __typename: 'ClUser', updateClUser: newUser },
       variables: {
-        input: {
-          id: user.getUsername(),
-          email: user.attributes.email,
-          familyName: user.attributes.family_name,
-          givenName: user.attributes.given_name,
-          avatar: user.attributes.profile,
-          identityId,
-        },
+        input: newUser,
       },
+      fetchPolicy: __DEV__ ? 'no-cache' : undefined,
     });
     assertErrors(response);
     return response.data.updateClUser;
@@ -94,6 +101,7 @@ export const handleCreateConvo = async (
           members,
         },
       },
+      fetchPolicy: __DEV__ ? 'no-cache' : undefined,
     });
     assertErrors(conversationResponse);
     const userConversation1Response = await client.mutate<
@@ -118,6 +126,7 @@ export const handleCreateConvo = async (
           convoLinkConversationId: conversationResponse.data.createConvo.id,
         },
       },
+      fetchPolicy: __DEV__ ? 'no-cache' : undefined,
     });
     assertErrors(userConversation2Response);
   } catch (e) {
@@ -137,6 +146,7 @@ export const handleCreateMessage = async (message: string) => {
       variables: {
         input: message,
       },
+      fetchPolicy: __DEV__ ? 'no-cache' : undefined,
     });
     assertErrors(response);
     return response.data.createMessage;

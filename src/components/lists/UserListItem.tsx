@@ -1,16 +1,32 @@
 import React from 'react';
 import { ListRenderItem } from 'react-native';
-import { ListItem } from 'react-native-elements';
-import { User } from '../../core';
-import { NavigationService } from '../../utils';
+import { Avatar, ListItem } from 'react-native-elements';
 
-const UserListItem: ListRenderItem<User> = ({ item, ...props }) => {
+import { NavigationService } from '../../utils';
+import { PreviewAvatar } from '../Images/PreviewAvatar';
+
+// TODO: replace any
+const UserListItem: ListRenderItem<any> = ({ item, ...props }) => {
+  const ImageComponent = class extends React.Component<{}> {
+    public render() {
+      return (
+        <PreviewAvatar
+          size="small"
+          imgKey={item.avatar}
+          level={'protected'}
+          identityId={item.identityId}
+        />
+      );
+    }
+  };
   return (
     <ListItem
-      leftAvatar={{ source: { uri: item.profile_image.large } }}
-      subtitle={item.bio ? item.bio : undefined}
+      leftElement={<Avatar size="small" ImageComponent={ImageComponent} />}
+      subtitle={item.email ? item.email : undefined}
       onPress={() => NavigationService.navigate('Chat', item)}
-      title={`${item.last_name}, ${item.first_name}`}
+      title={`${item.familyName}, ${item.givenName}`}
+      bottomDivider
+      {...props}
     />
   );
 };
