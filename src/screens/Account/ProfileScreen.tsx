@@ -1,4 +1,3 @@
-import { CurrentUserOpts } from '@aws-amplify/auth/lib/types';
 import { Formik, FormikActions, FormikProps } from 'formik';
 import React, { Component, Fragment } from 'react';
 import {
@@ -11,6 +10,8 @@ import {
   ProfileModel,
   StyleGuide,
   UpdateProfileSchema,
+  WrapKnownExceptions,
+  handleClUserUpdate,
   handleGetCurrentUserAttrs,
   handlePressVerifyContact,
   handleSignOut,
@@ -18,9 +19,6 @@ import {
   handleVerifyContactResend,
   logInfo,
 } from '../../core';
-import { handleGetCurrentUser } from '../../core/actions/authActions';
-import { handleUpdateClUser } from '../../core/actions/mutationActions';
-import { WrapKnownExceptions } from '../../core/errors';
 import {
   FormikButtonInjector,
   FormikInputInjector,
@@ -275,11 +273,7 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
         newForm.picture = newPicUrl;
       }
       await handleUpdateProfile(newForm);
-      if (emailChanged) {
-        asyncGetCurrentUserOpts()
-          .then((opts: CurrentUserOpts) => handleGetCurrentUser(opts))
-          .then(newUser => handleUpdateClUser(newUser));
-      }
+      await handleClUserUpdate();
       this.checkVerifiedContact();
       alertOk(() => {
         if (emailChanged) {

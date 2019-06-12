@@ -24,7 +24,11 @@ export const onCreateClUser = `subscription OnCreateClUser {
       nextToken
     }
     username
+    givenName
+    familyName
     email
+    avatar
+    identityId
     createdAt
     updatedAt
   }
@@ -53,7 +57,11 @@ export const onUpdateClUser = `subscription OnUpdateClUser {
       nextToken
     }
     username
+    givenName
+    familyName
     email
+    avatar
+    identityId
     createdAt
     updatedAt
   }
@@ -82,7 +90,11 @@ export const onDeleteClUser = `subscription OnDeleteClUser {
       nextToken
     }
     username
+    givenName
+    familyName
     email
+    avatar
+    identityId
     createdAt
     updatedAt
   }

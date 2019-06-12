@@ -18,7 +18,10 @@ const assertErrors = (response: ApolloQueryResult<any> | FetchResult<any>) => {
   }
 };
 
-export const handleCreateClUser = async (user: ChatCognitoUser) => {
+export const handleCreateClUser = async (
+  user: ChatCognitoUser,
+  identityId?: string,
+) => {
   try {
     const response = await client.mutate<CreateClUserMutation>({
       mutation: gql(mutations.createClUser),
@@ -27,6 +30,10 @@ export const handleCreateClUser = async (user: ChatCognitoUser) => {
           id: user.getUsername(),
           username: user.getUsername(),
           email: user.attributes.email,
+          familyName: user.attributes.family_name,
+          givenName: user.attributes.given_name,
+          avatar: user.attributes.profile,
+          identityId,
         },
       },
     });
@@ -42,12 +49,22 @@ export const handleCreateClUser = async (user: ChatCognitoUser) => {
   }
 };
 
-export const handleUpdateClUser = async (user: ChatCognitoUser) => {
+export const handleUpdateClUser = async (
+  user: ChatCognitoUser,
+  identityId?: string,
+) => {
   try {
     const response = await client.mutate<UpdateClUserMutation>({
       mutation: gql(mutations.updateClUser),
       variables: {
-        input: { id: user.getUsername(), email: user.attributes.email },
+        input: {
+          id: user.getUsername(),
+          email: user.attributes.email,
+          familyName: user.attributes.family_name,
+          givenName: user.attributes.given_name,
+          avatar: user.attributes.profile,
+          identityId,
+        },
       },
     });
     assertErrors(response);

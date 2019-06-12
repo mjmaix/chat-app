@@ -37,6 +37,11 @@ export const handleGetCurrentUser = async (opts?: CurrentUserOpts) => {
   return currentUser as ChatCognitoUser;
 };
 
+export const handleGetCurrentIdentityId = async () => {
+  const creds = await Auth.currentCredentials();
+  return creds.identityId;
+};
+
 export const handleSignUp = async (data: typeof SignUpModel) => {
   const { password, ...attrs } = data;
   const user = await Auth.signUp({
@@ -79,6 +84,7 @@ export const handleUpdateProfile = async (data: typeof ProfileModel) => {
     given_name,
     picture: picture || '', // TODO: workaround, https://github.com/jaredpalmer/formik/pull/728 - wait for formik to support Yup transform during validation
   };
+
   if (phone_number) {
     buildAttrs.phone_number = phone_number || '';
   }

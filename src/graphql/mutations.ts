@@ -24,7 +24,11 @@ export const createClUser = `mutation CreateClUser($input: CreateClUserInput!) {
       nextToken
     }
     username
+    givenName
+    familyName
     email
+    avatar
+    identityId
     createdAt
     updatedAt
   }
@@ -53,7 +57,11 @@ export const updateClUser = `mutation UpdateClUser($input: UpdateClUserInput!) {
       nextToken
     }
     username
+    givenName
+    familyName
     email
+    avatar
+    identityId
     createdAt
     updatedAt
   }
@@ -82,7 +90,11 @@ export const deleteClUser = `mutation DeleteClUser($input: DeleteClUserInput!) {
       nextToken
     }
     username
+    givenName
+    familyName
     email
+    avatar
+    identityId
     createdAt
     updatedAt
   }
@@ -129,7 +141,11 @@ export const createClMessage = `mutation CreateClMessage($input: CreateClMessage
         nextToken
       }
       username
+      givenName
+      familyName
       email
+      avatar
+      identityId
       createdAt
       updatedAt
     }
@@ -165,7 +181,11 @@ export const updateClMessage = `mutation UpdateClMessage($input: UpdateClMessage
         nextToken
       }
       username
+      givenName
+      familyName
       email
+      avatar
+      identityId
       createdAt
       updatedAt
     }
@@ -201,7 +221,11 @@ export const deleteClMessage = `mutation DeleteClMessage($input: DeleteClMessage
         nextToken
       }
       username
+      givenName
+      familyName
       email
+      avatar
+      identityId
       createdAt
       updatedAt
     }
@@ -237,7 +261,11 @@ export const createConvoLink = `mutation CreateConvoLink($input: CreateClConvoLi
         nextToken
       }
       username
+      givenName
+      familyName
       email
+      avatar
+      identityId
       createdAt
       updatedAt
     }
@@ -272,7 +300,11 @@ export const updateConvoLink = `mutation UpdateConvoLink($input: UpdateClConvoLi
         nextToken
       }
       username
+      givenName
+      familyName
       email
+      avatar
+      identityId
       createdAt
       updatedAt
     }

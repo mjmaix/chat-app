@@ -9,7 +9,11 @@ type ClUser
     @connection(name: "UserMessages")
     @auth(rules: [{ allow: owner, ownerField: "username" }])
   username: String
+  givenName: String!
+  familyName: String!
   email: String!
+  avatar: String
+  identityId: String
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
 }

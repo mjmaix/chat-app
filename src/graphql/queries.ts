@@ -24,7 +24,11 @@ export const getClUser = `query GetClUser($id: ID!) {
       nextToken
     }
     username
+    givenName
+    familyName
     email
+    avatar
+    identityId
     createdAt
     updatedAt
   }
@@ -45,7 +49,11 @@ export const listClUsers = `query ListClUsers(
         nextToken
       }
       username
+      givenName
+      familyName
       email
+      avatar
+      identityId
       createdAt
       updatedAt
     }

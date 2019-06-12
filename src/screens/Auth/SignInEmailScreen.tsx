@@ -7,7 +7,7 @@ import {
   SafeException,
   SignInEmailSchema,
   SignInModel,
-  handleNewSignedInUser,
+  handleClUserCreate,
   handleSignIn,
 } from '../../core';
 import { FormikInputInjector } from '../../hocs';
@@ -86,7 +86,7 @@ class SignInEmailScreen extends Component<Props> {
       } else if (MFA_CHALLENGES.includes(user.challengeName)) {
         transferScreen = 'SignInCode';
       } else if (!user.challengeName) {
-        handleNewSignedInUser();
+        handleClUserCreate();
       }
     } catch (err) {
       transferScreen = null;

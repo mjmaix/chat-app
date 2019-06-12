@@ -29,3 +29,17 @@ export const handleGetClUser = async (username: string) => {
     });
   }
 };
+
+export const handleListClUserConvos = async (username: string) => {
+  try {
+    const user = await handleGetClUser(username);
+    return user ? user.conversations : null;
+  } catch (e) {
+    logRecord({
+      name: 'GetUserError',
+      attributes: {
+        error: e.message,
+      },
+    });
+  }
+};

@@ -1,8 +1,14 @@
+import { CurrentUserOpts } from '@aws-amplify/auth/lib/types';
+
 import { logInfo } from '../../core';
 import { NavigationService } from '../../utils';
 import { asyncGetCurrentUserOpts } from '../../utils/amplifyAuthUtils';
-import { handleGetCurrentUser, handleGetCurrentUserAttrs } from './authActions';
-import { handleCreateClUser } from './mutationActions';
+import {
+  handleGetCurrentIdentityId,
+  handleGetCurrentUser,
+  handleGetCurrentUserAttrs,
+} from './authActions';
+import { handleCreateClUser, handleUpdateClUser } from './mutationActions';
 import { handleGetClUser } from './queryActions';
 
 export const handlePressVerifyContact = async (contact: Contact) => {
@@ -15,12 +21,21 @@ export const handlePressVerifyContact = async (contact: Contact) => {
   });
 };
 
-export const handleNewSignedInUser = async () => {
+export const handleClUserCreate = async () => {
   const cognitoUser = await handleGetCurrentUser();
   const username = cognitoUser.getUsername();
   const userExists = await handleGetClUser(username);
   if (!userExists) {
     logInfo('Create ClUser entry');
-    await handleCreateClUser(cognitoUser);
+    const identityId = await handleGetCurrentIdentityId();
+    return handleCreateClUser(cognitoUser, identityId);
   }
+};
+
+export const handleClUserUpdate = async () => {
+  const newUser = await asyncGetCurrentUserOpts().then(
+    (opts: CurrentUserOpts) => handleGetCurrentUser(opts),
+  );
+  const identityId = await handleGetCurrentIdentityId();
+  return handleUpdateClUser(newUser, identityId);
 };
