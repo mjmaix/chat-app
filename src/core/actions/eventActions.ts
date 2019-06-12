@@ -1,6 +1,6 @@
 import { CurrentUserOpts } from '@aws-amplify/auth/lib/types';
 
-import { logInfo } from '../../core';
+import { logInfo } from '../../core/reports';
 import { NavigationService } from '../../utils';
 import { asyncGetCurrentUserOpts } from '../../utils/amplifyAuthUtils';
 import {

@@ -5,7 +5,7 @@ import { Platform } from 'react-native';
 import RNImagePicker, { ImagePickerResponse } from 'react-native-image-picker';
 import RNFetchBlob from 'rn-fetch-blob';
 
-import { logError, logInfo } from '../core';
+import { logError, logInfo } from '../core/reports';
 import { getExt } from './getExt';
 
 const { fs } = RNFetchBlob;

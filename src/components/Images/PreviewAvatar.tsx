@@ -13,7 +13,9 @@ export interface PreviewAvatarProps {
   isSubmitting?: boolean;
   imageProps?: Partial<ImageProperties>;
   imgKey?: string;
+  identityId?: string;
   level?: 'private' | 'protected' | 'public';
+  size?: 'small' | 'medium' | 'large' | 'xlarge' | number;
 }
 
 // TODO: style errorMessage
@@ -27,6 +29,8 @@ export const PreviewAvatar = (props: PreviewAvatarProps) => {
     imageProps,
     imgKey,
     level,
+    size = 'xlarge',
+    identityId,
   } = props;
 
   const icon = {
@@ -38,7 +42,11 @@ export const PreviewAvatar = (props: PreviewAvatarProps) => {
     ? class extends React.Component {
         public render() {
           return (
-            <PreviewS3Image imgKey={imgKey} level={level || 'protected'} />
+            <PreviewS3Image
+              imgKey={imgKey}
+              level={level || 'protected'}
+              identityId={identityId}
+            />
           );
         }
       }
@@ -52,7 +60,7 @@ export const PreviewAvatar = (props: PreviewAvatarProps) => {
         showEditButton={!isSubmitting}
         rounded
         imageProps={imageProps}
-        size="xlarge"
+        size={size}
         onEditPress={async () => {
           const picker = new AsyncImagePicker();
           const result = await picker.showImagePicker();

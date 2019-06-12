@@ -1,4 +1,4 @@
-import { handleCheckVerifiedContact } from '../core';
+import { handleCheckVerifiedContact } from '../core/actions/authActions';
 import { isConnected } from '../utils/networkUtil';
 
 export const asyncGetCurrentUserOpts = () =>

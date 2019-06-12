@@ -11,6 +11,8 @@ import { containerStyles } from '../commonStyles';
 interface PreviewS3ImageProps {
   imgKey: string;
   level?: string;
+  track?: boolean;
+  identityId?: string;
 }
 interface PreviewS3ImageState {
   isConnected: boolean;
@@ -47,8 +49,16 @@ class PreviewS3Image extends React.Component<
         </View>
       );
     }
-    const { imgKey, level } = this.props;
-    return <S3Image imgKey={imgKey} level={level} style={{ flex: 1 }} />;
+    const { imgKey, level, track, identityId } = this.props;
+    return (
+      <S3Image
+        imgKey={imgKey}
+        level={level}
+        track={track}
+        identityId={identityId}
+        style={{ flex: 1 }}
+      />
+    );
   }
 }
 
