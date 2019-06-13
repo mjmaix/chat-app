@@ -1,0 +1,74 @@
+query GetClUserPrivate($userId: ID!) {
+  getClUser(id: $userId) {
+    id
+    conversations {
+      items {
+        id
+        convoLinkUserId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    messages {
+      items {
+        id
+        content
+        messageConversationId
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    username
+    email
+    createdAt
+    updatedAt
+  }
+}
+
+query GetClUserPublic($id: ID!) {
+  getClUser(id: $id) {
+    username
+    email
+    createdAt
+    updatedAt
+  }
+}
+
+mutation CreateClUser($user: CreateClUserInput!) {
+  createClUser(input: $user) {
+    username
+    givenName
+    familyName
+    email
+    avatar
+    identityId
+    createdAt
+    updatedAt
+  }
+}
+
+mutation DeleteClUser($deleteInput: DeleteClUserInput!) {
+  deleteClUser(input: $deleteInput) {
+    id
+  }
+}
+
+
+
+{
+  "userId": "e25da0dc-1291-4f40-99e1-548a1e824494",
+  "deleteInput": {
+    "id" : "e25da0dc-1291-4f40-99e1-548a1e824494"
+  },
+  "user": {
+    "id": "e25da0dc-1291-4f40-99e1-548a1e824494",
+    "username": "e25da0dc-1291-4f40-99e1-548a1e824494",
+    "email": "admin@mjabadilla.com",
+    "familyName": "Admin3",
+    "givenName": "Admin3",
+    "avatar": "profile_picture.jpg",
+    "identityId": "ap-southeast-1:06cd235f-8398-4150-8f92-e97f9d87caaa"
+	}
+}

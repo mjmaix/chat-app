@@ -8,7 +8,7 @@ type ClUser
   messages: [ClMessage]
     @connection(name: "UserMessages")
     @auth(rules: [{ allow: owner, ownerField: "username" }])
-  username: String
+  username: String!
   givenName: String!
   familyName: String!
   email: String!
