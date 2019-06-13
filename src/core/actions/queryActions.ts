@@ -76,11 +76,11 @@ const listContacts = `query ListContacts(
   }
 `;
 
-export const handleListContacts = async () => {
+export const handleListContacts = async (user: ChatCognitoUser) => {
   try {
     const response = await client.query<ListClUsersQuery>({
       query: gql(listContacts),
-      variables: { limit: 100 },
+      variables: { limit: 100, filter: { id: { ne: user.getUsername() } } },
       fetchPolicy: __DEV__ ? 'no-cache' : undefined,
     });
     assertErrors(response);
