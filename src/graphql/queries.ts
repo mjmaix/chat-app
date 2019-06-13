@@ -7,7 +7,6 @@ export const getClUser = `query GetClUser($id: ID!) {
     conversations {
       items {
         id
-        convoLinkUserId
         createdAt
         updatedAt
       }
@@ -17,7 +16,6 @@ export const getClUser = `query GetClUser($id: ID!) {
       items {
         id
         content
-        messageConversationId
         createdAt
         updatedAt
       }
@@ -61,14 +59,13 @@ export const listClUsers = `query ListClUsers(
   }
 }
 `;
-export const getConvo = `query GetConvo($id: ID!) {
-  getConvo(id: $id) {
+export const getClConvo = `query GetClConvo($id: ID!) {
+  getClConvo(id: $id) {
     id
     messages {
       items {
         id
         content
-        messageConversationId
         createdAt
         updatedAt
       }
@@ -77,7 +74,6 @@ export const getConvo = `query GetConvo($id: ID!) {
     associated {
       items {
         id
-        convoLinkUserId
         createdAt
         updatedAt
       }

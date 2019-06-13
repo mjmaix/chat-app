@@ -7,7 +7,6 @@ export const createClUser = `mutation CreateClUser($input: CreateClUserInput!) {
     conversations {
       items {
         id
-        convoLinkUserId
         createdAt
         updatedAt
       }
@@ -17,7 +16,6 @@ export const createClUser = `mutation CreateClUser($input: CreateClUserInput!) {
       items {
         id
         content
-        messageConversationId
         createdAt
         updatedAt
       }
@@ -40,7 +38,6 @@ export const updateClUser = `mutation UpdateClUser($input: UpdateClUserInput!) {
     conversations {
       items {
         id
-        convoLinkUserId
         createdAt
         updatedAt
       }
@@ -50,7 +47,6 @@ export const updateClUser = `mutation UpdateClUser($input: UpdateClUserInput!) {
       items {
         id
         content
-        messageConversationId
         createdAt
         updatedAt
       }
@@ -73,7 +69,6 @@ export const deleteClUser = `mutation DeleteClUser($input: DeleteClUserInput!) {
     conversations {
       items {
         id
-        convoLinkUserId
         createdAt
         updatedAt
       }
@@ -83,7 +78,6 @@ export const deleteClUser = `mutation DeleteClUser($input: DeleteClUserInput!) {
       items {
         id
         content
-        messageConversationId
         createdAt
         updatedAt
       }
@@ -100,14 +94,13 @@ export const deleteClUser = `mutation DeleteClUser($input: DeleteClUserInput!) {
   }
 }
 `;
-export const createConvo = `mutation CreateConvo($input: CreateClConversationInput!) {
-  createConvo(input: $input) {
+export const createClConvo = `mutation CreateClConvo($input: CreateClConversationInput!) {
+  createClConvo(input: $input) {
     id
     messages {
       items {
         id
         content
-        messageConversationId
         createdAt
         updatedAt
       }
@@ -116,7 +109,6 @@ export const createConvo = `mutation CreateConvo($input: CreateClConversationInp
     associated {
       items {
         id
-        convoLinkUserId
         createdAt
         updatedAt
       }
@@ -163,7 +155,6 @@ export const createClMessage = `mutation CreateClMessage($input: CreateClMessage
       createdAt
       updatedAt
     }
-    messageConversationId
     createdAt
     updatedAt
   }
@@ -203,7 +194,6 @@ export const updateClMessage = `mutation UpdateClMessage($input: UpdateClMessage
       createdAt
       updatedAt
     }
-    messageConversationId
     createdAt
     updatedAt
   }
@@ -243,14 +233,13 @@ export const deleteClMessage = `mutation DeleteClMessage($input: DeleteClMessage
       createdAt
       updatedAt
     }
-    messageConversationId
     createdAt
     updatedAt
   }
 }
 `;
-export const createConvoLink = `mutation CreateConvoLink($input: CreateClConvoLinkInput!) {
-  createConvoLink(input: $input) {
+export const createClConvoLink = `mutation CreateClConvoLink($input: CreateClConvoLinkInput!) {
+  createClConvoLink(input: $input) {
     id
     user {
       id
@@ -269,7 +258,6 @@ export const createConvoLink = `mutation CreateConvoLink($input: CreateClConvoLi
       createdAt
       updatedAt
     }
-    convoLinkUserId
     conversation {
       id
       messages {
@@ -288,8 +276,8 @@ export const createConvoLink = `mutation CreateConvoLink($input: CreateClConvoLi
   }
 }
 `;
-export const updateConvoLink = `mutation UpdateConvoLink($input: UpdateClConvoLinkInput!) {
-  updateConvoLink(input: $input) {
+export const updateClConvoLink = `mutation UpdateClConvoLink($input: UpdateClConvoLinkInput!) {
+  updateClConvoLink(input: $input) {
     id
     user {
       id
@@ -308,7 +296,6 @@ export const updateConvoLink = `mutation UpdateConvoLink($input: UpdateClConvoLi
       createdAt
       updatedAt
     }
-    convoLinkUserId
     conversation {
       id
       messages {

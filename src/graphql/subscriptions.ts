@@ -1,13 +1,89 @@
 // tslint:disable
 // this is an auto generated file. This will be overwritten
 
+export const onCreateClMessage = `subscription OnCreateClMessage($members: [String!]!) {
+  onCreateClMessage(members: $members) {
+    id
+    author {
+      id
+      conversations {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+      username
+      givenName
+      familyName
+      email
+      avatar
+      identityId
+      createdAt
+      updatedAt
+    }
+    content
+    conversation {
+      id
+      messages {
+        nextToken
+      }
+      associated {
+        nextToken
+      }
+      name
+      members
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+`;
+export const onCreateClConvoLink = `subscription OnCreateClConvoLink($user: String!) {
+  onCreateClConvoLink(user: $user) {
+    id
+    user {
+      id
+      conversations {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+      username
+      givenName
+      familyName
+      email
+      avatar
+      identityId
+      createdAt
+      updatedAt
+    }
+    conversation {
+      id
+      messages {
+        nextToken
+      }
+      associated {
+        nextToken
+      }
+      name
+      members
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+`;
 export const onCreateClUser = `subscription OnCreateClUser {
   onCreateClUser {
     id
     conversations {
       items {
         id
-        convoLinkUserId
         createdAt
         updatedAt
       }
@@ -17,7 +93,6 @@ export const onCreateClUser = `subscription OnCreateClUser {
       items {
         id
         content
-        messageConversationId
         createdAt
         updatedAt
       }
@@ -40,7 +115,6 @@ export const onUpdateClUser = `subscription OnUpdateClUser {
     conversations {
       items {
         id
-        convoLinkUserId
         createdAt
         updatedAt
       }
@@ -50,7 +124,6 @@ export const onUpdateClUser = `subscription OnUpdateClUser {
       items {
         id
         content
-        messageConversationId
         createdAt
         updatedAt
       }
@@ -73,7 +146,6 @@ export const onDeleteClUser = `subscription OnDeleteClUser {
     conversations {
       items {
         id
-        convoLinkUserId
         createdAt
         updatedAt
       }
@@ -83,7 +155,6 @@ export const onDeleteClUser = `subscription OnDeleteClUser {
       items {
         id
         content
-        messageConversationId
         createdAt
         updatedAt
       }

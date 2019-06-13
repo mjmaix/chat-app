@@ -20,8 +20,8 @@ type ClUser
 
 type ClConversation
   @model(
-    mutations: { create: "createConvo" }
-    queries: { get: "getConvo" }
+    mutations: { create: "createClConvo" }
+    queries: { get: "getClConvo" }
     subscriptions: null
   )
   @auth(rules: [{ allow: owner, ownerField: "members" }]) {
@@ -42,28 +42,26 @@ type ClMessage
   content: String!
   conversation: ClConversation!
     @connection(name: "ConvoMsgs", sortField: "createdAt")
-  messageConversationId: ID
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
 }
 
 type ClConvoLink
   @model(
-    mutations: { create: "createConvoLink", update: "updateConvoLink" }
+    mutations: { create: "createClConvoLink", update: "updateClConvoLink" }
     queries: null
     subscriptions: null
   ) {
   id: ID!
   user: ClUser! @connection(name: "UserLinks")
-  convoLinkUserId: String
   conversation: ClConversation! @connection(name: "AssociatedLinks")
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
 }
 
-type ClSubscription {
-  onCreateConvoLink(convoLinkUserId: ID!): ClConvoLink
-    @aws_subscribe(mutations: ["createConvoLink"])
-  onCreateMessage(messageConversationId: ID!): ClMessage
-    @aws_subscribe(mutations: ["createMessage"])
+type Subscription {
+  onCreateClMessage(members: [String!]!): ClMessage
+    @aws_subscribe(mutations: ["createClMessage"])
+  onCreateClConvoLink(user: String!): ClConvoLink
+    @aws_subscribe(mutations: ["createClConvoLink"])
 }
