@@ -8,7 +8,6 @@ type ClUser
   messages: [ClMessage]
     @connection(name: "UserMessages")
     @auth(rules: [{ allow: owner, ownerField: "username" }])
-  username: String!
   givenName: String!
   familyName: String!
   email: String!
@@ -54,7 +53,9 @@ type ClConvoLink
   ) {
   id: ID!
   user: ClUser! @connection(name: "UserLinks")
+  clConvoLinkUserId: String
   conversation: ClConversation! @connection(name: "AssociatedLinks")
+  clConvoLinkConversationId: String
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
 }
@@ -62,6 +63,6 @@ type ClConvoLink
 type Subscription {
   onCreateClMessage(members: [String!]!): ClMessage
     @aws_subscribe(mutations: ["createClMessage"])
-  onCreateClConvoLink(user: String!): ClConvoLink
+  onCreateClConvoLink(clConvoLinkUserId: String!): ClConvoLink
     @aws_subscribe(mutations: ["createClConvoLink"])
 }

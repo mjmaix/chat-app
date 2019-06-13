@@ -31,7 +31,6 @@ class PreviewS3Image extends React.Component<
   public componentDidMount() {
     this.mounted = true;
     getNetInfo().then(state => {
-      logInfo('Connection', state.isConnected, state.type);
       if (this.mounted) {
         this.setState({ isConnected: state.isConnected, type: state.type });
       }

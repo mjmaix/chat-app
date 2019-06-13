@@ -1,3 +1,4 @@
+import includes from 'lodash/includes';
 import * as Yup from 'yup';
 
 export const emailRule = Yup.string()
@@ -35,8 +36,8 @@ export const codeRule = Yup.string()
 export const SignUpSchema = Yup.object().shape({
   password: passwordRule.required(),
   email: emailRule.required(),
-  family_name: nameRule.label('Family name').notRequired(),
-  given_name: nameRule.label('Given name').notRequired(),
+  family_name: nameRule.label('Family name').required(),
+  given_name: nameRule.label('Given name').required(),
   phone_number: phoneNumberRule.notRequired(),
   picture: pictureRule.notRequired(),
 });
@@ -44,15 +45,15 @@ export const SignUpSchema = Yup.object().shape({
 export const CompleteNewPasswordSchema = Yup.object().shape({
   password: passwordRule.required(),
   email: emailRule.notRequired(),
-  family_name: nameRule.label('Family name').notRequired(),
-  given_name: nameRule.label('Given name').notRequired(),
-  phone_umber: phoneNumberRule.required(),
+  family_name: nameRule.label('Family name').required(),
+  given_name: nameRule.label('Given name').required(),
+  phone_umber: phoneNumberRule.notRequired(),
 });
 
 export const UpdateProfileSchema = Yup.object().shape({
   email: emailRule.required(),
-  family_name: nameRule.label('Family name').notRequired(),
-  given_name: nameRule.label('Given name').notRequired(),
+  family_name: nameRule.label('Family name').required(),
+  given_name: nameRule.label('Given name').required(),
   phone_umber: phoneNumberRule.notRequired(),
   picture: pictureRule.notRequired(),
 });
@@ -96,3 +97,42 @@ export const PasswordChangeSchema = Yup.object().shape({
 export const CodeSchema = Yup.object().shape({
   code: codeRule.required(),
 });
+
+export const NewMessageSchema = Yup.object().shape({
+  content: Yup.string().required(),
+});
+
+export const CompleteRegistrationSchema = (
+  requiredAttributes: ChatCognitoRequiredAttributes[],
+) => {
+  const showEmailField = includes(requiredAttributes, 'email');
+  const showPhoneNumberField = includes(requiredAttributes, 'phone_number');
+  const showGivenNameField = includes(requiredAttributes, 'given_name');
+  const showFamilyNameField = includes(requiredAttributes, 'family_name');
+  const showPasswordField = true; // always show
+
+  const schemaFields: { [k: string]: Yup.StringSchema } = {};
+  if (showEmailField) {
+    schemaFields.email = emailRule.required();
+  }
+
+  if (showPhoneNumberField) {
+    schemaFields.phone_number = phoneNumberRule.required();
+  }
+
+  if (showGivenNameField) {
+    schemaFields.given_name = nameRule.label('Given name').required();
+  }
+
+  if (showFamilyNameField) {
+    schemaFields.family_name = nameRule.label('Family name').required();
+  }
+
+  if (showPasswordField) {
+    schemaFields.password = passwordRule.required();
+  }
+
+  const validationSchema = Yup.object().shape(schemaFields);
+
+  return validationSchema;
+};

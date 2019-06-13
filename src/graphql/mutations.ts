@@ -7,6 +7,8 @@ export const createClUser = `mutation CreateClUser($input: CreateClUserInput!) {
     conversations {
       items {
         id
+        clConvoLinkUserId
+        clConvoLinkConversationId
         createdAt
         updatedAt
       }
@@ -21,7 +23,6 @@ export const createClUser = `mutation CreateClUser($input: CreateClUserInput!) {
       }
       nextToken
     }
-    username
     givenName
     familyName
     email
@@ -38,6 +39,8 @@ export const updateClUser = `mutation UpdateClUser($input: UpdateClUserInput!) {
     conversations {
       items {
         id
+        clConvoLinkUserId
+        clConvoLinkConversationId
         createdAt
         updatedAt
       }
@@ -52,7 +55,6 @@ export const updateClUser = `mutation UpdateClUser($input: UpdateClUserInput!) {
       }
       nextToken
     }
-    username
     givenName
     familyName
     email
@@ -69,6 +71,8 @@ export const deleteClUser = `mutation DeleteClUser($input: DeleteClUserInput!) {
     conversations {
       items {
         id
+        clConvoLinkUserId
+        clConvoLinkConversationId
         createdAt
         updatedAt
       }
@@ -83,7 +87,6 @@ export const deleteClUser = `mutation DeleteClUser($input: DeleteClUserInput!) {
       }
       nextToken
     }
-    username
     givenName
     familyName
     email
@@ -109,6 +112,8 @@ export const createClConvo = `mutation CreateClConvo($input: CreateClConversatio
     associated {
       items {
         id
+        clConvoLinkUserId
+        clConvoLinkConversationId
         createdAt
         updatedAt
       }
@@ -132,7 +137,6 @@ export const createClMessage = `mutation CreateClMessage($input: CreateClMessage
       messages {
         nextToken
       }
-      username
       givenName
       familyName
       email
@@ -171,7 +175,6 @@ export const updateClMessage = `mutation UpdateClMessage($input: UpdateClMessage
       messages {
         nextToken
       }
-      username
       givenName
       familyName
       email
@@ -210,7 +213,6 @@ export const deleteClMessage = `mutation DeleteClMessage($input: DeleteClMessage
       messages {
         nextToken
       }
-      username
       givenName
       familyName
       email
@@ -249,7 +251,6 @@ export const createClConvoLink = `mutation CreateClConvoLink($input: CreateClCon
       messages {
         nextToken
       }
-      username
       givenName
       familyName
       email
@@ -258,6 +259,7 @@ export const createClConvoLink = `mutation CreateClConvoLink($input: CreateClCon
       createdAt
       updatedAt
     }
+    clConvoLinkUserId
     conversation {
       id
       messages {
@@ -271,6 +273,7 @@ export const createClConvoLink = `mutation CreateClConvoLink($input: CreateClCon
       createdAt
       updatedAt
     }
+    clConvoLinkConversationId
     createdAt
     updatedAt
   }
@@ -287,7 +290,6 @@ export const updateClConvoLink = `mutation UpdateClConvoLink($input: UpdateClCon
       messages {
         nextToken
       }
-      username
       givenName
       familyName
       email
@@ -296,6 +298,7 @@ export const updateClConvoLink = `mutation UpdateClConvoLink($input: UpdateClCon
       createdAt
       updatedAt
     }
+    clConvoLinkUserId
     conversation {
       id
       messages {
@@ -309,6 +312,7 @@ export const updateClConvoLink = `mutation UpdateClConvoLink($input: UpdateClCon
       createdAt
       updatedAt
     }
+    clConvoLinkConversationId
     createdAt
     updatedAt
   }

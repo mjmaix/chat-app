@@ -55,6 +55,51 @@ mutation DeleteClUser($deleteInput: DeleteClUserInput!) {
   }
 }
 
+mutation CreateClConvo {
+  createClConvo(input:{
+    name:"Test Convo1",
+    members:["60c46077-02da-4c5f-96a7-b68ab468bd5a", "e25da0dc-1291-4f40-99e1-548a1e824494"]
+  }) {
+    id
+    name
+    members
+    createdAt
+    updatedAt
+  }
+}
+
+mutation CreateClConvoLink {
+  createClConvoLink(input: {
+    clConvoLinkUserId: "e25da0dc-1291-4f40-99e1-548a1e824494",
+    clConvoLinkConversationId: "7aa3b68a-e1b9-47ab-9664-5511cee62106"
+  }) {
+  	  id
+    	user {
+        email
+      }
+    	createdAt
+    	updatedAt
+    	conversation {
+        name
+        members
+      }
+  }
+}
+
+subscription SubscribeOnCreateConvoLink {
+  onCreateClConvoLink(clConvoLinkUserId: "e25da0dc-1291-4f40-99e1-548a1e824494") {
+    id
+    user {
+      email
+    }
+    conversation {
+      name
+      members
+    }
+    createdAt
+    updatedAt
+  }
+}
 
 
 {
@@ -72,3 +117,4 @@ mutation DeleteClUser($deleteInput: DeleteClUserInput!) {
     "identityId": "ap-southeast-1:06cd235f-8398-4150-8f92-e97f9d87caaa"
 	}
 }
+

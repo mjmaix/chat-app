@@ -51,10 +51,7 @@ class ContactsScreen extends Component<Props, State> {
       const clUser = data.onUpdateClUser;
       if (clUser) {
         this.setState(prev => {
-          const idx = _.findIndex(
-            prev.users,
-            (d: any) => d.username === clUser.username,
-          );
+          const idx = _.findIndex(prev.users, (d: any) => d.id === clUser.id);
           const newUsers = [...prev.users];
           newUsers.splice(idx, 1, clUser);
           return { users: newUsers };
@@ -65,10 +62,7 @@ class ContactsScreen extends Component<Props, State> {
       const clUser = data.onDeleteClUser;
       if (clUser) {
         this.setState(prev => {
-          const newUsers = _.remove(
-            prev.users,
-            (d: any) => d.username === clUser.username,
-          );
+          const newUsers = _.remove(prev.users, (d: any) => d.id === clUser.id);
           return { users: newUsers };
         });
       }
@@ -101,7 +95,7 @@ class ContactsScreen extends Component<Props, State> {
           ListHeaderComponent={HeaderComponent}
           stickyHeaderIndices={[0]}
           data={users}
-          keyExtractor={item => item.username}
+          keyExtractor={item => item.id}
           renderItem={data => <UserListItem {...data} />}
         />
       </StyledScreenContainer>

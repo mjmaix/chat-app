@@ -2,6 +2,8 @@ import { ApolloCurrentResult } from 'apollo-client';
 import gql from 'graphql-tag';
 
 import {
+  OnCreateClConvoLinkSubscription,
+  OnCreateClConvoLinkSubscriptionVariables,
   OnCreateClUserSubscription,
   OnDeleteClUserSubscription,
   OnUpdateClUserSubscription,
@@ -91,6 +93,40 @@ export const subscribeToDeleteClUser = <T = OnDeleteClUserSubscription>(
         }
         logRecord({
           name: 'SubscribeDeleteUserError',
+          attributes: {
+            error: e.message,
+          },
+        });
+      },
+    });
+  return observer;
+};
+
+export const subscribeToCreateClConvoLink = <
+  T = OnCreateClConvoLinkSubscription
+>(
+  user: ChatCognitoUser,
+  cbNextData: SubscribeNextCallback<T>,
+  cbError?: SubscribeErrorCallback,
+) => {
+  const observer = client
+    .subscribe<DataWrapper<T>, OnCreateClConvoLinkSubscriptionVariables>({
+      query: gql(subscriptions.onCreateClConvoLink),
+      variables: {
+        clConvoLinkUserId: user.getUsername(),
+      },
+      fetchPolicy: __DEV__ ? 'no-cache' : undefined,
+    })
+    .subscribe({
+      next: data => {
+        cbNextData(data);
+      },
+      error: e => {
+        if (cbError) {
+          cbError(e);
+        }
+        logRecord({
+          name: 'SubscribeCreateConvoLinkError',
           attributes: {
             error: e.message,
           },

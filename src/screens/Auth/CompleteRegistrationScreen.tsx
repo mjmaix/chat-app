@@ -2,17 +2,13 @@ import { Formik, FormikActions } from 'formik';
 import includes from 'lodash/includes';
 import React, { Component } from 'react';
 import { NavigationScreenProps } from 'react-navigation';
-import * as Yup from 'yup';
 
 import { EmailInput, Header, PasswordInput } from '../../components';
 import {
+  CompleteRegistrationSchema,
   PasswordRequiredModel,
   SignUpModel,
-  emailRule,
   handleCompleteNewPassword,
-  nameRule,
-  passwordRule,
-  phoneNumberRule,
 } from '../../core';
 import { FormikInputInjector } from '../../hocs';
 import { MemoFormikFormErrorText } from '../../hocs/MemoFormikFormErrorText';
@@ -54,34 +50,13 @@ class CompleteRegistrationScreen extends Component<Props, State> {
     }
 
     const { requiredAttributes } = challengeParam;
+    const schema = CompleteRegistrationSchema(requiredAttributes);
     const showEmailField = includes(requiredAttributes, 'email');
     const showPhoneNumberField = includes(requiredAttributes, 'phone_number');
     const showGivenNameField = includes(requiredAttributes, 'given_name');
     const showFamilyNameField = includes(requiredAttributes, 'family_name');
     const showPasswordField = true; // always show
 
-    const schemaFields: { [k: string]: Yup.StringSchema } = {};
-    if (showEmailField) {
-      schemaFields.email = emailRule.required();
-    }
-
-    if (showPhoneNumberField) {
-      schemaFields.phone_number = phoneNumberRule.required();
-    }
-
-    if (showGivenNameField) {
-      schemaFields.given_name = nameRule.label('Given name').required();
-    }
-
-    if (showFamilyNameField) {
-      schemaFields.family_name = nameRule.label('Family name').required();
-    }
-
-    if (showPasswordField) {
-      schemaFields.password = passwordRule.required();
-    }
-
-    const validationSchema = Yup.object().shape(schemaFields);
     return (
       <StyledScreenContainer>
         <Header
@@ -90,7 +65,7 @@ class CompleteRegistrationScreen extends Component<Props, State> {
         />
         <Formik<FormModel>
           initialValues={SignUpModel}
-          validationSchema={validationSchema}
+          validationSchema={schema}
           onSubmit={this.onPressSubmit}
         >
           {fProps => {

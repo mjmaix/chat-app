@@ -12,7 +12,6 @@ export const onCreateClMessage = `subscription OnCreateClMessage($members: [Stri
       messages {
         nextToken
       }
-      username
       givenName
       familyName
       email
@@ -40,8 +39,8 @@ export const onCreateClMessage = `subscription OnCreateClMessage($members: [Stri
   }
 }
 `;
-export const onCreateClConvoLink = `subscription OnCreateClConvoLink($user: String!) {
-  onCreateClConvoLink(user: $user) {
+export const onCreateClConvoLink = `subscription OnCreateClConvoLink($clConvoLinkUserId: String!) {
+  onCreateClConvoLink(clConvoLinkUserId: $clConvoLinkUserId) {
     id
     user {
       id
@@ -51,7 +50,6 @@ export const onCreateClConvoLink = `subscription OnCreateClConvoLink($user: Stri
       messages {
         nextToken
       }
-      username
       givenName
       familyName
       email
@@ -60,6 +58,7 @@ export const onCreateClConvoLink = `subscription OnCreateClConvoLink($user: Stri
       createdAt
       updatedAt
     }
+    clConvoLinkUserId
     conversation {
       id
       messages {
@@ -73,6 +72,7 @@ export const onCreateClConvoLink = `subscription OnCreateClConvoLink($user: Stri
       createdAt
       updatedAt
     }
+    clConvoLinkConversationId
     createdAt
     updatedAt
   }
@@ -84,6 +84,8 @@ export const onCreateClUser = `subscription OnCreateClUser {
     conversations {
       items {
         id
+        clConvoLinkUserId
+        clConvoLinkConversationId
         createdAt
         updatedAt
       }
@@ -98,7 +100,6 @@ export const onCreateClUser = `subscription OnCreateClUser {
       }
       nextToken
     }
-    username
     givenName
     familyName
     email
@@ -115,6 +116,8 @@ export const onUpdateClUser = `subscription OnUpdateClUser {
     conversations {
       items {
         id
+        clConvoLinkUserId
+        clConvoLinkConversationId
         createdAt
         updatedAt
       }
@@ -129,7 +132,6 @@ export const onUpdateClUser = `subscription OnUpdateClUser {
       }
       nextToken
     }
-    username
     givenName
     familyName
     email
@@ -146,6 +148,8 @@ export const onDeleteClUser = `subscription OnDeleteClUser {
     conversations {
       items {
         id
+        clConvoLinkUserId
+        clConvoLinkConversationId
         createdAt
         updatedAt
       }
@@ -160,7 +164,6 @@ export const onDeleteClUser = `subscription OnDeleteClUser {
       }
       nextToken
     }
-    username
     givenName
     familyName
     email

@@ -3,10 +3,13 @@ import { FetchResult } from 'apollo-link';
 import gql from 'graphql-tag';
 
 import {
+  CreateClConvoLinkMutation,
+  CreateClConvoMutation,
+  CreateClConvoMutationVariables,
   CreateClUserMutation,
-  CreateConvoLinkMutation,
-  CreateConvoMutation,
+  CreateClUserMutationVariables,
   UpdateClUserMutation,
+  UpdateClUserMutationVariables,
 } from '../../API';
 import * as mutations from '../../graphql/mutations';
 import { apolloClient as client } from '../../setup';
@@ -24,7 +27,6 @@ export const handleCreateClUser = async (
 ) => {
   const newUser = {
     id: user.getUsername(),
-    username: user.getUsername(),
     email: user.attributes.email,
     familyName: user.attributes.family_name,
     givenName: user.attributes.given_name,
@@ -32,7 +34,10 @@ export const handleCreateClUser = async (
     identityId,
   };
   try {
-    const response = await client.mutate<CreateClUserMutation>({
+    const response = await client.mutate<
+      CreateClUserMutation,
+      CreateClUserMutationVariables
+    >({
       mutation: gql(mutations.createClUser),
       // TODO: test first
       // optimisticResponse: { __typename: 'ClUser', createClUser: newUser },
@@ -65,7 +70,10 @@ export const handleUpdateClUser = async (
       avatar: user.attributes.picture,
       identityId,
     };
-    const response = await client.mutate<UpdateClUserMutation>({
+    const response = await client.mutate<
+      UpdateClUserMutation,
+      UpdateClUserMutationVariables
+    >({
       mutation: gql(mutations.updateClUser),
       // TODO: test first
       // optimisticResponse: { __typename: 'ClUser', updateClUser: newUser },
@@ -93,8 +101,11 @@ export const handleCreateConvo = async (
   try {
     const members = [user1, user2].sort();
     const conversationName = members.join(' and ');
-    const conversationResponse = await client.mutate<CreateConvoMutation>({
-      mutation: gql(mutations.createConvo),
+    const conversationResponse = await client.mutate<
+      CreateClConvoMutation,
+      CreateClConvoMutationVariables
+    >({
+      mutation: gql(mutations.createClConvo),
       variables: {
         input: {
           name: conversationName,
@@ -105,9 +116,9 @@ export const handleCreateConvo = async (
     });
     assertErrors(conversationResponse);
     const userConversation1Response = await client.mutate<
-      CreateConvoLinkMutation
+      CreateClConvoLinkMutation
     >({
-      mutation: gql(mutations.createConvoLink),
+      mutation: gql(mutations.createClConvoLink),
       variables: {
         input: {
           convoLinkUserId: user1,
@@ -117,9 +128,9 @@ export const handleCreateConvo = async (
     });
     assertErrors(userConversation1Response);
     const userConversation2Response = await client.mutate<
-      CreateConvoLinkMutation
+      CreateClConvoLinkMutation
     >({
-      mutation: gql(mutations.createConvoLink),
+      mutation: gql(mutations.createClConvoLink),
       variables: {
         input: {
           convoLinkUserId: user2,

@@ -24,7 +24,8 @@ export const handlePressVerifyContact = async (contact: Contact) => {
 export const handleClUserCreate = async () => {
   const cognitoUser = await handleGetCurrentUser();
   const username = cognitoUser.getUsername();
-  const userExists = await handleGetClUser(username);
+  const response = await handleGetClUser(username);
+  const userExists = response && response.getClUser;
   if (!userExists) {
     logInfo('Create ClUser entry');
     const identityId = await handleGetCurrentIdentityId();

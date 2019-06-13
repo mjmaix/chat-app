@@ -20,8 +20,8 @@ declare global {
     phone_number: string;
     phone_number_verified: false;
     sub: string;
-    family_name?: string;
-    given_name?: string;
+    family_name: string;
+    given_name: string;
     picture?: string;
     address?: string;
     birthdate?: string;
@@ -30,15 +30,11 @@ declare global {
     middle_name?: string;
     name?: string;
     nickname?: string;
-    preferred_username?: string;
+    preferred_username: string;
     profile?: string;
     timezone?: string;
     updated_at?: string;
     website?: string;
-  }
-
-  interface ChatCognitoUser extends CognitoUser {
-    attributes: ChatUserAttributes;
   }
 
   type MfaMethod = 'TOTP' | 'SMS' | 'NOMFA';
@@ -70,6 +66,7 @@ declare global {
   }
 
   interface ChatCognitoUser extends CognitoUser {
+    attributes: ChatUserAttributes;
     challengeName: ChallengeName;
     challengeParam: ChallengeParam;
   }

@@ -7,6 +7,8 @@ export const getClUser = `query GetClUser($id: ID!) {
     conversations {
       items {
         id
+        clConvoLinkUserId
+        clConvoLinkConversationId
         createdAt
         updatedAt
       }
@@ -21,7 +23,6 @@ export const getClUser = `query GetClUser($id: ID!) {
       }
       nextToken
     }
-    username
     givenName
     familyName
     email
@@ -46,7 +47,6 @@ export const listClUsers = `query ListClUsers(
       messages {
         nextToken
       }
-      username
       givenName
       familyName
       email
@@ -74,6 +74,8 @@ export const getClConvo = `query GetClConvo($id: ID!) {
     associated {
       items {
         id
+        clConvoLinkUserId
+        clConvoLinkConversationId
         createdAt
         updatedAt
       }
