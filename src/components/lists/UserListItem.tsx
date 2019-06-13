@@ -7,11 +7,14 @@ import { PreviewAvatar } from '../Images/PreviewAvatar';
 
 // TODO: replace any
 const UserListItem: ListRenderItem<any> = ({ item, ...props }) => {
+  const size = 'medium';
   const ImageComponent = class extends React.Component<{}> {
     public render() {
       return (
         <PreviewAvatar
-          size="small"
+          editable={false}
+          rounded={false}
+          size={size}
           imgKey={item.avatar}
           level={'protected'}
           identityId={item.identityId}
@@ -21,7 +24,7 @@ const UserListItem: ListRenderItem<any> = ({ item, ...props }) => {
   };
   return (
     <ListItem
-      leftElement={<Avatar size="small" ImageComponent={ImageComponent} />}
+      leftElement={<Avatar size={size} ImageComponent={ImageComponent} />}
       subtitle={item.email ? item.email : undefined}
       onPress={() => NavigationService.navigate('Chat', item)}
       title={`${item.familyName}, ${item.givenName}`}

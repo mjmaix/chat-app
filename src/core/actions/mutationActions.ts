@@ -39,8 +39,7 @@ export const handleCreateClUser = async (
       CreateClUserMutationVariables
     >({
       mutation: gql(mutations.createClUser),
-      // TODO: test first
-      // optimisticResponse: { __typename: 'ClUser', createClUser: newUser },
+      optimisticResponse: { __typename: 'ClUser', createClUser: newUser },
       variables: {
         input: newUser,
       },

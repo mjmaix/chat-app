@@ -16,6 +16,8 @@ export interface PreviewAvatarProps {
   identityId?: string;
   level?: 'private' | 'protected' | 'public';
   size?: 'small' | 'medium' | 'large' | 'xlarge' | number;
+  rounded?: boolean;
+  editable?: boolean;
 }
 
 // TODO: style errorMessage
@@ -31,6 +33,8 @@ export const PreviewAvatar = (props: PreviewAvatarProps) => {
     level,
     size = 'xlarge',
     identityId,
+    editable = true,
+    rounded = true,
   } = props;
 
   const icon = {
@@ -57,8 +61,8 @@ export const PreviewAvatar = (props: PreviewAvatarProps) => {
         ImageComponent={imgKey ? ImgComp : undefined}
         icon={imgKey ? undefined : icon}
         source={imgKey ? undefined : source}
-        showEditButton={!isSubmitting}
-        rounded
+        showEditButton={!isSubmitting && editable}
+        rounded={rounded}
         imageProps={imageProps}
         size={size}
         onEditPress={async () => {
