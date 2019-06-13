@@ -4,10 +4,10 @@ type ClUser
   id: ID!
   conversations: [ClConvoLink]
     @connection(name: "UserLinks")
-    @auth(rules: [{ allow: owner, ownerField: "username" }])
+    @auth(rules: [{ allow: owner, ownerField: "id" }])
   messages: [ClMessage]
     @connection(name: "UserMessages")
-    @auth(rules: [{ allow: owner, ownerField: "username" }])
+    @auth(rules: [{ allow: owner, ownerField: "id" }])
   givenName: String!
   familyName: String!
   email: String!
