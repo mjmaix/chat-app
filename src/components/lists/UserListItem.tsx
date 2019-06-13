@@ -26,7 +26,7 @@ const UserListItem: ListRenderItem<any> = ({ item, ...props }) => {
     <ListItem
       leftElement={<Avatar size={size} ImageComponent={ImageComponent} />}
       subtitle={item.email ? item.email : undefined}
-      onPress={() => NavigationService.navigate('Chat', item)}
+      onPress={() => NavigationService.navigate('Chat', { selectedUser: item })}
       title={`${item.familyName}, ${item.givenName}`}
       bottomDivider
       {...props}
