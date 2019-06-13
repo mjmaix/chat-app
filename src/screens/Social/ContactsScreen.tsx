@@ -1,4 +1,5 @@
-import _ from 'lodash';
+import diffBy from 'lodash/differenceBy';
+import findIndex from 'lodash/findIndex';
 import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
@@ -51,7 +52,7 @@ class ContactsScreen extends Component<Props, State> {
       const clUser = data.onUpdateClUser;
       if (clUser) {
         this.setState(prev => {
-          const idx = _.findIndex(prev.users, (d: any) => d.id === clUser.id);
+          const idx = findIndex(prev.users, (d: any) => d.id === clUser.id);
           const newUsers = [...prev.users];
           newUsers.splice(idx, 1, clUser);
           return { users: newUsers };
@@ -62,7 +63,7 @@ class ContactsScreen extends Component<Props, State> {
       const clUser = data.onDeleteClUser;
       if (clUser) {
         this.setState(prev => {
-          const newUsers = _.remove(prev.users, (d: any) => d.id === clUser.id);
+          const newUsers = diffBy(prev.users, [clUser], 'id');
           return { users: newUsers };
         });
       }
