@@ -6,8 +6,6 @@ import * as queries from '../../graphql/queries';
 import { apolloClient as client } from '../../setup';
 import { logReport as logRecord } from '../reports/index';
 
-// TODO: cleanup and refactor
-
 const assertErrors = (
   response: ApolloQueryResult<GetClUserQuery | ListClUsersQuery>,
 ) => {
@@ -24,7 +22,7 @@ export const handleGetClUser = async (username: string) => {
       fetchPolicy: __DEV__ ? 'no-cache' : undefined,
     });
     assertErrors(response);
-    return response.data.getClUser;
+    return response.data;
   } catch (e) {
     logRecord({
       name: 'GetUserError',
@@ -38,7 +36,7 @@ export const handleGetClUser = async (username: string) => {
 export const handleListClUserConvos = async (username: string) => {
   try {
     const user = await handleGetClUser(username);
-    return user ? user.conversations : null;
+    return user && user.getClUser ? user.getClUser.conversations : null;
   } catch (e) {
     logRecord({
       name: 'GetUserError',
@@ -49,7 +47,8 @@ export const handleListClUserConvos = async (username: string) => {
   }
 };
 
-const listPublicClUsers = `query ListClUsers(
+// FIXME: refactor or try to create own query
+const listContacts = `query ListContacts(
     $filter: ModelClUserFilterInput
     $limit: Int
     $nextToken: String
@@ -71,15 +70,15 @@ const listPublicClUsers = `query ListClUsers(
   }
 `;
 
-export const handleListClUsers = async () => {
+export const handleListContacts = async () => {
   try {
     const response = await client.query<ListClUsersQuery>({
-      query: gql(listPublicClUsers),
+      query: gql(listContacts),
       variables: { limit: 100 },
       fetchPolicy: __DEV__ ? 'no-cache' : undefined,
     });
     assertErrors(response);
-    return response.data.listClUsers;
+    return response.data;
   } catch (e) {
     logRecord({
       name: 'ListUserError',
