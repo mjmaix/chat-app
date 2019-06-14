@@ -11,6 +11,7 @@ import {
   StyleGuide,
   UpdateProfileSchema,
   WrapKnownExceptions,
+  handleCheckContactVerified,
   handleClUserUpdate,
   handleGetCurrentUserAttrs,
   handlePressVerifyContact,
@@ -41,10 +42,6 @@ import {
   getMime,
 } from '../../utils';
 import { alertFail, alertOk } from '../../utils';
-import {
-  asyncGetCurrentUserOpts,
-  asyncIsContactVerified,
-} from '../../utils/amplifyAuthUtils';
 
 interface Props extends NavigationScreenProps {}
 type FormModel = typeof ProfileModel;
@@ -66,25 +63,21 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
   private willFocusListener?: NavigationEventSubscription;
 
   public async componentDidMount() {
-    asyncGetCurrentUserOpts()
-      .then(ops => {
-        return handleGetCurrentUserAttrs(ops);
-      })
-      .then(form => {
-        this.setState(prev => ({
-          form: {
-            ...prev.form,
-            ...{
-              email: form.email || '',
-              family_name: form.family_name || '',
-              given_name: form.given_name || '',
-              phone_number: form.phone_number || '',
-              picture: form.picture || '',
-            },
+    handleGetCurrentUserAttrs().then(form => {
+      this.setState(prev => ({
+        form: {
+          ...prev.form,
+          ...{
+            email: form.email || '',
+            family_name: form.family_name || '',
+            given_name: form.given_name || '',
+            phone_number: form.phone_number || '',
+            picture: form.picture || '',
           },
-          isFormReady: true,
-        }));
-      });
+        },
+        isFormReady: true,
+      }));
+    });
     const { navigation } = this.props;
     this.willFocusListener = navigation.addListener('willFocus', () => {
       this.checkVerifiedContact();
@@ -98,8 +91,8 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
   }
 
   private checkVerifiedContact = async () => {
-    const showVerifyEmail = !(await asyncIsContactVerified('email'));
-    // const showVerifyPhone = !(await asyncIsContactVerified('phone_number'));
+    const showVerifyEmail = !(await handleCheckContactVerified('email'));
+    // const showVerifyPhone = !(await handleCheckContactVerified('phone_number'));
 
     this.setState({ showVerifyEmail });
   };

@@ -6,8 +6,11 @@ import {
   GetClUserQueryVariables,
   ListClUsersQuery,
 } from '../../API';
+import { handleGetCurrentUser } from '../../core';
+import { listContacts } from '../../graphql/publicOnlyQueries';
 import * as queries from '../../graphql/queries';
 import { apolloClient as client } from '../../setup';
+import { logInfo } from '../reports';
 import { logReport as logRecord } from '../reports/index';
 
 const assertErrors = (
@@ -19,6 +22,7 @@ const assertErrors = (
 };
 
 export const handleGetClUser = async (username: string) => {
+  logInfo('[START] handleGetClUser');
   try {
     const response = await client.query<
       GetClUserQuery,
@@ -41,6 +45,7 @@ export const handleGetClUser = async (username: string) => {
 };
 
 export const handleListClUserConvos = async (username: string) => {
+  logInfo('[START] handleListClUserConvos');
   try {
     const user = await handleGetClUser(username);
     return user && user.getClUser ? user.getClUser.conversations : null;
@@ -54,30 +59,10 @@ export const handleListClUserConvos = async (username: string) => {
   }
 };
 
-// FIXME: refactor or try to create own query
-const listContacts = `query ListContacts(
-    $filter: ModelClUserFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listClUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        givenName
-        familyName
-        email
-        avatar
-        identityId
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-
-export const handleListContacts = async (user: ChatCognitoUser) => {
+export const handleListContacts = async () => {
+  logInfo('[START] handleListContacts');
   try {
+    const user = await handleGetCurrentUser();
     const response = await client.query<ListClUsersQuery>({
       query: gql(listContacts),
       variables: { limit: 100, filter: { id: { ne: user.getUsername() } } },

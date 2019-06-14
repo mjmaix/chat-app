@@ -1,4 +1,3 @@
-import { CognitoUser } from '@aws-amplify/auth';
 import {
   CurrentUserOpts,
   GetPreferredMFAOpts,
@@ -6,6 +5,10 @@ import {
 import { Auth } from 'aws-amplify';
 import _ from 'lodash';
 
+import {
+  asyncGetCurrentUserOpts,
+  buildOpts,
+} from '../../utils/amplifyAuthUtils';
 import { WrapKnownExceptions } from '../errors';
 import {
   ChallengeModel,
@@ -23,14 +26,18 @@ import { logInfo } from '../reports';
 
 type SignUpModel = typeof ProfileModel & typeof PasswordRequiredModel;
 
-export const handleGetCurrentUserAttrs = async (opts?: CurrentUserOpts) => {
+export const handleGetCurrentUserAttrs = async (provOpts?: CurrentUserOpts) => {
+  logInfo('[START] handleGetCurrentUserAttrs');
+  const opts = await buildOpts(provOpts);
   const currentUser: ChatCognitoUser = await Auth.currentUserPoolUser(
     opts,
   ).catch(WrapKnownExceptions);
   return currentUser.attributes;
 };
 
-export const handleGetCurrentUser = async (opts?: CurrentUserOpts) => {
+export const handleGetCurrentUser = async (provOpts?: CurrentUserOpts) => {
+  logInfo('[START] handleGetCurrentUser');
+  const opts = await buildOpts(provOpts);
   const currentUser = await Auth.currentUserPoolUser(opts).catch(
     WrapKnownExceptions,
   );
@@ -38,11 +45,13 @@ export const handleGetCurrentUser = async (opts?: CurrentUserOpts) => {
 };
 
 export const handleGetCurrentIdentityId = async () => {
+  logInfo('[START] handleGetCurrentIdentityId');
   const creds = await Auth.currentCredentials();
   return creds.identityId;
 };
 
 export const handleSignUp = async (data: typeof SignUpModel) => {
+  logInfo('[START] handleSignUp');
   const { password, ...attrs } = data;
   const user = await Auth.signUp({
     username: attrs.email,
@@ -92,8 +101,11 @@ export const handleUpdateProfile = async (data: typeof ProfileModel) => {
   return Auth.updateUserAttributes(user, buildAttrs).catch(WrapKnownExceptions);
 };
 
-export const handleCheckVerifiedContact = async (opts?: CurrentUserOpts) => {
+export const handleCheckVerifiedContact = async (
+  provOpts?: CurrentUserOpts,
+) => {
   logInfo('[START] handleCheckVerifiedContact');
+  const opts = await buildOpts(provOpts);
   const user = await Auth.currentUserPoolUser(opts).catch(WrapKnownExceptions);
   const verif = await Auth.verifiedContact(user).catch(WrapKnownExceptions);
   return verif;
@@ -203,6 +215,7 @@ export const handleVerifyMfaSms = async (data: typeof CodeRequiredModel) => {
 };
 
 export const handleSetMfa = async (mfa: MfaOption) => {
+  logInfo('[START] handleSetMfa');
   const user = await Auth.currentUserPoolUser().catch(WrapKnownExceptions);
   return Auth.setPreferredMFA(user, mfa).catch(WrapKnownExceptions);
 };
@@ -227,4 +240,11 @@ export const handleConfirmSignIn = async (
   return Auth.confirmSignIn(unAuthUser, data.code, mfaType).catch(
     WrapKnownExceptions,
   );
+};
+
+export const handleCheckContactVerified = async (contact: Contact) => {
+  logInfo('[START] handleConfirmSignIn');
+  const opts = await asyncGetCurrentUserOpts();
+  const status: VerifiedContact = await handleCheckVerifiedContact(opts);
+  return !!(status && status.verified && status.verified[contact]);
 };

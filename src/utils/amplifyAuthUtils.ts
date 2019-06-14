@@ -1,4 +1,5 @@
-import { handleCheckVerifiedContact } from '../core/actions/authActions';
+import { CurrentUserOpts } from '@aws-amplify/auth/lib/types';
+
 import { isConnected } from '../utils/networkUtil';
 
 export const asyncGetCurrentUserOpts = () =>
@@ -6,8 +7,11 @@ export const asyncGetCurrentUserOpts = () =>
     .then(() => ({ bypassCache: true }))
     .catch(() => ({ bypassCache: false }));
 
-export const asyncIsContactVerified = async (contact: Contact) => {
-  const opts = await asyncGetCurrentUserOpts();
-  const status: VerifiedContact = await handleCheckVerifiedContact(opts);
-  return !!(status && status.verified && status.verified[contact]);
+export const buildOpts = async (opts?: CurrentUserOpts) => {
+  const netOpts = await asyncGetCurrentUserOpts();
+  const builtOpts = {
+    ...netOpts,
+    ...opts,
+  };
+  return builtOpts;
 };

@@ -1,9 +1,11 @@
+import { ApolloCurrentResult } from 'apollo-client';
 import { ApolloQueryResult } from 'apollo-client/core/types';
 import { FetchResult } from 'apollo-link';
 import gql from 'graphql-tag';
 
 import {
   CreateClConvoLinkMutation,
+  CreateClConvoLinkMutationVariables,
   CreateClConvoMutation,
   CreateClConvoMutationVariables,
   CreateClUserMutation,
@@ -12,8 +14,14 @@ import {
   UpdateClUserMutationVariables,
 } from '../../API';
 import * as mutations from '../../graphql/mutations';
+import { createClConvoLinkPublic } from '../../graphql/publicOnlyMutations';
 import { apolloClient as client } from '../../setup';
+import { logInfo } from '../reports';
 import { logReport as logRecord } from '../reports/index';
+
+interface DataWrapper<T> extends ApolloCurrentResult<T> {
+  data: T;
+}
 
 const assertErrors = (response: ApolloQueryResult<any> | FetchResult<any>) => {
   if (response && response.errors && response.errors.length > 0) {
@@ -25,6 +33,7 @@ export const handleCreateClUser = async (
   user: ChatCognitoUser,
   identityId?: string,
 ) => {
+  logInfo('[START] handleCreateClUser');
   const newUser = {
     id: user.getUsername(),
     email: user.attributes.email,
@@ -60,6 +69,7 @@ export const handleUpdateClUser = async (
   user: ChatCognitoUser,
   identityId?: string,
 ) => {
+  logInfo('[START] handleUpdateClUser');
   try {
     const newUser = {
       id: user.getUsername(),
@@ -93,14 +103,22 @@ export const handleUpdateClUser = async (
   }
 };
 
-export const handleCreateConvo = async (
-  user1: ChatUserAttributes,
-  user2: ChatUserAttributes,
+export const handleCreateConvo = async <
+  T1 extends CreateClConvoMutation = CreateClConvoMutation,
+  T2 extends CreateClConvoLinkMutation = CreateClConvoLinkMutation
+>(
+  user1: string,
+  user2: string,
 ) => {
+  logInfo('[START] handleCreateConvo');
+  let conversationResponse: Nullable<DataWrapper<T1>> = null;
+  let userConversation1Response: Nullable<DataWrapper<T2>> = null;
+  let userConversation2Response: Nullable<DataWrapper<T2>> = null;
+
   try {
     const members = [user1, user2].sort();
     const conversationName = members.join(' and ');
-    const conversationResponse = await client.mutate<
+    conversationResponse = await client.mutate<
       CreateClConvoMutation,
       CreateClConvoMutationVariables
     >({
@@ -114,31 +132,6 @@ export const handleCreateConvo = async (
       fetchPolicy: __DEV__ ? 'no-cache' : undefined,
     });
     assertErrors(conversationResponse);
-    const userConversation1Response = await client.mutate<
-      CreateClConvoLinkMutation
-    >({
-      mutation: gql(mutations.createClConvoLink),
-      variables: {
-        input: {
-          convoLinkUserId: user1,
-          convoLinkConversationId: conversationResponse.data.createConvo.id,
-        },
-      },
-    });
-    assertErrors(userConversation1Response);
-    const userConversation2Response = await client.mutate<
-      CreateClConvoLinkMutation
-    >({
-      mutation: gql(mutations.createClConvoLink),
-      variables: {
-        input: {
-          convoLinkUserId: user2,
-          convoLinkConversationId: conversationResponse.data.createConvo.id,
-        },
-      },
-      fetchPolicy: __DEV__ ? 'no-cache' : undefined,
-    });
-    assertErrors(userConversation2Response);
   } catch (e) {
     logRecord({
       name: 'CreateConvoError',
@@ -147,9 +140,76 @@ export const handleCreateConvo = async (
       },
     });
   }
+  let createClConvo;
+
+  if (
+    conversationResponse &&
+    conversationResponse.data &&
+    conversationResponse.data.createClConvo
+  ) {
+    createClConvo = conversationResponse.data.createClConvo;
+  }
+
+  if (createClConvo) {
+    try {
+      userConversation1Response = await client.mutate<
+        CreateClConvoLinkMutation,
+        CreateClConvoLinkMutationVariables
+      >({
+        mutation: gql(mutations.createClConvoLink),
+        variables: {
+          input: {
+            clConvoLinkUserId: user1,
+            clConvoLinkConversationId: createClConvo.id,
+          },
+        },
+      });
+      assertErrors(userConversation1Response);
+    } catch (e) {
+      logRecord({
+        name: 'CreateConvoLink1Error',
+        attributes: {
+          error: e.message,
+        },
+      });
+    }
+  }
+
+  if (createClConvo) {
+    try {
+      userConversation2Response = await client.mutate<
+        CreateClConvoLinkMutation,
+        CreateClConvoLinkMutationVariables
+      >({
+        mutation: gql(createClConvoLinkPublic),
+        variables: {
+          input: {
+            clConvoLinkUserId: user2,
+            clConvoLinkConversationId: createClConvo.id,
+          },
+        },
+        fetchPolicy: __DEV__ ? 'no-cache' : undefined,
+      });
+      assertErrors(userConversation2Response);
+    } catch (e) {
+      logRecord({
+        name: 'CreateConvoLink2Error',
+        attributes: {
+          error: e.message,
+        },
+      });
+    }
+  }
+
+  return [
+    conversationResponse,
+    userConversation1Response,
+    userConversation2Response,
+  ];
 };
 
 export const handleCreateMessage = async (message: string) => {
+  logInfo('[START] handleCreateMessage');
   try {
     const response = await client.mutate({
       mutation: gql(mutations.createClMessage),

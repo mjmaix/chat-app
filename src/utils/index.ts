@@ -12,3 +12,5 @@ export * from './mfa';
 export * from './networkUtil';
 export * from './constants';
 export * from './amplifyAuthUtils';
+export * from './amplifyStorageUtils';
+export * from './StoreKeyObjHelper';

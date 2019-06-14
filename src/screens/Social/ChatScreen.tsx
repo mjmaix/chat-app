@@ -1,69 +1,120 @@
+import memoize from 'lodash/memoize';
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ThemeConsumer } from 'react-native-elements';
-import { Bubble, GiftedChat } from 'react-native-gifted-chat';
+import { Bubble, GiftedChat, Send } from 'react-native-gifted-chat';
 import { IMessage, User } from 'react-native-gifted-chat/lib/types';
 import { NavigationScreenProps } from 'react-navigation';
 import { ThemedComponentProps } from 'styled-components';
 
+import {
+  handleCreateConvo,
+  handleGetClUser,
+  handleGetCurrentUser,
+  logInfo,
+} from '../../core';
 import { StyledScreenContainer } from '../../styled';
-import { isLight } from '../../utils';
+import { asyncGetS3Link, isLight } from '../../utils';
 
 type Props = NavigationScreenProps;
 
 interface State {
   messages: IMessage[];
-  myUser: User;
+  myUser?: ClUser;
+  myAvatar?: string;
+  otherUser?: ClUser;
+  otherAvatar?: string;
+  loading: boolean;
+  toggleUser: boolean;
 }
 
 class ChatScreen extends Component<Props, State> {
-  public readonly state = {
+  public readonly state: State = {
+    loading: true,
     messages: [],
-    myUser: {
-      _id: 1,
-      name: 'You',
-      avatar: 'https://placeimg.com/140/140/people',
-    },
+    otherUser: undefined,
+    myUser: undefined,
+    myAvatar: undefined,
+    toggleUser: false,
   };
 
-  public componentWillMount() {
-    this.setState({
-      messages: [
-        {
-          _id: 4,
-          text: 'This is a system message',
-          createdAt: new Date(Date.UTC(2016, 5, 11, 17, 20, 0)),
-          system: true,
-          user: {
-            _id: 0,
-          },
-        },
-        {
-          _id: 1,
-          text: 'Chat message',
-          createdAt: new Date(),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/141/141/people',
-          },
-        },
-        {
-          _id: 2,
-          text: 'Image message',
-          createdAt: new Date(Date.UTC(2016, 5, 11, 17, 20, 0)),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://placeimg.com/140/140/any',
-          },
-          image:
-            'https://camo.githubusercontent.com/d77d7a3eafd85abece54e6297f163930e12f3a87/68747470733a2f2f692e696d6775722e636f6d2f6f553758596b6b2e706e67',
-        },
-      ],
-    });
+  public async componentDidMount() {
+    const newState: Partial<State> = {};
+    const { navigation } = this.props;
+    // section1
+    const me = await handleGetCurrentUser();
+    const myClUser = await handleGetClUser(me.getUsername());
+    if (myClUser && myClUser.getClUser) {
+      newState.myUser = myClUser.getClUser;
+    }
+
+    // section 2
+    const user = newState.myUser as ClUser;
+    if (user.avatar) {
+      const link = await asyncGetS3Link(user.avatar, {
+        identityId: user.identityId as string,
+        level: 'protected',
+      });
+      if (link) {
+        newState.myAvatar = link as string;
+      }
+    }
+
+    // section 3
+    if (navigation.getParam('selectedUser')) {
+      newState.otherUser = navigation.getParam('selectedUser');
+    }
+
+    // section 4
+    const other = newState.otherUser as ClUser;
+    if (other.avatar) {
+      const link = await asyncGetS3Link(other.avatar, {
+        identityId: other.identityId as string,
+        level: 'protected',
+      });
+      if (link) {
+        newState.otherAvatar = link as string;
+      }
+    }
+
+    // section 5
+    try {
+      const user1 = (newState.myUser as ClUser).id;
+      const user2 = (newState.otherUser as ClUser).id;
+      const createConvoResp = await handleCreateConvo(user1, user2);
+    } catch (err) {
+      logInfo('[ERROR] cannot create conversation', err);
+    }
+
+    this.setState({ ...newState, loading: false } as State);
   }
+
+  private getChatUser = memoize((other?: boolean) => {
+    const user = other ? this.state.otherUser : this.state.myUser;
+    const link = other ? this.state.otherAvatar : this.state.myAvatar;
+    if (!user) {
+      return {
+        _id: 0,
+      };
+    }
+    const chatMyUser: User = {
+      _id: user.id,
+      name: `${user.familyName}, ${user.givenName}`,
+      avatar: link,
+    };
+    return chatMyUser;
+  });
+
   public render() {
+    const { myUser, otherUser, loading } = this.state;
+    if (!myUser || loading) {
+      // TODO: remove with loading flag
+      return null;
+    }
+
+    const myChatUser = this.getChatUser(false);
+    const otherChatUser = this.getChatUser(true);
+
     return (
       <ThemeConsumer>
         {(props: ThemedComponentProps) => {
@@ -73,9 +124,19 @@ class ChatScreen extends Component<Props, State> {
             <StyledScreenContainer>
               <View style={styles.giftedChat}>
                 <GiftedChat
+                  showUserAvatar
                   messages={this.state.messages}
                   onSend={messages => this.onSend(messages)}
-                  user={this.state.myUser}
+                  user={myChatUser}
+                  renderSend={sendProps => (
+                    <Send
+                      {...sendProps}
+                      textStyle={{
+                        ...sendProps.textStyle,
+                        color: colors.primary,
+                      }}
+                    />
+                  )}
                   renderBubble={bubbleProps => {
                     return (
                       <Bubble
@@ -115,6 +176,7 @@ class ChatScreen extends Component<Props, State> {
   private onSend(messages: IMessage[] = []) {
     this.setState(previousState => ({
       messages: GiftedChat.append(previousState.messages, messages),
+      toggleUser: !previousState.toggleUser,
     }));
   }
 }

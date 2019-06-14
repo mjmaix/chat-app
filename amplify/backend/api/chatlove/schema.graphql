@@ -1,4 +1,5 @@
 type ClUser
+  # @model(subscriptions: null)
   @model
   @auth(rules: [{ allow: owner, ownerField: "id", queries: null }]) {
   id: ID!
@@ -60,9 +61,23 @@ type ClConvoLink
   updatedAt: AWSDateTime
 }
 
+# input NeIDFilterInput {
+#   ne: ID
+# }
+
+# input SubscriptClUserFilter {
+#   id: NeIDFilterInput
+# }
+
 type Subscription {
   onCreateClMessage(members: [String!]!): ClMessage
     @aws_subscribe(mutations: ["createClMessage"])
   onCreateClConvoLink(clConvoLinkUserId: String!): ClConvoLink
     @aws_subscribe(mutations: ["createClConvoLink"])
+
+  # onCreateClUser(filter: SubscriptClUserFilter): ClUser
+  #   @aws_subscribe(mutations: ["createClUser"])
+  # onUpdateClUser(filter: SubscriptClUserFilter): ClUser
+  #   @aws_subscribe(mutations: ["updateClUser"])
+  # onDeleteClUser: ClUser @aws_subscribe(mutations: ["deleteClUser"])
 }

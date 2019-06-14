@@ -98,10 +98,6 @@ export const CodeSchema = Yup.object().shape({
   code: codeRule.required(),
 });
 
-export const NewMessageSchema = Yup.object().shape({
-  content: Yup.string().required(),
-});
-
 export const CompleteRegistrationSchema = (
   requiredAttributes: ChatCognitoRequiredAttributes[],
 ) => {

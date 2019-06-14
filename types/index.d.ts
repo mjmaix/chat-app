@@ -1,5 +1,7 @@
 import { CognitoUser } from '@aws-amplify/auth';
 
+import { GetClUserQuery, UpdateClMessageMutation } from '../src/API';
+
 declare module '*.jpg';
 declare global {
   type Nullable<T> = T | null;
@@ -80,7 +82,19 @@ declare global {
    */
   interface StorageConfig {
     level: 'private' | 'protected' | 'public';
-    contentType: string;
+    contentType?: string;
     progressCallback?: (param: { loaded: number; total: number }) => void;
+    identityId?: string;
+    track?: boolean;
   }
+
+  /**
+   * AppSync
+   */
+
+  type ClUser = ModelFromGetQuery<GetClUserQuery, 'getClUser'>;
+  type ClMessage = ModelFromGetQuery<
+    UpdateClMessageMutation,
+    'updateClMessage'
+  >;
 }

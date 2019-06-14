@@ -58,7 +58,3 @@ export const VerifyContactModel: FormModel = {
   ...CodeRequiredModel,
   phone_number: '',
 };
-
-export const NewMessageModel: FormModel = {
-  ...EmailModel,
-};

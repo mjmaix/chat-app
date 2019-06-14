@@ -521,6 +521,45 @@ export type UpdateClConvoLinkMutation = {
   } | null,
 };
 
+export type CreateClConvoLinkPublicMutationVariables = {
+  input: CreateClConvoLinkInput,
+};
+
+export type CreateClConvoLinkPublicMutation = {
+  createClConvoLink:  {
+    __typename: "ClConvoLink",
+    id: string,
+    clConvoLinkUserId: string | null,
+    clConvoLinkConversationId: string | null,
+    createdAt: string | null,
+    updatedAt: string | null,
+  } | null,
+};
+
+export type ListContactsQueryVariables = {
+  filter?: ModelClUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListContactsQuery = {
+  listClUsers:  {
+    __typename: "ModelClUserConnection",
+    items:  Array< {
+      __typename: "ClUser",
+      id: string,
+      givenName: string,
+      familyName: string,
+      email: string,
+      avatar: string | null,
+      identityId: string | null,
+      createdAt: string | null,
+      updatedAt: string | null,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
 export type GetClUserQueryVariables = {
   id: string,
 };

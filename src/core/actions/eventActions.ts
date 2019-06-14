@@ -1,8 +1,5 @@
-import { CurrentUserOpts } from '@aws-amplify/auth/lib/types';
-
 import { logInfo } from '../../core/reports';
 import { NavigationService } from '../../utils';
-import { asyncGetCurrentUserOpts } from '../../utils/amplifyAuthUtils';
 import {
   handleGetCurrentIdentityId,
   handleGetCurrentUser,
@@ -12,8 +9,8 @@ import { handleCreateClUser, handleUpdateClUser } from './mutationActions';
 import { handleGetClUser } from './queryActions';
 
 export const handlePressVerifyContact = async (contact: Contact) => {
-  const opts = await asyncGetCurrentUserOpts();
-  const attributes = await handleGetCurrentUserAttrs(opts);
+  logInfo('[START] handlePressVerifyContact');
+  const attributes = await handleGetCurrentUserAttrs();
   const contactValue = attributes[contact];
   NavigationService.navigate('VerifyContact', {
     contact,
@@ -22,6 +19,7 @@ export const handlePressVerifyContact = async (contact: Contact) => {
 };
 
 export const handleClUserCreate = async () => {
+  logInfo('[START] handleClUserCreate');
   const cognitoUser = await handleGetCurrentUser();
   const username = cognitoUser.getUsername();
   const response = await handleGetClUser(username);
@@ -34,9 +32,9 @@ export const handleClUserCreate = async () => {
 };
 
 export const handleClUserUpdate = async () => {
-  const newUser = await asyncGetCurrentUserOpts().then(
-    (opts: CurrentUserOpts) => handleGetCurrentUser(opts),
-  );
+  logInfo('[START] handleClUserUpdate');
+  const newUser = await handleGetCurrentUser();
+
   const identityId = await handleGetCurrentIdentityId();
   return handleUpdateClUser(newUser, identityId);
 };

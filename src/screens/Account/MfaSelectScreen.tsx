@@ -6,6 +6,7 @@ import { FlatList, NavigationScreenProps } from 'react-navigation';
 
 import {
   ProfileModel,
+  handleCheckContactVerified,
   handleGetPreferredMfa,
   handlePressVerifyContact,
   handleSetMfa,
@@ -16,10 +17,6 @@ import {
   alertFail,
   alertOk,
 } from '../../utils';
-import {
-  asyncGetCurrentUserOpts,
-  asyncIsContactVerified,
-} from '../../utils/amplifyAuthUtils';
 
 type Props = NavigationScreenProps;
 interface State {
@@ -45,11 +42,9 @@ class MfaSelectScreen extends React.Component<Props, State> {
   };
 
   public componentDidMount() {
-    asyncGetCurrentUserOpts()
-      .then(opts => handleGetPreferredMfa(opts))
-      .then((prefMfa: MfaChallengeType) => {
-        this.setState({ isReady: true, preferredMfa: prefMfa });
-      });
+    handleGetPreferredMfa().then((prefMfa: MfaChallengeType) => {
+      this.setState({ isReady: true, preferredMfa: prefMfa });
+    });
   }
 
   public renderItem: ListRenderItem<any> = ({ item, index }) => (
@@ -61,7 +56,7 @@ class MfaSelectScreen extends React.Component<Props, State> {
       const sel = buttonMap[selectedIndex];
       const pref = this.state.preferredMfa; // NOTE: re-click disabled, workaround for disableStyle as gray
       if (sel === 'SOFTWARE_TOKEN_MFA' && 'SOFTWARE_TOKEN_MFA' !== pref) {
-        const isEmailVerified = await asyncIsContactVerified('email');
+        const isEmailVerified = await handleCheckContactVerified('email');
         if (isEmailVerified) {
           this.handlePressSoftwareTokenMfa();
         } else {
@@ -71,7 +66,9 @@ class MfaSelectScreen extends React.Component<Props, State> {
           });
         }
       } else if (buttonMap[selectedIndex] === 'SMS_MFA' && 'SMS_MFA' !== pref) {
-        const isMobileVerified = await asyncIsContactVerified('phone_number');
+        const isMobileVerified = await handleCheckContactVerified(
+          'phone_number',
+        );
         if (isMobileVerified) {
           this.handlePressSmsMfa();
         } else {
