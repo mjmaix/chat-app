@@ -39,40 +39,30 @@ export const onCreateClMessage = `subscription OnCreateClMessage($members: [Stri
   }
 }
 `;
-export const onCreateClConvoLink = `subscription OnCreateClConvoLink($clConvoLinkUserId: String!) {
-  onCreateClConvoLink(clConvoLinkUserId: $clConvoLinkUserId) {
+export const onCreateClConversation = `subscription OnCreateClConversation($members: String!) {
+  onCreateClConversation(members: $members) {
     id
-    user {
-      id
-      conversations {
-        nextToken
+    messages {
+      items {
+        id
+        content
+        createdAt
+        updatedAt
       }
-      messages {
-        nextToken
-      }
-      givenName
-      familyName
-      email
-      avatar
-      identityId
-      createdAt
-      updatedAt
+      nextToken
     }
-    clConvoLinkUserId
-    conversation {
-      id
-      messages {
-        nextToken
+    associated {
+      items {
+        id
+        clConvoLinkUserId
+        clConvoLinkConversationId
+        createdAt
+        updatedAt
       }
-      associated {
-        nextToken
-      }
-      name
-      members
-      createdAt
-      updatedAt
+      nextToken
     }
-    clConvoLinkConversationId
+    name
+    members
     createdAt
     updatedAt
   }

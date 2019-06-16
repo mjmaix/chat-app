@@ -11,7 +11,7 @@ export interface ClMessagesStoreInfo {
   update?: (k: ClMessagesStoreData) => void;
 }
 
-const ClMessageContext = React.createContext<ClMessagesStoreInfo>({
+export const ClMessageContext = React.createContext<ClMessagesStoreInfo>({
   data: {},
   isReady: false,
   update: d => Alert.alert('not yet implemented'),

@@ -113,6 +113,17 @@ export type ModelStringFilterInput = {
   beginsWith?: string | null,
 };
 
+export type ModelClConversationFilterInput = {
+  id?: ModelIDFilterInput | null,
+  name?: ModelStringFilterInput | null,
+  members?: ModelStringFilterInput | null,
+  createdAt?: ModelStringFilterInput | null,
+  updatedAt?: ModelStringFilterInput | null,
+  and?: Array< ModelClConversationFilterInput | null > | null,
+  or?: Array< ModelClConversationFilterInput | null > | null,
+  not?: ModelClConversationFilterInput | null,
+};
+
 export type CreateClUserMutationVariables = {
   input: CreateClUserInput,
 };
@@ -633,12 +644,12 @@ export type ListClUsersQuery = {
   } | null,
 };
 
-export type GetClConvoQueryVariables = {
+export type GetClConversationQueryVariables = {
   id: string,
 };
 
-export type GetClConvoQuery = {
-  getClConvo:  {
+export type GetClConversationQuery = {
+  getClConversation:  {
     __typename: "ClConversation",
     id: string,
     messages:  {
@@ -668,6 +679,35 @@ export type GetClConvoQuery = {
     members: Array< string > | null,
     createdAt: string | null,
     updatedAt: string | null,
+  } | null,
+};
+
+export type ListClConversationsQueryVariables = {
+  filter?: ModelClConversationFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListClConversationsQuery = {
+  listClConversations:  {
+    __typename: "ModelClConversationConnection",
+    items:  Array< {
+      __typename: "ClConversation",
+      id: string,
+      messages:  {
+        __typename: "ModelClMessageConnection",
+        nextToken: string | null,
+      } | null,
+      associated:  {
+        __typename: "ModelClConvoLinkConnection",
+        nextToken: string | null,
+      } | null,
+      name: string,
+      members: Array< string > | null,
+      createdAt: string | null,
+      updatedAt: string | null,
+    } | null > | null,
+    nextToken: string | null,
   } | null,
 };
 
@@ -720,51 +760,39 @@ export type OnCreateClMessageSubscription = {
   } | null,
 };
 
-export type OnCreateClConvoLinkSubscriptionVariables = {
-  clConvoLinkUserId: string,
+export type OnCreateClConversationSubscriptionVariables = {
+  members: string,
 };
 
-export type OnCreateClConvoLinkSubscription = {
-  onCreateClConvoLink:  {
-    __typename: "ClConvoLink",
+export type OnCreateClConversationSubscription = {
+  onCreateClConversation:  {
+    __typename: "ClConversation",
     id: string,
-    user:  {
-      __typename: "ClUser",
-      id: string,
-      conversations:  {
-        __typename: "ModelClConvoLinkConnection",
-        nextToken: string | null,
-      } | null,
-      messages:  {
-        __typename: "ModelClMessageConnection",
-        nextToken: string | null,
-      } | null,
-      givenName: string,
-      familyName: string,
-      email: string,
-      avatar: string | null,
-      identityId: string | null,
-      createdAt: string | null,
-      updatedAt: string | null,
-    },
-    clConvoLinkUserId: string | null,
-    conversation:  {
-      __typename: "ClConversation",
-      id: string,
-      messages:  {
-        __typename: "ModelClMessageConnection",
-        nextToken: string | null,
-      } | null,
-      associated:  {
-        __typename: "ModelClConvoLinkConnection",
-        nextToken: string | null,
-      } | null,
-      name: string,
-      members: Array< string > | null,
-      createdAt: string | null,
-      updatedAt: string | null,
-    },
-    clConvoLinkConversationId: string | null,
+    messages:  {
+      __typename: "ModelClMessageConnection",
+      items:  Array< {
+        __typename: "ClMessage",
+        id: string,
+        content: string,
+        createdAt: string | null,
+        updatedAt: string | null,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    associated:  {
+      __typename: "ModelClConvoLinkConnection",
+      items:  Array< {
+        __typename: "ClConvoLink",
+        id: string,
+        clConvoLinkUserId: string | null,
+        clConvoLinkConversationId: string | null,
+        createdAt: string | null,
+        updatedAt: string | null,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    name: string,
+    members: Array< string > | null,
     createdAt: string | null,
     updatedAt: string | null,
   } | null,

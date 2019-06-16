@@ -1,10 +1,6 @@
 import './setup';
 
-import { thisExpression } from '@babel/types';
 import AsyncStorage from '@react-native-community/async-storage';
-import diffBy from 'lodash/differenceBy';
-import findIndex from 'lodash/findIndex';
-import keyBy from 'lodash/keyBy';
 import React, { Component } from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { ActivityIndicator } from 'react-native';
@@ -12,8 +8,11 @@ import { ThemeProvider as RneThemeProvider } from 'react-native-elements';
 import { ThemeProvider as ScThemeProvider } from 'styled-components';
 
 import { ZenObservable } from '../node_modules/zen-observable-ts/lib/types';
-import { ListClUsersQuery } from './API';
+import { ListClConversationsQuery, ListClUsersQuery } from './API';
 import {
+  ClConversationsProvider,
+  ClConversationsStoreData,
+  ClConversationsStoreInfo,
   ClMessagesProvider,
   ClMessagesStoreData,
   ClMessagesStoreInfo,
@@ -27,8 +26,12 @@ import {
   handleGetCurrentUser,
   logError,
 } from './core';
-import { handleListContacts } from './core/actions/queryActions';
 import {
+  handleListClConversations,
+  handleListContacts,
+} from './core/actions/queryActions';
+import {
+  subscribeToCreateClConversation,
   subscribeToCreateClMessage,
   subscribeToCreateClUser,
   subscribeToDeleteClUser,
@@ -48,6 +51,7 @@ interface AppState {
   isThemeReady: boolean;
   clUserStoreInfo: ClUserStoreInfo;
   clMessagesStoreInfo: ClMessagesStoreInfo;
+  clConversationsStoreInfo: ClConversationsStoreInfo;
   clContactsStoreInfo: ClContactsStoreInfo;
 }
 
@@ -69,11 +73,18 @@ export default class App extends Component<{}, AppState> {
     ClMessagesStoreInfo
   >('createdAt');
 
+  private conversationsHelper = new StoreKeyObjHelper<
+    ClConversations,
+    ClConversationsStoreData,
+    ClConversationsStoreInfo
+  >('updatedAt');
+
   public readonly state = {
     theme: ThemeHelper.get(),
     isThemeReady: false,
     clUserStoreInfo: { data: null, isReady: false },
     clMessagesStoreInfo: { data: {}, isReady: false },
+    clConversationsStoreInfo: { data: {}, isReady: false },
     clContactsStoreInfo: { data: {}, isReady: false },
   };
 
@@ -85,6 +96,7 @@ export default class App extends Component<{}, AppState> {
     this.loadTheme();
     this.loadClUser();
     this.loadSubscribeClMessages();
+    this.loadSubscribeClConversation();
     this.loadSubscribeClContacts();
   }
 
@@ -114,25 +126,29 @@ export default class App extends Component<{}, AppState> {
       theme,
       clUserStoreInfo,
       clMessagesStoreInfo,
+      clConversationsStoreInfo,
       clContactsStoreInfo,
     } = this.state;
+
     return (
       <ApolloProvider client={apolloClient}>
         <ScThemeProvider theme={theme}>
           <RneThemeProvider theme={theme}>
             <ClUserProvider value={clUserStoreInfo}>
-              <ClMessagesProvider value={clMessagesStoreInfo}>
-                <ClContactsProvider value={clContactsStoreInfo}>
-                  <AppRoutes
-                    screenProps={{
-                      theme: this.state.theme,
-                    }}
-                    ref={navigatorRef => {
-                      NavigationService.setTopLevelNavigator(navigatorRef);
-                    }}
-                  />
-                </ClContactsProvider>
-              </ClMessagesProvider>
+              <ClConversationsProvider value={clConversationsStoreInfo}>
+                <ClMessagesProvider value={clMessagesStoreInfo}>
+                  <ClContactsProvider value={clContactsStoreInfo}>
+                    <AppRoutes
+                      screenProps={{
+                        theme: this.state.theme,
+                      }}
+                      ref={navigatorRef => {
+                        NavigationService.setTopLevelNavigator(navigatorRef);
+                      }}
+                    />
+                  </ClContactsProvider>
+                </ClMessagesProvider>
+              </ClConversationsProvider>
             </ClUserProvider>
           </RneThemeProvider>
         </ScThemeProvider>
@@ -188,7 +204,33 @@ export default class App extends Component<{}, AppState> {
     }
   }
 
+  private async loadSubscribeClConversation() {
+    const { appendItem } = this.conversationsHelper;
+
+    await this.loadInitialConversations();
+
+    try {
+      this.createMessageObserver = await subscribeToCreateClConversation(
+        ({ data }) => {
+          const clConversations = data.onCreateClConversation;
+          if (clConversations) {
+            this.setState(prev => ({
+              clConversationsStoreInfo: appendItem(
+                prev.clConversationsStoreInfo,
+                clConversations,
+              ),
+            }));
+          }
+        },
+      );
+    } catch (err) {
+      logError(err);
+    }
+  }
+
   private async loadSubscribeClContacts() {
+    const user = await handleGetCurrentUser();
+
     const { appendItem, removeItem } = this.contactsHelper;
     await this.loadInitialContacts();
 
@@ -207,9 +249,9 @@ export default class App extends Component<{}, AppState> {
       }
     });
 
-    const user = await handleGetCurrentUser();
     this.updateContactObserver = await subscribeToUpdateClUser(({ data }) => {
-      const clUser = data.onUpdateClUser; // NOTE: workaround for https://github.com/aws-amplify/amplify-js/issues/2817
+      const clUser = data.onUpdateClUser;
+      // NOTE: workaround to filter result https://github.com/aws-amplify/amplify-js/issues/2817
       if (clUser && user.getUsername() !== clUser.id) {
         this.setState(prev => {
           const clContactsStoreInfo = appendItem(
@@ -220,6 +262,7 @@ export default class App extends Component<{}, AppState> {
         });
       }
     });
+
     this.deleteContactObserver = await subscribeToDeleteClUser(({ data }) => {
       const clUser = data.onDeleteClUser;
       if (clUser) {
@@ -246,6 +289,29 @@ export default class App extends Component<{}, AppState> {
       clContactsStoreInfo = appendList(clContactsStoreInfo, contacts);
       clContactsStoreInfo = setReady(clContactsStoreInfo, true);
       this.setState({ clContactsStoreInfo });
+    }
+  }
+
+  private async loadInitialConversations() {
+    const { appendList, setReady } = this.conversationsHelper;
+
+    const user = await handleGetCurrentUser();
+
+    const data:
+      | ListClConversationsQuery
+      | undefined = await handleListClConversations(user.getUsername());
+    let clConversationsStoreInfo: ClConversationsStoreInfo = {
+      isReady: false,
+      data: {},
+    };
+    if (data && data.listClConversations && data.listClConversations.items) {
+      const converstaions = data.listClConversations.items as ClConversations[];
+      clConversationsStoreInfo = appendList(
+        clConversationsStoreInfo,
+        converstaions,
+      );
+      clConversationsStoreInfo = setReady(clConversationsStoreInfo, true);
+      this.setState({ clConversationsStoreInfo });
     }
   }
 }

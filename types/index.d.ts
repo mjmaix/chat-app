@@ -1,6 +1,11 @@
 import { CognitoUser } from '@aws-amplify/auth';
 
-import { GetClUserQuery, UpdateClMessageMutation } from '../src/API';
+import {
+  GetClConversationQuery,
+  GetClUserQuery,
+  ListClConversationsQuery,
+  UpdateClMessageMutation,
+} from '../src/API';
 
 declare module '*.jpg';
 declare global {
@@ -93,8 +98,14 @@ declare global {
    */
 
   type ClUser = ModelFromGetQuery<GetClUserQuery, 'getClUser'>;
+
   type ClMessage = ModelFromGetQuery<
     UpdateClMessageMutation,
     'updateClMessage'
+  >;
+
+  type ClConversations = ModelFromGetQuery<
+    GetClConversationQuery,
+    'getClConversation'
   >;
 }

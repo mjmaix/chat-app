@@ -11,7 +11,7 @@ export interface ClContactsStoreInfo {
   update?: (k: ClContactsStoreData) => void;
 }
 
-const ClContactContext = React.createContext<ClContactsStoreInfo>({
+export const ClContactContext = React.createContext<ClContactsStoreInfo>({
   data: {},
   isReady: false,
   update: d => Alert.alert('not yet implemented'),

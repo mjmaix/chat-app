@@ -86,7 +86,7 @@ class SignInEmailScreen extends Component<Props> {
       } else if (MFA_CHALLENGES.includes(user.challengeName)) {
         transferScreen = 'SignInCode';
       } else if (!user.challengeName) {
-        handleClUserCreate();
+        await handleClUserCreate();
       }
     } catch (err) {
       transferScreen = null;

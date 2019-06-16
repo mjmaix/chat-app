@@ -19,11 +19,7 @@ type ClUser
 }
 
 type ClConversation
-  @model(
-    mutations: { create: "createClConvo" }
-    queries: { get: "getClConvo" }
-    subscriptions: null
-  )
+  @model(mutations: { create: "createClConvo" }, subscriptions: null)
   @auth(rules: [{ allow: owner, ownerField: "members" }]) {
   id: ID!
   messages: [ClMessage] @connection(name: "ConvoMsgs", sortField: "createdAt")
@@ -61,23 +57,9 @@ type ClConvoLink
   updatedAt: AWSDateTime
 }
 
-# input NeIDFilterInput {
-#   ne: ID
-# }
-
-# input SubscriptClUserFilter {
-#   id: NeIDFilterInput
-# }
-
 type Subscription {
   onCreateClMessage(members: [String!]!): ClMessage
     @aws_subscribe(mutations: ["createClMessage"])
-  onCreateClConvoLink(clConvoLinkUserId: String!): ClConvoLink
-    @aws_subscribe(mutations: ["createClConvoLink"])
-
-  # onCreateClUser(filter: SubscriptClUserFilter): ClUser
-  #   @aws_subscribe(mutations: ["createClUser"])
-  # onUpdateClUser(filter: SubscriptClUserFilter): ClUser
-  #   @aws_subscribe(mutations: ["updateClUser"])
-  # onDeleteClUser: ClUser @aws_subscribe(mutations: ["deleteClUser"])
+  onCreateClConversation(members: String!): ClConversation
+    @aws_subscribe(mutations: ["createClConvo"])
 }

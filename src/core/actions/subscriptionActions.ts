@@ -2,8 +2,8 @@ import { ApolloCurrentResult } from 'apollo-client';
 import gql from 'graphql-tag';
 
 import {
-  OnCreateClConvoLinkSubscription,
-  OnCreateClConvoLinkSubscriptionVariables,
+  OnCreateClConversationSubscription,
+  OnCreateClConversationSubscriptionVariables,
   OnCreateClMessageSubscription,
   OnCreateClMessageSubscriptionVariables,
   OnCreateClUserSubscription,
@@ -14,7 +14,7 @@ import { handleGetCurrentUser } from '../../core/actions';
 import * as subscriptions from '../../graphql/subscriptions';
 import { apolloClient as client } from '../../setup';
 import { logInfo } from '../reports';
-import { logReport as logRecord } from '../reports/index';
+import { logRecord } from '../reports/index';
 
 interface DataWrapper<T> extends ApolloCurrentResult<T> {
   data: T;
@@ -111,19 +111,20 @@ export const subscribeToDeleteClUser = async <T = OnDeleteClUserSubscription>(
   return observer;
 };
 
-export const subscribeToCreateClConvoLink = async <
-  T = OnCreateClConvoLinkSubscription
+export const subscribeToCreateClConversation = async <
+  T = OnCreateClConversationSubscription
 >(
   cbNextData: SubscribeNextCallback<T>,
   cbError?: SubscribeErrorCallback,
 ) => {
-  logInfo('[START] subscribeToCreateClConvoLink');
+  logInfo('[START] subscribeToCreateClConversation');
+
   const user = await handleGetCurrentUser();
   const observer = client
-    .subscribe<DataWrapper<T>, OnCreateClConvoLinkSubscriptionVariables>({
-      query: gql(subscriptions.onCreateClConvoLink),
+    .subscribe<DataWrapper<T>, OnCreateClConversationSubscriptionVariables>({
+      query: gql(subscriptions.onCreateClConversation),
       variables: {
-        clConvoLinkUserId: user.getUsername(),
+        members: user.getUsername(),
       },
       fetchPolicy: __DEV__ ? 'no-cache' : undefined,
     })
@@ -136,7 +137,7 @@ export const subscribeToCreateClConvoLink = async <
           cbError(e);
         }
         logRecord({
-          name: 'SubscribeCreateConvoLinkError',
+          name: 'SubscribeCreateConversationError',
           attributes: {
             error: e.message,
           },

@@ -59,8 +59,8 @@ export const listClUsers = `query ListClUsers(
   }
 }
 `;
-export const getClConvo = `query GetClConvo($id: ID!) {
-  getClConvo(id: $id) {
+export const getClConversation = `query GetClConversation($id: ID!) {
+  getClConversation(id: $id) {
     id
     messages {
       items {
@@ -85,6 +85,29 @@ export const getClConvo = `query GetClConvo($id: ID!) {
     members
     createdAt
     updatedAt
+  }
+}
+`;
+export const listClConversations = `query ListClConversations(
+  $filter: ModelClConversationFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listClConversations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      messages {
+        nextToken
+      }
+      associated {
+        nextToken
+      }
+      name
+      members
+      createdAt
+      updatedAt
+    }
+    nextToken
   }
 }
 `;

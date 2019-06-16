@@ -13,6 +13,7 @@ import {
   handleGetCurrentUser,
   logInfo,
 } from '../../core';
+import { handleListClConversations } from '../../core/actions/queryActions';
 import { StyledScreenContainer } from '../../styled';
 import { asyncGetS3Link, isLight } from '../../utils';
 
@@ -38,6 +39,7 @@ class ChatScreen extends Component<Props, State> {
     toggleUser: false,
   };
 
+  // TODO: for refactoring
   public async componentDidMount() {
     const newState: Partial<State> = {};
     const { navigation } = this.props;
@@ -78,12 +80,20 @@ class ChatScreen extends Component<Props, State> {
     }
 
     // section 5
-    try {
-      const user1 = (newState.myUser as ClUser).id;
-      const user2 = (newState.otherUser as ClUser).id;
-      const createConvoResp = await handleCreateConvo(user1, user2);
-    } catch (err) {
-      logInfo('[ERROR] cannot create conversation', err);
+    if (newState.myUser && newState.otherUser) {
+      try {
+        const convos = await handleListClConversations(me.getUsername());
+        const user1 = newState.myUser.id;
+        const user2 = newState.otherUser.id;
+        if (convos && convos.listClConversations) {
+          const convoItems = convos.listClConversations.items;
+          if (!convoItems || convoItems.length === 0) {
+            const createConvoResp = await handleCreateConvo(user1, user2);
+          }
+        }
+      } catch (err) {
+        logInfo('[ERROR] cannot create conversation', err);
+      }
     }
 
     this.setState({ ...newState, loading: false } as State);

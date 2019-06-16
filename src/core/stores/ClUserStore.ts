@@ -9,7 +9,7 @@ export interface ClUserStoreInfo {
   update?: (k: ClUserStoreData) => void;
 }
 
-const ClUserContext = React.createContext<ClUserStoreInfo>({
+export const ClUserContext = React.createContext<ClUserStoreInfo>({
   data: null,
   isReady: false,
   update: d => Alert.alert('not yet implemented'),

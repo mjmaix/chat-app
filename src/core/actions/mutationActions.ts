@@ -17,7 +17,7 @@ import * as mutations from '../../graphql/mutations';
 import { createClConvoLinkPublic } from '../../graphql/publicOnlyMutations';
 import { apolloClient as client } from '../../setup';
 import { logInfo } from '../reports';
-import { logReport as logRecord } from '../reports/index';
+import { logRecord } from '../reports/index';
 
 interface DataWrapper<T> extends ApolloCurrentResult<T> {
   data: T;
@@ -54,7 +54,7 @@ export const handleCreateClUser = async (
       },
     });
     assertErrors(response);
-    return response.data.createUser;
+    return response;
   } catch (e) {
     logRecord({
       name: 'CreateUserError',
