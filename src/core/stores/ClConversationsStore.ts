@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert } from 'react-native';
 
 export interface ClConversationsStoreData {
-  [k: string]: ClConversations;
+  [k: string]: ClConversation;
 }
 
 export interface ClConversationsStoreInfo {

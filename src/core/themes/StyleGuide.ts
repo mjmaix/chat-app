@@ -10,4 +10,8 @@ export const StyleGuide = {
     left: 10,
     bottom: 10,
   },
+  userIcon: {
+    name: 'user',
+    type: 'feather',
+  },
 };

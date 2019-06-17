@@ -1,10 +1,9 @@
-import NetInfo, { NetInfoStateType } from '@react-native-community/netinfo';
+import { NetInfoStateType } from '@react-native-community/netinfo';
 import { S3Image } from 'aws-amplify-react-native';
 import React from 'react';
 import { View } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-import { logInfo } from '../../core';
 import { getNetInfo } from '../../utils';
 import { containerStyles } from '../commonStyles';
 
@@ -40,6 +39,7 @@ class PreviewS3Image extends React.Component<
   public componentWillUnmount() {
     this.mounted = false;
   }
+
   public render() {
     if (!this.state.isConnected) {
       return (

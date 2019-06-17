@@ -5,14 +5,35 @@ declare global {
    * Top extractors
    */
   type ModelFromGetQuery<
-    LQ extends GetQueryStructure,
+    Q extends GetQueryStructure,
     QueryName extends string
-  > = GetValueOfQueryName<LQ, QueryName>;
+  > = GetValueOfQueryName<Q, QueryName>;
 
   type ModelFromListQuery<
-    LQ extends ListQueryStructure,
+    Q extends ListQueryStructure,
     QueryName extends string
-  > = ListQueryItemModel<LQ, QueryName>;
+  > = ListQueryItemModel<Q, QueryName>;
+
+  type ModelConnectionFromGetQuery<
+    Q extends ConnectionGetQueryStructure,
+    QueryName extends string,
+    ConnectionFieldName extends string
+  > = ConnectionGetValueOfQueryName<Q, QueryName, ConnectionFieldName>;
+
+  /**
+   * Utils - Connection
+   */
+  interface ConnectionGetQueryStructure {
+    [k: string]: {
+      [k: string]: any | null;
+    } | null;
+  }
+
+  type ConnectionGetValueOfQueryName<
+    Q extends ConnectionGetQueryStructure,
+    QueryName extends string,
+    ConnectionFieldName extends string
+  > = NonNullable<NonNullable<NonNullable<Q[QueryName]>>[ConnectionFieldName]>;
 
   /**
    * Utils - GetQuery
@@ -25,9 +46,9 @@ declare global {
   }
 
   type GetValueOfQueryName<
-    LQ extends GetQueryStructure,
+    Q extends GetQueryStructure,
     QueryName extends string
-  > = NonNullable<LQ[QueryName]>;
+  > = NonNullable<Q[QueryName]>;
 
   /**
    * Utils - ListItems
@@ -44,22 +65,22 @@ declare global {
   }
 
   type ListValueOfQueryName<
-    LQ extends ListQueryStructure,
+    Q extends ListQueryStructure,
     QueryName extends string
-  > = NonNullable<LQ[QueryName]>;
+  > = NonNullable<Q[QueryName]>;
 
   type ListQueryValueOfItems<
-    LQ extends ListQueryStructure,
+    Q extends ListQueryStructure,
     QueryName extends string
-  > = NonNullable<ListValueOfQueryName<LQ, QueryName>['items']>;
+  > = NonNullable<ListValueOfQueryName<Q, QueryName>['items']>;
 
   type ListQueryRemoveNullOnArrayValue<
-    LQ extends ListQueryStructure,
+    Q extends ListQueryStructure,
     QueryName extends string
-  > = Exclude<ListQueryValueOfItems<LQ, QueryName>, [null]>;
+  > = Exclude<ListQueryValueOfItems<Q, QueryName>, [null]>;
 
   type ListQueryItemModel<
-    LQ extends ListQueryStructure,
+    Q extends ListQueryStructure,
     QueryName extends string
-  > = NonNullable<ListQueryRemoveNullOnArrayValue<LQ, QueryName>[0]>;
+  > = NonNullable<ListQueryRemoveNullOnArrayValue<Q, QueryName>[0]>;
 }

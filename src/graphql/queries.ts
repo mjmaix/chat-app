@@ -4,10 +4,27 @@
 export const getClUser = `query GetClUser($id: ID!) {
   getClUser(id: $id) {
     id
-    conversations {
+    convoLinks {
       items {
         id
+        user {
+          id
+          givenName
+          familyName
+          email
+          avatar
+          identityId
+          createdAt
+          updatedAt
+        }
         clConvoLinkUserId
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         clConvoLinkConversationId
         createdAt
         updatedAt
@@ -17,7 +34,24 @@ export const getClUser = `query GetClUser($id: ID!) {
     messages {
       items {
         id
+        author {
+          id
+          givenName
+          familyName
+          email
+          avatar
+          identityId
+          createdAt
+          updatedAt
+        }
         content
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -41,10 +75,23 @@ export const listClUsers = `query ListClUsers(
   listClUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
-      conversations {
+      convoLinks {
+        items {
+          id
+          clConvoLinkUserId
+          clConvoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       messages {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       givenName
@@ -65,7 +112,24 @@ export const getClConversation = `query GetClConversation($id: ID!) {
     messages {
       items {
         id
+        author {
+          id
+          givenName
+          familyName
+          email
+          avatar
+          identityId
+          createdAt
+          updatedAt
+        }
         content
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -74,7 +138,24 @@ export const getClConversation = `query GetClConversation($id: ID!) {
     associated {
       items {
         id
+        user {
+          id
+          givenName
+          familyName
+          email
+          avatar
+          identityId
+          createdAt
+          updatedAt
+        }
         clConvoLinkUserId
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         clConvoLinkConversationId
         createdAt
         updatedAt
@@ -97,9 +178,22 @@ export const listClConversations = `query ListClConversations(
     items {
       id
       messages {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       associated {
+        items {
+          id
+          clConvoLinkUserId
+          clConvoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       name

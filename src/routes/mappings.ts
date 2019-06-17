@@ -3,6 +3,7 @@ import { NavigationRouteConfig } from 'react-navigation';
 
 import { ConfirmSignUpScreen } from './../screens/Auth/ConfirmSignUpScreen';
 import { IconObject } from '../components';
+import { StyleGuide } from '../core';
 import {
   BusyOverlayScreen,
   ChatScreen,
@@ -77,7 +78,7 @@ export type StackRouteConfigMap = {
 export const Mappings: Mappings = {
   Profile: {
     screen: ProfileScreen,
-    icon: { name: 'user', type: 'feather' },
+    icon: StyleGuide.userIcon,
   },
   Settings: {
     screen: SettingsScreen,
@@ -170,6 +171,6 @@ export const Mappings: Mappings = {
   },
   MoreStack: {
     screen: null,
-    icon: { name: 'user', type: 'feather' },
+    icon: StyleGuide.userIcon,
   },
 };

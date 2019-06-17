@@ -8,7 +8,11 @@ import { ThemeProvider as RneThemeProvider } from 'react-native-elements';
 import { ThemeProvider as ScThemeProvider } from 'styled-components';
 
 import { ZenObservable } from '../node_modules/zen-observable-ts/lib/types';
-import { ListClConversationsQuery, ListClUsersQuery } from './API';
+import {
+  GetClUserWithConvosQuery,
+  ListClConversationsQuery,
+  ListClUsersQuery,
+} from './API';
 import {
   ClConversationsProvider,
   ClConversationsStoreData,
@@ -74,7 +78,7 @@ export default class App extends Component<{}, AppState> {
   >('createdAt');
 
   private conversationsHelper = new StoreKeyObjHelper<
-    ClConversations,
+    ClConversation,
     ClConversationsStoreData,
     ClConversationsStoreInfo
   >('updatedAt');
@@ -176,10 +180,49 @@ export default class App extends Component<{}, AppState> {
       const respClUser = await handleGetClUser(user.getUsername());
       if (respClUser) {
         const clUser = respClUser.getClUser;
-        this.setState({ clUserStoreInfo: { isReady: true, data: clUser } });
+
+        const newState: Partial<AppState> = {
+          clUserStoreInfo: { isReady: true, data: clUser as ClUser },
+          clConversationsStoreInfo: { data: {}, isReady: false },
+        };
+
+        // load initial conversations
+        if (clUser) {
+          this.extractClConvosFromClUser(clUser as ClUserWithConvos, newState);
+        }
+        this.setState(newState as AppState);
       }
     } catch (err) {
       logError(err);
+    }
+  }
+
+  private extractClConvosFromClUser(
+    clUser: ClUserWithConvos,
+    newState: Partial<AppState>,
+  ) {
+    const { appendList, setReady } = this.conversationsHelper;
+    const convoLinks = clUser.convoLinks;
+    if (convoLinks) {
+      const items = convoLinks.items;
+      if (items) {
+        const convos = items.map(item => {
+          if (!item) {
+            return null;
+          }
+          return {
+            ...item.conversation,
+          };
+        });
+        newState.clConversationsStoreInfo = appendList(
+          (newState as AppState).clConversationsStoreInfo,
+          convos as ClConversation[],
+        );
+        newState.clConversationsStoreInfo = setReady(
+          (newState as AppState).clConversationsStoreInfo,
+          true,
+        );
+      }
     }
   }
 
@@ -206,8 +249,6 @@ export default class App extends Component<{}, AppState> {
 
   private async loadSubscribeClConversation() {
     const { appendItem } = this.conversationsHelper;
-
-    await this.loadInitialConversations();
 
     try {
       this.createMessageObserver = await subscribeToCreateClConversation(
@@ -289,29 +330,6 @@ export default class App extends Component<{}, AppState> {
       clContactsStoreInfo = appendList(clContactsStoreInfo, contacts);
       clContactsStoreInfo = setReady(clContactsStoreInfo, true);
       this.setState({ clContactsStoreInfo });
-    }
-  }
-
-  private async loadInitialConversations() {
-    const { appendList, setReady } = this.conversationsHelper;
-
-    const user = await handleGetCurrentUser();
-
-    const data:
-      | ListClConversationsQuery
-      | undefined = await handleListClConversations(user.getUsername());
-    let clConversationsStoreInfo: ClConversationsStoreInfo = {
-      isReady: false,
-      data: {},
-    };
-    if (data && data.listClConversations && data.listClConversations.items) {
-      const converstaions = data.listClConversations.items as ClConversations[];
-      clConversationsStoreInfo = appendList(
-        clConversationsStoreInfo,
-        converstaions,
-      );
-      clConversationsStoreInfo = setReady(clConversationsStoreInfo, true);
-      this.setState({ clConversationsStoreInfo });
     }
   }
 }

@@ -3,9 +3,14 @@ type ClUser
   @model
   @auth(rules: [{ allow: owner, ownerField: "id", queries: null }]) {
   id: ID!
-  conversations: [ClConvoLink]
+  convoLinks: [ClConvoLink]
     @connection(name: "UserLinks")
     @auth(rules: [{ allow: owner, ownerField: "id" }])
+  # NOTE: Many to Many connections are not yet supported - https://github.com/aws-amplify/amplify-cli/issues/91
+  # NOTE: Use links first
+  # conversations: [ClConversation]
+  #   @connection(name: "UserConversations", sortField: "updatedAt")
+  #   @auth(rules: [{ allow: owner, ownerField: "id" }])
   messages: [ClMessage]
     @connection(name: "UserMessages")
     @auth(rules: [{ allow: owner, ownerField: "id" }])
@@ -32,7 +37,15 @@ type ClConversation
 
 type ClMessage
   @model(subscriptions: null, queries: null)
-  @auth(rules: [{ allow: owner, ownerField: "author" }]) {
+  @auth(
+    rules: [
+      {
+        allow: owner
+        ownerField: "author"
+        operations: [create, update, delete]
+      }
+    ]
+  ) {
   id: ID!
   author: ClUser @connection(name: "UserMessages")
   content: String!

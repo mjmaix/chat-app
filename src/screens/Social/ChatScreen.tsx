@@ -47,7 +47,7 @@ class ChatScreen extends Component<Props, State> {
     const me = await handleGetCurrentUser();
     const myClUser = await handleGetClUser(me.getUsername());
     if (myClUser && myClUser.getClUser) {
-      newState.myUser = myClUser.getClUser;
+      newState.myUser = myClUser.getClUser as ClUser;
     }
 
     // section 2

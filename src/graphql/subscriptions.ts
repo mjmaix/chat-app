@@ -6,10 +6,23 @@ export const onCreateClMessage = `subscription OnCreateClMessage($members: [Stri
     id
     author {
       id
-      conversations {
+      convoLinks {
+        items {
+          id
+          clConvoLinkUserId
+          clConvoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       messages {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       givenName
@@ -24,9 +37,22 @@ export const onCreateClMessage = `subscription OnCreateClMessage($members: [Stri
     conversation {
       id
       messages {
+        items {
+          id
+          content
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       associated {
+        items {
+          id
+          clConvoLinkUserId
+          clConvoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       name
@@ -45,7 +71,24 @@ export const onCreateClConversation = `subscription OnCreateClConversation($memb
     messages {
       items {
         id
+        author {
+          id
+          givenName
+          familyName
+          email
+          avatar
+          identityId
+          createdAt
+          updatedAt
+        }
         content
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -54,7 +97,24 @@ export const onCreateClConversation = `subscription OnCreateClConversation($memb
     associated {
       items {
         id
+        user {
+          id
+          givenName
+          familyName
+          email
+          avatar
+          identityId
+          createdAt
+          updatedAt
+        }
         clConvoLinkUserId
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         clConvoLinkConversationId
         createdAt
         updatedAt
@@ -71,10 +131,27 @@ export const onCreateClConversation = `subscription OnCreateClConversation($memb
 export const onCreateClUser = `subscription OnCreateClUser {
   onCreateClUser {
     id
-    conversations {
+    convoLinks {
       items {
         id
+        user {
+          id
+          givenName
+          familyName
+          email
+          avatar
+          identityId
+          createdAt
+          updatedAt
+        }
         clConvoLinkUserId
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         clConvoLinkConversationId
         createdAt
         updatedAt
@@ -84,7 +161,24 @@ export const onCreateClUser = `subscription OnCreateClUser {
     messages {
       items {
         id
+        author {
+          id
+          givenName
+          familyName
+          email
+          avatar
+          identityId
+          createdAt
+          updatedAt
+        }
         content
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -103,10 +197,27 @@ export const onCreateClUser = `subscription OnCreateClUser {
 export const onUpdateClUser = `subscription OnUpdateClUser {
   onUpdateClUser {
     id
-    conversations {
+    convoLinks {
       items {
         id
+        user {
+          id
+          givenName
+          familyName
+          email
+          avatar
+          identityId
+          createdAt
+          updatedAt
+        }
         clConvoLinkUserId
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         clConvoLinkConversationId
         createdAt
         updatedAt
@@ -116,7 +227,24 @@ export const onUpdateClUser = `subscription OnUpdateClUser {
     messages {
       items {
         id
+        author {
+          id
+          givenName
+          familyName
+          email
+          avatar
+          identityId
+          createdAt
+          updatedAt
+        }
         content
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -135,10 +263,27 @@ export const onUpdateClUser = `subscription OnUpdateClUser {
 export const onDeleteClUser = `subscription OnDeleteClUser {
   onDeleteClUser {
     id
-    conversations {
+    convoLinks {
       items {
         id
+        user {
+          id
+          givenName
+          familyName
+          email
+          avatar
+          identityId
+          createdAt
+          updatedAt
+        }
         clConvoLinkUserId
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         clConvoLinkConversationId
         createdAt
         updatedAt
@@ -148,7 +293,24 @@ export const onDeleteClUser = `subscription OnDeleteClUser {
     messages {
       items {
         id
+        author {
+          id
+          givenName
+          familyName
+          email
+          avatar
+          identityId
+          createdAt
+          updatedAt
+        }
         content
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }

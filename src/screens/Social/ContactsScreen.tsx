@@ -3,13 +3,14 @@ import React, { Component } from 'react';
 import { Alert } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 
-import { SearchBar, SimpleFlatList, UserListItem } from '../../components';
-import { ClContactsConsumer } from '../../core';
 import {
-  StyledBoldText,
-  StyledCenterContainer,
-  StyledScreenContainer,
-} from '../../styled';
+  ListEmptyComponent,
+  SearchBar,
+  SimpleFlatList,
+  UserListItem,
+} from '../../components';
+import { ClContactsConsumer, ClContactsStoreData } from '../../core';
+import { StyledScreenContainer } from '../../styled';
 
 type Props = Nullable<NavigationScreenProps>;
 
@@ -28,11 +29,9 @@ class ContactsScreen extends Component<Props> {
             <StyledScreenContainer>
               <SimpleFlatList<any>
                 ListEmptyComponent={
-                  isReady ? null : (
-                    <StyledCenterContainer>
-                      <StyledBoldText>No one is online</StyledBoldText>
-                    </StyledCenterContainer>
-                  )
+                  <ListEmptyComponent
+                    message={this.getEmptyMessage(isReady, data)}
+                  />
                 }
                 ListHeaderComponent={HeaderComponent}
                 stickyHeaderIndices={[0]}
@@ -50,6 +49,17 @@ class ContactsScreen extends Component<Props> {
         }}
       </ClContactsConsumer>
     );
+  }
+
+  private getEmptyMessage(
+    isReady: boolean | undefined,
+    data: ClContactsStoreData,
+  ): string {
+    return isReady && data
+      ? 'No one is online'
+      : !isReady
+      ? 'Loading contacts'
+      : '';
   }
 }
 

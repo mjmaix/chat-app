@@ -4,14 +4,15 @@ import { ApolloQueryResult } from '../../../node_modules/apollo-client/core/type
 import {
   GetClConversationQuery,
   GetClUserQuery,
-  GetClUserQueryVariables,
+  GetClUserWithConvosQuery,
+  GetClUserWithConvosQueryVariables,
   ListClConversationsQuery,
   ListClConversationsQueryVariables,
   ListClUsersQuery,
 } from '../../API';
-import { handleGetCurrentUser } from '../../core';
+import { handleGetCurrentUser } from '../../core/actions/authActions';
+import { getClUserWithConvos } from '../../graphql/protectedOnlyQueries';
 import { listContacts } from '../../graphql/publicOnlyQueries';
-import * as queries from '../../graphql/queries';
 import { listClConversations } from '../../graphql/queries';
 import { apolloClient as client } from '../../setup';
 import { logInfo, logRecord } from '../reports';
@@ -21,6 +22,7 @@ const assertErrors = (
     | GetClUserQuery
     | ListClUsersQuery
     | GetClConversationQuery
+    | GetClUserWithConvosQuery
     | ListClConversationsQuery
   >,
 ) => {
@@ -33,10 +35,10 @@ export const handleGetClUser = async (username: string) => {
   logInfo('[START] handleGetClUser');
   try {
     const response = await client.query<
-      GetClUserQuery,
-      GetClUserQueryVariables
+      GetClUserWithConvosQuery,
+      GetClUserWithConvosQueryVariables
     >({
-      query: gql(queries.getClUser),
+      query: gql(getClUserWithConvos),
       variables: { id: username },
       fetchPolicy: __DEV__ ? 'no-cache' : undefined,
     });
@@ -59,7 +61,7 @@ export const handleListClConversations = async (username: string) => {
       ListClConversationsQuery,
       ListClConversationsQueryVariables
     >({
-      query: gql(queries.listClConversations),
+      query: gql(listClConversations),
       variables: {
         filter: {
           members: {
@@ -74,22 +76,6 @@ export const handleListClConversations = async (username: string) => {
   } catch (e) {
     logRecord({
       name: 'ListClConversationsError',
-      attributes: {
-        error: e.message,
-      },
-    });
-  }
-};
-
-export const handleListClUserConvoLinks = async (username: string) => {
-  logInfo('[START] handleListClUserConvos');
-  try {
-    const user = await handleGetClUser(username);
-    const clUser = user && user.getClUser;
-    return clUser ? clUser.conversations : null;
-  } catch (e) {
-    logRecord({
-      name: 'GetUserError',
       attributes: {
         error: e.message,
       },

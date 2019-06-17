@@ -10,7 +10,7 @@ import {
   OnDeleteClUserSubscription,
   OnUpdateClUserSubscription,
 } from '../../API';
-import { handleGetCurrentUser } from '../../core/actions';
+import { handleGetCurrentUser } from '../../core/actions/authActions';
 import * as subscriptions from '../../graphql/subscriptions';
 import { apolloClient as client } from '../../setup';
 import { logInfo } from '../reports';

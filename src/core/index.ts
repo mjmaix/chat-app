@@ -5,3 +5,4 @@ export * from './validators';
 export * from './actions';
 export * from './models';
 export * from './stores';
+export * from './data';

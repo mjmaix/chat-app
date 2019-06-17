@@ -3,7 +3,9 @@ import { CognitoUser } from '@aws-amplify/auth';
 import {
   GetClConversationQuery,
   GetClUserQuery,
+  GetClUserWithConvosQuery,
   ListClConversationsQuery,
+  OnCreateClUserSubscription,
   UpdateClMessageMutation,
 } from '../src/API';
 
@@ -97,6 +99,11 @@ declare global {
    * AppSync
    */
 
+  type ClUserWithConvos = ModelFromGetQuery<
+    GetClUserWithConvosQuery,
+    'getClUser'
+  >;
+
   type ClUser = ModelFromGetQuery<GetClUserQuery, 'getClUser'>;
 
   type ClMessage = ModelFromGetQuery<
@@ -104,8 +111,26 @@ declare global {
     'updateClMessage'
   >;
 
-  type ClConversations = ModelFromGetQuery<
+  type ClConversation = ModelFromGetQuery<
     GetClConversationQuery,
     'getClConversation'
+  >;
+
+  type ClConvoLinkConnection = ModelConnectionFromGetQuery<
+    OnCreateClUserSubscription,
+    'onCreateClUser',
+    'convoLinks'
+  >;
+
+  type ClMessageConnection = ModelConnectionFromGetQuery<
+    GetClConversationQuery,
+    'getClConversation',
+    'messages'
+  >;
+
+  type ClCoversationConnection = ModelConnectionFromGetQuery<
+    GetClUserWithConvosQuery,
+    'getClUser',
+    'convoLinks'
   >;
 }
