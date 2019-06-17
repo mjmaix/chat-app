@@ -92,7 +92,7 @@ export const handleUpdateClUser = async (
       fetchPolicy: __DEV__ ? 'no-cache' : undefined,
     });
     assertErrors(response);
-    return response.data.updateClUser;
+    return response;
   } catch (e) {
     logRecord({
       name: 'UpdateUserError',

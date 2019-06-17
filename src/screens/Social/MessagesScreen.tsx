@@ -13,9 +13,9 @@ import {
   ClConversationsContext,
   ClConversationsStoreInfo,
   ClUserContext,
+  ConvoMessageItem,
   parseMessageData,
 } from '../../core';
-import { ConvoMessageItem } from '../../core/data/compositeTypes';
 import { StyledScreenContainer } from '../../styled';
 import { StyledBottomContainer } from '../../styled/StyledViews';
 

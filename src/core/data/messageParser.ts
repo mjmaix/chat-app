@@ -2,7 +2,7 @@ import first from 'lodash/first';
 
 import { ClUserStoreInfo } from '../../core';
 import { ClConversationsStoreInfo } from '../stores/ClConversationsStore';
-import { ConvoMessageItem } from '.';
+import { ConvoMessageItem } from './compositeTypes';
 
 function parseMessageData(
   convoStore: ClConversationsStoreInfo,
@@ -18,7 +18,7 @@ function parseMessageData(
         members: convo.members as string[],
         id: convo.id as string,
         currentClUser: userStore.data as ClUser,
-        lastMessage: lastMessage as ClMessage,
+        lastMessage: lastMessage as ClMessage | null | undefined,
       };
     });
   return parsedConvos;

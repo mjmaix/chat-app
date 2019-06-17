@@ -54,7 +54,7 @@ export const handleGetClUser = async (username: string) => {
   }
 };
 
-export const handleListClConversations = async (username: string) => {
+export const handleListClConversations = async (user1: string) => {
   logInfo('[START] handleListClConversations');
   try {
     const response = await client.query<
@@ -65,7 +65,7 @@ export const handleListClConversations = async (username: string) => {
       variables: {
         filter: {
           members: {
-            contains: username,
+            contains: user1,
           },
         },
       },

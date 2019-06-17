@@ -1,12 +1,15 @@
+import first from 'lodash/first';
+import isEqual from 'lodash/isEqual';
 import memoize from 'lodash/memoize';
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { ThemeConsumer } from 'react-native-elements';
 import { Bubble, GiftedChat, Send } from 'react-native-gifted-chat';
 import { IMessage, User } from 'react-native-gifted-chat/lib/types';
 import { NavigationScreenProps } from 'react-navigation';
 import { ThemedComponentProps } from 'styled-components';
 
+import { CreateClConvoMutation } from '../../API';
 import {
   handleCreateConvo,
   handleGetClUser,
@@ -14,25 +17,25 @@ import {
   logInfo,
 } from '../../core';
 import { handleListClConversations } from '../../core/actions/queryActions';
+import { parseConvoToGifted } from '../../core/data/giftecChatParser';
 import { StyledScreenContainer } from '../../styled';
 import { asyncGetS3Link, isLight } from '../../utils';
 
 type Props = NavigationScreenProps;
 
 interface State {
-  messages: IMessage[];
   myUser?: ClUser;
   myAvatar?: string;
   otherUser?: ClUser;
   otherAvatar?: string;
   loading: boolean;
   toggleUser: boolean;
+  conversation?: ClConversation;
 }
 
 class ChatScreen extends Component<Props, State> {
   public readonly state: State = {
     loading: true,
-    messages: [],
     otherUser: undefined,
     myUser: undefined,
     myAvatar: undefined,
@@ -82,15 +85,18 @@ class ChatScreen extends Component<Props, State> {
     // section 5
     if (newState.myUser && newState.otherUser) {
       try {
-        const convos = await handleListClConversations(me.getUsername());
         const user1 = newState.myUser.id;
         const user2 = newState.otherUser.id;
-        if (convos && convos.listClConversations) {
-          const convoItems = convos.listClConversations.items;
-          if (!convoItems || convoItems.length === 0) {
-            const createConvoResp = await handleCreateConvo(user1, user2);
+
+        let convo = await this.existingConversation(user1, user2);
+        if (!convo) {
+          const [newConvo, ...others] = await handleCreateConvo(user1, user2);
+          if (newConvo) {
+            const data = newConvo.data as CreateClConvoMutation;
+            convo = data.createClConvo;
           }
         }
+        newState.conversation = convo as ClConversation;
       } catch (err) {
         logInfo('[ERROR] cannot create conversation', err);
       }
@@ -115,15 +121,37 @@ class ChatScreen extends Component<Props, State> {
     return chatMyUser;
   });
 
+  private async existingConversation(user1: string, user2: string) {
+    let existing = null;
+    const convos = await handleListClConversations(user1);
+    if (convos && convos.listClConversations) {
+      const convoItems = convos.listClConversations.items;
+      if (convoItems !== null) {
+        const membersConvo = convoItems.filter(c => {
+          if (!c) {
+            return false;
+          }
+          // TODO: sort -> extract with mutationAction
+          return isEqual(c.members, [user1, user2].sort());
+        });
+        if (membersConvo.length > 0) {
+          existing = first(membersConvo);
+        }
+      }
+    }
+    return existing;
+  }
+
   public render() {
-    const { myUser, otherUser, loading } = this.state;
-    if (!myUser || loading) {
-      // TODO: remove with loading flag
-      return null;
+    const { myUser, otherUser, loading, conversation } = this.state;
+    if (!myUser || loading || !conversation) {
+      return <ActivityIndicator />;
     }
 
     const myChatUser = this.getChatUser(false);
-    const otherChatUser = this.getChatUser(true);
+
+    const { messages } = parseConvoToGifted(conversation);
+    console.log(messages);
 
     return (
       <ThemeConsumer>
@@ -135,8 +163,8 @@ class ChatScreen extends Component<Props, State> {
               <View style={styles.giftedChat}>
                 <GiftedChat
                   showUserAvatar
-                  messages={this.state.messages}
-                  onSend={messages => this.onSend(messages)}
+                  messages={messages}
+                  onSend={m => this.onSend(m)}
                   user={myChatUser}
                   renderSend={sendProps => (
                     <Send
