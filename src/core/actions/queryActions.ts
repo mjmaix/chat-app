@@ -8,10 +8,15 @@ import {
   GetClUserWithConvosQueryVariables,
   ListClConversationsQuery,
   ListClConversationsQueryVariables,
+  ListClConversationsWithAuthorQuery,
+  ListClConversationsWithAuthorQueryVariables,
   ListClUsersQuery,
 } from '../../API';
 import { handleGetCurrentUser } from '../../core/actions/authActions';
-import { getClUserWithConvos } from '../../graphql/protectedOnlyQueries';
+import {
+  getClUserWithConvos,
+  listClConversationsWithAuthor,
+} from '../../graphql/protectedOnlyQueries';
 import { listContacts } from '../../graphql/publicOnlyQueries';
 import { listClConversations } from '../../graphql/queries';
 import { apolloClient as client } from '../../setup';
@@ -58,10 +63,10 @@ export const handleListClConversations = async (user1: string) => {
   logInfo('[START] handleListClConversations');
   try {
     const response = await client.query<
-      ListClConversationsQuery,
-      ListClConversationsQueryVariables
+      ListClConversationsWithAuthorQuery,
+      ListClConversationsWithAuthorQueryVariables
     >({
-      query: gql(listClConversations),
+      query: gql(listClConversationsWithAuthor),
       variables: {
         filter: {
           members: {

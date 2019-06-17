@@ -1,7 +1,7 @@
 import React from 'react';
 import { ListItem } from 'react-native-elements';
 
-import { ListItemS3ImageAvatar } from '../../components';
+import { ListItemS3ImageAvatar } from '../../components/Lists/ListItemS3ImageAvatar';
 import { ConvoMessageItem } from '../../core';
 import { NavigationService } from '../../utils';
 

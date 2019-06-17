@@ -50,7 +50,11 @@ const MessagesScreen = () => {
         refreshing={!convoStore.isReady}
         ListHeaderComponent={SearchComponent}
         style={containerStyles.fullWidth}
-        data={convoStore.isReady ? orderBy(parsedConvos, [], []) : null}
+        data={
+          convoStore.isReady
+            ? orderBy(parsedConvos, ['lastMessage.updatedAt'], ['desc'])
+            : null
+        }
         renderItem={item => <MessageListItem item={item.item} />}
         keyExtractor={item => item.id}
       />

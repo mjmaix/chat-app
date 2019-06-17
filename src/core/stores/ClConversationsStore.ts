@@ -8,7 +8,7 @@ export interface ClConversationsStoreData {
 export interface ClConversationsStoreInfo {
   data: ClConversationsStoreData;
   isReady?: boolean;
-  update?: (k: ClConversationsStoreData) => void;
+  update?: (k: ClConversation[]) => void;
 }
 
 export const ClConversationsContext = React.createContext<

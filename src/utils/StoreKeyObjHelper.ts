@@ -1,5 +1,8 @@
 import keyBy from 'lodash/keyBy';
 import omit from 'lodash/keyBy';
+
+import { ClConversationsStoreData } from '../core/stores/ClConversationsStore';
+
 interface ItemType {
   [k: string]: any;
   [k: number]: any;
@@ -8,7 +11,7 @@ interface ItemType {
 interface StoreInfoType<StoreDataT, ItemT> {
   data: StoreDataT;
   isReady?: boolean;
-  update?: (k: StoreDataT) => void;
+  update?: (k: ItemT[]) => void;
 }
 
 interface StoreDataType<ItemT> {
@@ -70,6 +73,15 @@ export class StoreKeyObjHelper<
     const newStoreDataInfo: StoreInfoT = {
       ...existing,
       isReady: value,
+    };
+
+    return newStoreDataInfo;
+  };
+
+  public setUpdate = (existing: StoreInfoT, update: (k: ItemT[]) => void) => {
+    const newStoreDataInfo: StoreInfoT = {
+      ...existing,
+      update,
     };
 
     return newStoreDataInfo;

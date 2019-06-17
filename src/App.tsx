@@ -8,11 +8,7 @@ import { ThemeProvider as RneThemeProvider } from 'react-native-elements';
 import { ThemeProvider as ScThemeProvider } from 'styled-components';
 
 import { ZenObservable } from '../node_modules/zen-observable-ts/lib/types';
-import {
-  GetClUserWithConvosQuery,
-  ListClConversationsQuery,
-  ListClUsersQuery,
-} from './API';
+import { ListClUsersQuery } from './API';
 import {
   ClConversationsProvider,
   ClConversationsStoreData,
@@ -30,10 +26,7 @@ import {
   handleGetCurrentUser,
   logError,
 } from './core';
-import {
-  handleListClConversations,
-  handleListContacts,
-} from './core/actions/queryActions';
+import { handleListContacts } from './core/actions/queryActions';
 import {
   subscribeToCreateClConversation,
   subscribeToCreateClMessage,
@@ -65,30 +58,26 @@ export default class App extends Component<{}, AppState> {
   private updateContactObserver?: ZenObservable.Subscription;
   private deleteContactObserver?: ZenObservable.Subscription;
 
-  private contactsHelper = new StoreKeyObjHelper<
-    ClUser,
-    ClContactsStoreData,
-    ClContactsStoreInfo
-  >('id');
+  private contactsHelper = new StoreKeyObjHelper<ClUser, ClContactsStoreData>(
+    'id',
+  );
 
   private messagesHelper = new StoreKeyObjHelper<
     ClMessage,
-    ClMessagesStoreData,
-    ClMessagesStoreInfo
+    ClMessagesStoreData
   >('createdAt');
 
   private conversationsHelper = new StoreKeyObjHelper<
     ClConversation,
-    ClConversationsStoreData,
-    ClConversationsStoreInfo
-  >('updatedAt');
+    ClConversationsStoreData
+  >('id');
 
   public readonly state = {
     theme: ThemeHelper.get(),
     isThemeReady: false,
     clUserStoreInfo: { data: null, isReady: false },
     clMessagesStoreInfo: { data: {}, isReady: false },
-    clConversationsStoreInfo: { data: {}, isReady: false },
+    clConversationsStoreInfo: { data: {}, isReady: false, update: undefined },
     clContactsStoreInfo: { data: {}, isReady: false },
   };
 
@@ -201,7 +190,7 @@ export default class App extends Component<{}, AppState> {
     clUser: ClUserWithConvos,
     newState: Partial<AppState>,
   ) {
-    const { appendList, setReady } = this.conversationsHelper;
+    const { appendList, setReady, setUpdate } = this.conversationsHelper;
     const convoLinks = clUser.convoLinks;
     if (convoLinks) {
       const items = convoLinks.items;
@@ -221,6 +210,17 @@ export default class App extends Component<{}, AppState> {
         newState.clConversationsStoreInfo = setReady(
           (newState as AppState).clConversationsStoreInfo,
           true,
+        );
+        newState.clConversationsStoreInfo = setUpdate(
+          (newState as AppState).clConversationsStoreInfo,
+          (data: ClConversation[]) => {
+            this.setState(prev => ({
+              clConversationsStoreInfo: appendList(
+                prev.clConversationsStoreInfo,
+                data,
+              ),
+            }));
+          },
         );
       }
     }

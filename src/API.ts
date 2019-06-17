@@ -73,18 +73,15 @@ export type UpdateClConvoLinkInput = {
   updatedAt?: string | null,
 };
 
-export type ModelClUserFilterInput = {
+export type ModelClConversationFilterInput = {
   id?: ModelIDFilterInput | null,
-  givenName?: ModelStringFilterInput | null,
-  familyName?: ModelStringFilterInput | null,
-  email?: ModelStringFilterInput | null,
-  avatar?: ModelStringFilterInput | null,
-  identityId?: ModelStringFilterInput | null,
+  name?: ModelStringFilterInput | null,
+  members?: ModelStringFilterInput | null,
   createdAt?: ModelStringFilterInput | null,
   updatedAt?: ModelStringFilterInput | null,
-  and?: Array< ModelClUserFilterInput | null > | null,
-  or?: Array< ModelClUserFilterInput | null > | null,
-  not?: ModelClUserFilterInput | null,
+  and?: Array< ModelClConversationFilterInput | null > | null,
+  or?: Array< ModelClConversationFilterInput | null > | null,
+  not?: ModelClConversationFilterInput | null,
 };
 
 export type ModelIDFilterInput = {
@@ -113,15 +110,18 @@ export type ModelStringFilterInput = {
   beginsWith?: string | null,
 };
 
-export type ModelClConversationFilterInput = {
+export type ModelClUserFilterInput = {
   id?: ModelIDFilterInput | null,
-  name?: ModelStringFilterInput | null,
-  members?: ModelStringFilterInput | null,
+  givenName?: ModelStringFilterInput | null,
+  familyName?: ModelStringFilterInput | null,
+  email?: ModelStringFilterInput | null,
+  avatar?: ModelStringFilterInput | null,
+  identityId?: ModelStringFilterInput | null,
   createdAt?: ModelStringFilterInput | null,
   updatedAt?: ModelStringFilterInput | null,
-  and?: Array< ModelClConversationFilterInput | null > | null,
-  or?: Array< ModelClConversationFilterInput | null > | null,
-  not?: ModelClConversationFilterInput | null,
+  and?: Array< ModelClUserFilterInput | null > | null,
+  or?: Array< ModelClUserFilterInput | null > | null,
+  not?: ModelClUserFilterInput | null,
 };
 
 export type CreateClUserMutationVariables = {
@@ -899,6 +899,61 @@ export type GetClUserWithConvosQuery = {
     identityId: string | null,
     createdAt: string | null,
     updatedAt: string | null,
+  } | null,
+};
+
+export type ListClConversationsWithAuthorQueryVariables = {
+  filter?: ModelClConversationFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListClConversationsWithAuthorQuery = {
+  listClConversations:  {
+    __typename: "ModelClConversationConnection",
+    items:  Array< {
+      __typename: "ClConversation",
+      id: string,
+      messages:  {
+        __typename: "ModelClMessageConnection",
+        items:  Array< {
+          __typename: "ClMessage",
+          id: string,
+          content: string,
+          createdAt: string | null,
+          updatedAt: string | null,
+          author:  {
+            __typename: "ClUser",
+            id: string,
+            givenName: string,
+            familyName: string,
+            email: string,
+            avatar: string | null,
+            identityId: string | null,
+            createdAt: string | null,
+            updatedAt: string | null,
+          } | null,
+        } | null > | null,
+        nextToken: string | null,
+      } | null,
+      associated:  {
+        __typename: "ModelClConvoLinkConnection",
+        items:  Array< {
+          __typename: "ClConvoLink",
+          id: string,
+          clConvoLinkUserId: string | null,
+          clConvoLinkConversationId: string | null,
+          createdAt: string | null,
+          updatedAt: string | null,
+        } | null > | null,
+        nextToken: string | null,
+      } | null,
+      name: string,
+      members: Array< string > | null,
+      createdAt: string | null,
+      updatedAt: string | null,
+    } | null > | null,
+    nextToken: string | null,
   } | null,
 };
 

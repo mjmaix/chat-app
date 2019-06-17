@@ -1,6 +1,7 @@
 import first from 'lodash/first';
 import isEqual from 'lodash/isEqual';
 import memoize from 'lodash/memoize';
+import orderBy from 'lodash/orderBy';
 import React, { Component } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { ThemeConsumer } from 'react-native-elements';
@@ -11,15 +12,24 @@ import { ThemedComponentProps } from 'styled-components';
 
 import { CreateClConvoMutation } from '../../API';
 import {
+  ClConversationsConsumer,
+  ClConversationsStoreData,
+  ClConversationsStoreInfo,
+  GiftedConvoItem,
   handleCreateConvo,
   handleGetClUser,
   handleGetCurrentUser,
   logInfo,
 } from '../../core';
+import { handleCreateMessage } from '../../core/actions/mutationActions';
 import { handleListClConversations } from '../../core/actions/queryActions';
-import { parseConvoToGifted } from '../../core/data/giftecChatParser';
+import {
+  mapClMessageToGifted,
+  parseConvoToGifted,
+} from '../../core/data/giftecChatParser';
+import { createClMessage } from '../../graphql/mutations';
 import { StyledScreenContainer } from '../../styled';
-import { asyncGetS3Link, isLight } from '../../utils';
+import { StoreKeyObjHelper, asyncGetS3Link, isLight } from '../../utils';
 
 type Props = NavigationScreenProps;
 
@@ -31,6 +41,7 @@ interface State {
   loading: boolean;
   toggleUser: boolean;
   conversation?: ClConversation;
+  messages: GiftedConvoItem[];
 }
 
 class ChatScreen extends Component<Props, State> {
@@ -40,6 +51,7 @@ class ChatScreen extends Component<Props, State> {
     myUser: undefined,
     myAvatar: undefined,
     toggleUser: false,
+    messages: [],
   };
 
   // TODO: for refactoring
@@ -97,6 +109,17 @@ class ChatScreen extends Component<Props, State> {
           }
         }
         newState.conversation = convo as ClConversation;
+        console.log('initial convo', convo);
+        if (convo) {
+          const parsedMessages = orderBy(
+            parseConvoToGifted(convo as ClConversation).messages,
+            ['lastMessage.updatedAt'],
+            ['desc'],
+          );
+          if (parsedMessages) {
+            newState.messages = parsedMessages;
+          }
+        }
       } catch (err) {
         logInfo('[ERROR] cannot create conversation', err);
       }
@@ -143,15 +166,12 @@ class ChatScreen extends Component<Props, State> {
   }
 
   public render() {
-    const { myUser, otherUser, loading, conversation } = this.state;
+    const { myUser, otherUser, loading, conversation, messages } = this.state;
     if (!myUser || loading || !conversation) {
       return <ActivityIndicator />;
     }
 
     const myChatUser = this.getChatUser(false);
-
-    const { messages } = parseConvoToGifted(conversation);
-    console.log(messages);
 
     return (
       <ThemeConsumer>
@@ -211,11 +231,24 @@ class ChatScreen extends Component<Props, State> {
     );
   }
 
-  private onSend(messages: IMessage[] = []) {
-    this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, messages),
-      toggleUser: !previousState.toggleUser,
-    }));
+  private async onSend(messages: IMessage[] = []) {
+    console.log('onSend', messages);
+    const { conversation, myUser } = this.state;
+    if (!conversation || !myUser) {
+      return null;
+    }
+    const resp = await handleCreateMessage(myUser, conversation, messages[0]);
+    if (resp && resp.data) {
+      const respData = resp.data;
+      const newMessage = mapClMessageToGifted(respData.createClMessage);
+
+      this.setState((previous: State) => {
+        const prevMessages = previous.messages as IMessage[];
+        return {
+          messages: GiftedChat.append(prevMessages, [newMessage]),
+        } as State;
+      });
+    }
   }
 }
 

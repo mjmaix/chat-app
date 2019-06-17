@@ -2,12 +2,15 @@ import { ApolloCurrentResult } from 'apollo-client';
 import { ApolloQueryResult } from 'apollo-client/core/types';
 import { FetchResult } from 'apollo-link';
 import gql from 'graphql-tag';
+import { IMessage } from 'react-native-gifted-chat/lib/types';
 
 import {
   CreateClConvoLinkMutation,
   CreateClConvoLinkMutationVariables,
   CreateClConvoMutation,
   CreateClConvoMutationVariables,
+  CreateClMessageMutation,
+  CreateClMessageMutationVariables,
   CreateClUserMutation,
   CreateClUserMutationVariables,
   UpdateClUserMutation,
@@ -208,18 +211,30 @@ export const handleCreateConvo = async <
   ];
 };
 
-export const handleCreateMessage = async (message: string) => {
+export const handleCreateMessage = async (
+  user: ClUser,
+  convo: ClConversation,
+  message: IMessage,
+) => {
   logInfo('[START] handleCreateMessage');
   try {
-    const response = await client.mutate({
+    const response = await client.mutate<
+      CreateClMessageMutation,
+      CreateClMessageMutationVariables
+    >({
       mutation: gql(mutations.createClMessage),
       variables: {
-        input: message,
+        input: {
+          clMessageAuthorId: message.user._id,
+          clMessageConversationId: convo.id,
+          content: message.text,
+          id: message._id,
+        },
       },
       fetchPolicy: __DEV__ ? 'no-cache' : undefined,
     });
     assertErrors(response);
-    return response.data.createMessage;
+    return response;
   } catch (e) {
     logRecord({
       name: 'CreateMessageError',

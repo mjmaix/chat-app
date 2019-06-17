@@ -8,7 +8,7 @@ export interface ClContactsStoreData {
 export interface ClContactsStoreInfo {
   data: ClContactsStoreData;
   isReady?: boolean;
-  update?: (k: ClContactsStoreData) => void;
+  update?: (k: ClUser[]) => void;
 }
 
 export const ClContactContext = React.createContext<ClContactsStoreInfo>({

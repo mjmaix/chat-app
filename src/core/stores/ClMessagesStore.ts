@@ -8,7 +8,7 @@ export interface ClMessagesStoreData {
 export interface ClMessagesStoreInfo {
   data: ClMessagesStoreData;
   isReady?: boolean;
-  update?: (k: ClMessagesStoreData) => void;
+  update?: (k: ClMessage[]) => void;
 }
 
 export const ClMessageContext = React.createContext<ClMessagesStoreInfo>({

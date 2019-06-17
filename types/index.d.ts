@@ -5,7 +5,7 @@ import {
   GetClConversationQuery,
   GetClUserQuery,
   GetClUserWithConvosQuery,
-  ListClConversationsQuery,
+  ListClConversationsWithAuthorQuery,
   OnCreateClUserSubscription,
   UpdateClMessageMutation,
 } from '../src/API';
@@ -113,7 +113,11 @@ declare global {
 
   type ClConversation =
     | ModelFromGetQuery<GetClConversationQuery, 'getClConversation'>
-    | ModelFromGetQuery<CreateClConvoMutation, 'createClConvo'>;
+    | ModelFromGetQuery<CreateClConvoMutation, 'createClConvo'>
+    | ModelFromListQuery<
+        ListClConversationsWithAuthorQuery,
+        'listClConversations'
+      >;
 
   type ClConvoLinkConnection = ModelConnectionFromGetQuery<
     OnCreateClUserSubscription,

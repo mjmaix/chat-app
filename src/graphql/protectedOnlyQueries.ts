@@ -54,3 +54,50 @@ export const getClUserWithConvos = `query GetClUserWithConvos($id: ID!) {
     }
   }
   `;
+
+export const listClConversationsWithAuthor = `query ListClConversationsWithAuthor(
+    $filter: ModelClConversationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listClConversations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        messages {
+          items {
+            id
+            content
+            createdAt
+            updatedAt
+            author {
+              id
+              givenName
+              familyName
+              email
+              avatar
+              identityId
+              createdAt
+              updatedAt
+            }
+          }
+          nextToken
+        }
+        associated {
+          items {
+            id
+            clConvoLinkUserId
+            clConvoLinkConversationId
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        name
+        members
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+  `;
