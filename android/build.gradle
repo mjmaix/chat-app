@@ -44,7 +44,3 @@ allprojects {
         }
     }
 }
-
-lintOptions{
-    disable 'MissingDefaultResource'
-}
