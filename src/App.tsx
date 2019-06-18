@@ -1,6 +1,8 @@
 import './setup';
 
+import { HubCallback } from '@aws-amplify/core/lib/Hub';
 import AsyncStorage from '@react-native-community/async-storage';
+import { Hub } from 'aws-amplify';
 import React, { Component } from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { ActivityIndicator } from 'react-native';
@@ -19,6 +21,7 @@ import {
   handleGetClUser,
   handleGetCurrentUser,
   logError,
+  logInfo,
 } from './core';
 import { handleListContacts } from './core/actions/queryActions';
 import {
@@ -42,21 +45,20 @@ interface AppState {
   clContactsStoreInfo: ClContactsStoreInfo;
 }
 
+const initialState = {
+  theme: ThemeHelper.get(),
+  isThemeReady: false,
+  clUserStoreInfo: { data: null, isReady: false },
+  clContactsStoreInfo: { data: {}, isReady: false },
+};
 export default class App extends Component<{}, AppState> {
   private createContactObserver?: ZenObservable.Subscription;
   private updateContactObserver?: ZenObservable.Subscription;
   private deleteContactObserver?: ZenObservable.Subscription;
 
-  private contactsHelper = new StoreKeyObjHelper<ClUser, ClContactsStoreData>(
-    'id',
-  );
+  private contactsHelper = contacteHelperInit();
 
-  public readonly state = {
-    theme: ThemeHelper.get(),
-    isThemeReady: false,
-    clUserStoreInfo: { data: null, isReady: false },
-    clContactsStoreInfo: { data: {}, isReady: false },
-  };
+  public readonly state = initialState;
 
   public componentWillMount() {
     ThemeHelper.addListener(theme => this.setState({ theme }));
@@ -64,9 +66,22 @@ export default class App extends Component<{}, AppState> {
 
   public async componentDidMount() {
     this.loadTheme();
-    this.loadClUser();
-    this.loadSubscribeClContacts();
+    Hub.listen('auth', this.authListener);
   }
+
+  public authListener: HubCallback = data => {
+    logInfo('[START] authListener');
+    switch (data.payload.event) {
+      case 'signIn':
+        this.loadClUser();
+        this.loadSubscribeClContacts();
+        break;
+      case 'signOut':
+        this.setState(initialState);
+        this.contactsHelper = contacteHelperInit();
+        break;
+    }
+  };
 
   public componentWillUnmount() {
     ThemeHelper.removeAllListeners();
@@ -126,6 +141,7 @@ export default class App extends Component<{}, AppState> {
   }
 
   private async loadClUser() {
+    logInfo('[START] loadClUser');
     try {
       const user = await handleGetCurrentUser();
       const respClUser = await handleGetClUser(user.getUsername());
@@ -144,6 +160,7 @@ export default class App extends Component<{}, AppState> {
   }
 
   private async loadSubscribeClContacts() {
+    logInfo('[START] loadSubscribeClContacts');
     const user = await handleGetCurrentUser();
 
     const { appendItem, removeItem } = this.contactsHelper;
@@ -206,4 +223,7 @@ export default class App extends Component<{}, AppState> {
       this.setState({ clContactsStoreInfo });
     }
   }
+}
+function contacteHelperInit() {
+  return new StoreKeyObjHelper<ClUser, ClContactsStoreData>('id');
 }
