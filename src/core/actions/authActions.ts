@@ -98,7 +98,11 @@ export const handleUpdateProfile = async (data: typeof ProfileModel) => {
     buildAttrs.phone_number = phone_number || '';
   }
 
-  return Auth.updateUserAttributes(user, buildAttrs).catch(WrapKnownExceptions);
+  const resp = await Auth.updateUserAttributes(user, buildAttrs).catch(
+    WrapKnownExceptions,
+  );
+
+  return resp;
 };
 
 export const handleCheckVerifiedContact = async (

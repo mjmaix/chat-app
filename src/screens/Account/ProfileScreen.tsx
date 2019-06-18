@@ -245,7 +245,7 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
   ) => {
     const oldAttrs = this.state.form;
     const newAttrs = form;
-    const emailChanged = oldAttrs.email !== newAttrs.email;
+
     const picChanged = oldAttrs.picture !== newAttrs.picture;
 
     try {
@@ -268,11 +268,7 @@ class ProfileScreen extends Component<Props, typeof InitialState> {
       await handleUpdateProfile(newForm);
       await handleClUserUpdate();
       this.checkVerifiedContact();
-      alertOk(() => {
-        if (emailChanged) {
-          this.handlePressVerifyContactResend('email');
-        }
-      });
+      alertOk(() => null);
     } catch (err) {
       actions.setFieldError('form', err.message);
       alertFail(() => null, err);
