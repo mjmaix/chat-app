@@ -2,15 +2,23 @@ import first from 'lodash/first';
 import isEqual from 'lodash/isEqual';
 import memoize from 'lodash/memoize';
 import orderBy from 'lodash/orderBy';
+import sortBy from 'lodash/sortBy';
 import React, { Component } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { ThemeConsumer } from 'react-native-elements';
-import { Bubble, GiftedChat, Send } from 'react-native-gifted-chat';
+import {
+  Avatar,
+  Bubble,
+  GiftedChat,
+  GiftedChatProps,
+  Send,
+} from 'react-native-gifted-chat';
 import { IMessage, User } from 'react-native-gifted-chat/lib/types';
 import { NavigationScreenProps } from 'react-navigation';
 import { ThemedComponentProps } from 'styled-components';
 
 import { CreateClConvoMutation } from '../../API';
+import { ListItemS3ImageAvatar } from '../../components/Lists/ListItemS3ImageAvatar';
 import {
   ClConversationsConsumer,
   ClConversationsStoreData,
@@ -109,11 +117,10 @@ class ChatScreen extends Component<Props, State> {
           }
         }
         newState.conversation = convo as ClConversation;
-        console.log('initial convo', convo);
         if (convo) {
           const parsedMessages = orderBy(
             parseConvoToGifted(convo as ClConversation).messages,
-            ['lastMessage.updatedAt'],
+            ['createdAt'],
             ['desc'],
           );
           if (parsedMessages) {
@@ -186,6 +193,14 @@ class ChatScreen extends Component<Props, State> {
                   messages={messages}
                   onSend={m => this.onSend(m)}
                   user={myChatUser}
+                  renderAvatar={(avatarProps: any) => {
+                    return (
+                      <ListItemS3ImageAvatar
+                        rounded
+                        user={avatarProps.currentMessage.user}
+                      />
+                    );
+                  }}
                   renderSend={sendProps => (
                     <Send
                       {...sendProps}
@@ -232,7 +247,6 @@ class ChatScreen extends Component<Props, State> {
   }
 
   private async onSend(messages: IMessage[] = []) {
-    console.log('onSend', messages);
     const { conversation, myUser } = this.state;
     if (!conversation || !myUser) {
       return null;

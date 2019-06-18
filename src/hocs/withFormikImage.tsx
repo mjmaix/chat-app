@@ -1,13 +1,13 @@
 import React from 'react';
 import { ImageURISource } from 'react-native';
-import { ImageProps } from 'react-native-elements';
+import { AvatarProps, ImageProps } from 'react-native-elements';
 import { Subtract } from 'utility-types';
 import * as Yup from 'yup';
 
 import { PreviewAvatarProps } from '../components';
 import { StringKeyedObject, WithFormikConfig } from '.';
 
-export interface InjectPreviewAvatarProps {
+export interface InjectPreviewAvatarProps extends Partial<AvatarProps> {
   errorMessage?: string | undefined | null;
   handleChangeImage?: ((e: unknown) => void) | null | undefined;
   handleTouched?: (v: boolean) => void;
@@ -40,6 +40,7 @@ export function withFormikImage<T extends StringKeyedObject>(
     handleChangeImage,
     handleTouched,
     isSubmitting,
+    rounded: true,
   };
 
   const val = formProps.values[dataKey];

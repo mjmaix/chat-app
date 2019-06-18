@@ -6,7 +6,7 @@ export const mapClMessageToGifted = (m: ClMessage) => {
   return {
     _id: m.id,
     text: m.content,
-    createdAt: m.createdAt,
+    createdAt: m.createdAt ? new Date(m.createdAt) : m.createdAt,
     user: {
       ...m.author,
       _id: m.author ? m.author.id : undefined,

@@ -34,7 +34,7 @@ export const PreviewAvatar = (props: PreviewAvatarProps) => {
     size = 'xlarge',
     identityId,
     editable = true,
-    rounded = true,
+    rounded = false,
   } = props;
 
   const icon = {
