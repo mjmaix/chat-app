@@ -30,7 +30,7 @@ const buttonLabels: string[] = ['Off', 'App']; // TODO: include 'Sms' once AWS s
 const buttonMap: MfaChallengeType[] = [
   'NOMFA',
   'SOFTWARE_TOKEN_MFA',
-  'SMS_MFA',
+  // 'SMS_MFA',
 ]; // 'SMS'
 
 class MfaSelectScreen extends React.Component<Props, State> {

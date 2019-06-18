@@ -77,7 +77,10 @@ export default class App extends Component<{}, AppState> {
         this.loadSubscribeClContacts();
         break;
       case 'signOut':
-        this.setState(initialState);
+        this.setState({
+          clUserStoreInfo: initialState.clUserStoreInfo,
+          clContactsStoreInfo: initialState.clContactsStoreInfo,
+        });
         this.contactsHelper = contacteHelperInit();
         break;
     }
