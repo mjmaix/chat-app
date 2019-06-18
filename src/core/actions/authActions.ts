@@ -161,7 +161,7 @@ export const handleChangePasswordSubmit = async (
   );
   return Auth.changePassword(
     currentUser,
-    data.passwordOld,
+    data.password_old,
     data.password,
   ).catch(WrapKnownExceptions);
 };
