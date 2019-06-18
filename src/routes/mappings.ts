@@ -9,7 +9,6 @@ import {
   ChatScreen,
   CompleteRegistrationScreen,
   ContactsScreen,
-  MessagesScreen,
   MfaSelectScreen,
   MfaSmsScreen,
   MfaTotpScreen,
@@ -38,7 +37,6 @@ export type ScreenName =
   | 'Mfa'
   | 'MfaTotp'
   | 'MfaSms'
-  | 'Messages'
   | 'Chat'
   | 'Contacts'
   | 'SignInChoices'
@@ -103,10 +101,6 @@ export const Mappings: Mappings = {
   MfaSms: {
     screen: MfaSmsScreen,
     icon: { type: 'entypo', name: 'lock' },
-  },
-  Messages: {
-    screen: MessagesScreen,
-    icon: { name: 'mail', type: 'feather' },
   },
   Chat: {
     screen: ChatScreen,

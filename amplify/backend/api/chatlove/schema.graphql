@@ -1,16 +1,10 @@
 type ClUser
-  # @model(subscriptions: null)
   @model
   @auth(rules: [{ allow: owner, ownerField: "id", queries: null }]) {
   id: ID!
   convoLinks: [ClConvoLink]
     @connection(name: "UserLinks")
     @auth(rules: [{ allow: owner, ownerField: "id" }])
-  # NOTE: Many to Many connections are not yet supported - https://github.com/aws-amplify/amplify-cli/issues/91
-  # NOTE: Use links first
-  # conversations: [ClConversation]
-  #   @connection(name: "UserConversations", sortField: "updatedAt")
-  #   @auth(rules: [{ allow: owner, ownerField: "id" }])
   messages: [ClMessage]
     @connection(name: "UserMessages")
     @auth(rules: [{ allow: owner, ownerField: "id" }])
@@ -30,7 +24,7 @@ type ClConversation
   messages: [ClMessage] @connection(name: "ConvoMsgs", sortField: "createdAt")
   associated: [ClConvoLink] @connection(name: "AssociatedLinks")
   name: String!
-  members: [String!]
+  members: [String!]!
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
 }
@@ -51,6 +45,7 @@ type ClMessage
   content: String!
   conversation: ClConversation!
     @connection(name: "ConvoMsgs", sortField: "createdAt")
+  clMessageConversationId: ID!
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
 }
@@ -71,8 +66,8 @@ type ClConvoLink
 }
 
 type Subscription {
-  onCreateClMessage(members: [String!]!): ClMessage
+  onCreateClMessage(clMessageConversationId: ID!): ClMessage
     @aws_subscribe(mutations: ["createClMessage"])
-  onCreateClConversation(members: String!): ClConversation
-    @aws_subscribe(mutations: ["createClConvo"])
+  onCreateClConvoLink(clConvoLinkUserId: ID!): ClConvoLink
+    @aws_subscribe(mutations: ["createClConvoLink"])
 }

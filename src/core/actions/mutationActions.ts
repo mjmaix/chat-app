@@ -2,6 +2,7 @@ import { ApolloCurrentResult } from 'apollo-client';
 import { ApolloQueryResult } from 'apollo-client/core/types';
 import { FetchResult } from 'apollo-link';
 import gql from 'graphql-tag';
+import filter from 'lodash/filter';
 import { IMessage } from 'react-native-gifted-chat/lib/types';
 
 import {
@@ -218,6 +219,7 @@ export const handleCreateMessage = async (
 ) => {
   logInfo('[START] handleCreateMessage');
   try {
+    const recipient = filter(convo.members, m => m !== user.id)[0];
     const response = await client.mutate<
       CreateClMessageMutation,
       CreateClMessageMutationVariables

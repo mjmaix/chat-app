@@ -2,8 +2,8 @@ import { ApolloCurrentResult } from 'apollo-client';
 import gql from 'graphql-tag';
 
 import {
-  OnCreateClConversationSubscription,
-  OnCreateClConversationSubscriptionVariables,
+  OnCreateClConvoLinkSubscription,
+  OnCreateClConvoLinkSubscriptionVariables,
   OnCreateClMessageSubscription,
   OnCreateClMessageSubscriptionVariables,
   OnCreateClUserSubscription,
@@ -111,20 +111,20 @@ export const subscribeToDeleteClUser = async <T = OnDeleteClUserSubscription>(
   return observer;
 };
 
-export const subscribeToCreateClConversation = async <
-  T = OnCreateClConversationSubscription
+export const subscribeToCreateClConvoLink = async <
+  T = OnCreateClConvoLinkSubscription
 >(
   cbNextData: SubscribeNextCallback<T>,
   cbError?: SubscribeErrorCallback,
 ) => {
-  logInfo('[START] subscribeToCreateClConversation');
+  logInfo('[START] subscribeToCreateClConvoLink');
 
   const user = await handleGetCurrentUser();
   const observer = client
-    .subscribe<DataWrapper<T>, OnCreateClConversationSubscriptionVariables>({
-      query: gql(subscriptions.onCreateClConversation),
+    .subscribe<DataWrapper<T>, OnCreateClConvoLinkSubscriptionVariables>({
+      query: gql(subscriptions.onCreateClConvoLink),
       variables: {
-        members: user.getUsername(),
+        clConvoLinkUserId: user.getUsername(),
       },
       fetchPolicy: __DEV__ ? 'no-cache' : undefined,
     })
@@ -147,21 +147,21 @@ export const subscribeToCreateClConversation = async <
   return observer;
 };
 
+// FIXME: this could be removed since new messages created by other sent to current user is not queryable
 export const subscribeToCreateClMessage = async <
   T = OnCreateClMessageSubscription
 >(
+  convo: ClConversation,
   cbNextData: SubscribeNextCallback<T>,
   cbError?: SubscribeErrorCallback,
 ) => {
   logInfo('[START] subscribeToCreateClMessage');
-  const user = await handleGetCurrentUser();
   const observer = client
-
     .subscribe<DataWrapper<T>, OnCreateClMessageSubscriptionVariables>({
       query: gql(subscriptions.onCreateClMessage),
       fetchPolicy: __DEV__ ? 'no-cache' : undefined,
       variables: {
-        members: [user.getUsername()],
+        clMessageConversationId: convo.id,
       },
     })
     .subscribe({

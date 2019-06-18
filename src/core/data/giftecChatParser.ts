@@ -13,6 +13,7 @@ export const mapClMessageToGifted = (m: ClMessage) => {
     },
   } as GiftedConvoItem;
 };
+
 export const parseConvoToGifted = (convo: ClConversation) => {
   const { messages } = convo;
   const giftedObj: Partial<{

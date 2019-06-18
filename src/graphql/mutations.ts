@@ -52,6 +52,7 @@ export const createClUser = `mutation CreateClUser($input: CreateClUserInput!) {
           createdAt
           updatedAt
         }
+        clMessageConversationId
         createdAt
         updatedAt
       }
@@ -118,6 +119,7 @@ export const updateClUser = `mutation UpdateClUser($input: UpdateClUserInput!) {
           createdAt
           updatedAt
         }
+        clMessageConversationId
         createdAt
         updatedAt
       }
@@ -184,6 +186,7 @@ export const deleteClUser = `mutation DeleteClUser($input: DeleteClUserInput!) {
           createdAt
           updatedAt
         }
+        clMessageConversationId
         createdAt
         updatedAt
       }
@@ -223,6 +226,7 @@ export const createClConvo = `mutation CreateClConvo($input: CreateClConversatio
           createdAt
           updatedAt
         }
+        clMessageConversationId
         createdAt
         updatedAt
       }
@@ -281,6 +285,7 @@ export const createClMessage = `mutation CreateClMessage($input: CreateClMessage
         items {
           id
           content
+          clMessageConversationId
           createdAt
           updatedAt
         }
@@ -301,6 +306,7 @@ export const createClMessage = `mutation CreateClMessage($input: CreateClMessage
         items {
           id
           content
+          clMessageConversationId
           createdAt
           updatedAt
         }
@@ -321,6 +327,7 @@ export const createClMessage = `mutation CreateClMessage($input: CreateClMessage
       createdAt
       updatedAt
     }
+    clMessageConversationId
     createdAt
     updatedAt
   }
@@ -345,6 +352,7 @@ export const updateClMessage = `mutation UpdateClMessage($input: UpdateClMessage
         items {
           id
           content
+          clMessageConversationId
           createdAt
           updatedAt
         }
@@ -365,6 +373,7 @@ export const updateClMessage = `mutation UpdateClMessage($input: UpdateClMessage
         items {
           id
           content
+          clMessageConversationId
           createdAt
           updatedAt
         }
@@ -385,6 +394,7 @@ export const updateClMessage = `mutation UpdateClMessage($input: UpdateClMessage
       createdAt
       updatedAt
     }
+    clMessageConversationId
     createdAt
     updatedAt
   }
@@ -409,6 +419,7 @@ export const deleteClMessage = `mutation DeleteClMessage($input: DeleteClMessage
         items {
           id
           content
+          clMessageConversationId
           createdAt
           updatedAt
         }
@@ -429,6 +440,7 @@ export const deleteClMessage = `mutation DeleteClMessage($input: DeleteClMessage
         items {
           id
           content
+          clMessageConversationId
           createdAt
           updatedAt
         }
@@ -449,6 +461,7 @@ export const deleteClMessage = `mutation DeleteClMessage($input: DeleteClMessage
       createdAt
       updatedAt
     }
+    clMessageConversationId
     createdAt
     updatedAt
   }
@@ -473,6 +486,7 @@ export const createClConvoLink = `mutation CreateClConvoLink($input: CreateClCon
         items {
           id
           content
+          clMessageConversationId
           createdAt
           updatedAt
         }
@@ -493,6 +507,7 @@ export const createClConvoLink = `mutation CreateClConvoLink($input: CreateClCon
         items {
           id
           content
+          clMessageConversationId
           createdAt
           updatedAt
         }
@@ -538,6 +553,7 @@ export const updateClConvoLink = `mutation UpdateClConvoLink($input: UpdateClCon
         items {
           id
           content
+          clMessageConversationId
           createdAt
           updatedAt
         }
@@ -558,6 +574,7 @@ export const updateClConvoLink = `mutation UpdateClConvoLink($input: UpdateClCon
         items {
           id
           content
+          clMessageConversationId
           createdAt
           updatedAt
         }

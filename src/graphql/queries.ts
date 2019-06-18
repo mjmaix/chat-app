@@ -52,6 +52,7 @@ export const getClUser = `query GetClUser($id: ID!) {
           createdAt
           updatedAt
         }
+        clMessageConversationId
         createdAt
         updatedAt
       }
@@ -89,6 +90,7 @@ export const listClUsers = `query ListClUsers(
         items {
           id
           content
+          clMessageConversationId
           createdAt
           updatedAt
         }
@@ -130,6 +132,7 @@ export const getClConversation = `query GetClConversation($id: ID!) {
           createdAt
           updatedAt
         }
+        clMessageConversationId
         createdAt
         updatedAt
       }
@@ -181,6 +184,7 @@ export const listClConversations = `query ListClConversations(
         items {
           id
           content
+          clMessageConversationId
           createdAt
           updatedAt
         }

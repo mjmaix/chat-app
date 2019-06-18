@@ -1,8 +1,8 @@
 // tslint:disable
 // this is an auto generated file. This will be overwritten
 
-export const onCreateClMessage = `subscription OnCreateClMessage($members: [String!]!) {
-  onCreateClMessage(members: $members) {
+export const onCreateClMessage = `subscription OnCreateClMessage($clMessageConversationId: ID!) {
+  onCreateClMessage(clMessageConversationId: $clMessageConversationId) {
     id
     author {
       id
@@ -20,6 +20,7 @@ export const onCreateClMessage = `subscription OnCreateClMessage($members: [Stri
         items {
           id
           content
+          clMessageConversationId
           createdAt
           updatedAt
         }
@@ -40,6 +41,7 @@ export const onCreateClMessage = `subscription OnCreateClMessage($members: [Stri
         items {
           id
           content
+          clMessageConversationId
           createdAt
           updatedAt
         }
@@ -60,69 +62,74 @@ export const onCreateClMessage = `subscription OnCreateClMessage($members: [Stri
       createdAt
       updatedAt
     }
+    clMessageConversationId
     createdAt
     updatedAt
   }
 }
 `;
-export const onCreateClConversation = `subscription OnCreateClConversation($members: String!) {
-  onCreateClConversation(members: $members) {
+export const onCreateClConvoLink = `subscription OnCreateClConvoLink($clConvoLinkUserId: ID!) {
+  onCreateClConvoLink(clConvoLinkUserId: $clConvoLinkUserId) {
     id
-    messages {
-      items {
-        id
-        author {
+    user {
+      id
+      convoLinks {
+        items {
           id
-          givenName
-          familyName
-          email
-          avatar
-          identityId
+          clConvoLinkUserId
+          clConvoLinkConversationId
           createdAt
           updatedAt
         }
-        content
-        conversation {
-          id
-          name
-          members
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
+        nextToken
       }
-      nextToken
-    }
-    associated {
-      items {
-        id
-        user {
+      messages {
+        items {
           id
-          givenName
-          familyName
-          email
-          avatar
-          identityId
+          content
+          clMessageConversationId
           createdAt
           updatedAt
         }
-        clConvoLinkUserId
-        conversation {
-          id
-          name
-          members
-          createdAt
-          updatedAt
-        }
-        clConvoLinkConversationId
-        createdAt
-        updatedAt
+        nextToken
       }
-      nextToken
+      givenName
+      familyName
+      email
+      avatar
+      identityId
+      createdAt
+      updatedAt
     }
-    name
-    members
+    clConvoLinkUserId
+    conversation {
+      id
+      messages {
+        items {
+          id
+          content
+          clMessageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      associated {
+        items {
+          id
+          clConvoLinkUserId
+          clConvoLinkConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      name
+      members
+      createdAt
+      updatedAt
+    }
+    clConvoLinkConversationId
     createdAt
     updatedAt
   }
@@ -179,6 +186,7 @@ export const onCreateClUser = `subscription OnCreateClUser {
           createdAt
           updatedAt
         }
+        clMessageConversationId
         createdAt
         updatedAt
       }
@@ -245,6 +253,7 @@ export const onUpdateClUser = `subscription OnUpdateClUser {
           createdAt
           updatedAt
         }
+        clMessageConversationId
         createdAt
         updatedAt
       }
@@ -311,6 +320,7 @@ export const onDeleteClUser = `subscription OnDeleteClUser {
           createdAt
           updatedAt
         }
+        clMessageConversationId
         createdAt
         updatedAt
       }

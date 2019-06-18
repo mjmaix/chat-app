@@ -1,33 +1,22 @@
-import first from 'lodash/first';
-import isEqual from 'lodash/isEqual';
-import memoize from 'lodash/memoize';
-import orderBy from 'lodash/orderBy';
-import sortBy from 'lodash/sortBy';
+import { filter, first, isEqual, memoize, orderBy } from 'lodash';
 import React, { Component } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { ThemeConsumer } from 'react-native-elements';
-import {
-  Avatar,
-  Bubble,
-  GiftedChat,
-  GiftedChatProps,
-  Send,
-} from 'react-native-gifted-chat';
+import { Bubble, GiftedChat, Send } from 'react-native-gifted-chat';
 import { IMessage, User } from 'react-native-gifted-chat/lib/types';
 import { NavigationScreenProps } from 'react-navigation';
 import { ThemedComponentProps } from 'styled-components';
 
+import { ZenObservable } from '../../../node_modules/zen-observable-ts/lib/types';
 import { CreateClConvoMutation } from '../../API';
 import { ListItemS3ImageAvatar } from '../../components/Lists/ListItemS3ImageAvatar';
 import {
-  ClConversationsConsumer,
-  ClConversationsStoreData,
-  ClConversationsStoreInfo,
   GiftedConvoItem,
   handleCreateConvo,
   handleGetClUser,
   handleGetCurrentUser,
   logInfo,
+  subscribeToCreateClMessage,
 } from '../../core';
 import { handleCreateMessage } from '../../core/actions/mutationActions';
 import { handleListClConversations } from '../../core/actions/queryActions';
@@ -35,9 +24,8 @@ import {
   mapClMessageToGifted,
   parseConvoToGifted,
 } from '../../core/data/giftecChatParser';
-import { createClMessage } from '../../graphql/mutations';
 import { StyledScreenContainer } from '../../styled';
-import { StoreKeyObjHelper, asyncGetS3Link, isLight } from '../../utils';
+import { asyncGetS3Link, isLight } from '../../utils';
 
 type Props = NavigationScreenProps;
 
@@ -61,6 +49,14 @@ class ChatScreen extends Component<Props, State> {
     toggleUser: false,
     messages: [],
   };
+
+  private createMessageObserver?: ZenObservable.Subscription;
+
+  public componentWillUmount() {
+    if (this.createMessageObserver) {
+      this.createMessageObserver.unsubscribe();
+    }
+  }
 
   // TODO: for refactoring
   public async componentDidMount() {
@@ -116,19 +112,51 @@ class ChatScreen extends Component<Props, State> {
             convo = data.createClConvo;
           }
         }
-        newState.conversation = convo as ClConversation;
         if (convo) {
+          const parsedMessage = parseConvoToGifted(convo).messages;
           const parsedMessages = orderBy(
-            parseConvoToGifted(convo as ClConversation).messages,
+            parsedMessage,
             ['createdAt'],
             ['desc'],
           );
+
           if (parsedMessages) {
             newState.messages = parsedMessages;
           }
+          newState.conversation = convo;
         }
       } catch (err) {
         logInfo('[ERROR] cannot create conversation', err);
+      }
+    }
+
+    // section 6
+    if (newState.conversation) {
+      try {
+        const convo = newState.conversation;
+        this.createMessageObserver = await subscribeToCreateClMessage(
+          convo,
+          nextData => {
+            const clMessage = nextData.data.onCreateClMessage;
+            if (clMessage) {
+              const newMessage = mapClMessageToGifted(clMessage);
+              const exists = filter(
+                this.state.messages,
+                e => e._id === newMessage._id,
+              );
+              if (exists.length === 0) {
+                this.setState((previous: State) => {
+                  const prevMessages = previous.messages as IMessage[];
+                  return {
+                    messages: GiftedChat.append(prevMessages, [newMessage]),
+                  } as State;
+                });
+              }
+            }
+          },
+        );
+      } catch (err) {
+        logInfo('[ERROR] cannot subscribe to create message for convo', err);
       }
     }
 

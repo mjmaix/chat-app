@@ -21,7 +21,6 @@ export * from './Account/MfaTotpScreen';
 
 export * from './Social/ChatScreen';
 export * from './Social/ContactsScreen';
-export * from './Social/MessagesScreen';
 
 export * from './Common/AuthLoadingScreen';
 export * from './Common/BusyOverlayScreen';
