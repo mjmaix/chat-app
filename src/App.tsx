@@ -2,7 +2,7 @@ import './setup';
 
 import { HubCallback } from '@aws-amplify/core/lib/Hub';
 import AsyncStorage from '@react-native-community/async-storage';
-import { Hub } from 'aws-amplify';
+import { Hub, Auth } from 'aws-amplify';
 import React, { Component } from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { ActivityIndicator } from 'react-native';
@@ -67,6 +67,7 @@ export default class App extends Component<{}, AppState> {
   public async componentDidMount() {
     this.loadTheme();
     Hub.listen('auth', this.authListener);
+    Auth.currentUserPoolUser().then(() => this.loadSubscribeClContacts());
   }
 
   public authListener: HubCallback = data => {
@@ -129,7 +130,7 @@ export default class App extends Component<{}, AppState> {
     );
   }
 
-  private async loadTheme() {
+  private loadTheme = async () => {
     try {
       const themeId = (await AsyncStorage.getItem(STORAGE_KEY)) as ThemeName;
       if (themeId) {
@@ -141,9 +142,9 @@ export default class App extends Component<{}, AppState> {
     } finally {
       this.setState({ isThemeReady: true });
     }
-  }
+  };
 
-  private async loadClUser() {
+  private loadClUser = async () => {
     logInfo('[START] loadClUser');
     try {
       const user = await handleGetCurrentUser();
@@ -160,9 +161,9 @@ export default class App extends Component<{}, AppState> {
     } catch (err) {
       logError(err);
     }
-  }
+  };
 
-  private async loadSubscribeClContacts() {
+  private loadSubscribeClContacts = async () => {
     logInfo('[START] loadSubscribeClContacts');
     const user = await handleGetCurrentUser();
 
@@ -210,9 +211,9 @@ export default class App extends Component<{}, AppState> {
         });
       }
     });
-  }
+  };
 
-  private async loadInitialContacts() {
+  private loadInitialContacts = async () => {
     const { appendList, setReady } = this.contactsHelper;
     const data: ListClUsersQuery | undefined = await handleListContacts();
     let clContactsStoreInfo: ClContactsStoreInfo = {
@@ -225,7 +226,7 @@ export default class App extends Component<{}, AppState> {
       clContactsStoreInfo = setReady(clContactsStoreInfo, true);
       this.setState({ clContactsStoreInfo });
     }
-  }
+  };
 }
 function contacteHelperInit() {
   return new StoreKeyObjHelper<ClUser, ClContactsStoreData>('id');

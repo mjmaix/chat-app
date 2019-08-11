@@ -7,7 +7,6 @@ import {
   GetClUserWithConvosQuery,
   GetClUserWithConvosQueryVariables,
   ListClConversationsQuery,
-  ListClConversationsQueryVariables,
   ListClConversationsWithAuthorQuery,
   ListClConversationsWithAuthorQueryVariables,
   ListClUsersQuery,
@@ -18,7 +17,6 @@ import {
   listClConversationsWithAuthor,
 } from '../../graphql/protectedOnlyQueries';
 import { listContacts } from '../../graphql/publicOnlyQueries';
-import { listClConversations } from '../../graphql/queries';
 import { apolloClient as client } from '../../setup';
 import { logInfo, logRecord } from '../reports';
 
@@ -29,6 +27,7 @@ const assertErrors = (
     | GetClConversationQuery
     | GetClUserWithConvosQuery
     | ListClConversationsQuery
+    | ListClConversationsWithAuthorQuery
   >,
 ) => {
   if (response && response.errors && response.errors.length > 0) {
