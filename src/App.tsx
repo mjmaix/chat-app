@@ -10,7 +10,6 @@ import { ThemeProvider as RneThemeProvider } from 'react-native-elements';
 import { ThemeProvider as ScThemeProvider } from 'styled-components';
 
 import { ZenObservable } from '../node_modules/zen-observable-ts/lib/types';
-import { ListClUsersQuery } from './API';
 import {
   ClUserProvider,
   ClUserStoreInfo,
@@ -37,6 +36,7 @@ import {
 import { AppRoutes } from './routes';
 import { apolloClient } from './setup';
 import { NavigationService, StoreKeyObjHelper } from './utils';
+import { ListClUsersQuery } from './API';
 
 interface AppState {
   theme: Nullable<Theme>;

@@ -7,7 +7,7 @@ import { NavigationService } from '../../utils';
 
 type Props = NavigationScreenProps;
 interface State {
-  mfa: MFAChoice;
+  mfa: MfaMethod;
   enableMfa: boolean;
 }
 
