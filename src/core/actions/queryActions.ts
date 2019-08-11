@@ -1,12 +1,8 @@
 import gql from 'graphql-tag';
 
-import { ApolloQueryResult } from '../../../node_modules/apollo-client/core/types';
 import {
-  GetClConversationQuery,
-  GetClUserQuery,
   GetClUserWithConvosQuery,
   GetClUserWithConvosQueryVariables,
-  ListClConversationsQuery,
   ListClConversationsWithAuthorQuery,
   ListClConversationsWithAuthorQueryVariables,
   ListClUsersQuery,
@@ -20,21 +16,6 @@ import { listContacts } from '../../graphql/publicOnlyQueries';
 import { apolloClient as client } from '../../setup';
 import { logInfo, logRecord } from '../reports';
 
-const assertErrors = (
-  response: ApolloQueryResult<
-    | GetClUserQuery
-    | ListClUsersQuery
-    | GetClConversationQuery
-    | GetClUserWithConvosQuery
-    | ListClConversationsQuery
-    | ListClConversationsWithAuthorQuery
-  >,
-) => {
-  if (response && response.errors && response.errors.length > 0) {
-    throw new Error(response.errors.join('\n'));
-  }
-};
-
 export const handleGetClUser = async (username: string) => {
   logInfo('[START] handleGetClUser');
   try {
@@ -46,7 +27,6 @@ export const handleGetClUser = async (username: string) => {
       variables: { id: username },
       fetchPolicy: __DEV__ ? 'no-cache' : undefined,
     });
-    assertErrors(response);
     return response.data;
   } catch (e) {
     logRecord({
@@ -75,7 +55,6 @@ export const handleListClConversations = async (user1: string) => {
       },
       fetchPolicy: __DEV__ ? 'no-cache' : undefined,
     });
-    assertErrors(response);
     return response.data;
   } catch (e) {
     logRecord({
@@ -96,7 +75,6 @@ export const handleListContacts = async () => {
       variables: { limit: 100, filter: { id: { ne: user.getUsername() } } },
       fetchPolicy: __DEV__ ? 'no-cache' : undefined,
     });
-    assertErrors(response);
     return response.data;
   } catch (e) {
     logRecord({

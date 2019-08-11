@@ -2,7 +2,7 @@ import './setup';
 
 import { HubCallback } from '@aws-amplify/core/lib/Hub';
 import AsyncStorage from '@react-native-community/async-storage';
-import { Hub, Auth } from 'aws-amplify';
+import Amplify, { Hub, Auth } from 'aws-amplify';
 import React, { Component } from 'react';
 import { ApolloProvider } from 'react-apollo';
 import { ActivityIndicator } from 'react-native';
@@ -38,6 +38,8 @@ import { apolloClient } from './setup';
 import { NavigationService, StoreKeyObjHelper } from './utils';
 import { ListClUsersQuery } from './API';
 
+Amplify.Logger.LOG_LEVEL = 'DEBUG';
+
 interface AppState {
   theme: Nullable<Theme>;
   isThemeReady: boolean;
@@ -67,15 +69,19 @@ export default class App extends Component<{}, AppState> {
   public async componentDidMount() {
     this.loadTheme();
     Hub.listen('auth', this.authListener);
-    Auth.currentUserPoolUser().then(() => this.loadSubscribeClContacts());
+    Auth.currentUserPoolUser().then(() => this.reloadLoggedInData());
   }
+
+  public reloadLoggedInData = async () => {
+    this.loadClUser();
+    this.loadSubscribeClContacts();
+  };
 
   public authListener: HubCallback = data => {
     logInfo('[START] authListener');
     switch (data.payload.event) {
       case 'signIn':
-        this.loadClUser();
-        this.loadSubscribeClContacts();
+        this.reloadLoggedInData();
         break;
       case 'signOut':
         this.setState({
