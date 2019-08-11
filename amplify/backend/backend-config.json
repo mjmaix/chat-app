@@ -1,8 +1,9 @@
 {
 	"auth": {
-		"chatlove0994aaff": {
+		"chatlove5692c2245692c224": {
 			"service": "Cognito",
-			"providerPlugin": "awscloudformation"
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
 		}
 	},
 	"storage": {

@@ -1,18 +1,18 @@
 {
     "prod": {
         "awscloudformation": {
-            "AuthRoleName": "chatlove-prod-20190530183942-authRole",
-            "UnauthRoleArn": "arn:aws:iam::991300696177:role/chatlove-prod-20190530183942-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::991300696177:role/chatlove-prod-20190530183942-authRole",
+            "AuthRoleName": "chatlove-prod-20190811234226-authRole",
+            "UnauthRoleArn": "arn:aws:iam::991300696177:role/chatlove-prod-20190811234226-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::991300696177:role/chatlove-prod-20190811234226-authRole",
             "Region": "ap-southeast-1",
-            "DeploymentBucketName": "chatlove-prod-20190530183942-deployment",
-            "UnauthRoleName": "chatlove-prod-20190530183942-unauthRole",
-            "StackName": "chatlove-prod-20190530183942",
-            "StackId": "arn:aws:cloudformation:ap-southeast-1:991300696177:stack/chatlove-prod-20190530183942/3c2c26a0-82c7-11e9-803c-064b1a6199c8"
+            "DeploymentBucketName": "chatlove-prod-20190811234226-deployment",
+            "UnauthRoleName": "chatlove-prod-20190811234226-unauthRole",
+            "StackName": "chatlove-prod-20190811234226",
+            "StackId": "arn:aws:cloudformation:ap-southeast-1:991300696177:stack/chatlove-prod-20190811234226/9f0fe200-bc4e-11e9-a603-0630c285b0d0"
         },
         "categories": {
             "auth": {
-                "chatlove0994aaff": {}
+                "chatlove5692c2245692c224": {}
             }
         }
     }
