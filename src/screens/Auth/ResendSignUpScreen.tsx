@@ -45,7 +45,10 @@ class ResendSignUpScreen extends Component<Props> {
                 </StyledFormRow>
 
                 <StyledFormRow>
-                  <StyledButton onPress={fProps.handleSubmit} label={'Reset'} />
+                  <StyledButton
+                    onPress={fProps.handleSubmit}
+                    label={'Resend'}
+                  />
                 </StyledFormRow>
               </StyledFormContainer>
             );
